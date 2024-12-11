@@ -1,0 +1,14 @@
+.floatingSidebar {
+  &.visible {
+    z-index: 3 !important;
+  }
+
+  &:not(.visible) {
+    width: 0px !important;
+  }
+}
+
+.sidebarAction {
+  height: 44px;
+  width: 100%;
+}

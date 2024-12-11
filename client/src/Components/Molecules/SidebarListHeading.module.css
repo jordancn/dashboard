@@ -1,0 +1,8 @@
+.sidebarListHeading {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 20px;
+  padding-left: 16px;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}

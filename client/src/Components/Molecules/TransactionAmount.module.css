@@ -1,0 +1,5 @@
+.transactionAmount {
+  font-family: var(--rounded-font-family);
+  font-size: 50px;
+  font-weight: 600;
+}

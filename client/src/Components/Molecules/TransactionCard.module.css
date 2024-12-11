@@ -1,0 +1,47 @@
+.transactionCard {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.secondaryContainer {
+  display: flex;
+  flex-direction: row;
+  flex: 2;
+  align-items: baseline;
+}
+
+.imageContainer {
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+}
+
+.image {
+  width: 45px;
+  height: 45px;
+}
+
+.additionalContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
+.vendorContainer {
+  height: 20px;
+  overflow-y: hidden;
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chevronContainer {
+  align-self: flex-start;
+  padding-top: 6px;
+}

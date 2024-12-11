@@ -1,0 +1,35 @@
+schema: "./schema/schema.gql"
+documents: ../client/**/*.graphql
+generates:
+  ../client/src/types/graphql/client.gen.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+      - add:
+          content:
+            - 'import { Base64Url } from "./Base64Url";'
+    config:
+      scalars:
+        Base64Url: Base64Url
+  ./types/graphql/server.gen.ts:
+    plugins:
+      - typescript
+      - typescript-resolvers
+      - add:
+          content:
+            - 'import { Base64Url } from "./Base64Url";'
+    config:
+      scalars:
+        Base64Url: Base64Url
+      nonOptionalTypename: true
+      # avoidOptionals: true
+      noSchemaStitching: true
+      useIndexSignature: true
+      allowParentTypeOverride: true
+      resolverTypeWrapperSignature: |
+        Promisable<T extends { id: string, __typename: string } ? { id: string; scope: Scope } | null : T>;
+        export type Promisable<T> = Promise<T> | T
+      customResolverFn: |
+        (parent: UnwrapPromise<ResolverTypeWrapper<TParent>>, args: TArgs, context: TContext, info: GraphQLResolveInfo) => Promisable<TResult>;
+        export type UnwrapPromise<T> = T extends Promise<infer U> ? U : T

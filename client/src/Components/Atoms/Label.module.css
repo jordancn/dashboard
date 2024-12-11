@@ -1,0 +1,24 @@
+.label {
+  font-family: var(--font-family);
+  font-size: 17px;
+}
+
+.primary {
+  @media (prefers-color-scheme: dark) {
+    color: #0a84ff;
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: #007aff;
+  }
+}
+
+.secondary {
+  @media (prefers-color-scheme: dark) {
+    color: rgba(130, 130, 130, 0.85);
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: #007aff;
+  }
+}

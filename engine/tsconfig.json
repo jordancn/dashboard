@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "lib": ["esnext"],
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "paths": {
+      "GraphQL/*": ["./types/graphql/*"],
+    }
+  },
+}

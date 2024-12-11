@@ -1,0 +1,180 @@
+// Profit margin for each propert and active
+// Current quarter and rolling 4 quarters
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+enum AccountType {
+  Checking
+  Savings
+  Retirement
+  Credit
+  Mortgage
+}
+
+enum PropertyType {
+  SingleFamily
+  Duplex
+}
+
+enum PropertyPurpose {
+  Rental
+  LandContract
+  Lender
+  Wholesale
+}
+
+enum CategoryType {
+  Expense
+  Income
+}
+
+model Entity {
+  id       String     @id @default(uuid())
+  name     String     @unique
+  Account  Account[]
+  Property Property[]
+  Budget   Budget[]
+  includeInOverall    Boolean   @default(false)
+}
+
+model Institution {
+  id      String    @id @default(uuid())
+  name    String    @unique
+  Account Account[]
+}
+
+model Category {
+  id           String        @id @default(uuid())
+  name         String        @unique
+  categoryType CategoryType  @default(Expense)
+  Transaction  Transaction[]
+  Budget       Budget[]
+}
+
+model Vendor {
+  id          String        @id @default(uuid())
+  name        String
+  image       Bytes?
+  Transaction Transaction[]
+}
+
+model Account {
+  id            String        @id @default(uuid())
+  externalId    String?
+  name          String
+  number        String
+  institution   Institution   @relation(fields: [institutionId], references: [id])
+  institutionId String
+  RefreshLog    RefreshLog[]
+  Transaction   Transaction[]
+  entity        Entity        @relation(fields: [entityId], references: [id])
+  entityId      String
+  Balance       Balance[]
+  accountType   AccountType
+  Mortgage      Mortgage[]
+
+  @@unique([institutionId, entityId, name])
+}
+
+model RefreshLog {
+  id          String   @id @default(uuid())
+  refreshedAt DateTime @default(now()) @db.Timestamptz
+  account     Account  @relation(fields: [accountId], references: [id])
+  accountId   String
+}
+
+model Balance {
+  id        String   @id @default(uuid())
+  account   Account  @relation(fields: [accountId], references: [id])
+  addedAt   DateTime @default(now()) @db.Timestamptz
+  balance   Decimal
+  accountId String
+}
+
+model Transaction {
+  id               String    @id @default(uuid())
+  account          Account   @relation(fields: [accountId], references: [id])
+  accountId        String
+  date             DateTime  @db.Date
+  addedAt          DateTime  @default(now()) @db.Timestamptz
+  category         Category? @relation(fields: [categoryId], references: [id])
+  categoryId       String?
+  description      String
+  amount           Decimal
+  availableBalance Decimal
+  property         Property? @relation(fields: [propertyId], references: [id])
+  propertyId       String?
+  pending          Boolean   @default(false)
+  vendor           Vendor?   @relation(fields: [vendorId], references: [id])
+  vendorId         String?
+
+  @@unique([accountId, date, description, amount, availableBalance])
+}
+
+model Budget {
+  id       String @id @default(uuid())
+  entity   Entity @relation(fields: [entityId], references: [id])
+  entityId String
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  BudgetAmount BudgetAmount[]
+}
+
+model BudgetAmount {
+  id         String    @id @default(uuid())
+  amount     Decimal
+  startingAt DateTime? @db.Date
+
+  budget Budget @relation(fields: [budgetId], references: [id])
+
+  budgetId String
+}
+
+model Property {
+  id              String          @id @default(uuid())
+  externalId      String?         @unique
+  entity          Entity          @relation(fields: [entityId], references: [id])
+  entityId        String
+  address         String
+  city            String
+  state           String
+  zip             String
+  propertyType    PropertyType
+  propertyPurpose PropertyPurpose
+  latitude        Decimal
+  longitude       Decimal
+  acquired        DateTime?       @db.Date
+  dispositioned   DateTime?       @db.Date
+  Mortgage        Mortgage[]
+  Value           Value[]
+
+  Transaction Transaction[]
+  @@unique([entityId, address, city, state, zip])
+}
+
+model Mortgage {
+  id              String   @id @default(uuid())
+  property        Property @relation(fields: [propertyId], references: [id])
+  propertyId      String
+  payment         Decimal
+  account         Account  @relation(fields: [accountId], references: [id])
+  accountId       String
+  startingBalance Decimal
+}
+
+model Value {
+  id         String   @id @default(uuid())
+  addedAt    DateTime @default(now()) @db.Timestamptz
+  property   Property @relation(fields: [propertyId], references: [id])
+  propertyId String
+  value      Decimal
+}

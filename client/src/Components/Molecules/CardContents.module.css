@@ -1,0 +1,93 @@
+.cardContents {
+  position: relative;
+}
+
+.start {
+  border-radius: 10px 10px 0 0;
+  border-spacing: 5px;
+
+  &::after {
+    content: "";
+
+    :not(&.transparent) {
+      @media (prefers-color-scheme: dark) {
+        background: #454549;
+      }
+
+      @media (prefers-color-scheme: light) {
+        background: #b8b8bb;
+      }
+    }
+
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    right: 0px;
+    height: 1px;
+    width: calc(100% - 10px);
+  }
+}
+
+.middle {
+  border-radius: 0;
+  border-spacing: 5px;
+
+  &::after {
+    content: "";
+
+    :not(&.transparent) {
+      @media (prefers-color-scheme: dark) {
+        background: #454549;
+      }
+
+      @media (prefers-color-scheme: light) {
+        background: #b8b8bb;
+      }
+    }
+
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    right: 0px;
+    height: 1px;
+    width: calc(100% - 10px);
+  }
+
+  .end {
+    border-radius: 0 0 10px 10px;
+  }
+
+  .single {
+    border-radius: 10px;
+  }
+
+  :not(.transparent) {
+    @media (prefers-color-scheme: dark) {
+      background-color: #2c2c2e;
+    }
+
+    @media (prefers-color-scheme: light) {
+      background-color: #ffffff;
+    }
+  }
+
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.error {
+  @media (prefers-color-scheme: dark) {
+    border: 2px solid #ff453a;
+  }
+
+  @media (prefers-color-scheme: light) {
+    border: 2px solid #ff3b30;
+  }
+}
+
+.translucent {
+  opacity: 0.5;
+}

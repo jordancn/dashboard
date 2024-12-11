@@ -1,0 +1,17 @@
+query AccountsOverall {
+  accounts {
+    id
+    name
+    number
+    currentBalance
+    accountType
+    institution {
+      id
+      name
+    }
+    entity {
+      id
+      name
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "schema:generate": "graphql-codegen"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.2",
+    "@graphql-codegen/add": "^5.0.3",
+    "@marko19907/string-to-color": "^1.0.0",
+    "classnames": "^2.5.1",
+    "date-fns-tz": "^3.2.0",
+    "graphql": "^16.9.0",
+    "lodash": "^4.17.21",
+    "next": "15.1.0",
+    "prettier": "^3.4.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@graphql-codegen/cli": "^5.0.3",
+    "@graphql-codegen/typescript": "^4.1.2",
+    "@graphql-codegen/typescript-operations": "^4.4.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
+    "@types/lodash": "^4.17.13",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.0",
+    "typescript": "^5"
+  }
+}

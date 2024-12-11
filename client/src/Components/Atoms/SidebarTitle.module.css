@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 34px;
+  padding-left: 14px;
+}
+
+.children {
+  padding-right: 14px;
+}

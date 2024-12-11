@@ -1,0 +1,65 @@
+.content {
+  background-color: gray;
+  /* transition: width 0.5s ease, left 0.5s ease; */
+  padding-top: 54px; /* TODO??? */
+  /* border: 1px solid blue; */
+  display: flex;
+  justify-content: center;
+
+  &.contentFixed {
+    left: var(--sidebar-width);
+    /* TODO define sidebar width in configuration */
+    width: calc(100vw - var(--sidebar-width));
+  }
+
+  &:not(.contentFixed) {
+    left: 0;
+    width: 100vw;
+  }
+}
+
+.contentContainer {
+  /* border: 1px solid red; */
+}
+
+.contentScrollable {
+  /* border: 1px solid red; */
+  padding: 16px;
+  padding-top: 0;
+  margin-bottom: 80px;
+  /* margin-top: ${props.navigationBar ? 54 : 34}px; */
+}
+
+.fullWidth {
+  padding: 0;
+}
+
+.fullHeight {
+  padding-bottom: 0px;
+  /* height: calc(100% - 70px - 16px); */
+  /* border: 1px solid red; */
+
+  &.navigationBar {
+    height: calc(100% - 54px - 16px);
+  }
+
+  :not(.navigationBar) {
+    height: calc(100% - 34px - 16px);
+  }
+}
+
+.wrapCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+
+  &.wrapCardsColumn {
+    flex-direction: column;
+  }
+
+  :not(&.wrapCardsColumn) {
+    flex-direction: row;
+  }
+}

@@ -1,0 +1,17 @@
+query Transactions($accountId: ID!, $dateRange: DateRange!) {
+  account(accountId: $accountId) {
+    id
+    name
+
+    transactions(dateRange: $dateRange) {
+      id
+      amount
+      date
+      description
+      category {
+        id
+        name
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+query Account($id: ID!) {
+  account(accountId: $id) {
+    id
+    name
+  }
+}

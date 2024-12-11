@@ -1,0 +1,12 @@
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.secondaryContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

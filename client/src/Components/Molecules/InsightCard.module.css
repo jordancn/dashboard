@@ -1,0 +1,12 @@
+.cardContents {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.secondary {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

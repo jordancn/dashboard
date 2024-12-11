@@ -1,0 +1,18 @@
+query TransactionGroupOverview($transactionsDateRange: DateRange!) {
+  transactions(dateRange: $transactionsDateRange) {
+    id
+    date
+    description
+    amount
+    pending
+    category {
+      id
+      name
+    }
+    vendor {
+      id
+      name
+      image
+    }
+  }
+}

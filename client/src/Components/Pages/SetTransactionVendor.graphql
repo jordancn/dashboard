@@ -1,0 +1,10 @@
+mutation SetTransactionVendor($transactionId: ID!, $vendorId: ID) {
+  setVendor(transactionId: $transactionId, vendorId: $vendorId) {
+    id
+    vendor {
+      id
+      name
+      image
+    }
+  }
+}

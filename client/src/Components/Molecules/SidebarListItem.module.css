@@ -1,0 +1,38 @@
+.sidebarListItem {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding: 6px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.match {
+  background-color: #007aff;
+  color: white;
+  border-radius: 10px;
+}
+
+.icon {
+  margin-right: 0px;
+  width: 28px;
+  align-self: center;
+}
+
+.icon i {
+  font-size: 32px;
+  color: #007aff;
+}
+
+.icon.match i {
+  color: white;
+}
+
+.title {
+  margin-left: 16px;
+  font-family: var(--font-family);
+  font-size: 17px;
+  align-self: center;
+}

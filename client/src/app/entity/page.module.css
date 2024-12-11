@@ -1,0 +1,10 @@
+.page {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 44px;
+  width: 100%;
+  margin-top: 10px;
+  /*  border: 1px solid red;*/
+  gap: 20px;
+}

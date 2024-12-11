@@ -1,0 +1,27 @@
+.textarea {
+  background-color: transparent;
+  border: none;
+  font-weight: inherit;
+  font-size: inherit;
+  color: inherit;
+  width: 100%;
+
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  font-weight: inherit;
+  font-size: inherit;
+  color: inherit;
+  width: 100%;
+
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
+}

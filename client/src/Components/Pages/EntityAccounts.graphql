@@ -1,0 +1,19 @@
+query EntityAccounts($entityId: ID!) {
+  entity(entityId: $entityId) {
+    accounts {
+      id
+      name
+      number
+      currentBalance
+      accountType
+      institution {
+        id
+        name
+      }
+      entity {
+        id
+        name
+      }
+    }
+  }
+}

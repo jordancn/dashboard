@@ -1,0 +1,40 @@
+.insightCards {
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 220px;
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  scroll-snap-type: x mandatory;
+  scroll-margin-right: 10px;
+  scroll-margin-left: 10px;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.short {
+  height: 110px;
+}
+
+.scrollMarker {
+  /* border: 1px solid red; */
+  height: 100%;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  width: 10px;
+}

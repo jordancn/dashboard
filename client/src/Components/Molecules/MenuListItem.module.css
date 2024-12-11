@@ -1,0 +1,26 @@
+.menuListItem {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #2c2c2e;
+  }
+
+  @media (prefers-color-scheme: light) {
+    background-color: #ffffff;
+  }
+
+  border-bottom: 1px solid #cccccc;
+}
+
+.title {
+  /* margin-left: 16px; */
+  font-family: var(--font-family);
+  font-size: 17px;
+  align-self: center;
+}

@@ -1,0 +1,6 @@
+query SidebarContents {
+  entities {
+    id
+    name
+  }
+}

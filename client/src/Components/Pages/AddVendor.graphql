@@ -1,0 +1,6 @@
+mutation AddVendor($name: String!) {
+  addVendor(name: $name) {
+    id
+    name
+  }
+}

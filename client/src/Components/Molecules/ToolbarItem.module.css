@@ -1,0 +1,57 @@
+.toolbarItem {
+  width: 48px;
+  max-width: 48px;
+  min-width: 48px;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: #333333;
+  }
+
+  &.match {
+    color: #007aff !important;
+  }
+}
+
+.icon {
+  margin-right: 0px;
+  width: 28px;
+  align-self: center;
+  display: flex;
+
+  i {
+    font-size: 32px;
+
+    .match & {
+      color: #007aff;
+    }
+
+    :not(.match) & {
+      @media (prefers-color-scheme: dark) {
+        color: white;
+      }
+
+      @media (prefers-color-scheme: light) {
+        color: #333333;
+      }
+    }
+  }
+}
+
+.title {
+  font-family: var(--font);
+  font-size: 12px;
+  align-self: center;
+  text-align: center;
+}

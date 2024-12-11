@@ -1,0 +1,29 @@
+.tag {
+  font-family: var(--font-family);
+  font-size: 15px;
+  padding: 4px;
+  border-radius: 4px;
+  margin-left: 4px;
+  opacity: 0.2;
+
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
+
+  @media (prefers-color-scheme: light) {
+    background-color: #007aff;
+    color: white;
+  }
+}
+
+.primary {
+  @media (prefers-color-scheme: dark) {
+    background-color: #0a84ff;
+  }
+}
+
+.secondary {
+  @media (prefers-color-scheme: dark) {
+    background-color: rgba(130, 130, 130, 0.85);
+  }
+}

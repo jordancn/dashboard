@@ -1,0 +1,22 @@
+query TransactionGroup($entityId: ID!, $transactionsDateRange: DateRange!) {
+  entity(entityId: $entityId) {
+    id
+    currentBalance
+    transactions(dateRange: $transactionsDateRange) {
+      id
+      date
+      description
+      amount
+      pending
+      category {
+        id
+        name
+      }
+      vendor {
+        id
+        name
+        image
+      }
+    }
+  }
+}

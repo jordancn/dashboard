@@ -1,0 +1,8 @@
+.scrollMarker {
+  scroll-snap-align: start;
+  scroll-margin-left: 16px;
+}
+
+.fullHeight {
+  height: 100%;
+}
