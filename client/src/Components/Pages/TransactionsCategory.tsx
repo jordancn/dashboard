@@ -1,73 +1,102 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+import {
+  useTransactionCategoryGroupOverallQuery,
+  useTransactionCategoryGroupQuery,
+} from "@/app/client.gen";
+import { DateIso, toDateIso } from "@/Utils/date-iso";
+import { formatCurrency, getNamedDateRange } from "@/Utils/formatters";
+import {
+  getActivityGroupBy,
+  useRelativeSize,
+  useRouteParams,
+} from "@/Utils/helpers";
+import React from "react";
+import { Caption1 } from "../Atoms/Caption1";
+import { Empty } from "../Atoms/Empty";
+import { Headline } from "../Atoms/Headline";
+import { NavigationChevron } from "../Atoms/NavigationChevron";
+import { Spinner } from "../Atoms/Spinner";
+import { Card } from "../Molecules/Card";
+import { CardContents } from "../Molecules/CardContents";
+import { CardTitle } from "../Molecules/CardTitle";
+import { NavigationBar } from "../Molecules/NavigationBar";
+import { SectionHeading } from "../Molecules/SectionHeading";
+import { TransactionCards } from "../Organisms/TransactionCards";
+import { ActivityGroup, useActivityGroup } from "../Providers/AppStateProvider";
+import { ContentScrollable } from "../Templates/Content";
+import styles from "./TransactionsCategory.module.css";
 
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Empty } from 'Atoms/Empty';
-import { NavigationChevron } from 'Atoms/NavigationChevron';
-import { Spinner } from 'Atoms/Spinner';
-import { FONT } from 'Configuration/Configuration';
-import { css, jsx } from '@emotion/react';
-import { useTransactionCategoryGroupOverallQuery, useTransactionCategoryGroupQuery } from 'GraphQL/client.gen';
-import { Card } from 'Molecules/Card';
-import { CardContents } from 'Molecules/CardContents';
-import { CardTitle } from 'Molecules/CardTitle';
-import { NavigationBar } from 'Molecules/NavigationBar';
-import { SectionHeading } from 'Molecules/SectionHeading';
-import { TransactionCards } from 'Organisms/TransactionCards';
-import { useActivityGroup } from 'Providers/AppStateProvider';
-import { ContentScrollable } from 'Templates/Content';
-import { toDateIso } from 'Utils/date-iso';
-import { formatCurrency, getNamedDateRange } from 'Utils/formatters';
-import { getActivityGroupBy, useRelativeSize, useRouteParams } from 'Utils/helpers';
-import * as React from 'react';
-import { useNavigate } from 'react-router';
-import { Headline, Caption1 } from 'design-system';
+const useQuery = (args: {
+  entityId?: string;
+  start: DateIso;
+  end: DateIso;
+  categoryId: string;
+  activityGroup: ActivityGroup;
+}) => {
+  const isEntity = !!args.entityId && args.entityId !== "overview";
 
-export const TransactionsCategory: React.FC = (props) => {
-  const size = useRelativeSize('single');
-  const params = useRouteParams<{ entityId: string | 'overall'; start: string; end: string; categoryId: string }>();
-  const navigate = useNavigate();
+  const overallResults = useTransactionCategoryGroupOverallQuery({
+    variables: {
+      dateRange: {
+        start: args.start, // getFirstDayOfYear(isoStringToIsoDate(params.start)),
+        end: args.end,
+      },
+      categoryId: args.categoryId,
+      groupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: isEntity,
+  });
+
+  const entityResults = useTransactionCategoryGroupQuery({
+    variables: {
+      entityId: args.entityId || "",
+      dateRange: {
+        start: args.start, // getFirstDayOfYear(isoStringToIsoDate(params.start)),
+        end: args.end,
+      },
+      categoryId: args.categoryId,
+      groupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: !isEntity,
+  });
+
+  return isEntity ? entityResults : overallResults;
+};
+
+export const TransactionsCategory = () => {
+  const size = useRelativeSize("single");
+  const params = useRouteParams<{
+    entityId: string | "overall";
+    start: string;
+    end: string;
+    categoryId: string;
+  }>();
+  // const navigate = useNavigate();
 
   const activityGroup = useActivityGroup();
 
-  const results =
-    params.entityId === 'overview'
-      ? useTransactionCategoryGroupOverallQuery({
-          variables: {
-            dateRange: {
-              start: params.start, // getFirstDayOfYear(isoStringToIsoDate(params.start)),
-              end: params.end,
-            },
-            categoryId: params.categoryId,
-            groupBy: getActivityGroupBy(activityGroup),
-          },
-        })
-      : useTransactionCategoryGroupQuery({
-          variables: {
-            entityId: params.entityId,
-            dateRange: {
-              start: params.start, // getFirstDayOfYear(isoStringToIsoDate(params.start)),
-              end: params.end,
-            },
-            categoryId: params.categoryId,
-            groupBy: getActivityGroupBy(activityGroup),
-          },
-        });
-
   const onBackClicked = React.useCallback(() => {
-    navigate(-1);
+    // TODO
+    // navigate(-1);
   }, []);
+
+  const results = useQuery({
+    entityId: params.entityId,
+    start: toDateIso(params.start),
+    end: toDateIso(params.end),
+    categoryId: params.categoryId,
+    activityGroup,
+  });
 
   const category = React.useMemo(() => {
     if (!results.data) {
       return;
     }
 
-    if ('entity' in results.data) {
+    if ("entity" in results.data) {
       return results.data.entity?.category;
     }
 
-    if ('category' in results.data) {
+    if ("category" in results.data) {
       return results.data.category;
     }
   }, [results]);
@@ -76,7 +105,7 @@ export const TransactionsCategory: React.FC = (props) => {
     return (
       <Empty>
         <NavigationBar></NavigationBar>
-        <ContentScrollable type='wrap-cards'>
+        <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
       </Empty>
@@ -88,96 +117,44 @@ export const TransactionsCategory: React.FC = (props) => {
   return (
     <Empty>
       <NavigationBar>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            align-items: center;
-            height: 44px;
-          `}
-        >
-          <div
-            css={css`
-              margin-left: 5px;
-              display: flex;
-              align-items: center;
-              height: 44px;
-              z-index: 100;
-              cursor: pointer;
-            `}
-            onClick={onBackClicked}
-          >
+        <div className={styles.navigationBar}>
+          <div className={styles.backButtonContainer} onClick={onBackClicked}>
             <div>
               <NavigationChevron />
             </div>
-            <div
-              css={css`
-                font-size: 17px;
-                color: #007aff;
-                font: ${FONT};
-                margin-top: -4px;
-                margin-left: 10px;
-              `}
-            >
-              Insights
-            </div>
+            <div className={styles.title}>Insights</div>
           </div>
         </div>
       </NavigationBar>
-      <ContentScrollable type='wrap-cards'>
-        <SectionHeading title={category?.name || ''} />
-        <div
-          css={css`
-            width: ${size}px;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-          `}
-        >
-          <Card size='single'>
+      <ContentScrollable type="wrap-cards">
+        <SectionHeading title={category?.name || ""} />
+        <div style={{ width: `${size}px` }} className={styles.cardsContainer}>
+          <Card size="single">
             <CardTitle />
-            <CardContents variant='transparent'>
-              <div
-                css={css`
-                  display: flex;
-                  width: 100%;
-                  align-items: center;
-                  justify-content: space-between;
-                  gap: 10px;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                    flex: 2;
-                  `}
-                >
-                  <div
-                    css={css`
-                      height: 20px;
-                      overflow-y: hidden;
-                    `}
-                  >
-                    <Headline title={getNamedDateRange({ start: toDateIso(params.start), end: toDateIso(params.end) })} />
-                  </div>
-                  {/* <div>
+            <CardContents variant="transparent">
+              <div className={styles.cardContent}>
+                <div className={styles.cardContentLeft}>
+                  <div>
+                    <div className={styles.cardContentLeftDate}>
+                      <Headline
+                        title={getNamedDateRange({
+                          start: toDateIso(params.start),
+                          end: toDateIso(params.end),
+                        })}
+                      />
+                    </div>
+                    {/* <div>
                     <Subheadline title={formatDate(props.date)} variant='secondary' />
                   </div> */}
-                </div>
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-end;
-                  `}
-                >
-                  <div>{formatCurrency.format(category?.total || 0)}</div>
-                  <div>
-                    <Caption1 title={`${category?.count || 0} transactions`} color='Secondary' />
+                  </div>
+                  <div className={styles.cardContentRight}>
+                    <div>{formatCurrency.format(category?.total || 0)}</div>
+                    <div>
+                      <Caption1
+                        title={`${category?.count || 0} transactions`}
+                        color="Secondary"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -189,24 +166,18 @@ export const TransactionsCategory: React.FC = (props) => {
 
         <div>
           <div
-            css={css`
-              width: ${size}px;
-
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
-              justify-content: flex-start;
-              align-items: flex-start;
-            `}
+            style={{ width: `${size}px` }}
+            className={styles.transactionCards}
           >
             <TransactionCards
               transactions={transactions.map((transaction) => {
                 return {
                   amount: transaction.amount,
-                  categoryName: transaction.category?.name || '',
+                  categoryName: transaction.category?.name || "",
                   date: transaction.date,
                   id: transaction.id,
-                  vendorName: transaction.vendor?.name || transaction.description,
+                  vendorName:
+                    transaction.vendor?.name || transaction.description,
                   pending: transaction.pending,
                   image: transaction.vendor?.image || undefined,
                 };

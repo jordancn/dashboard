@@ -3,6 +3,7 @@ import _ from "lodash";
 import { Empty } from "../Atoms/Empty";
 import { Spinner } from "../Atoms/Spinner";
 import { ToolbarItem } from "../Molecules/ToolbarItem";
+import { shame } from "@/types/core";
 
 const icons = {
   Personal: "user",
@@ -43,16 +44,16 @@ export const ToolbarContents = () => {
       />
       {_.orderBy(
         (results.data?.entities || []).filter(
-          (entity) => (icons as any)[entity.name],
+          (entity) => (icons as shame)[entity.name],
         ),
-        (entity) => (entitiesSortOrder as any)[entity.name],
+        (entity) => (entitiesSortOrder as shame)[entity.name],
       ).map((entity) => {
         return (
           <ToolbarItem
             entityId={entity.id}
             key={entity.id}
-            title={(names as any)[entity.name]}
-            icon={(icons as any)[entity.name]}
+            title={(names as shame)[entity.name]}
+            icon={(icons as shame)[entity.name]}
             path={`/entity/${entity.id}/insights`}
             base={`/entity/${entity.id}`}
           />

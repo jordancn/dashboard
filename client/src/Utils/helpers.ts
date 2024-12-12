@@ -9,6 +9,7 @@ import {
 } from "@/Components/Configuration/Configuration";
 import { ActivityGroup } from "@/Components/Providers/AppStateProvider";
 import { useDeviceData } from "@/Components/Providers/DeviceDataProvider";
+import { shame } from "@/types/core";
 import { useParams } from "next/navigation";
 
 export const useContenWidth = () => {
@@ -72,7 +73,7 @@ export const useRelativeSize = (
   return CARD_SIZE_SINGLE_WIDTH;
 };
 
-export const getRelativePosition = <T extends {}>(index: number, list: T[]) => {
+export const getRelativePosition = <T>(index: number, list: T[]) => {
   if (list.length === 1) {
     return "single";
   }
@@ -127,5 +128,5 @@ export const getActivitySubGroup = (
 export function useRouteParams<T>(): T {
   const params = useParams();
 
-  return params as any as T;
+  return params as shame as T;
 }

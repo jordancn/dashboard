@@ -140,14 +140,14 @@ type TextStyle = {
   size: Size;
 };
 
-const getFontColor = (theme: "light" | "dark"): Mode => {
-  switch (theme) {
-    case "dark":
-      return "Dark";
-    case "light":
-      return "Light";
-  }
-};
+// const getFontColor = (theme: "light" | "dark"): Mode => {
+//   switch (theme) {
+//     case "dark":
+//       return "Dark";
+//     case "light":
+//       return "Light";
+//   }
+// };
 
 export const Text: React.FC<{ style: TextStyle; value: string }> = (props) => {
   // const theme = useSystemTheme();

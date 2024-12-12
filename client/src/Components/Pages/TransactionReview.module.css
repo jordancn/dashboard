@@ -1,0 +1,109 @@
+.navigationBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 44px;
+}
+
+.backButtonContainer {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 17px;
+  color: #007aff;
+  font: var(--font);
+  margin-top: -4px;
+  margin-left: 10px;
+}
+
+.transactionReviewContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.transactionReviewCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  flex-direction: row;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  & > div {
+    /* border: 1px solid red; */
+  }
+}
+
+.transactionReviewCardImage {
+  width: 45px;
+  height: 45px;
+
+  & > img {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.transactionReviewCardDate {
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.transactionReviewCardEntityName {
+  width: 300px;
+}
+
+.transactionReviewCardAccountName {
+  width: 300px;
+}
+
+.transactionReviewCardAccountNumber {
+  width: 70px;
+}
+
+.transactionReviewCardDescription {
+  width: 500px;
+  text-overflow: clip;
+}
+
+.transactionReviewCardAmount {
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  text-align: right;
+}
+
+.vendors {
+  border: none;
+  font: var(--font);
+  font-size: 15px;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background-color: transparent;
+}
+
+.categories {
+  border: none;
+  font: var(--font);
+  font-size: 15px;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  background-color: transparent;
+}

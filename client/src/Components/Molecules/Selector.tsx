@@ -1,4 +1,3 @@
-import { useRelativeSize } from "@/Utils/helpers";
 import classNames from "classnames";
 import styles from "./Selector.module.css";
 
@@ -7,7 +6,7 @@ export const Selector = (props: {
   options: Array<{ label: string; onClick: () => void; disabled?: boolean }>;
   selectedOptionLabel: string;
 }) => {
-  const size = useRelativeSize(props.size);
+  // const size = useRelativeSize(props.size);
 
   return (
     <div className={styles.selectorContainer}>

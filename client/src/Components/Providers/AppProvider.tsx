@@ -156,6 +156,8 @@ export const AppProvider = (props: {
   title?: string;
   children?: React.ReactNode;
 }) => {
+  console.log("globalCss", globalCss);
+
   return (
     <>
       {/*

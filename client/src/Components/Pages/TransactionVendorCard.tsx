@@ -1,57 +1,44 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Checkmark } from 'Atoms/Checkmark';
-import { css, jsx } from '@emotion/react';
-import { useSetTransactionVendorMutation } from 'GraphQL/client.gen';
-import { Card } from 'Molecules/Card';
-import { CardContents } from 'Molecules/CardContents';
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Headline } from 'design-system';
+import { useSetTransactionVendorMutation } from "@/app/client.gen";
+import { useCallback } from "react";
+import { Checkmark } from "../Atoms/Checkmark";
+import { Headline } from "../Atoms/Headline";
+import { Card } from "../Molecules/Card";
+import { CardContents } from "../Molecules/CardContents";
+import styles from "./TransactionVendorCard.module.css";
 
-export const TransactionVendorCard: React.FC<{ isChecked: boolean; position?: 'start' | 'middle' | 'end'; transaction: { id: string }; vendor?: { id: string; name: string } }> = (props) => {
-  const navigate = useNavigate();
+export const TransactionVendorCard = (props: {
+  isChecked: boolean;
+  position?: "start" | "middle" | "end";
+  transaction: { id: string };
+  vendor?: { id: string; name: string };
+}) => {
+  // const navigate = useNavigate();
 
-  const [setTransactionVendorMutation, { data, loading, error }] = useSetTransactionVendorMutation({
+  // { data, loading, error }
+  const [setTransactionVendorMutation] = useSetTransactionVendorMutation({
     variables: {
       transactionId: props.transaction.id,
       vendorId: props.vendor?.id,
     },
   });
 
-  const onClick = React.useCallback(async () => {
+  const onClick = useCallback(async () => {
     await setTransactionVendorMutation();
 
-    navigate(-1);
+    // TODO
+    // navigate(-1);
   }, [setTransactionVendorMutation]);
 
   return (
-    <Card size='single' onClick={onClick}>
+    <Card size="single" onClick={onClick}>
       <CardContents position={props.position}>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-          `}
-        >
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-            `}
-          >
+        <div className={styles.contents}>
+          <div className={styles.vendorContainer}>
             <div>
-              <Headline title={props.vendor?.name || 'No Vendor'} />
+              <Headline title={props.vendor?.name || "No Vendor"} />
             </div>
           </div>
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-              align-self: center;
-            `}
-          >
+          <div className={styles.checkedContainer}>
             {props.isChecked && <Checkmark />}
           </div>
         </div>

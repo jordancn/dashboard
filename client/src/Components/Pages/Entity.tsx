@@ -1,28 +1,81 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Empty } from 'Atoms/Empty';
-import { Spinner } from 'Atoms/Spinner';
-import { css, jsx } from '@emotion/react';
-import { useEntityQuery, useOverviewQuery } from 'GraphQL/client.gen';
-import { EntityInsightActivityCard } from 'Molecules/EntityInsightActivityCard';
-import { EntityInsightBalanceCard } from 'Molecules/EntityInsightBalanceCard';
-import { NavigationBar } from 'Molecules/NavigationBar';
-import { SectionHeading } from 'Molecules/SectionHeading';
-import { BudgetCards } from 'Organisms/BudgetCards';
-import { InsightCards } from 'Organisms/InsightCards';
-import { TransactionCards } from 'Organisms/TransactionCards';
-import { TransactionGroupCards } from 'Organisms/TransactionGroupCards';
-import { useActivityGroup } from 'Providers/AppStateProvider';
-import { ContentScrollable } from 'Templates/Content';
-import { addDays, addMonths, addYears, getFirstDayOfMonth, getFirstDayOfYear, getYearFromIsoDate, lastDayOfMonth, today } from 'Utils/date-iso';
-import { getActivityGroupBy } from 'Utils/helpers';
-import _ from 'lodash';
-import * as React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEntityQuery, useOverviewQuery } from "@/app/client.gen";
+import {
+  addDays,
+  addMonths,
+  addYears,
+  DateIso,
+  getFirstDayOfMonth,
+  getFirstDayOfYear,
+  getYearFromIsoDate,
+  lastDayOfMonth,
+  today,
+} from "@/Utils/date-iso";
+import { getActivityGroupBy } from "@/Utils/helpers";
+import _ from "lodash";
+import { useParams } from "next/navigation";
+import { useCallback, useMemo } from "react";
+import { Empty } from "../Atoms/Empty";
+import { Spinner } from "../Atoms/Spinner";
+import { EntityInsightActivityCard } from "../Molecules/EntityInsightActivityCard";
+import { EntityInsightBalanceCard } from "../Molecules/EntityInsightBalanceCard";
+import { NavigationBar } from "../Molecules/NavigationBar";
+import { SectionHeading } from "../Molecules/SectionHeading";
+import { BudgetCards } from "../Organisms/BudgetCards";
+import { InsightCards } from "../Organisms/InsightCards";
+import { TransactionCards } from "../Organisms/TransactionCards";
+import { TransactionGroupCards } from "../Organisms/TransactionGroupCards";
+import { ActivityGroup, useActivityGroup } from "../Providers/AppStateProvider";
+import { ContentScrollable } from "../Templates/Content";
+import styles from "./Entity.module.css";
 
-export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
-  const navigate = useNavigate();
+const useQuery = (args: {
+  entityId?: string;
+  insightsDateRange: { start: DateIso; end: DateIso };
+  activityDateRange: { start: DateIso; end: DateIso };
+  activityGroup: ActivityGroup;
+}) => {
+  const isEntity = !!args.entityId && args.entityId !== "overview";
+
+  const entityResults = useEntityQuery({
+    variables: {
+      entityId: args.entityId || "",
+      insightsDateRange: args.insightsDateRange,
+      transactionsDateRange: {
+        start: addDays(today(), -3),
+        end: today(),
+      },
+      transactionGroupsDateRange: {
+        start: getFirstDayOfYear(today()),
+        end: today(),
+      },
+      activityDateRange: args.activityDateRange,
+      activityGroupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: !isEntity,
+  });
+
+  const overallResults = useOverviewQuery({
+    variables: {
+      insightsDateRange: args.insightsDateRange,
+      transactionsDateRange: {
+        start: addDays(today(), -3),
+        end: today(),
+      },
+      transactionGroupsDateRange: {
+        start: getFirstDayOfYear(today()),
+        end: today(),
+      },
+      activityDateRange: args.activityDateRange,
+      activityGroupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: isEntity,
+  });
+
+  return isEntity ? entityResults : overallResults;
+};
+
+export const Entity = (props: { mode: "insights" | "budget" }) => {
+  // const navigate = useNavigate();
 
   const params = useParams<{ entityId?: string }>();
 
@@ -33,24 +86,24 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
 
   const activityGroup = useActivityGroup();
 
-  const activityDateRange = React.useMemo(() => {
+  const activityDateRange = useMemo(() => {
     switch (activityGroup) {
-      case 'WeekDay':
+      case "WeekDay":
         return {
           start: today(),
           end: today(),
         };
-      case 'Week':
+      case "Week":
         return {
           start: addDays(today(), -28),
           end: today(),
         };
-      case 'Month':
+      case "Month":
         return {
           start: addMonths(getFirstDayOfMonth(today()), -4),
           end: today(),
         };
-      case 'Year':
+      case "Year":
         return {
           start: addYears(today(), -3),
           end: today(),
@@ -58,42 +111,14 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
     }
   }, []);
 
-  const results = params.entityId
-    ? useEntityQuery({
-        variables: {
-          entityId: params.entityId,
-          insightsDateRange,
-          transactionsDateRange: {
-            start: addDays(today(), -3),
-            end: today(),
-          },
-          transactionGroupsDateRange: {
-            start: getFirstDayOfYear(today()),
-            end: today(),
-          },
-          changeThreshold: 0.1,
-          activityDateRange,
-          activityGroupBy: getActivityGroupBy(activityGroup),
-        },
-      })
-    : useOverviewQuery({
-        variables: {
-          insightsDateRange,
-          transactionsDateRange: {
-            start: addDays(today(), -3),
-            end: today(),
-          },
-          transactionGroupsDateRange: {
-            start: getFirstDayOfYear(today()),
-            end: today(),
-          },
-          changeThreshold: 0.1,
-          activityDateRange,
-          activityGroupBy: getActivityGroupBy(activityGroup),
-        },
-      });
+  const results = useQuery({
+    entityId: params.entityId,
+    insightsDateRange,
+    activityDateRange,
+    activityGroup,
+  });
 
-  const insights = React.useMemo(() => {
+  const insights = useMemo(() => {
     if (results.loading || !results.data) {
       return [];
     }
@@ -103,11 +128,11 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
         return [];
       }
 
-      if ('entity' in results.data) {
+      if ("entity" in results.data) {
         return results.data.entity?.insights || [];
       }
 
-      if ('insights' in results.data) {
+      if ("insights" in results.data) {
         return results.data.insights || [];
       }
 
@@ -127,10 +152,12 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
         previousTotal: category.change.proratedPreviousTotal,
         budget: category.budget || [],
       }))
-      .filter((insight) => insight.currentTotal > 100 || insight.previousTotal > 100);
+      .filter(
+        (insight) => insight.currentTotal > 100 || insight.previousTotal > 100,
+      );
   }, [results]);
 
-  const budget = React.useMemo(() => {
+  const budget = useMemo(() => {
     return _.compact(
       insights.map((category) => {
         const budget = category.budget;
@@ -139,7 +166,7 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
           return;
         }
 
-        if (!('performance' in budget)) {
+        if (!("performance" in budget)) {
           return;
         }
 
@@ -155,13 +182,15 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
           categoryId: category.categoryId,
           budget: performance.budgeted,
           amount: performance.spent,
-          percent: performance.budgeted ? performance.spent / performance.budgeted : Number.POSITIVE_INFINITY,
+          percent: performance.budgeted
+            ? performance.spent / performance.budgeted
+            : Number.POSITIVE_INFINITY,
         };
       }),
     );
   }, [insights, results]);
 
-  const pendingTransactions = React.useMemo(() => {
+  const pendingTransactions = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -171,11 +200,11 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
         return [];
       }
 
-      if ('entity' in results.data) {
+      if ("entity" in results.data) {
         return results.data.entity?.transactions || [];
       }
 
-      if ('transactions' in results.data) {
+      if ("transactions" in results.data) {
         return results.data.transactions || [];
       }
 
@@ -203,7 +232,7 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
     );
   }, [results]);
 
-  const latestTransactions = React.useMemo(() => {
+  const latestTransactions = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -213,11 +242,11 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
         return [];
       }
 
-      if ('entity' in results.data) {
+      if ("entity" in results.data) {
         return results.data.entity?.transactions || [];
       }
 
-      if ('transactions' in results.data) {
+      if ("transactions" in results.data) {
         return results.data.transactions || [];
       }
 
@@ -245,7 +274,7 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
     );
   }, [results]);
 
-  const groupedTransactions = React.useMemo(() => {
+  const groupedTransactions = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -255,11 +284,11 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
         return [];
       }
 
-      if ('entity' in results.data) {
+      if ("entity" in results.data) {
         return results.data.entity?.transactionGroups || [];
       }
 
-      if ('transactionGroups' in results.data) {
+      if ("transactionGroups" in results.data) {
         return results.data.transactionGroups || [];
       }
 
@@ -277,7 +306,7 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
     }));
   }, [results]);
 
-  const activity = React.useMemo(() => {
+  const activity = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -287,11 +316,11 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
         return [];
       }
 
-      if ('entity' in results.data) {
+      if ("entity" in results.data) {
         return results.data.entity?.activity || [];
       }
 
-      if ('activity' in results.data) {
+      if ("activity" in results.data) {
         return results.data.activity || [];
       }
 
@@ -300,7 +329,7 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
 
     const act = getActivity();
 
-    return act.map((activity, index, list) => ({
+    return act.map((activity) => ({
       groupIndex: activity.groupIndex,
       start: activity.start,
       end: activity.end,
@@ -310,28 +339,31 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
     }));
   }, [results]);
 
-  const onShowBudgetClicked = React.useCallback(() => {
-    navigate(`/entity/${params.entityId || 'overview'}/budget`);
+  const onShowBudgetClicked = useCallback(() => {
+    // TODO
+    // navigate(`/entity/${params.entityId || 'overview'}/budget`);
   }, [params.entityId]);
 
-  const onShowInsightsClicked = React.useCallback(() => {
-    navigate(`/entity/${params.entityId || 'overview'}/insights`);
+  const onShowInsightsClicked = useCallback(() => {
+    // TODO
+    // navigate(`/entity/${params.entityId || 'overview'}/insights`);
   }, [params.entityId]);
 
-  const onAccountsClicked = React.useCallback(() => {
-    navigate(`/entity/${params.entityId || 'overview'}/accounts`);
+  const onAccountsClicked = useCallback(() => {
+    // TODO
+    // navigate(`/entity/${params.entityId || 'overview'}/accounts`);
   }, [params.entityId]);
 
-  const currentBalance = React.useMemo(() => {
+  const currentBalance = useMemo(() => {
     if (!results.data) {
       return 0;
     }
 
-    if ('entity' in results.data) {
+    if ("entity" in results.data) {
       return results.data.entity?.currentBalance || 0;
     }
 
-    if ('currentBalance' in results.data) {
+    if ("currentBalance" in results.data) {
       return results.data.currentBalance;
     }
 
@@ -342,7 +374,7 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
     return (
       <Empty>
         <NavigationBar></NavigationBar>
-        <ContentScrollable type='wrap-cards'>
+        <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
       </Empty>
@@ -356,18 +388,7 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
   return (
     <Empty>
       <NavigationBar>
-        <div
-          css={css`
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            height: 44px;
-            width: 100%;
-            margin-top: 10px;
-            // border: 1px solid red;
-            gap: 20px;
-          `}
-        >
+        <div className={styles.entity}>
           {/* <div>
             <svg xmlns='http://www.w3.org/2000/svg' width='20.99' height='21.194' viewBox='0 0 20.99 21.194'>
               <path
@@ -379,54 +400,95 @@ export const Entity: React.FC<{ mode: 'insights' | 'budget' }> = (props) => {
             </svg>
           </div> */}
           <div onClick={onAccountsClicked}>
-            <svg xmlns='http://www.w3.org/2000/svg' width='27.221' height='19.411' viewBox='0 0 27.221 19.411'>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="27.221"
+              height="19.411"
+              viewBox="0 0 27.221 19.411"
+            >
               <path
-                id='Symbol'
-                d='M-9.254,1.429H-.521V-.3h-8.7A1.506,1.506,0,0,1-10.9-1.987v-8.218H10.887V-6.6a4.8,4.8,0,0,1,.881-.086,4.377,4.377,0,0,1,.849.075v-6.982c0-2.213-1.117-3.33-3.373-3.33h-18.5c-2.234,0-3.373,1.117-3.373,3.33v11.7C-12.627.322-11.489,1.429-9.254,1.429ZM-10.9-13.492a1.514,1.514,0,0,1,1.676-1.7H9.222a1.511,1.511,0,0,1,1.665,1.7v.849H-10.9ZM3.969,2.385H8.008a.627.627,0,0,0,.655-.634.641.641,0,0,0-.655-.666H5.452V1.031l1.407-1.4C8.051-1.536,8.427-2.181,8.427-3A2.356,2.356,0,0,0,5.86-5.221a2.524,2.524,0,0,0-2.449,1.6,1.561,1.561,0,0,0-.1.5.612.612,0,0,0,.634.645A.6.6,0,0,0,4.582-3a1.521,1.521,0,0,1,.075-.236,1.269,1.269,0,0,1,1.2-.709,1.107,1.107,0,0,1,1.171,1c0,.483-.215.816-1.128,1.719L3.625,1.042a.907.907,0,0,0-.344.688A.641.641,0,0,0,3.969,2.385Zm7.81.107c1.622,0,2.814-.978,2.814-2.31A1.875,1.875,0,0,0,13.455-1.59a1.759,1.759,0,0,0,.838-1.558,2.254,2.254,0,0,0-2.524-2.073,2.539,2.539,0,0,0-2.4,1.311,1.53,1.53,0,0,0-.15.645.6.6,0,0,0,.634.634.585.585,0,0,0,.623-.473,1.212,1.212,0,0,1,1.257-.838c.73,0,1.171.354,1.171.913,0,.58-.473.945-1.214.945h-.537a.6.6,0,0,0-.623.623.6.6,0,0,0,.623.612H11.7c.945,0,1.461.365,1.461,1.031,0,.612-.548,1.021-1.375,1.021A1.361,1.361,0,0,1,10.361.365a.6.6,0,0,0-.634-.473.635.635,0,0,0-.666.655,1.313,1.313,0,0,0,.161.623A2.738,2.738,0,0,0,11.779,2.492ZM1.627,2.481a.663.663,0,0,0,.709-.7v-6.22a.711.711,0,0,0-.763-.741A1.1,1.1,0,0,0,.9-4.931L-.725-3.878a.7.7,0,0,0-.376.612.591.591,0,0,0,.623.591.694.694,0,0,0,.408-.14l.956-.6H.951v5.2A.654.654,0,0,0,1.627,2.481Z'
-                transform='translate(12.627 16.919)'
-                fill='#007aff'
+                id="Symbol"
+                d="M-9.254,1.429H-.521V-.3h-8.7A1.506,1.506,0,0,1-10.9-1.987v-8.218H10.887V-6.6a4.8,4.8,0,0,1,.881-.086,4.377,4.377,0,0,1,.849.075v-6.982c0-2.213-1.117-3.33-3.373-3.33h-18.5c-2.234,0-3.373,1.117-3.373,3.33v11.7C-12.627.322-11.489,1.429-9.254,1.429ZM-10.9-13.492a1.514,1.514,0,0,1,1.676-1.7H9.222a1.511,1.511,0,0,1,1.665,1.7v.849H-10.9ZM3.969,2.385H8.008a.627.627,0,0,0,.655-.634.641.641,0,0,0-.655-.666H5.452V1.031l1.407-1.4C8.051-1.536,8.427-2.181,8.427-3A2.356,2.356,0,0,0,5.86-5.221a2.524,2.524,0,0,0-2.449,1.6,1.561,1.561,0,0,0-.1.5.612.612,0,0,0,.634.645A.6.6,0,0,0,4.582-3a1.521,1.521,0,0,1,.075-.236,1.269,1.269,0,0,1,1.2-.709,1.107,1.107,0,0,1,1.171,1c0,.483-.215.816-1.128,1.719L3.625,1.042a.907.907,0,0,0-.344.688A.641.641,0,0,0,3.969,2.385Zm7.81.107c1.622,0,2.814-.978,2.814-2.31A1.875,1.875,0,0,0,13.455-1.59a1.759,1.759,0,0,0,.838-1.558,2.254,2.254,0,0,0-2.524-2.073,2.539,2.539,0,0,0-2.4,1.311,1.53,1.53,0,0,0-.15.645.6.6,0,0,0,.634.634.585.585,0,0,0,.623-.473,1.212,1.212,0,0,1,1.257-.838c.73,0,1.171.354,1.171.913,0,.58-.473.945-1.214.945h-.537a.6.6,0,0,0-.623.623.6.6,0,0,0,.623.612H11.7c.945,0,1.461.365,1.461,1.031,0,.612-.548,1.021-1.375,1.021A1.361,1.361,0,0,1,10.361.365a.6.6,0,0,0-.634-.473.635.635,0,0,0-.666.655,1.313,1.313,0,0,0,.161.623A2.738,2.738,0,0,0,11.779,2.492ZM1.627,2.481a.663.663,0,0,0,.709-.7v-6.22a.711.711,0,0,0-.763-.741A1.1,1.1,0,0,0,.9-4.931L-.725-3.878a.7.7,0,0,0-.376.612.591.591,0,0,0,.623.591.694.694,0,0,0,.408-.14l.956-.6H.951v5.2A.654.654,0,0,0,1.627,2.481Z"
+                transform="translate(12.627 16.919)"
+                fill="#007aff"
               />
             </svg>
           </div>
         </div>
       </NavigationBar>
-      <ContentScrollable type='wrap-cards'>
-        <EntityInsightBalanceCard balance={currentBalance} date={results.data?.lastRefreshed} />
+      <ContentScrollable type="wrap-cards">
+        <EntityInsightBalanceCard
+          balance={currentBalance}
+          date={results.data?.lastRefreshed}
+        />
 
-        <EntityInsightActivityCard activityGroup={activityGroup} activity={activity} entityId={params.entityId} />
+        <EntityInsightActivityCard
+          activityGroup={activityGroup}
+          activity={activity}
+          entityId={params.entityId}
+        />
 
-        {props.mode === 'insights' && (
+        {props.mode === "insights" && (
           <Empty>
-            {!params.entityId && <SectionHeading title='Insights' />}
-            {params.entityId && <SectionHeading title='Insights' subtitle='Show Budget' onClick={onShowBudgetClicked} />}
+            {!params.entityId && <SectionHeading title="Insights" />}
+            {params.entityId && (
+              <SectionHeading
+                title="Insights"
+                subtitle="Show Budget"
+                onClick={onShowBudgetClicked}
+              />
+            )}
 
-            <InsightCards entityId={params.entityId} insights={insights} dateRange={insightsDateRange} />
+            <InsightCards
+              entityId={params.entityId}
+              insights={insights}
+              dateRange={insightsDateRange}
+            />
           </Empty>
         )}
 
-        {props.mode === 'budget' && budget && params.entityId && (
+        {props.mode === "budget" && budget && params.entityId && (
           <Empty>
-            <SectionHeading title='Budget' subtitle='Show Insights' onClick={onShowInsightsClicked} />
+            <SectionHeading
+              title="Budget"
+              subtitle="Show Insights"
+              onClick={onShowInsightsClicked}
+            />
 
-            <BudgetCards budget={budget} entityId={params.entityId} dateRange={insightsDateRange} />
+            <BudgetCards
+              budget={budget}
+              entityId={params.entityId}
+              dateRange={insightsDateRange}
+            />
           </Empty>
         )}
 
         {pendingTransactions.length > 0 && (
           <Empty>
-            <SectionHeading title='Pending Transactions' />
+            <SectionHeading title="Pending Transactions" />
 
-            <TransactionCards transactions={pendingTransactions} entityId={params.entityId} />
+            <TransactionCards
+              transactions={pendingTransactions}
+              entityId={params.entityId}
+            />
           </Empty>
         )}
 
-        {latestTransactions.length > 0 && <SectionHeading title='Latest Transactions' />}
+        {latestTransactions.length > 0 && (
+          <SectionHeading title="Latest Transactions" />
+        )}
 
-        <TransactionCards transactions={latestTransactions} entityId={params.entityId} />
+        <TransactionCards
+          transactions={latestTransactions}
+          entityId={params.entityId}
+        />
 
         <SectionHeading title={getYearFromIsoDate(today())} />
 
-        <TransactionGroupCards transactionGroups={groupedTransactions} entityId={params.entityId} />
+        <TransactionGroupCards
+          transactionGroups={groupedTransactions}
+          entityId={params.entityId}
+        />
       </ContentScrollable>
     </Empty>
   );

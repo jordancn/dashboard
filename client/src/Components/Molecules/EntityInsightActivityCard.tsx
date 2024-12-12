@@ -11,7 +11,7 @@ import _ from "lodash";
 import * as React from "react";
 import { Caption1 } from "../Atoms/Caption1";
 import { Subheadline } from "../Atoms/Subheadline";
-import { ActivityGroup, useActivityGroup } from "../Providers/AppStateProvider";
+import { ActivityGroup } from "../Providers/AppStateProvider";
 import styles from "./EntityInsightActivityCard.module.css";
 
 export const EntityInsightActivityCard = (props: {
@@ -27,7 +27,7 @@ export const EntityInsightActivityCard = (props: {
   }>;
   size?: "half" | "single";
 }) => {
-  const activityGroup = useActivityGroup();
+  // const activityGroup = useActivityGroup();
 
   const onClick = React.useCallback(() => {
     // TODO

@@ -10,7 +10,10 @@ import { BudgetCards } from "@/Components/Organisms/BudgetCards";
 import { InsightCards } from "@/Components/Organisms/InsightCards";
 import { TransactionCards } from "@/Components/Organisms/TransactionCards";
 import { TransactionGroupCards } from "@/Components/Organisms/TransactionGroupCards";
-import { useActivityGroup } from "@/Components/Providers/AppStateProvider";
+import {
+  ActivityGroup,
+  useActivityGroup,
+} from "@/Components/Providers/AppStateProvider";
 import { ContentScrollable } from "@/Components/Templates/Content";
 import {
   addDays,
@@ -26,8 +29,57 @@ import { getActivityGroupBy } from "@/Utils/helpers";
 import _ from "lodash";
 import { useParams } from "next/navigation";
 import * as React from "react";
-import { useEntityQuery, useOverviewQuery } from "../client.gen";
+import { DateRange, useEntityQuery, useOverviewQuery } from "../client.gen";
 import styles from "./page.module.css";
+import { shame } from "@/types/core";
+
+const useQuery = (args: {
+  entityId?: string;
+  insightsDateRange: DateRange;
+  activityDateRange: DateRange;
+  activityGroup: ActivityGroup;
+}) => {
+  const isEntity = !!args.entityId && args.entityId !== "overview";
+
+  const entityResults = useEntityQuery({
+    variables: {
+      entityId: args.entityId,
+      insightsDateRange: args.insightsDateRange,
+      transactionsDateRange: {
+        start: addDays(today(), -3),
+        end: today(),
+      },
+      transactionGroupsDateRange: {
+        start: getFirstDayOfYear(today()),
+        end: today(),
+      },
+      changeThreshold: 0.1,
+      activityDateRange: args.activityDateRange,
+      activityGroupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: !isEntity,
+  });
+
+  const overallResults = useOverviewQuery({
+    variables: {
+      insightsDateRange: args.insightsDateRange,
+      transactionsDateRange: {
+        start: addDays(today(), -3),
+        end: today(),
+      },
+      transactionGroupsDateRange: {
+        start: getFirstDayOfYear(today()),
+        end: today(),
+      },
+      changeThreshold: 0.1,
+      activityDateRange: args.activityDateRange,
+      activityGroupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: isEntity,
+  });
+
+  return isEntity ? entityResults : overallResults;
+};
 
 export const Entity: React.FC<{ mode: "insights" | "budget" }> = (props) => {
   // const navigate = useNavigate();
@@ -66,40 +118,12 @@ export const Entity: React.FC<{ mode: "insights" | "budget" }> = (props) => {
     }
   }, []);
 
-  const results = params.entityId
-    ? useEntityQuery({
-        variables: {
-          entityId: params.entityId,
-          insightsDateRange,
-          transactionsDateRange: {
-            start: addDays(today(), -3),
-            end: today(),
-          },
-          transactionGroupsDateRange: {
-            start: getFirstDayOfYear(today()),
-            end: today(),
-          },
-          changeThreshold: 0.1,
-          activityDateRange,
-          activityGroupBy: getActivityGroupBy(activityGroup),
-        },
-      })
-    : useOverviewQuery({
-        variables: {
-          insightsDateRange,
-          transactionsDateRange: {
-            start: addDays(today(), -3),
-            end: today(),
-          },
-          transactionGroupsDateRange: {
-            start: getFirstDayOfYear(today()),
-            end: today(),
-          },
-          changeThreshold: 0.1,
-          activityDateRange,
-          activityGroupBy: getActivityGroupBy(activityGroup),
-        },
-      });
+  const results = useQuery({
+    entityId: params.entityId,
+    insightsDateRange,
+    activityDateRange,
+    activityGroup,
+  });
 
   const insights = React.useMemo(() => {
     if (results.loading || !results.data) {
@@ -312,7 +336,7 @@ export const Entity: React.FC<{ mode: "insights" | "budget" }> = (props) => {
 
     const act = getActivity();
 
-    return act.map((activity, index, list) => ({
+    return act.map((activity) => ({
       groupIndex: activity.groupIndex,
       start: activity.start,
       end: activity.end,
@@ -448,7 +472,7 @@ export const Entity: React.FC<{ mode: "insights" | "budget" }> = (props) => {
             <SectionHeading title="Pending Transactions" />
 
             <TransactionCards
-              transactions={pendingTransactions as any /* TODO */}
+              transactions={pendingTransactions as shame /* TODO */}
               entityId={params.entityId}
             />
           </Empty>
@@ -459,7 +483,7 @@ export const Entity: React.FC<{ mode: "insights" | "budget" }> = (props) => {
         )}
 
         <TransactionCards
-          transactions={latestTransactions as any /* TODO */}
+          transactions={latestTransactions as shame /* TODO */}
           entityId={params.entityId}
         />
 

@@ -1,4 +1,3 @@
-import { useSystemTheme } from "@/Utils/use-system-theme/use-system-theme";
 import { useCallback } from "react";
 import styles from "./MenuListItem.module.css";
 export const MenuListItem = (props: {
@@ -7,9 +6,9 @@ export const MenuListItem = (props: {
   path: string;
 }) => {
   // const navigate = useNavigate();
-  const theme = useSystemTheme();
+  // const theme = useSystemTheme();
 
-  const Icon = props.icon;
+  // const Icon = props.icon;
 
   const onClick = useCallback(() => {
     // TODO

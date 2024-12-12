@@ -1,123 +1,170 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Empty } from 'Atoms/Empty';
-import { Spinner } from 'Atoms/Spinner';
-import { css, jsx } from '@emotion/react';
-import { CategoryType, useEntityActivityOverviewQuery, useEntityActivityQuery } from 'GraphQL/client.gen';
-import { Card } from 'Molecules/Card';
-import { CardContents } from 'Molecules/CardContents';
-import { CardTitle } from 'Molecules/CardTitle';
-import { EntityInsightActivityCard } from 'Molecules/EntityInsightActivityCard';
-import { NavigationBar } from 'Molecules/NavigationBar';
-import { Selector } from 'Molecules/Selector';
-import { TransactionGroup } from 'Molecules/TransactionGroupCard';
-import { ActivityGroup, useActivityGroup, useGroupIndex, useSetActivityGroup, useSetGroupIndex } from 'Providers/AppStateProvider';
-import { ContentScrollable } from 'Templates/Content';
-import { addDays, addMonths, addYears, DateIso, getFirstDayOfMonth, getFirstDayOfYear, getLastDayOfMonth, getLastDayOfYear, getWeekDayFromIsoDate, today, toMonthAndYear, toShortMonthAndDate, toYear } from 'Utils/date-iso';
-import { formatCurrency } from 'Utils/formatters';
-import { getActivitySubGroup, getActivitySubGroupBy, relativePosition, useRelativeSize, useRouteParams } from 'Utils/helpers';
-import * as _ from 'lodash';
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import SwipeableViews from 'react-swipeable-views';
-import { bindKeyboard, virtualize } from 'react-swipeable-views-utils';
-import { Title } from 'Atoms/Title';
-import { Subheadline, Caption1 } from 'design-system';
+import {
+  CategoryType,
+  useEntityActivityOverviewQuery,
+  useEntityActivityQuery,
+} from "@/app/client.gen";
+import {
+  DateIso,
+  toMonthAndYear,
+  toShortMonthAndDate,
+  toYear,
+} from "@/Utils/date-iso";
+import { formatCurrency } from "@/Utils/formatters";
+import {
+  getActivityGroupBy,
+  getActivitySubGroup,
+  getRelativePosition,
+  useRelativeSize,
+  useRouteParams,
+} from "@/Utils/helpers";
+import _ from "lodash";
+import React from "react";
+import { Caption1 } from "../Atoms/Caption1";
+import { Empty } from "../Atoms/Empty";
+import { Spinner } from "../Atoms/Spinner";
+import { Subheadline } from "../Atoms/Subheadline";
+import { Title } from "../Atoms/Title";
+import { Card } from "../Molecules/Card";
+import { CardContents } from "../Molecules/CardContents";
+import { CardTitle } from "../Molecules/CardTitle";
+import { EntityInsightActivityCard } from "../Molecules/EntityInsightActivityCard";
+import { NavigationBar } from "../Molecules/NavigationBar";
+import { Selector } from "../Molecules/Selector";
+import {
+  ActivityGroup,
+  useActivityGroup,
+  useSetActivityGroup,
+  useSetGroupIndex,
+} from "../Providers/AppStateProvider";
+import { ContentScrollable } from "../Templates/Content";
+import styles from "./Activity.module.css";
+import { TransactionGroup } from "./TransactionGroup";
 
-const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
+// const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
 
-const styles = {
-  root: {
-    // paddingLeft: '16px',
-    // paddingRight: '16px',
-  },
-  slideContainer: {
-    // paddingLeft: '8px',
-    // paddingRight: '8px',
-  },
-};
+// const styles = {
+//   root: {
+//     // paddingLeft: '16px',
+//     // paddingRight: '16px',
+//   },
+//   slideContainer: {
+//     // paddingLeft: '8px',
+//     // paddingRight: '8px',
+//   },
+// };
 
-export const TestActivityContainer: React.FC<{ index: number; type: ActivityGroup; start: DateIso; end: DateIso }> = (props) => {
-  const size = useRelativeSize('single');
+export const TestActivityContainer = (props: {
+  index: number;
+  type: ActivityGroup;
+  start: DateIso;
+  end: DateIso;
+}) => {
+  const size = useRelativeSize("single");
   const activityGroup = useActivityGroup();
 
-  const title = activityGroup === 'Month' ? toMonthAndYear(props.start) : activityGroup === 'Year' ? toYear(props.start) : `${toShortMonthAndDate(props.start)} – ${toShortMonthAndDate(props.end)}`;
+  const title =
+    activityGroup === "Month"
+      ? toMonthAndYear(props.start)
+      : activityGroup === "Year"
+        ? toYear(props.start)
+        : `${toShortMonthAndDate(props.start)} – ${toShortMonthAndDate(props.end)}`;
 
   return (
     <div
-      css={css`
-        width: calc(${size}px);
-
-        padding-left: 16px;
-        padding-right: 16px;
-
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: flex-start;
-      `}
+      style={{ width: `${size}px` }}
+      className={styles.testActivityContainer}
     >
-      <div
-        css={css`
-          margin-left: 10px;
-        `}
-      >
+      <div className={styles.titleContainer}>
         <Title title={title} />
       </div>
 
-      <TestActivity end={props.end} index={props.index} start={props.start} type={activityGroup} />
+      <TestActivity
+        end={props.end}
+        index={props.index}
+        start={props.start}
+        type={activityGroup}
+      />
     </div>
   );
 };
 
-export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start: DateIso; end: DateIso }> = (props) => {
-  const size = useRelativeSize('single');
+const useQuery = (args: {
+  entityId?: string;
+  start: DateIso;
+  end: DateIso;
+  activityGroup: ActivityGroup;
+}) => {
+  const isEntity = !!args.entityId && args.entityId !== "overview";
+
+  const entityResults = useEntityActivityQuery({
+    variables: {
+      entityId: args.entityId || "",
+      dateRange: {
+        start: args.start,
+        end: args.end,
+      },
+      activityGroupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: !isEntity,
+  });
+
+  const overallResults = useEntityActivityOverviewQuery({
+    variables: {
+      dateRange: {
+        start: args.start,
+        end: args.end,
+      },
+      activityGroupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: isEntity,
+  });
+
+  return isEntity ? entityResults : overallResults;
+};
+
+export const TestActivity = (props: {
+  index: number;
+  type: ActivityGroup;
+  start: DateIso;
+  end: DateIso;
+}) => {
+  const size = useRelativeSize("single");
   const activityGroup = useActivityGroup();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const params = useRouteParams<{ entityId?: string | 'overview' }>();
+  const params = useRouteParams<{ entityId?: string | "overview" }>();
 
-  const dateRange = {
+  // const dateRange = {
+  //   start: props.start,
+  //   end: props.end,
+  // };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onClick = React.useCallback((categoryId: string) => {
+    // TODO
+    // navigate(
+    //   `/entity/${params.entityId || "overview"}/insights/category/${categoryId}/${dateRange.start}/${dateRange.end}`,
+    // );
+  }, []);
+
+  const results = useQuery({
+    entityId: params.entityId,
     start: props.start,
     end: props.end,
-  };
-
-  const onClick = React.useCallback(
-    (categoryId: string) => {
-      navigate(`/entity/${params.entityId || 'overview'}/insights/category/${categoryId}/${dateRange.start}/${dateRange.end}`);
-    },
-    [navigate, dateRange],
-  );
-
-  const results =
-    params.entityId && params.entityId !== 'overview'
-      ? useEntityActivityQuery({
-          variables: {
-            entityId: params.entityId,
-            dateRange,
-            activityGroupBy: getActivitySubGroupBy(activityGroup),
-          },
-        })
-      : useEntityActivityOverviewQuery({
-          variables: {
-            dateRange,
-            activityGroupBy: getActivitySubGroupBy(activityGroup),
-          },
-        });
+    activityGroup: props.type,
+  });
 
   const categories = React.useMemo(() => {
     if (results.loading || !results.data) {
       return;
     }
 
-    if ('entity' in results.data) {
+    if ("entity" in results.data) {
       return results.data.entity?.categories;
     }
 
-    if ('categories' in results.data) {
+    if ("categories" in results.data) {
       return results.data.categories;
     }
   }, [results]);
@@ -132,11 +179,11 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
         return [];
       }
 
-      if ('entity' in results.data) {
+      if ("entity" in results.data) {
         return results.data.entity?.activity || [];
       }
 
-      if ('activity' in results.data) {
+      if ("activity" in results.data) {
         return results.data.activity || [];
       }
 
@@ -145,7 +192,7 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
 
     const act = getActivity();
 
-    return act.map((activity, index, list) => ({
+    return act.map((activity) => ({
       groupIndex: activity.groupIndex,
       start: activity.start,
       end: activity.end,
@@ -159,14 +206,10 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
     return (
       <Empty>
         <div>
-          <Card size='single'>
+          <Card size="single">
             <CardTitle />
-            <CardContents variant='transparent'>
-              <div
-                css={css`
-                  height: 400px;
-                `}
-              >
+            <CardContents variant="transparent">
+              <div className={styles.testActivityLoadingContainer}>
                 <Spinner />
               </div>
             </CardContents>
@@ -176,55 +219,68 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
     );
   }
 
-  const totalIncome = _.sum((categories || []).filter((category) => category.total !== 0 && category.categoryType === CategoryType.Income).map((category) => category.total));
-  const totalIncomeCount = _.sum((categories || []).filter((category) => category.total !== 0 && category.categoryType === CategoryType.Income).map((category) => category.count));
+  const totalIncome = _.sum(
+    (categories || [])
+      .filter(
+        (category) =>
+          category.total !== 0 && category.categoryType === CategoryType.Income,
+      )
+      .map((category) => category.total),
+  );
+  const totalIncomeCount = _.sum(
+    (categories || [])
+      .filter(
+        (category) =>
+          category.total !== 0 && category.categoryType === CategoryType.Income,
+      )
+      .map((category) => category.count),
+  );
 
-  const totalExpense = _.sum((categories || []).filter((category) => category.total !== 0 && category.categoryType === CategoryType.Expense).map((category) => category.total));
-  const totalExpenseCount = _.sum((categories || []).filter((category) => category.total !== 0 && category.categoryType === CategoryType.Expense).map((category) => category.count));
+  const totalExpense = _.sum(
+    (categories || [])
+      .filter(
+        (category) =>
+          category.total !== 0 &&
+          category.categoryType === CategoryType.Expense,
+      )
+      .map((category) => category.total),
+  );
+  const totalExpenseCount = _.sum(
+    (categories || [])
+      .filter(
+        (category) =>
+          category.total !== 0 &&
+          category.categoryType === CategoryType.Expense,
+      )
+      .map((category) => category.count),
+  );
 
   return (
     <Empty>
       <div>
-        <EntityInsightActivityCard size='single' entityId={params.entityId} activity={activity} activityGroup={getActivitySubGroup(activityGroup)} />
+        <EntityInsightActivityCard
+          size="single"
+          entityId={params.entityId}
+          activity={activity}
+          activityGroup={getActivitySubGroup(activityGroup)}
+        />
 
-        <Card size='single'>
+        <Card size="single">
           <CardTitle />
-          <CardContents variant='transparent'>
-            <div
-              css={css`
-                display: flex;
-                width: 100%;
-                align-items: center;
-                justify-content: space-between;
-                gap: 10px;
-              `}
-            >
-              <div
-                css={css`
-                  display: flex;
-                  flex-direction: column;
-                  flex: 2;
-                `}
-              >
-                <div
-                  css={css`
-                    height: 20px;
-                    overflow-y: hidden;
-                  `}
-                >
-                  <Subheadline title='Income' />
+          <CardContents variant="transparent">
+            <div className={styles.testActivityIncomeContainer}>
+              <div className={styles.testActivityIncomeTextContainer}>
+                <div className={styles.testActivityIncomeText}>
+                  <Subheadline title="Income" />
                 </div>
               </div>
-              <div
-                css={css`
-                  display: flex;
-                  flex-direction: column;
-                  align-items: flex-end;
-                `}
-              >
+              <div className={styles.testActivityIncomeValueContainer}>
                 <div>{formatCurrency.format(totalIncome || 0)}</div>
                 <div>
-                  <Caption1 title={`${totalIncomeCount || 0} transactions`} color='Secondary' />
+                  <Caption1
+                    title={`${totalIncomeCount || 0} transactions`}
+                    color="Secondary"
+                  />
                 </div>
               </div>
             </div>
@@ -232,13 +288,17 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
         </Card>
 
         {_.orderBy(
-          (categories || []).filter((category) => category.total !== 0 && category.categoryType === CategoryType.Income),
+          (categories || []).filter(
+            (category) =>
+              category.total !== 0 &&
+              category.categoryType === CategoryType.Income,
+          ),
           (category) => category.total,
-          'desc',
+          "desc",
         ).map((category, index, list) => {
           return (
             <TransactionGroup
-              relativePosition={relativePosition(index, list)}
+              relativePosition={getRelativePosition(index, list)}
               key={category.categoryId}
               title={category.name}
               id={category.categoryId}
@@ -253,54 +313,25 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
       {/* subtitle='Show Merchants' /> */}
 
       <div
-        css={css`
-          width: ${size}px;
-
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: flex-start;
-          align-items: flex-start;
-        `}
+        style={{ width: `${size}px` }}
+        className={styles.testContainerExpenses}
       >
-        <Card size='single'>
+        <Card size="single">
           <CardTitle />
-          <CardContents variant='transparent'>
-            <div
-              css={css`
-                display: flex;
-                width: 100%;
-                align-items: center;
-                justify-content: space-between;
-                gap: 10px;
-              `}
-            >
-              <div
-                css={css`
-                  display: flex;
-                  flex-direction: column;
-                  flex: 2;
-                `}
-              >
-                <div
-                  css={css`
-                    height: 20px;
-                    overflow-y: hidden;
-                  `}
-                >
-                  <Subheadline title='Expenses' />
+          <CardContents variant="transparent">
+            <div className={styles.testActivityExpenseContainer}>
+              <div className={styles.testActivityExpenseTextContainer}>
+                <div className={styles.testActivityExpenseText}>
+                  <Subheadline title="Expenses" />
                 </div>
               </div>
-              <div
-                css={css`
-                  display: flex;
-                  flex-direction: column;
-                  align-items: flex-end;
-                `}
-              >
+              <div className={styles.testActivityExpenseValueContainer}>
                 <div>{formatCurrency.format(totalExpense || 0)}</div>
                 <div>
-                  <Caption1 title={`${totalExpenseCount || 0} transactions`} color='Secondary' />
+                  <Caption1
+                    title={`${totalExpenseCount || 0} transactions`}
+                    color="Secondary"
+                  />
                 </div>
               </div>
             </div>
@@ -308,13 +339,17 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
         </Card>
 
         {_.orderBy(
-          (categories || []).filter((category) => category.total !== 0 && category.categoryType === CategoryType.Expense),
+          (categories || []).filter(
+            (category) =>
+              category.total !== 0 &&
+              category.categoryType === CategoryType.Expense,
+          ),
           (category) => category.total,
-          'asc',
+          "asc",
         ).map((category, index, list) => {
           return (
             <TransactionGroup
-              relativePosition={relativePosition(index, list)}
+              relativePosition={getRelativePosition(index, list)}
               key={category.categoryId}
               title={category.name}
               id={category.categoryId}
@@ -329,41 +364,48 @@ export const TestActivity: React.FC<{ index: number; type: ActivityGroup; start:
   );
 };
 
-export const Activity: React.FC<{}> = () => {
-  const params = useRouteParams<{ entityId?: string | 'overview'; groupType: string; start?: string }>();
+export const Activity = () => {
+  // const params = useRouteParams<{
+  //   entityId?: string | "overview";
+  //   groupType: string;
+  //   start?: string;
+  // }>();
   const activityGroup = useActivityGroup();
   const setActivityGroup = useSetActivityGroup();
-  const navigate = useNavigate();
-  const groupIndex = useGroupIndex();
+  // const navigate = useNavigate();
+  // const groupIndex = useGroupIndex();
   const setGroupIndex = useSetGroupIndex();
 
   const options = React.useMemo(() => {
     return [
       {
-        label: 'Week',
+        label: "Week",
         onClick: () => {
-          setActivityGroup('Week');
+          setActivityGroup("Week");
           setGroupIndex(0);
 
-          navigate(`/entity/${params.entityId || 'overview'}/activity/Week#1`);
+          // TODO
+          // navigate(`/entity/${params.entityId || "overview"}/activity/Week#1`);
         },
       },
       {
-        label: 'Month',
+        label: "Month",
         onClick: () => {
-          setActivityGroup('Month');
+          setActivityGroup("Month");
           setGroupIndex(0);
 
-          navigate(`/entity/${params.entityId || 'overview'}/activity/Month#1`);
+          // TODO
+          // navigate(`/entity/${params.entityId || "overview"}/activity/Month#1`);
         },
       },
       {
-        label: 'Year',
+        label: "Year",
         onClick: () => {
-          setActivityGroup('Year');
+          setActivityGroup("Year");
           setGroupIndex(0);
 
-          navigate(`/entity/${params.entityId || 'overview'}/activity/Year#1`);
+          // TODO
+          // navigate(`/entity/${params.entityId || "overview"}/activity/Year#1`);
         },
       },
     ];
@@ -372,54 +414,73 @@ export const Activity: React.FC<{}> = () => {
   return (
     <Empty>
       <NavigationBar>
-        <Selector size='half' options={options} selectedOptionLabel={activityGroup} />
+        <Selector
+          size="half"
+          options={options}
+          selectedOptionLabel={activityGroup}
+        />
       </NavigationBar>
-      <ContentScrollable type='wrap-cards' fullHeight fullWidth navigationBar>
-        <VirtualizeSwipeableViews style={styles.root} slideStyle={styles.slideContainer} overscanSlideBefore={1} overscanSlideAfter={1} index={groupIndex} onChangeIndex={setGroupIndex} slideRenderer={slideRenderer} />
+      <ContentScrollable type="wrap-cards" fullHeight fullWidth navigationBar>
+        {/* <VirtualizeSwipeableViews
+          style={styles.root}
+          slideStyle={styles.slideContainer}
+          overscanSlideBefore={1}
+          overscanSlideAfter={1}
+          index={groupIndex}
+          onChangeIndex={setGroupIndex}
+          slideRenderer={slideRenderer}
+        /> */}
       </ContentScrollable>
     </Empty>
   );
 };
 
-const Thing: React.FC<{ index: number }> = (props) => {
-  const activityGroup = useActivityGroup();
+// const Thing = (props: { index: number }) => {
+//   const activityGroup = useActivityGroup();
 
-  const date = today();
+//   const date = today();
 
-  const dateRange = React.useMemo(() => {
-    switch (activityGroup) {
-      case 'Week': {
-        const dayOfWeek = getWeekDayFromIsoDate(date);
+//   const dateRange = React.useMemo(() => {
+//     switch (activityGroup) {
+//       case "Week": {
+//         const dayOfWeek = getWeekDayFromIsoDate(date);
 
-        const start = addDays(date, -dayOfWeek + 7 * props.index);
-        const end = addDays(date, 6 - dayOfWeek + 7 * props.index);
+//         const start = addDays(date, -dayOfWeek + 7 * props.index);
+//         const end = addDays(date, 6 - dayOfWeek + 7 * props.index);
 
-        return { start, end };
-      }
-      case 'Month': {
-        const start = getFirstDayOfMonth(addMonths(date, props.index));
-        const end = getLastDayOfMonth(addMonths(date, props.index));
+//         return { start, end };
+//       }
+//       case "Month": {
+//         const start = getFirstDayOfMonth(addMonths(date, props.index));
+//         const end = getLastDayOfMonth(addMonths(date, props.index));
 
-        return { start, end };
-      }
-      case 'Year':
-        const start = getFirstDayOfYear(addYears(date, props.index));
-        const end = getLastDayOfYear(addYears(date, props.index));
+//         return { start, end };
+//       }
+//       case "Year":
+//         const start = getFirstDayOfYear(addYears(date, props.index));
+//         const end = getLastDayOfYear(addYears(date, props.index));
 
-        return { start, end };
+//         return { start, end };
 
-      default:
-        return;
-    }
-  }, [activityGroup]);
+//       default:
+//         return;
+//     }
+//   }, [activityGroup]);
 
-  if (!dateRange) {
-    return null;
-  }
+//   if (!dateRange) {
+//     return null;
+//   }
 
-  return <TestActivityContainer index={props.index} start={dateRange.start} end={dateRange.end} type={activityGroup} />;
-};
+//   return (
+//     <TestActivityContainer
+//       index={props.index}
+//       start={dateRange.start}
+//       end={dateRange.end}
+//       type={activityGroup}
+//     />
+//   );
+// };
 
-function slideRenderer(params: { index: number; key: number }) {
-  return <Thing key={params.key} index={params.index} />;
-}
+// function slideRenderer(params: { index: number; key: number }) {
+//   return <Thing key={params.key} index={params.index} />;
+// }

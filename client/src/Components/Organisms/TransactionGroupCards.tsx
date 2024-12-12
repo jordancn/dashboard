@@ -19,6 +19,7 @@ export const TransactionGroupCards = (props: {
   // const navigate = useNavigate();
 
   const onClick = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (transactionGroup: {
       id: string;
       count: number;

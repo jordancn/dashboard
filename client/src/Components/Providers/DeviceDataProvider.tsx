@@ -18,7 +18,7 @@ type ContextState =
   | {
       status: "LOADED";
       value: {
-        isMobile: Boolean;
+        isMobile: boolean;
         orientation: "landscape" | "portrait";
         size: "small" | "large";
       };

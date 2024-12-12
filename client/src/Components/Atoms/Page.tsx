@@ -89,6 +89,8 @@ const pageCss = `
 // TODO use css
 
 export const Page = (props: { children?: React.ReactNode }) => {
+  console.debug("pageCss", pageCss);
+
   return (
     <>
       <div id="page">{props.children}</div>

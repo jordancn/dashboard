@@ -1,0 +1,16 @@
+.transactionCategoryCard {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.transactionCategoryCardHeadlineContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.transactionCategoryCardRight {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}

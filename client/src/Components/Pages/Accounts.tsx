@@ -1,38 +1,45 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Empty } from 'Atoms/Empty';
-import { NavigationChevron } from 'Atoms/NavigationChevron';
-import { Spinner } from 'Atoms/Spinner';
-import { FONT } from 'Configuration/Configuration';
-import { css, jsx } from '@emotion/react';
-import { useAccountsOverallQuery, useEntityAccountsQuery } from 'GraphQL/client.gen';
-import { NavigationBar } from 'Molecules/NavigationBar';
-import { AccountCards } from 'Organisms/AccountCards';
-import { ContentScrollable } from 'Templates/Content';
-import { useRelativeSize, useRouteParams } from 'Utils/helpers';
-import * as React from 'react';
-import { useNavigate } from 'react-router';
+import { useAccountsOverallQuery } from "@/app/client.gen";
+import { useEntityAccountsQuery } from "@/app/client.gen";
+import { useRelativeSize } from "@/Utils/helpers";
+import { useParams } from "next/navigation";
+import { useCallback, useMemo } from "react";
+import { Empty } from "../Atoms/Empty";
+import { NavigationChevron } from "../Atoms/NavigationChevron";
+import { Spinner } from "../Atoms/Spinner";
+import { NavigationBar } from "../Molecules/NavigationBar";
+import { AccountCards } from "../Organisms/AccountCards";
+import { ContentScrollable } from "../Templates/Content";
+import styles from "./Accounts.module.css";
 
-export const Accounts: React.FC = (props) => {
-  const size = useRelativeSize('single');
-  const params = useRouteParams<{ entityId?: string }>();
-  const navigate = useNavigate();
+const useAccountsQuery = (entityId?: string) => {
+  const isEntity = !!entityId && entityId !== "overview";
 
-  const results =
-    params.entityId && params.entityId !== 'overview'
-      ? useEntityAccountsQuery({
-          variables: {
-            entityId: params.entityId,
-          },
-        })
-      : useAccountsOverallQuery({});
+  const entityResults = useEntityAccountsQuery({
+    variables: {
+      entityId: entityId || "",
+    },
+    skip: !isEntity,
+  });
 
-  const onBackClicked = React.useCallback(() => {
-    navigate(-1);
+  const overallResults = useAccountsOverallQuery({
+    skip: isEntity,
+  });
+
+  return isEntity ? entityResults : overallResults;
+};
+
+export const Accounts = () => {
+  const size = useRelativeSize("single");
+  const params = useParams<{ entityId?: string }>();
+  // const navigate = useNavigate();
+
+  const results = useAccountsQuery(params.entityId);
+
+  const onBackClicked = useCallback(() => {
+    // navigate(-1);
   }, []);
 
-  const accounts = React.useMemo(() => {
+  const accounts = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -41,11 +48,11 @@ export const Accounts: React.FC = (props) => {
       return [];
     }
 
-    if ('entity' in results.data) {
+    if ("entity" in results.data) {
       return results.data.entity?.accounts || [];
     }
 
-    if ('accounts' in results.data) {
+    if ("accounts" in results.data) {
       return results.data.accounts;
     }
 
@@ -56,7 +63,7 @@ export const Accounts: React.FC = (props) => {
     return (
       <Empty>
         <NavigationBar></NavigationBar>
-        <ContentScrollable type='wrap-cards'>
+        <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
       </Empty>
@@ -66,54 +73,17 @@ export const Accounts: React.FC = (props) => {
   return (
     <Empty>
       <NavigationBar>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            align-items: center;
-            height: 44px;
-          `}
-        >
-          <div
-            css={css`
-              margin-left: 5px;
-              display: flex;
-              align-items: center;
-              height: 44px;
-              z-index: 100;
-              cursor: pointer;
-            `}
-            onClick={onBackClicked}
-          >
+        <div className={styles.navigationBar}>
+          <div className={styles.backButtonContainer} onClick={onBackClicked}>
             <div>
               <NavigationChevron />
             </div>
-            <div
-              css={css`
-                font-size: 17px;
-                color: #007aff;
-                font: ${FONT};
-                margin-top: -4px;
-                margin-left: 10px;
-              `}
-            >
-              Insights
-            </div>
+            <div className={styles.title}>Insights</div>
           </div>
         </div>
       </NavigationBar>
-      <ContentScrollable type='wrap-cards'>
-        <div
-          css={css`
-            width: ${size}px;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-          `}
-        >
+      <ContentScrollable type="wrap-cards">
+        <div style={{ width: `${size}px` }} className={styles.accounts}>
           <AccountCards accounts={accounts} />
         </div>
       </ContentScrollable>

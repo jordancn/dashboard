@@ -1,4 +1,5 @@
 import { Base64Url } from "@/app/Base64Url";
+import { DateIso } from "@/Utils/date-iso";
 import { formatCurrency, formatDate } from "@/Utils/formatters";
 import { generateColor } from "@marko19907/string-to-color";
 import { Caption1 } from "../Atoms/Caption1";
@@ -10,7 +11,7 @@ import styles from "./TransactionCard.module.css";
 
 export const TransactionCard = (props: {
   id: string;
-  date: any;
+  date: DateIso;
   vendorName: string | undefined;
   categoryName: string | undefined;
   amount: number;

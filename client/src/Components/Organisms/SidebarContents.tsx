@@ -1,4 +1,5 @@
 import { useSidebarContentsQuery } from "@/app/client.gen";
+import { shame } from "@/types/core";
 import _ from "lodash";
 import { Empty } from "../Atoms/Empty";
 import { SidebarTitle } from "../Atoms/SidebarTitle";
@@ -45,16 +46,16 @@ export const SidebarContents = () => {
 
       {_.orderBy(
         (results.data?.entities || []).filter(
-          (entity) => (icons as any)[entity.name],
+          (entity) => (icons as shame)[entity.name],
         ),
-        (entity) => (sort as any)[entity.name],
+        (entity) => (sort as shame)[entity.name],
       ).map((entity) => {
         return (
           <SidebarListItem
             key={entity.id}
             entityId={entity.id}
-            title={(names as any)[entity.name]}
-            icon={(icons as any)[entity.name]}
+            title={(names as shame)[entity.name]}
+            icon={(icons as shame)[entity.name]}
             path={`/entity/${entity.id}/insights`}
           />
         );

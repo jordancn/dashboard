@@ -1,31 +1,28 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Empty } from 'Atoms/Empty';
-import { NavigationChevron } from 'Atoms/NavigationChevron';
-import { Spinner } from 'Atoms/Spinner';
-import { FONT } from 'Configuration/Configuration';
-import { css, jsx } from '@emotion/react';
-import { CategoryType, useTransactionCategoryQuery } from 'GraphQL/client.gen';
-import { CardTitle } from 'Molecules/CardTitle';
-import { NavigationBar } from 'Molecules/NavigationBar';
-import { ContentScrollable } from 'Templates/Content';
-import { today } from 'Utils/date-iso';
-import { useRelativeSize, useRouteParams } from 'Utils/helpers';
-import * as _ from 'lodash';
-import * as React from 'react';
-import { useNavigate } from 'react-router';
-import { useLocation } from 'react-router-dom';
-import { TransactionCategoryCard } from './TransactionCategoryCard';
-import { TransactionNewCategoryCard } from './TransactionNewCategoryCard';
+import { CategoryType, useTransactionCategoryQuery } from "@/app/client.gen";
+import { today } from "@/Utils/date-iso";
+import { useRelativeSize, useRouteParams } from "@/Utils/helpers";
+import _ from "lodash";
+import React from "react";
+import { Empty } from "../Atoms/Empty";
+import { NavigationChevron } from "../Atoms/NavigationChevron";
+import { Spinner } from "../Atoms/Spinner";
+import { CardTitle } from "../Molecules/CardTitle";
+import { NavigationBar } from "../Molecules/NavigationBar";
+import { ContentScrollable } from "../Templates/Content";
+import styles from "./TransactionCategory.module.css";
+import { TransactionCategoryCard } from "./TransactionCategoryCard";
+import { TransactionNewCategoryCard } from "./TransactionNewCategoryCard";
 
-export const TransactionCategory: React.FC = (props) => {
-  const size = useRelativeSize('single');
+export const TransactionCategory = () => {
+  const size = useRelativeSize("single");
   const params = useRouteParams<{ entityId: string; transactionId: string }>();
 
-  const search = useLocation().search;
-  const description = new URLSearchParams(search).get('description');
+  // const search = useLocation().search;
+  // const description = new URLSearchParams(search).get('description');
+  // TODO
+  const description = "";
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const results = useTransactionCategoryQuery({
     variables: {
@@ -35,14 +32,15 @@ export const TransactionCategory: React.FC = (props) => {
   });
 
   const onBackClicked = React.useCallback(() => {
-    navigate(-1);
+    // TODO
+    // navigate(-1);
   }, []);
 
   if (results.loading) {
     return (
       <Empty>
         <NavigationBar></NavigationBar>
-        <ContentScrollable type='wrap-cards'>
+        <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
       </Empty>
@@ -58,72 +56,46 @@ export const TransactionCategory: React.FC = (props) => {
   return (
     <Empty>
       <NavigationBar>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            align-items: center;
-            height: 44px;
-          `}
-        >
+        <div className={styles.navigationBar}>
           <div
-            css={css`
-              margin-left: 5px;
-              display: flex;
-              align-items: center;
-              height: 44px;
-              z-index: 100;
-              cursor: pointer;
-            `}
+            className={styles.navigationBarBackButtonContainer}
             onClick={onBackClicked}
           >
             <div>
               <NavigationChevron />
             </div>
-            <div
-              css={css`
-                font-size: 17px;
-                color: #007aff;
-                font: ${FONT};
-                margin-top: -4px;
-                margin-left: 10px;
-              `}
-            >
+            <div className={styles.navigationBarBackButtonContainerTitle}>
               Transaction
             </div>
           </div>
         </div>
       </NavigationBar>
-      <ContentScrollable type='wrap-cards'>
+      <ContentScrollable type="wrap-cards">
         <div
-          css={css`
-            width: ${size}px;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-          `}
+          style={{ width: `${size}px` }}
+          className={styles.transactionCardsContainer}
         >
-          <TransactionCategoryCard position='start' isChecked={!transaction.category} transaction={transaction} />
-          <TransactionNewCategoryCard position='end' placeholder={description || ''} transaction={transaction} />
+          <TransactionCategoryCard
+            position="start"
+            isChecked={!transaction.category}
+            transaction={transaction}
+          />
+          <TransactionNewCategoryCard
+            position="end"
+            placeholder={description || ""}
+            transaction={transaction}
+          />
         </div>
 
-        <CardTitle title='Income' />
+        <CardTitle title="Income" />
         <div
-          css={css`
-            width: ${size}px;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-            margin-bottom: 20px;
-          `}
+          style={{ width: `${size}px` }}
+          className={styles.incomeCardsContainer}
         >
-          {_.orderBy(results.data?.categories || [], (category) => category.name)
+          {_.orderBy(
+            results.data?.categories || [],
+            (category) => category.name,
+          )
             .filter((category) => category.categoryType === CategoryType.Income)
             .map((category, index, thing) => {
               return (
@@ -132,27 +104,30 @@ export const TransactionCategory: React.FC = (props) => {
                   isChecked={category.id === transaction.category?.id}
                   transaction={transaction}
                   key={category.id}
-                  position={index === 0 ? 'start' : index + 1 === thing.length ? 'end' : 'middle'}
+                  position={
+                    index === 0
+                      ? "start"
+                      : index + 1 === thing.length
+                        ? "end"
+                        : "middle"
+                  }
                 />
               );
             })}
         </div>
 
-        <CardTitle title='Expense' />
+        <CardTitle title="Expense" />
         <div
-          css={css`
-            width: ${size}px;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-            margin-bottom: 20px;
-          `}
+          style={{ width: `${size}px` }}
+          className={styles.expenseCardsContainer}
         >
-          {_.orderBy(results.data?.categories || [], (category) => category.name)
-            .filter((category) => category.categoryType === CategoryType.Expense)
+          {_.orderBy(
+            results.data?.categories || [],
+            (category) => category.name,
+          )
+            .filter(
+              (category) => category.categoryType === CategoryType.Expense,
+            )
             .map((category, index, thing) => {
               return (
                 <TransactionCategoryCard
@@ -160,7 +135,13 @@ export const TransactionCategory: React.FC = (props) => {
                   isChecked={category.id === transaction.category?.id}
                   transaction={transaction}
                   key={category.id}
-                  position={index === 0 ? 'start' : index + 1 === thing.length ? 'end' : 'middle'}
+                  position={
+                    index === 0
+                      ? "start"
+                      : index + 1 === thing.length
+                        ? "end"
+                        : "middle"
+                  }
                 />
               );
             })}

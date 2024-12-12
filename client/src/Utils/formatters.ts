@@ -1,18 +1,33 @@
-import { format, formatDistance, isToday, isTomorrow, isYesterday, parse } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
-import { DateRange } from 'GraphQL/client.gen';
-import { DateIso, differenceInDays, getFirstDayOfMonth, lastDayOfMonth, toMonth, toShortMonthAndDate, toYear } from './date-iso';
+import {
+  format,
+  formatDistance,
+  isToday,
+  isTomorrow,
+  isYesterday,
+  parse,
+} from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
+import {
+  DateIso,
+  differenceInDays,
+  getFirstDayOfMonth,
+  lastDayOfMonth,
+  toMonth,
+  toShortMonthAndDate,
+  toYear,
+} from "./date-iso";
+import { DateRange } from "@/app/client.gen";
 
-const usdFormater = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
+const usdFormater = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
 });
 
-const numberFormatter = new Intl.NumberFormat('en-US', {
+const numberFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 1,
 });
 
-const weightNumberFormatter = new Intl.NumberFormat('en-US', {
+const weightNumberFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 1,
   minimumFractionDigits: 1,
   minimumIntegerDigits: 3,
@@ -22,7 +37,7 @@ const ShouldCensor = false;
 
 const censorCurrency = (value: number) => {
   const formatted = usdFormater.format(value);
-  const digits = usdFormater.format(value).replace('$', '').replace(/,/g, '');
+  const digits = usdFormater.format(value).replace("$", "").replace(/,/g, "");
   const length = digits.length - 3;
 
   if (ShouldCensor) {
@@ -41,9 +56,12 @@ export const formatCurrency = {
   },
 };
 
-const censorNumber = (value: number, formatter: Intl.NumberFormat = numberFormatter) => {
+const censorNumber = (
+  value: number,
+  formatter: Intl.NumberFormat = numberFormatter,
+) => {
   const formatted = formatter.format(value);
-  const digits = formatter.format(value).replace(/,/g, '');
+  const digits = formatter.format(value).replace(/,/g, "");
   const length = digits.length - 3;
 
   if (ShouldCensor) {
@@ -61,7 +79,7 @@ export const formatNumber = {
     return `${censorNumber(v * 100)}%`;
   },
   formatPercentInt: (v: number): string => {
-    return `${censorNumber(v * 100)}%`.replace(/\.[0-9]+/, '');
+    return `${censorNumber(v * 100)}%`.replace(/\.[0-9]+/, "");
   },
   formatWeight: (v: number): string => {
     return censorNumber(v, weightNumberFormatter);
@@ -69,64 +87,72 @@ export const formatNumber = {
 };
 
 export const getTimeDistance = (timestamp: string) => {
-  const timeZone = 'America/Detroit';
+  const timeZone = "America/Detroit";
   const zonedDate = utcToZonedTime(timestamp, timeZone);
 
   const distance = formatDistance(zonedDate, new Date(), { addSuffix: true });
 
   if (distance.match(/less than a minute/)) {
-    return 'just now';
+    return "just now";
   }
 
-  return distance.replace('about ', '').replace(' ago', '').replace(' hours', 'h').replace(' hour', 'h').replace(' days', 'd').replace(' day', 'd').replace(' minutes', 'm').replace(' minute', 'm');
+  return distance
+    .replace("about ", "")
+    .replace(" ago", "")
+    .replace(" hours", "h")
+    .replace(" hour", "h")
+    .replace(" days", "d")
+    .replace(" day", "d")
+    .replace(" minutes", "m")
+    .replace(" minute", "m");
 };
 
 export const formatDate = (date: DateIso) => {
-  const [yearString, month, day] = date.substring(0, 10).split('-');
+  const [yearString, month, day] = date.substring(0, 10).split("-");
 
   const year = Number.parseInt(yearString);
 
   const formatted = `${month}/${day}/${year < 2000 ? 1900 + year : year}`;
 
   if (isToday(new Date(formatted))) {
-    return 'Today';
+    return "Today";
   }
 
   if (isYesterday(new Date(formatted))) {
-    return 'Yesterday';
+    return "Yesterday";
   }
 
   if (isTomorrow(new Date(formatted))) {
-    return 'Tomorrow';
+    return "Tomorrow";
   }
 
   return formatted;
 };
 
 export const formatDateMonthDay = (date: string) => {
-  const [yearString, month, day] = date.substring(0, 10).split('-');
+  const [yearString, month, day] = date.substring(0, 10).split("-");
 
   const year = Number.parseInt(yearString);
 
   const formatted = `${month}/${day}/${year < 2000 ? 1900 + year : year}`;
 
   if (isToday(new Date(formatted))) {
-    return 'Today';
+    return "Today";
   }
 
   if (isYesterday(new Date(formatted))) {
-    return 'Yesterday';
+    return "Yesterday";
   }
 
   if (isTomorrow(new Date(formatted))) {
-    return 'Tomorrow';
+    return "Tomorrow";
   }
 
-  return format(parse(formatted, 'MM/dd/yyyy', new Date()), 'MMM d');
+  return format(parse(formatted, "MM/dd/yyyy", new Date()), "MMM d");
 };
 
 export const formatMonth = (date: string) => {
-  const [yearString, month] = date.substring(0, 10).split('-');
+  const [yearString, month] = date.substring(0, 10).split("-");
 
   const year = Number.parseInt(yearString);
 
@@ -134,7 +160,7 @@ export const formatMonth = (date: string) => {
 
   const d = new Date(firstOfMonth);
 
-  const formatted = format(d, 'MMMM');
+  const formatted = format(d, "MMMM");
 
   return formatted;
 };

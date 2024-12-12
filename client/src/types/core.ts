@@ -2,9 +2,10 @@ export type Id = string;
 
 type Flavoring<FlavorT> = { _type?: FlavorT };
 type Subflavoring<SubflavorT> = { _subtype?: SubflavorT };
-export type Flavor<T, SubflavorT> = T extends Flavoring<infer FlavorT>
-  ? T & Flavoring<FlavorT> & Subflavoring<SubflavorT>
-  : T & Flavoring<SubflavorT>;
+export type Flavor<T, SubflavorT> =
+  T extends Flavoring<infer FlavorT>
+    ? T & Flavoring<FlavorT> & Subflavoring<SubflavorT>
+    : T & Flavoring<SubflavorT>;
 
 /** Used by Brand to mark a type in a readable way. */
 export interface Branding<BrandT> {
@@ -17,3 +18,6 @@ export interface Branding<BrandT> {
  * expected.
  */
 export type Brand<T, BrandT> = T & Branding<BrandT>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type shame = any;

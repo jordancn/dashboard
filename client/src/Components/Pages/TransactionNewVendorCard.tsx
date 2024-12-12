@@ -1,27 +1,31 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
-import { useAddVendorMutation, useSetTransactionVendorMutation } from 'GraphQL/client.gen';
-import { Card } from 'Molecules/Card';
-import { CardContents } from 'Molecules/CardContents';
-import { TextInput } from 'Molecules/TextInput';
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {
+  useAddVendorMutation,
+  useSetTransactionVendorMutation,
+} from "@/app/client.gen";
+import { useCallback } from "react";
+import { Card } from "../Molecules/Card";
+import { CardContents } from "../Molecules/CardContents";
+import { TextInput } from "../Molecules/TextInput";
+import styles from "./TransactionNewVendorCard.module.css";
 
-export const TransactionNewVendorCard: React.FC<{ placeholder: string; position?: 'start' | 'middle' | 'end'; transaction: { id: string } }> = (props) => {
-  const navigate = useNavigate();
+export const TransactionNewVendorCard = (props: {
+  placeholder: string;
+  position?: "start" | "middle" | "end";
+  transaction: { id: string };
+}) => {
+  // const navigate = useNavigate();
 
   const [setTransactionVendorMutation] = useSetTransactionVendorMutation();
 
   const [addVendor] = useAddVendorMutation();
 
-  const onChange = React.useCallback(
+  const onChange = useCallback(
     async (name: string) => {
       const vendor = await addVendor({
         variables: {
           name,
         },
-        refetchQueries: ['TransactionVendor'],
+        refetchQueries: ["TransactionVendor"],
       });
 
       if (!vendor.data?.addVendor.id) {
@@ -35,37 +39,24 @@ export const TransactionNewVendorCard: React.FC<{ placeholder: string; position?
         },
       });
 
-      navigate(-1);
+      // TODO
+      // navigate(-1);
     },
     [setTransactionVendorMutation, props.transaction.id],
   );
 
   return (
-    <Card size='single'>
+    <Card size="single">
       <CardContents position={props.position}>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-          `}
-        >
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-              flex-grow: 1;
-            `}
-          >
-            <TextInput placeholder={props.placeholder} value='' onChange={onChange} />
+        <div className={styles.cardContent}>
+          <div className={styles.inputContainer}>
+            <TextInput
+              placeholder={props.placeholder}
+              value=""
+              onChange={onChange}
+            />
           </div>
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-              align-self: center;
-            `}
-          ></div>
+          <div className={styles.tbdContainer}></div>
         </div>
       </CardContents>
     </Card>

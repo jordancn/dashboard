@@ -9,7 +9,7 @@ export const colorSchemes = {
   dark: "(prefers-color-scheme: dark)",
 };
 
-function onThemeChange(callback: Function) {
+function onThemeChange(callback: () => void) {
   return (event: MediaQueryListEvent) => {
     if (!event || !event.matches) {
       return;

@@ -1,0 +1,31 @@
+.navigationBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 44px;
+}
+
+.backButtonContainer {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 17px;
+  color: #007aff;
+  font: var(--font-family);
+  margin-top: -4px;
+  margin-left: 10px;
+}
+
+.accounts {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

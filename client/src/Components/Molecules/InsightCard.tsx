@@ -2,7 +2,6 @@ import { CategoryType, DateRange } from "@/app/client.gen";
 import { Card } from "@/Components/Molecules/Card";
 import { CardContents } from "@/Components/Molecules/CardContents";
 import { CardTitle } from "@/Components/Molecules/CardTitle";
-import { addMonths, getFirstDayOfMonth } from "@/Utils/date-iso";
 import { formatCurrency, formatNumber } from "@/Utils/formatters";
 import * as React from "react";
 import { Caption1 } from "../Atoms/Caption1";
@@ -23,7 +22,7 @@ export const InsightCard = (props: {
 
   const change = props.currentTotal - props.previousTotal;
 
-  const start = addMonths(getFirstDayOfMonth(props.dateRange.start), -1);
+  // const start = addMonths(getFirstDayOfMonth(props.dateRange.start), -1);
 
   const onClick = React.useCallback(() => {
     // TODO

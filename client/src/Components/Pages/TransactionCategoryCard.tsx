@@ -1,57 +1,44 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Checkmark } from 'Atoms/Checkmark';
-import { css, jsx } from '@emotion/react';
-import { useSetTransactionCategoryMutation } from 'GraphQL/client.gen';
-import { Card } from 'Molecules/Card';
-import { CardContents } from 'Molecules/CardContents';
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Headline } from 'design-system';
+import { useSetTransactionCategoryMutation } from "@/app/client.gen";
+import { useCallback } from "react";
+import { Checkmark } from "../Atoms/Checkmark";
+import { Headline } from "../Atoms/Headline";
+import { Card } from "../Molecules/Card";
+import { CardContents } from "../Molecules/CardContents";
+import styles from "./TransactionCategoryCard.module.css";
 
-export const TransactionCategoryCard: React.FC<{ isChecked: boolean; position?: 'start' | 'middle' | 'end'; transaction: { id: string }; category?: { id: string; name: string; categoryId: string } }> = (props) => {
-  const navigate = useNavigate();
+export const TransactionCategoryCard = (props: {
+  isChecked: boolean;
+  position?: "start" | "middle" | "end";
+  transaction: { id: string };
+  category?: { id: string; name: string; categoryId: string };
+}) => {
+  // const navigate = useNavigate();
 
-  const [setTransactionCategoryMutation, { data, loading, error }] = useSetTransactionCategoryMutation({
+  // , { data, loading, error }
+  const [setTransactionCategoryMutation] = useSetTransactionCategoryMutation({
     variables: {
       transactionId: props.transaction.id,
       categoryId: props.category?.categoryId,
     },
   });
 
-  const onClick = React.useCallback(async () => {
+  const onClick = useCallback(async () => {
     await setTransactionCategoryMutation();
 
-    navigate(-1);
+    // TODO
+    // navigate(-1);
   }, [setTransactionCategoryMutation]);
 
   return (
-    <Card size='single' onClick={onClick}>
+    <Card size="single" onClick={onClick}>
       <CardContents position={props.position}>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-          `}
-        >
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-            `}
-          >
+        <div className={styles.transactionCategoryCard}>
+          <div className={styles.transactionCategoryCardHeadlineContainer}>
             <div>
-              <Headline title={props.category?.name || 'No Category'} />
+              <Headline title={props.category?.name || "No Category"} />
             </div>
           </div>
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-              align-self: center;
-            `}
-          >
+          <div className={styles.transactionCategoryCardRight}>
             {props.isChecked && <Checkmark />}
           </div>
         </div>

@@ -196,6 +196,8 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = (props) => {
 export const SidebarDataProvider: React.FC<{ children?: React.ReactNode }> = (
   props,
 ) => {
+  console.debug("sidebarCss", sidebarCss);
+
   const device = useDeviceData();
 
   const [state, setState] = React.useState<ContextState>({

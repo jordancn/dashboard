@@ -1,4 +1,6 @@
 import { Base64Url } from "./Base64Url";
+import { DateIso } from "@/Utils/date-iso";
+import { DateTimeIso } from "@/Utils/date-time-iso";
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
@@ -17,8 +19,8 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   Base64Url: { input: Base64Url; output: Base64Url; }
-  DateIso: { input: any; output: any; }
-  DateTimeIso: { input: any; output: any; }
+  DateIso: { input: DateIso; output: DateIso; }
+  DateTimeIso: { input: DateTimeIso; output: DateTimeIso; }
 };
 
 export type Account = {
@@ -519,7 +521,7 @@ export type EntityActivityQueryVariables = Exact<{
 }>;
 
 
-export type EntityActivityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: any, end: any, total: number, totalIncome: number, totalExpenses: number }> } | null };
+export type EntityActivityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> } | null };
 
 export type EntityActivityOverviewQueryVariables = Exact<{
   dateRange: DateRange;
@@ -527,7 +529,7 @@ export type EntityActivityOverviewQueryVariables = Exact<{
 }>;
 
 
-export type EntityActivityOverviewQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: any, end: any, total: number, totalIncome: number, totalExpenses: number }> };
+export type EntityActivityOverviewQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
 
 export type AddCategoryMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -554,7 +556,7 @@ export type EntityQueryVariables = Exact<{
 }>;
 
 
-export type EntityQuery = { __typename?: 'Query', lastRefreshed: any, entity?: { __typename?: 'Entity', id: string, currentBalance: number, insights: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType, change: { __typename?: 'CategoryChange', id: string, currentTotal: number, previousTotal: number, changePercent?: number | null, proratedPreviousTotal: number, proratedChangePercent?: number | null, proratedPreviousDateRange: { __typename?: 'DateRangeValue', start: any, end: any } }, budget?: { __typename?: 'Budget', currentBudgeted: number, performance: Array<{ __typename?: 'Performance', id: string, month: string, spent: number, budgeted: number }> } | null }>, transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: any, end: any, total: number, count: number }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: any, end: any, total: number, totalIncome: number, totalExpenses: number }> } | null };
+export type EntityQuery = { __typename?: 'Query', lastRefreshed: DateIso, entity?: { __typename?: 'Entity', id: string, currentBalance: number, insights: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType, change: { __typename?: 'CategoryChange', id: string, currentTotal: number, previousTotal: number, changePercent?: number | null, proratedPreviousTotal: number, proratedChangePercent?: number | null, proratedPreviousDateRange: { __typename?: 'DateRangeValue', start: DateIso, end: DateIso } }, budget?: { __typename?: 'Budget', currentBudgeted: number, performance: Array<{ __typename?: 'Performance', id: string, month: string, spent: number, budgeted: number }> } | null }>, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> } | null };
 
 export type EntityAccountsQueryVariables = Exact<{
   entityId: Scalars['ID']['input'];
@@ -573,7 +575,7 @@ export type OverviewQueryVariables = Exact<{
 }>;
 
 
-export type OverviewQuery = { __typename?: 'Query', lastRefreshed: any, currentBalance: number, insights: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType, change: { __typename?: 'CategoryChange', id: string, currentTotal: number, previousTotal: number, changePercent?: number | null, proratedPreviousTotal: number, proratedChangePercent?: number | null, proratedPreviousDateRange: { __typename?: 'DateRangeValue', start: any, end: any } }, budget?: { __typename?: 'Budget', currentBudgeted: number, performance: Array<{ __typename?: 'Performance', id: string, month: string, spent: number, budgeted: number }> } | null }>, transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: any, end: any, total: number, count: number }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: any, end: any, total: number, totalIncome: number, totalExpenses: number }> };
+export type OverviewQuery = { __typename?: 'Query', lastRefreshed: DateIso, currentBalance: number, insights: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType, change: { __typename?: 'CategoryChange', id: string, currentTotal: number, previousTotal: number, changePercent?: number | null, proratedPreviousTotal: number, proratedChangePercent?: number | null, proratedPreviousDateRange: { __typename?: 'DateRangeValue', start: DateIso, end: DateIso } }, budget?: { __typename?: 'Budget', currentBudgeted: number, performance: Array<{ __typename?: 'Performance', id: string, month: string, spent: number, budgeted: number }> } | null }>, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
 
 export type SetTransactionCategoryMutationVariables = Exact<{
   transactionId: Scalars['ID']['input'];
@@ -596,7 +598,7 @@ export type TransactionQueryVariables = Exact<{
 }>;
 
 
-export type TransactionQuery = { __typename?: 'Query', transaction?: { __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string }, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null } | null };
+export type TransactionQuery = { __typename?: 'Query', transaction?: { __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string }, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null } | null };
 
 export type TransactionCategoryQueryVariables = Exact<{
   transactionId: Scalars['ID']['input'];
@@ -614,7 +616,7 @@ export type TransactionCategoryGroupQueryVariables = Exact<{
 }>;
 
 
-export type TransactionCategoryGroupQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, currentBalance: number, category: { __typename?: 'Category', id: string, name: string, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: any, end: any, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> }> } } | null };
+export type TransactionCategoryGroupQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, currentBalance: number, category: { __typename?: 'Category', id: string, name: string, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> }> } } | null };
 
 export type TransactionCategoryGroupOverallQueryVariables = Exact<{
   dateRange: DateRange;
@@ -623,7 +625,7 @@ export type TransactionCategoryGroupOverallQueryVariables = Exact<{
 }>;
 
 
-export type TransactionCategoryGroupOverallQuery = { __typename?: 'Query', currentBalance: number, category?: { __typename?: 'Category', id: string, name: string, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: any, end: any, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> }> } | null };
+export type TransactionCategoryGroupOverallQuery = { __typename?: 'Query', currentBalance: number, category?: { __typename?: 'Category', id: string, name: string, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> }> } | null };
 
 export type TransactionGroupQueryVariables = Exact<{
   entityId: Scalars['ID']['input'];
@@ -631,14 +633,14 @@ export type TransactionGroupQueryVariables = Exact<{
 }>;
 
 
-export type TransactionGroupQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, currentBalance: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> } | null };
+export type TransactionGroupQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, currentBalance: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> } | null };
 
 export type TransactionGroupOverviewQueryVariables = Exact<{
   transactionsDateRange: DateRange;
 }>;
 
 
-export type TransactionGroupOverviewQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> };
+export type TransactionGroupOverviewQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> };
 
 export type TransactionVendorQueryVariables = Exact<{
   transactionId: Scalars['ID']['input'];
@@ -652,7 +654,7 @@ export type TransactionsReviewQueryVariables = Exact<{
 }>;
 
 
-export type TransactionsReviewQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, date: any, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string, entity: { __typename?: 'Entity', id: string, name: string } }, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string }>, vendors: Array<{ __typename?: 'Vendor', id: string, name: string }> };
+export type TransactionsReviewQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string, entity: { __typename?: 'Entity', id: string, name: string } }, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string }>, vendors: Array<{ __typename?: 'Vendor', id: string, name: string }> };
 
 export type AccountQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -667,7 +669,7 @@ export type TransactionsQueryVariables = Exact<{
 }>;
 
 
-export type TransactionsQuery = { __typename?: 'Query', account?: { __typename?: 'Account', id: string, name: string, transactions: Array<{ __typename?: 'Transaction', id: string, amount: number, date: any, description: string, category?: { __typename?: 'Category', id: string, name: string } | null }> } | null };
+export type TransactionsQuery = { __typename?: 'Query', account?: { __typename?: 'Account', id: string, name: string, transactions: Array<{ __typename?: 'Transaction', id: string, amount: number, date: DateIso, description: string, category?: { __typename?: 'Category', id: string, name: string } | null }> } | null };
 
 export type AccountsQueryVariables = Exact<{ [key: string]: never; }>;
 

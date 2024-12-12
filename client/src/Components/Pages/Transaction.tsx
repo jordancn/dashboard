@@ -1,27 +1,24 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Chevron } from 'Atoms/Chevron';
-import { Empty } from 'Atoms/Empty';
-import { NavigationChevron } from 'Atoms/NavigationChevron';
-import { Spinner } from 'Atoms/Spinner';
-import { FONT } from 'Configuration/Configuration';
-import { css, jsx } from '@emotion/react';
-import { useTransactionQuery } from 'GraphQL/client.gen';
-import { Card } from 'Molecules/Card';
-import { CardContents } from 'Molecules/CardContents';
-import { NavigationBar } from 'Molecules/NavigationBar';
-import { TransactionAmount } from 'Molecules/TransactionAmount';
-import { ContentScrollable } from 'Templates/Content';
-import { formatCurrency, formatDate } from 'Utils/formatters';
-import { useRelativeSize, useRouteParams } from 'Utils/helpers';
-import * as React from 'react';
-import { useNavigate } from 'react-router';
-import { Subheadline, Caption1 } from 'design-system';
+import { useTransactionQuery } from "@/app/client.gen";
+import { formatCurrency, formatDate } from "@/Utils/formatters";
+import { useRelativeSize, useRouteParams } from "@/Utils/helpers";
+import React from "react";
+import { Caption1 } from "../Atoms/Caption1";
+import { Chevron } from "../Atoms/Chevron";
+import { Empty } from "../Atoms/Empty";
+import { NavigationChevron } from "../Atoms/NavigationChevron";
+import { Spinner } from "../Atoms/Spinner";
+import { Subheadline } from "../Atoms/Subheadline";
+import { Card } from "../Molecules/Card";
+import { CardContents } from "../Molecules/CardContents";
+import { NavigationBar } from "../Molecules/NavigationBar";
+import { TransactionAmount } from "../Molecules/TransactionAmount";
+import { ContentScrollable } from "../Templates/Content";
+import styles from "./Transaction.module.css";
 
-export const Transaction: React.FC<{ mode: 'insights' }> = (props) => {
-  const size = useRelativeSize('single');
+export const Transaction = (props: { mode: "insights" }) => {
+  const size = useRelativeSize("single");
   const params = useRouteParams<{ entityId: string; transactionId: string }>();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const results = useTransactionQuery({
     variables: {
@@ -30,7 +27,8 @@ export const Transaction: React.FC<{ mode: 'insights' }> = (props) => {
   });
 
   const onBackClicked = React.useCallback(() => {
-    navigate(-1);
+    // TODO
+    // navigate(-1);
   }, []);
 
   const onMerchantClick = React.useCallback(() => {
@@ -40,18 +38,24 @@ export const Transaction: React.FC<{ mode: 'insights' }> = (props) => {
       return;
     }
 
-    navigate(`/entity/${params.entityId || 'overview'}/insights/transaction/${params.transactionId}/vendor?description=${transaction?.description}`);
-  }, [navigate, params, results]);
+    // TODO
+    // navigate(
+    //   `/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/vendor?description=${transaction?.description}`,
+    // );
+  }, []);
 
   const onCategoryClick = React.useCallback(() => {
-    navigate(`/entity/${params.entityId || 'overview'}/insights/transaction/${params.transactionId}/category?description=${transaction?.description}`);
-  }, [navigate, params, results]);
+    // TODO
+    //  navigate(
+    //   `/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/category?description=${transaction?.description}`,
+    // );
+  }, []);
 
   if (results.loading) {
     return (
       <Empty>
         <NavigationBar></NavigationBar>
-        <ContentScrollable type='wrap-cards'>
+        <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
       </Empty>
@@ -67,266 +71,151 @@ export const Transaction: React.FC<{ mode: 'insights' }> = (props) => {
   return (
     <Empty>
       <NavigationBar>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            align-items: center;
-            height: 44px;
-          `}
-        >
+        <div className={styles.navigationBar}>
           <div
-            css={css`
-              margin-left: 5px;
-              display: flex;
-              align-items: center;
-              height: 44px;
-              z-index: 100;
-              cursor: pointer;
-            `}
+            className={styles.navigationBarBackButtonContainer}
             onClick={onBackClicked}
           >
             <div>
               <NavigationChevron />
             </div>
-            <div
-              css={css`
-                font-size: 17px;
-                color: #007aff;
-                font: ${FONT};
-                margin-top: -4px;
-                margin-left: 10px;
-              `}
-            >
-              {props.mode === 'insights' ? <Empty>Insights</Empty> : <Empty>Back</Empty>}
+            <div className={styles.navigationBarTitle}>
+              {props.mode === "insights" ? (
+                <Empty>Insights</Empty>
+              ) : (
+                <Empty>Back</Empty>
+              )}
             </div>
           </div>
         </div>
       </NavigationBar>
-      <ContentScrollable type='wrap-cards'>
-        <div
-          css={css`
-            width: ${size}px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-          `}
-        >
+      <ContentScrollable type="wrap-cards">
+        <div style={{ width: `${size}px` }} className={styles.cards}>
           {transaction.vendor?.image && (
             <img
-              alt={transaction.vendor?.name || ''}
-              css={css`
-                width: 45px;
-                height: 45px;
-              `}
+              alt={transaction.vendor?.name || ""}
               src={`data:image/png;base64,${transaction.vendor.image}`}
             />
           )}
         </div>
 
-        <div
-          css={css`
-            width: ${size}px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          `}
-        >
-          <Subheadline title={transaction.vendor?.name || ''} />
+        <div style={{ width: `${size}px` }} className={styles.cardSubheadline}>
+          <Subheadline title={transaction.vendor?.name || ""} />
         </div>
 
-        <div
-          css={css`
-            width: ${size}px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          `}
-        >
-          <TransactionAmount title={formatCurrency.format(transaction.amount)} />
+        <div style={{ width: `${size}px` }} className={styles.cardAmount}>
+          <TransactionAmount
+            title={formatCurrency.format(transaction.amount)}
+          />
         </div>
 
-        <div
-          css={css`
-            width: ${size}px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          `}
-        >
-          {transaction.pending && <Caption1 title='Pending' />}
-          {!transaction.pending && <Caption1 title={formatDate(transaction.date)} />}
+        <div style={{ width: `${size}px` }} className={styles.cardDate}>
+          {transaction.pending && <Caption1 title="Pending" />}
+          {!transaction.pending && (
+            <Caption1 title={formatDate(transaction.date)} />
+          )}
         </div>
 
-        <div
-          css={css`
-            width: ${size}px;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-          `}
-        >
-          <Card size='single'>
-            <CardContents position='start'>
-              <div
-                css={css`
-                  display: flex;
-                  width: 100%;
-                  justify-content: space-between;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                  `}
-                >
+        <div style={{ width: `${size}px` }} className={styles.cardAccount}>
+          <Card size="single">
+            <CardContents position="start">
+              <div className={styles.cardAccountHeader}>
+                <div className={styles.cardAccountHeaderAccountContainer}>
                   <div>
-                    <Caption1 weight='Bold' title={transaction.account?.name} />
+                    <Caption1 weight="Bold" title={transaction.account?.name} />
                   </div>
                   <div>
-                    <Caption1 title='Account Number' color='Secondary' />
+                    <Caption1 title="Account Number" color="Secondary" />
                   </div>
                 </div>
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                    align-self: flex-end;
-                  `}
-                >
+                <div className={styles.cardAccountHeaderAccountNumberContainer}>
                   <div>
-                    <Caption1 title={`· · · · ${transaction.account?.number}`} color='Secondary' />
+                    <Caption1
+                      title={`· · · · ${transaction.account?.number}`}
+                      color="Secondary"
+                    />
                   </div>
                 </div>
               </div>
             </CardContents>
           </Card>
-          <Card size='single'>
-            <CardContents position='middle'>
-              <div
-                css={css`
-                  display: flex;
-                  width: 100%;
-                  justify-content: space-between;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                  `}
-                >
+          <Card size="single">
+            <CardContents position="middle">
+              <div className={styles.cardAccountDescriptionContainer}>
+                <div className={styles.cardAccountDescription}>
                   <div>
-                    <Caption1 weight='Bold' title='Description' />
+                    <Caption1 weight="Bold" title="Description" />
                   </div>
                   <div>
-                    <Caption1 title={transaction.description} color='Secondary' />
+                    <Caption1
+                      title={transaction.description}
+                      color="Secondary"
+                    />
                   </div>
                 </div>
               </div>
             </CardContents>
           </Card>
-          <Card size='single' onClick={!transaction.pending ? onCategoryClick : undefined}>
-            <CardContents position='middle'>
-              <div
-                css={css`
-                  display: flex;
-                  width: 100%;
-                  justify-content: space-between;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                  `}
-                >
+          <Card
+            size="single"
+            onClick={!transaction.pending ? onCategoryClick : undefined}
+          >
+            <CardContents position="middle">
+              <div className={styles.categoryContainer}>
+                <div className={styles.categoryName}>
                   <div>
-                    <Caption1 weight='Bold' title='Category' />
+                    <Caption1 weight="Bold" title="Category" />
                   </div>
                   <div>
-                    <Caption1 title={transaction.category?.name || 'No Category'} color='Secondary' />
+                    <Caption1
+                      title={transaction.category?.name || "No Category"}
+                      color="Secondary"
+                    />
                   </div>
                 </div>
-                <div
-                  css={css`
-                    align-self: flex-start;
-                    padding-top: 6px;
-                  `}
-                >
+                <div className={styles.categoryChevron}>
                   {!transaction.pending && <Chevron />}
                 </div>
               </div>
             </CardContents>
           </Card>
-          <Card size='single' onClick={!transaction.pending ? onMerchantClick : undefined}>
-            <CardContents position='end'>
-              <div
-                css={css`
-                  display: flex;
-                  width: 100%;
-                  justify-content: space-between;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                  `}
-                >
+          <Card
+            size="single"
+            onClick={!transaction.pending ? onMerchantClick : undefined}
+          >
+            <CardContents position="end">
+              <div className={styles.merchantContainer}>
+                <div className={styles.merchantName}>
                   <div>
-                    <Caption1 weight='Bold' title='Merchant' />
+                    <Caption1 weight="Bold" title="Merchant" />
                   </div>
                   <div>
-                    <Caption1 title={transaction.vendor?.name || 'No Vendor'} color='Secondary' />
+                    <Caption1
+                      title={transaction.vendor?.name || "No Vendor"}
+                      color="Secondary"
+                    />
                   </div>
                 </div>
-                <div
-                  css={css`
-                    align-self: flex-start;
-                    padding-top: 6px;
-                  `}
-                >
+                <div className={styles.merchantChevron}>
                   {!transaction.pending && <Chevron />}
                 </div>
               </div>
             </CardContents>
           </Card>
-          {transaction.vendor?.name === 'Amazon' && (
-            <Card size='single' onClick={onMerchantClick}>
-              <CardContents position='end'>
-                <div
-                  css={css`
-                    display: flex;
-                    width: 100%;
-                    justify-content: space-between;
-                  `}
-                >
-                  <div
-                    css={css`
-                      display: flex;
-                      flex-direction: column;
-                    `}
-                  >
+          {transaction.vendor?.name === "Amazon" && (
+            <Card size="single" onClick={onMerchantClick}>
+              <CardContents position="end">
+                <div className={styles.amazonContainer}>
+                  <div className={styles.amazonDetails}>
                     <div>
-                      <Caption1 weight='Bold' title='Details' />
+                      <Caption1 weight="Bold" title="Details" />
                     </div>
                     <div>
                       {/* https://www.amazon.com/gp/your-account/order-details/?orderID=111-3298699-4870603 */}
-                      <Caption1 title='111-3298699-4870603' color='Secondary' />
+                      <Caption1 title="111-3298699-4870603" color="Secondary" />
                     </div>
                   </div>
-                  <div
-                    css={css`
-                      align-self: flex-start;
-                      padding-top: 6px;
-                    `}
-                  >
+                  <div className={styles.amazonChevron}>
                     <Chevron />
                   </div>
                 </div>

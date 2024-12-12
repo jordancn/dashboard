@@ -3,11 +3,13 @@ import { getRelativePosition, useRelativeSize } from "@/Utils/helpers";
 import { useCallback } from "react";
 import { TransactionCard } from "../Molecules/TransactionCard";
 import styles from "./TransactionCards.module.css";
+import { DateIso } from "@/Utils/date-iso";
+import { DateTimeIso } from "@/Utils/date-time-iso";
 
 export const TransactionCards = (props: {
   transactions: Array<{
     id: string;
-    date: any;
+    date: DateIso;
     vendorName: string | undefined;
     categoryName: string | undefined;
     amount: number;
@@ -19,6 +21,7 @@ export const TransactionCards = (props: {
   const size = useRelativeSize("single");
   // const navigate = useNavigate();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onClick = useCallback((transactionId: string) => {
     // TODO
     // navigate(`/entity/${props.entityId || 'overview'}/insights/transaction/${transactionId}`);

@@ -28,6 +28,7 @@ export const AccountCards = (props: {
 
   // const navigate = useNavigate();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onClick = useCallback((accountId: string) => {
     // navigate(`/entity/${props.entityId || 'overview'}/insights/transaction/${transactionId}`);
   }, []);
@@ -43,7 +44,7 @@ export const AccountCards = (props: {
         const accounts = accountGroups[institutionName];
 
         return (
-          <Empty>
+          <Empty key={institutionName}>
             <SectionHeading title={institutionName} />
 
             <div style={{ width: `${size}px` }} className={styles.section}>

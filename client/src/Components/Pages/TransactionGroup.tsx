@@ -1,48 +1,68 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { Empty } from 'Atoms/Empty';
-import { NavigationChevron } from 'Atoms/NavigationChevron';
-import { Spinner } from 'Atoms/Spinner';
-import { FONT } from 'Configuration/Configuration';
-import { css, jsx } from '@emotion/react';
-import { useTransactionGroupOverviewQuery, useTransactionGroupQuery } from 'GraphQL/client.gen';
-import { NavigationBar } from 'Molecules/NavigationBar';
-import { SectionHeading } from 'Molecules/SectionHeading';
-import { TransactionCards } from 'Organisms/TransactionCards';
-import { ContentScrollable } from 'Templates/Content';
-import { formatLongMonthYear, toDateIso } from 'Utils/date-iso';
-import { useRelativeSize, useRouteParams } from 'Utils/helpers';
-import * as React from 'react';
-import { useNavigate } from 'react-router';
+import {
+  useTransactionGroupOverviewQuery,
+  useTransactionGroupQuery,
+} from "@/app/client.gen";
+import { DateIso, formatLongMonthYear, toDateIso } from "@/Utils/date-iso";
+import { useRelativeSize, useRouteParams } from "@/Utils/helpers";
+import React from "react";
+import { Empty } from "../Atoms/Empty";
+import { NavigationChevron } from "../Atoms/NavigationChevron";
+import { Spinner } from "../Atoms/Spinner";
+import { NavigationBar } from "../Molecules/NavigationBar";
+import { SectionHeading } from "../Molecules/SectionHeading";
+import { TransactionCards } from "../Organisms/TransactionCards";
+import { ContentScrollable } from "../Templates/Content";
+import styles from "./TransactionGroup.module.css";
 
-export const TransactionGroup: React.FC = (props) => {
-  const size = useRelativeSize('single');
-  const params = useRouteParams<{ entityId: string; start: string; end: string }>();
-  const navigate = useNavigate();
+const useQuery = (args: {
+  entityId?: string;
+  start: DateIso;
+  end: DateIso;
+}) => {
+  const isEntity = !!args.entityId && args.entityId !== "overview";
 
-  const results =
-    params.entityId && params.entityId !== 'overview'
-      ? useTransactionGroupQuery({
-          variables: {
-            entityId: params.entityId,
-            transactionsDateRange: {
-              start: params.start,
-              end: params.end,
-            },
-          },
-        })
-      : useTransactionGroupOverviewQuery({
-          variables: {
-            transactionsDateRange: {
-              start: params.start,
-              end: params.end,
-            },
-          },
-        });
+  const entityResults = useTransactionGroupQuery({
+    variables: {
+      entityId: args.entityId || "",
+      transactionsDateRange: {
+        start: args.start,
+        end: args.end,
+      },
+    },
+    skip: !isEntity,
+  });
+
+  const overallResults = useTransactionGroupOverviewQuery({
+    variables: {
+      transactionsDateRange: {
+        start: args.start,
+        end: args.end,
+      },
+    },
+    skip: isEntity,
+  });
+
+  return isEntity ? entityResults : overallResults;
+};
+
+export const TransactionGroup = () => {
+  const size = useRelativeSize("single");
+  const params = useRouteParams<{
+    entityId: string;
+    start: string;
+    end: string;
+  }>();
+  // const navigate = useNavigate();
+
+  const results = useQuery({
+    entityId: params.entityId,
+    start: toDateIso(params.start),
+    end: toDateIso(params.end),
+  });
 
   const onBackClicked = React.useCallback(() => {
-    navigate(-1);
+    // TODO
+    // navigate(-1);
   }, []);
 
   const transactions = React.useMemo(() => {
@@ -54,7 +74,12 @@ export const TransactionGroup: React.FC = (props) => {
       return [];
     }
 
-    const t = 'entity' in results.data ? results.data.entity?.transactions : 'transactions' in results.data ? results.data.transactions : [];
+    const t =
+      "entity" in results.data
+        ? results.data.entity?.transactions
+        : "transactions" in results.data
+          ? results.data.transactions
+          : [];
 
     return (t || []).map((transaction) => ({
       id: transaction.id,
@@ -71,7 +96,7 @@ export const TransactionGroup: React.FC = (props) => {
     return (
       <Empty>
         <NavigationBar></NavigationBar>
-        <ContentScrollable type='wrap-cards'>
+        <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
       </Empty>
@@ -81,57 +106,26 @@ export const TransactionGroup: React.FC = (props) => {
   return (
     <Empty>
       <NavigationBar>
-        <div
-          css={css`
-            display: flex;
-            width: 100%;
-            align-items: center;
-            height: 44px;
-          `}
-        >
-          <div
-            css={css`
-              margin-left: 5px;
-              display: flex;
-              align-items: center;
-              height: 44px;
-              z-index: 100;
-              cursor: pointer;
-            `}
-            onClick={onBackClicked}
-          >
+        <div className={styles.navigationBar}>
+          <div className={styles.backButtonContainer} onClick={onBackClicked}>
             <div>
               <NavigationChevron />
             </div>
-            <div
-              css={css`
-                font-size: 17px;
-                color: #007aff;
-                font: ${FONT};
-                margin-top: -4px;
-                margin-left: 10px;
-              `}
-            >
-              Insights
-            </div>
+            <div className={styles.title}>Insights</div>
           </div>
         </div>
       </NavigationBar>
-      <ContentScrollable type='wrap-cards'>
+      <ContentScrollable type="wrap-cards">
         <SectionHeading title={formatLongMonthYear(toDateIso(params.start))} />
 
         <div
-          css={css`
-            width: ${size}px;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-items: flex-start;
-          `}
+          style={{ width: `${size}px` }}
+          className={styles.transactionCardsContainer}
         >
-          <TransactionCards transactions={transactions} entityId={params.entityId} />
+          <TransactionCards
+            transactions={transactions}
+            entityId={params.entityId}
+          />
         </div>
       </ContentScrollable>
     </Empty>

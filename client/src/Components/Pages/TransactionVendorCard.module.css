@@ -1,0 +1,16 @@
+.contents {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.vendorContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkedContainer {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}

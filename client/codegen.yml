@@ -9,6 +9,11 @@ generates:
       - add:
           content:
             - 'import { Base64Url } from "./Base64Url";'
+            - 'import { DateIso } from "@/Utils/date-iso";'
+            - 'import { DateTimeIso } from "@/Utils/date-time-iso";'
     config:
       scalars:
         Base64Url: Base64Url
+        DateIso: DateIso
+        DateTimeIso: DateTimeIso
+

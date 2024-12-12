@@ -1,4 +1,3 @@
-import { useSystemTheme } from "@/Utils/use-system-theme/use-system-theme";
 import classNames from "classnames";
 import React from "react";
 import styles from "./CardContents.module.css";
@@ -9,7 +8,7 @@ export const CardContents = (props: {
   variant?: "transparent" | "translucent";
   children?: React.ReactNode;
 }) => {
-  const theme = useSystemTheme();
+  // const theme = useSystemTheme();
 
   return (
     <div className={styles.cardContents}>
