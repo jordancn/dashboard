@@ -1,3 +1,5 @@
+"use client";
+
 import {
   MOBILE_LANDSCAPE_MEDIA_LOGIC,
   MOBILE_PORTRAIT_MEDIA_LOGIC,

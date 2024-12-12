@@ -26,6 +26,6 @@
   opacity: 1;
 }
 
-:not(.show) {
+/* :not(.show) {
   opacity: 0;
-}
+} */

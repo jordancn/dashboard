@@ -1,3 +1,5 @@
+"use client";
+
 import {
   FONT,
   MOBILE_LANDSCAPE_MEDIA_SELECTOR,

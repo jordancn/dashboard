@@ -5,13 +5,13 @@ import {
 import { DateIso, formatLongMonthYear, toDateIso } from "@/Utils/date-iso";
 import { useRelativeSize, useRouteParams } from "@/Utils/helpers";
 import React from "react";
-import { Empty } from "../Atoms/Empty";
-import { NavigationChevron } from "../Atoms/NavigationChevron";
-import { Spinner } from "../Atoms/Spinner";
-import { NavigationBar } from "../Molecules/NavigationBar";
-import { SectionHeading } from "../Molecules/SectionHeading";
-import { TransactionCards } from "../Organisms/TransactionCards";
-import { ContentScrollable } from "../Templates/Content";
+import { Empty } from "../Components/Atoms/Empty";
+import { NavigationChevron } from "../Components/Atoms/NavigationChevron";
+import { Spinner } from "../Components/Atoms/Spinner";
+import { NavigationBar } from "../Components/Molecules/NavigationBar";
+import { SectionHeading } from "../Components/Molecules/SectionHeading";
+import { TransactionCards } from "../Components/Organisms/TransactionCards";
+import { ContentScrollable } from "../Components/Templates/Content";
 import styles from "./TransactionGroup.module.css";
 
 const useQuery = (args: {

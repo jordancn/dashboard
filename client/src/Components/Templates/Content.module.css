@@ -59,7 +59,7 @@
     flex-direction: column;
   }
 
-  :not(&.wrapCardsColumn) {
+  :not(.wrapCardsColumn) {
     flex-direction: row;
   }
 }

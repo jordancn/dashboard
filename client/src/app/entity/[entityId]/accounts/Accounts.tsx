@@ -3,12 +3,12 @@ import { useEntityAccountsQuery } from "@/app/client.gen";
 import { useRelativeSize } from "@/Utils/helpers";
 import { useParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
-import { Empty } from "../Atoms/Empty";
-import { NavigationChevron } from "../Atoms/NavigationChevron";
-import { Spinner } from "../Atoms/Spinner";
-import { NavigationBar } from "../Molecules/NavigationBar";
-import { AccountCards } from "../Organisms/AccountCards";
-import { ContentScrollable } from "../Templates/Content";
+import { Empty } from "../Components/Atoms/Empty";
+import { NavigationChevron } from "../Components/Atoms/NavigationChevron";
+import { Spinner } from "../Components/Atoms/Spinner";
+import { NavigationBar } from "../Components/Molecules/NavigationBar";
+import { AccountCards } from "../Components/Organisms/AccountCards";
+import { ContentScrollable } from "../Components/Templates/Content";
 import styles from "./Accounts.module.css";
 
 const useAccountsQuery = (entityId?: string) => {

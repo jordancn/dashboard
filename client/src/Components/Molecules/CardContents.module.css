@@ -9,7 +9,7 @@
   &::after {
     content: "";
 
-    :not(&.transparent) {
+    :not(.transparent) {
       @media (prefers-color-scheme: dark) {
         background: #454549;
       }
@@ -35,7 +35,7 @@
   &::after {
     content: "";
 
-    :not(&.transparent) {
+    :not(.transparent) {
       @media (prefers-color-scheme: dark) {
         background: #454549;
       }

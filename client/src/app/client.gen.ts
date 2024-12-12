@@ -509,28 +509,6 @@ export type SidebarContentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SidebarContentsQuery = { __typename?: 'Query', entities: Array<{ __typename?: 'Entity', id: string, name: string }> };
 
-export type AccountsOverallQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AccountsOverallQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: string, name: string, number: string, currentBalance: number, accountType: AccountType, institution: { __typename?: 'Institution', id: string, name: string }, entity: { __typename?: 'Entity', id: string, name: string } }> };
-
-export type EntityActivityQueryVariables = Exact<{
-  entityId?: InputMaybe<Scalars['ID']['input']>;
-  dateRange: DateRange;
-  activityGroupBy: GroupBy;
-}>;
-
-
-export type EntityActivityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> } | null };
-
-export type EntityActivityOverviewQueryVariables = Exact<{
-  dateRange: DateRange;
-  activityGroupBy: GroupBy;
-}>;
-
-
-export type EntityActivityOverviewQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
-
 export type AddCategoryMutationVariables = Exact<{
   name: Scalars['String']['input'];
 }>;
@@ -557,13 +535,6 @@ export type EntityQueryVariables = Exact<{
 
 
 export type EntityQuery = { __typename?: 'Query', lastRefreshed: DateIso, entity?: { __typename?: 'Entity', id: string, currentBalance: number, insights: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType, change: { __typename?: 'CategoryChange', id: string, currentTotal: number, previousTotal: number, changePercent?: number | null, proratedPreviousTotal: number, proratedChangePercent?: number | null, proratedPreviousDateRange: { __typename?: 'DateRangeValue', start: DateIso, end: DateIso } }, budget?: { __typename?: 'Budget', currentBudgeted: number, performance: Array<{ __typename?: 'Performance', id: string, month: string, spent: number, budgeted: number }> } | null }>, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> } | null };
-
-export type EntityAccountsQueryVariables = Exact<{
-  entityId: Scalars['ID']['input'];
-}>;
-
-
-export type EntityAccountsQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', accounts: Array<{ __typename?: 'Account', id: string, name: string, number: string, currentBalance: number, accountType: AccountType, institution: { __typename?: 'Institution', id: string, name: string }, entity: { __typename?: 'Entity', id: string, name: string } }> } | null };
 
 export type OverviewQueryVariables = Exact<{
   insightsDateRange: DateRange;
@@ -656,6 +627,11 @@ export type TransactionsReviewQueryVariables = Exact<{
 
 export type TransactionsReviewQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string, entity: { __typename?: 'Entity', id: string, name: string } }, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string }>, vendors: Array<{ __typename?: 'Vendor', id: string, name: string }> };
 
+export type AccountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountsQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: string, name: string, currentBalance: number }> };
+
 export type AccountQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -671,10 +647,34 @@ export type TransactionsQueryVariables = Exact<{
 
 export type TransactionsQuery = { __typename?: 'Query', account?: { __typename?: 'Account', id: string, name: string, transactions: Array<{ __typename?: 'Transaction', id: string, amount: number, date: DateIso, description: string, category?: { __typename?: 'Category', id: string, name: string } | null }> } | null };
 
-export type AccountsQueryVariables = Exact<{ [key: string]: never; }>;
+export type EntityAccountsQueryVariables = Exact<{
+  entityId: Scalars['ID']['input'];
+}>;
 
 
-export type AccountsQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: string, name: string, currentBalance: number }> };
+export type EntityAccountsQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', accounts: Array<{ __typename?: 'Account', id: string, name: string, number: string, currentBalance: number, accountType: AccountType, institution: { __typename?: 'Institution', id: string, name: string }, entity: { __typename?: 'Entity', id: string, name: string } }> } | null };
+
+export type AccountsOverallQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountsOverallQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: string, name: string, number: string, currentBalance: number, accountType: AccountType, institution: { __typename?: 'Institution', id: string, name: string }, entity: { __typename?: 'Entity', id: string, name: string } }> };
+
+export type EntityActivityQueryVariables = Exact<{
+  entityId?: InputMaybe<Scalars['ID']['input']>;
+  dateRange: DateRange;
+  activityGroupBy: GroupBy;
+}>;
+
+
+export type EntityActivityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> } | null };
+
+export type EntityActivityOverviewQueryVariables = Exact<{
+  dateRange: DateRange;
+  activityGroupBy: GroupBy;
+}>;
+
+
+export type EntityActivityOverviewQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
 
 
 export const SidebarContentsDocument = gql`
@@ -717,169 +717,6 @@ export type SidebarContentsQueryHookResult = ReturnType<typeof useSidebarContent
 export type SidebarContentsLazyQueryHookResult = ReturnType<typeof useSidebarContentsLazyQuery>;
 export type SidebarContentsSuspenseQueryHookResult = ReturnType<typeof useSidebarContentsSuspenseQuery>;
 export type SidebarContentsQueryResult = Apollo.QueryResult<SidebarContentsQuery, SidebarContentsQueryVariables>;
-export const AccountsOverallDocument = gql`
-    query AccountsOverall {
-  accounts {
-    id
-    name
-    number
-    currentBalance
-    accountType
-    institution {
-      id
-      name
-    }
-    entity {
-      id
-      name
-    }
-  }
-}
-    `;
-
-/**
- * __useAccountsOverallQuery__
- *
- * To run a query within a React component, call `useAccountsOverallQuery` and pass it any options that fit your needs.
- * When your component renders, `useAccountsOverallQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAccountsOverallQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAccountsOverallQuery(baseOptions?: Apollo.QueryHookOptions<AccountsOverallQuery, AccountsOverallQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AccountsOverallQuery, AccountsOverallQueryVariables>(AccountsOverallDocument, options);
-      }
-export function useAccountsOverallLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountsOverallQuery, AccountsOverallQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AccountsOverallQuery, AccountsOverallQueryVariables>(AccountsOverallDocument, options);
-        }
-export function useAccountsOverallSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AccountsOverallQuery, AccountsOverallQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<AccountsOverallQuery, AccountsOverallQueryVariables>(AccountsOverallDocument, options);
-        }
-export type AccountsOverallQueryHookResult = ReturnType<typeof useAccountsOverallQuery>;
-export type AccountsOverallLazyQueryHookResult = ReturnType<typeof useAccountsOverallLazyQuery>;
-export type AccountsOverallSuspenseQueryHookResult = ReturnType<typeof useAccountsOverallSuspenseQuery>;
-export type AccountsOverallQueryResult = Apollo.QueryResult<AccountsOverallQuery, AccountsOverallQueryVariables>;
-export const EntityActivityDocument = gql`
-    query EntityActivity($entityId: ID, $dateRange: DateRange!, $activityGroupBy: GroupBy!) {
-  entity(entityId: $entityId) {
-    id
-    categories(dateRange: $dateRange) {
-      id
-      categoryId
-      name
-      total
-      count
-      categoryType
-    }
-    activity: transactionGroups(groupBy: $activityGroupBy, dateRange: $dateRange) {
-      groupIndex
-      start
-      end
-      total
-      totalIncome
-      totalExpenses
-    }
-  }
-}
-    `;
-
-/**
- * __useEntityActivityQuery__
- *
- * To run a query within a React component, call `useEntityActivityQuery` and pass it any options that fit your needs.
- * When your component renders, `useEntityActivityQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useEntityActivityQuery({
- *   variables: {
- *      entityId: // value for 'entityId'
- *      dateRange: // value for 'dateRange'
- *      activityGroupBy: // value for 'activityGroupBy'
- *   },
- * });
- */
-export function useEntityActivityQuery(baseOptions: Apollo.QueryHookOptions<EntityActivityQuery, EntityActivityQueryVariables> & ({ variables: EntityActivityQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<EntityActivityQuery, EntityActivityQueryVariables>(EntityActivityDocument, options);
-      }
-export function useEntityActivityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EntityActivityQuery, EntityActivityQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<EntityActivityQuery, EntityActivityQueryVariables>(EntityActivityDocument, options);
-        }
-export function useEntityActivitySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntityActivityQuery, EntityActivityQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<EntityActivityQuery, EntityActivityQueryVariables>(EntityActivityDocument, options);
-        }
-export type EntityActivityQueryHookResult = ReturnType<typeof useEntityActivityQuery>;
-export type EntityActivityLazyQueryHookResult = ReturnType<typeof useEntityActivityLazyQuery>;
-export type EntityActivitySuspenseQueryHookResult = ReturnType<typeof useEntityActivitySuspenseQuery>;
-export type EntityActivityQueryResult = Apollo.QueryResult<EntityActivityQuery, EntityActivityQueryVariables>;
-export const EntityActivityOverviewDocument = gql`
-    query EntityActivityOverview($dateRange: DateRange!, $activityGroupBy: GroupBy!) {
-  categories(dateRange: $dateRange) {
-    id
-    categoryId
-    name
-    total
-    count
-    categoryType
-  }
-  activity: transactionGroups(groupBy: $activityGroupBy, dateRange: $dateRange) {
-    groupIndex
-    start
-    end
-    total
-    totalIncome
-    totalExpenses
-  }
-}
-    `;
-
-/**
- * __useEntityActivityOverviewQuery__
- *
- * To run a query within a React component, call `useEntityActivityOverviewQuery` and pass it any options that fit your needs.
- * When your component renders, `useEntityActivityOverviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useEntityActivityOverviewQuery({
- *   variables: {
- *      dateRange: // value for 'dateRange'
- *      activityGroupBy: // value for 'activityGroupBy'
- *   },
- * });
- */
-export function useEntityActivityOverviewQuery(baseOptions: Apollo.QueryHookOptions<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables> & ({ variables: EntityActivityOverviewQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>(EntityActivityOverviewDocument, options);
-      }
-export function useEntityActivityOverviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>(EntityActivityOverviewDocument, options);
-        }
-export function useEntityActivityOverviewSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>(EntityActivityOverviewDocument, options);
-        }
-export type EntityActivityOverviewQueryHookResult = ReturnType<typeof useEntityActivityOverviewQuery>;
-export type EntityActivityOverviewLazyQueryHookResult = ReturnType<typeof useEntityActivityOverviewLazyQuery>;
-export type EntityActivityOverviewSuspenseQueryHookResult = ReturnType<typeof useEntityActivityOverviewSuspenseQuery>;
-export type EntityActivityOverviewQueryResult = Apollo.QueryResult<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>;
 export const AddCategoryDocument = gql`
     mutation AddCategory($name: String!) {
   addCategory(name: $name) {
@@ -1062,60 +899,6 @@ export type EntityQueryHookResult = ReturnType<typeof useEntityQuery>;
 export type EntityLazyQueryHookResult = ReturnType<typeof useEntityLazyQuery>;
 export type EntitySuspenseQueryHookResult = ReturnType<typeof useEntitySuspenseQuery>;
 export type EntityQueryResult = Apollo.QueryResult<EntityQuery, EntityQueryVariables>;
-export const EntityAccountsDocument = gql`
-    query EntityAccounts($entityId: ID!) {
-  entity(entityId: $entityId) {
-    accounts {
-      id
-      name
-      number
-      currentBalance
-      accountType
-      institution {
-        id
-        name
-      }
-      entity {
-        id
-        name
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useEntityAccountsQuery__
- *
- * To run a query within a React component, call `useEntityAccountsQuery` and pass it any options that fit your needs.
- * When your component renders, `useEntityAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useEntityAccountsQuery({
- *   variables: {
- *      entityId: // value for 'entityId'
- *   },
- * });
- */
-export function useEntityAccountsQuery(baseOptions: Apollo.QueryHookOptions<EntityAccountsQuery, EntityAccountsQueryVariables> & ({ variables: EntityAccountsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<EntityAccountsQuery, EntityAccountsQueryVariables>(EntityAccountsDocument, options);
-      }
-export function useEntityAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EntityAccountsQuery, EntityAccountsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<EntityAccountsQuery, EntityAccountsQueryVariables>(EntityAccountsDocument, options);
-        }
-export function useEntityAccountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntityAccountsQuery, EntityAccountsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<EntityAccountsQuery, EntityAccountsQueryVariables>(EntityAccountsDocument, options);
-        }
-export type EntityAccountsQueryHookResult = ReturnType<typeof useEntityAccountsQuery>;
-export type EntityAccountsLazyQueryHookResult = ReturnType<typeof useEntityAccountsLazyQuery>;
-export type EntityAccountsSuspenseQueryHookResult = ReturnType<typeof useEntityAccountsSuspenseQuery>;
-export type EntityAccountsQueryResult = Apollo.QueryResult<EntityAccountsQuery, EntityAccountsQueryVariables>;
 export const OverviewDocument = gql`
     query Overview($insightsDateRange: DateRange!, $transactionsDateRange: DateRange!, $changeThreshold: Float, $activityDateRange: DateRange!, $activityGroupBy: GroupBy!, $transactionGroupsDateRange: DateRange!) {
   lastRefreshed
@@ -1819,6 +1602,47 @@ export type TransactionsReviewQueryHookResult = ReturnType<typeof useTransaction
 export type TransactionsReviewLazyQueryHookResult = ReturnType<typeof useTransactionsReviewLazyQuery>;
 export type TransactionsReviewSuspenseQueryHookResult = ReturnType<typeof useTransactionsReviewSuspenseQuery>;
 export type TransactionsReviewQueryResult = Apollo.QueryResult<TransactionsReviewQuery, TransactionsReviewQueryVariables>;
+export const AccountsDocument = gql`
+    query Accounts {
+  accounts {
+    id
+    name
+    currentBalance
+  }
+}
+    `;
+
+/**
+ * __useAccountsQuery__
+ *
+ * To run a query within a React component, call `useAccountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAccountsQuery(baseOptions?: Apollo.QueryHookOptions<AccountsQuery, AccountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AccountsQuery, AccountsQueryVariables>(AccountsDocument, options);
+      }
+export function useAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountsQuery, AccountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AccountsQuery, AccountsQueryVariables>(AccountsDocument, options);
+        }
+export function useAccountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AccountsQuery, AccountsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AccountsQuery, AccountsQueryVariables>(AccountsDocument, options);
+        }
+export type AccountsQueryHookResult = ReturnType<typeof useAccountsQuery>;
+export type AccountsLazyQueryHookResult = ReturnType<typeof useAccountsLazyQuery>;
+export type AccountsSuspenseQueryHookResult = ReturnType<typeof useAccountsSuspenseQuery>;
+export type AccountsQueryResult = Apollo.QueryResult<AccountsQuery, AccountsQueryVariables>;
 export const AccountDocument = gql`
     query Account($id: ID!) {
   account(accountId: $id) {
@@ -1912,44 +1736,220 @@ export type TransactionsQueryHookResult = ReturnType<typeof useTransactionsQuery
 export type TransactionsLazyQueryHookResult = ReturnType<typeof useTransactionsLazyQuery>;
 export type TransactionsSuspenseQueryHookResult = ReturnType<typeof useTransactionsSuspenseQuery>;
 export type TransactionsQueryResult = Apollo.QueryResult<TransactionsQuery, TransactionsQueryVariables>;
-export const AccountsDocument = gql`
-    query Accounts {
-  accounts {
-    id
-    name
-    currentBalance
+export const EntityAccountsDocument = gql`
+    query EntityAccounts($entityId: ID!) {
+  entity(entityId: $entityId) {
+    accounts {
+      id
+      name
+      number
+      currentBalance
+      accountType
+      institution {
+        id
+        name
+      }
+      entity {
+        id
+        name
+      }
+    }
   }
 }
     `;
 
 /**
- * __useAccountsQuery__
+ * __useEntityAccountsQuery__
  *
- * To run a query within a React component, call `useAccountsQuery` and pass it any options that fit your needs.
- * When your component renders, `useAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useEntityAccountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEntityAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAccountsQuery({
+ * const { data, loading, error } = useEntityAccountsQuery({
+ *   variables: {
+ *      entityId: // value for 'entityId'
+ *   },
+ * });
+ */
+export function useEntityAccountsQuery(baseOptions: Apollo.QueryHookOptions<EntityAccountsQuery, EntityAccountsQueryVariables> & ({ variables: EntityAccountsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EntityAccountsQuery, EntityAccountsQueryVariables>(EntityAccountsDocument, options);
+      }
+export function useEntityAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EntityAccountsQuery, EntityAccountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EntityAccountsQuery, EntityAccountsQueryVariables>(EntityAccountsDocument, options);
+        }
+export function useEntityAccountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntityAccountsQuery, EntityAccountsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<EntityAccountsQuery, EntityAccountsQueryVariables>(EntityAccountsDocument, options);
+        }
+export type EntityAccountsQueryHookResult = ReturnType<typeof useEntityAccountsQuery>;
+export type EntityAccountsLazyQueryHookResult = ReturnType<typeof useEntityAccountsLazyQuery>;
+export type EntityAccountsSuspenseQueryHookResult = ReturnType<typeof useEntityAccountsSuspenseQuery>;
+export type EntityAccountsQueryResult = Apollo.QueryResult<EntityAccountsQuery, EntityAccountsQueryVariables>;
+export const AccountsOverallDocument = gql`
+    query AccountsOverall {
+  accounts {
+    id
+    name
+    number
+    currentBalance
+    accountType
+    institution {
+      id
+      name
+    }
+    entity {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useAccountsOverallQuery__
+ *
+ * To run a query within a React component, call `useAccountsOverallQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAccountsOverallQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAccountsOverallQuery({
  *   variables: {
  *   },
  * });
  */
-export function useAccountsQuery(baseOptions?: Apollo.QueryHookOptions<AccountsQuery, AccountsQueryVariables>) {
+export function useAccountsOverallQuery(baseOptions?: Apollo.QueryHookOptions<AccountsOverallQuery, AccountsOverallQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AccountsQuery, AccountsQueryVariables>(AccountsDocument, options);
+        return Apollo.useQuery<AccountsOverallQuery, AccountsOverallQueryVariables>(AccountsOverallDocument, options);
       }
-export function useAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountsQuery, AccountsQueryVariables>) {
+export function useAccountsOverallLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AccountsOverallQuery, AccountsOverallQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AccountsQuery, AccountsQueryVariables>(AccountsDocument, options);
+          return Apollo.useLazyQuery<AccountsOverallQuery, AccountsOverallQueryVariables>(AccountsOverallDocument, options);
         }
-export function useAccountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AccountsQuery, AccountsQueryVariables>) {
+export function useAccountsOverallSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AccountsOverallQuery, AccountsOverallQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<AccountsQuery, AccountsQueryVariables>(AccountsDocument, options);
+          return Apollo.useSuspenseQuery<AccountsOverallQuery, AccountsOverallQueryVariables>(AccountsOverallDocument, options);
         }
-export type AccountsQueryHookResult = ReturnType<typeof useAccountsQuery>;
-export type AccountsLazyQueryHookResult = ReturnType<typeof useAccountsLazyQuery>;
-export type AccountsSuspenseQueryHookResult = ReturnType<typeof useAccountsSuspenseQuery>;
-export type AccountsQueryResult = Apollo.QueryResult<AccountsQuery, AccountsQueryVariables>;
+export type AccountsOverallQueryHookResult = ReturnType<typeof useAccountsOverallQuery>;
+export type AccountsOverallLazyQueryHookResult = ReturnType<typeof useAccountsOverallLazyQuery>;
+export type AccountsOverallSuspenseQueryHookResult = ReturnType<typeof useAccountsOverallSuspenseQuery>;
+export type AccountsOverallQueryResult = Apollo.QueryResult<AccountsOverallQuery, AccountsOverallQueryVariables>;
+export const EntityActivityDocument = gql`
+    query EntityActivity($entityId: ID, $dateRange: DateRange!, $activityGroupBy: GroupBy!) {
+  entity(entityId: $entityId) {
+    id
+    categories(dateRange: $dateRange) {
+      id
+      categoryId
+      name
+      total
+      count
+      categoryType
+    }
+    activity: transactionGroups(groupBy: $activityGroupBy, dateRange: $dateRange) {
+      groupIndex
+      start
+      end
+      total
+      totalIncome
+      totalExpenses
+    }
+  }
+}
+    `;
+
+/**
+ * __useEntityActivityQuery__
+ *
+ * To run a query within a React component, call `useEntityActivityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEntityActivityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEntityActivityQuery({
+ *   variables: {
+ *      entityId: // value for 'entityId'
+ *      dateRange: // value for 'dateRange'
+ *      activityGroupBy: // value for 'activityGroupBy'
+ *   },
+ * });
+ */
+export function useEntityActivityQuery(baseOptions: Apollo.QueryHookOptions<EntityActivityQuery, EntityActivityQueryVariables> & ({ variables: EntityActivityQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EntityActivityQuery, EntityActivityQueryVariables>(EntityActivityDocument, options);
+      }
+export function useEntityActivityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EntityActivityQuery, EntityActivityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EntityActivityQuery, EntityActivityQueryVariables>(EntityActivityDocument, options);
+        }
+export function useEntityActivitySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntityActivityQuery, EntityActivityQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<EntityActivityQuery, EntityActivityQueryVariables>(EntityActivityDocument, options);
+        }
+export type EntityActivityQueryHookResult = ReturnType<typeof useEntityActivityQuery>;
+export type EntityActivityLazyQueryHookResult = ReturnType<typeof useEntityActivityLazyQuery>;
+export type EntityActivitySuspenseQueryHookResult = ReturnType<typeof useEntityActivitySuspenseQuery>;
+export type EntityActivityQueryResult = Apollo.QueryResult<EntityActivityQuery, EntityActivityQueryVariables>;
+export const EntityActivityOverviewDocument = gql`
+    query EntityActivityOverview($dateRange: DateRange!, $activityGroupBy: GroupBy!) {
+  categories(dateRange: $dateRange) {
+    id
+    categoryId
+    name
+    total
+    count
+    categoryType
+  }
+  activity: transactionGroups(groupBy: $activityGroupBy, dateRange: $dateRange) {
+    groupIndex
+    start
+    end
+    total
+    totalIncome
+    totalExpenses
+  }
+}
+    `;
+
+/**
+ * __useEntityActivityOverviewQuery__
+ *
+ * To run a query within a React component, call `useEntityActivityOverviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEntityActivityOverviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEntityActivityOverviewQuery({
+ *   variables: {
+ *      dateRange: // value for 'dateRange'
+ *      activityGroupBy: // value for 'activityGroupBy'
+ *   },
+ * });
+ */
+export function useEntityActivityOverviewQuery(baseOptions: Apollo.QueryHookOptions<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables> & ({ variables: EntityActivityOverviewQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>(EntityActivityOverviewDocument, options);
+      }
+export function useEntityActivityOverviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>(EntityActivityOverviewDocument, options);
+        }
+export function useEntityActivityOverviewSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>(EntityActivityOverviewDocument, options);
+        }
+export type EntityActivityOverviewQueryHookResult = ReturnType<typeof useEntityActivityOverviewQuery>;
+export type EntityActivityOverviewLazyQueryHookResult = ReturnType<typeof useEntityActivityOverviewLazyQuery>;
+export type EntityActivityOverviewSuspenseQueryHookResult = ReturnType<typeof useEntityActivityOverviewSuspenseQuery>;
+export type EntityActivityOverviewQueryResult = Apollo.QueryResult<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>;

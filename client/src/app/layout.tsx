@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ApolloProviderWrapper from "./apollo-provider";
 import "./globals.css";
+import { AppStateProvider } from "@/Components/Providers/AppStateProvider";
+import { SidebarDataProvider } from "@/Components/Providers/SidebarDataProvider";
+import { DeviceDataProvider } from "@/Components/Providers/DeviceDataProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ApolloProviderWrapper>{children}</ApolloProviderWrapper>
+        <AppStateProvider>
+          <DeviceDataProvider>
+            <SidebarDataProvider>
+              <ApolloProviderWrapper>{children}</ApolloProviderWrapper>
+            </SidebarDataProvider>
+          </DeviceDataProvider>
+        </AppStateProvider>
       </body>
     </html>
   );

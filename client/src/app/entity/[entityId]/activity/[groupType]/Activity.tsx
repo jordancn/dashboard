@@ -19,24 +19,24 @@ import {
 } from "@/Utils/helpers";
 import _ from "lodash";
 import React from "react";
-import { Caption1 } from "../Atoms/Caption1";
-import { Empty } from "../Atoms/Empty";
-import { Spinner } from "../Atoms/Spinner";
-import { Subheadline } from "../Atoms/Subheadline";
-import { Title } from "../Atoms/Title";
-import { Card } from "../Molecules/Card";
-import { CardContents } from "../Molecules/CardContents";
-import { CardTitle } from "../Molecules/CardTitle";
-import { EntityInsightActivityCard } from "../Molecules/EntityInsightActivityCard";
-import { NavigationBar } from "../Molecules/NavigationBar";
-import { Selector } from "../Molecules/Selector";
+import { Caption1 } from "../Components/Atoms/Caption1";
+import { Empty } from "../Components/Atoms/Empty";
+import { Spinner } from "../Components/Atoms/Spinner";
+import { Subheadline } from "../Components/Atoms/Subheadline";
+import { Title } from "../Components/Atoms/Title";
+import { Card } from "../Components/Molecules/Card";
+import { CardContents } from "../Components/Molecules/CardContents";
+import { CardTitle } from "../Components/Molecules/CardTitle";
+import { EntityInsightActivityCard } from "../Components/Molecules/EntityInsightActivityCard";
+import { NavigationBar } from "../Components/Molecules/NavigationBar";
+import { Selector } from "../Components/Molecules/Selector";
 import {
   ActivityGroup,
   useActivityGroup,
   useSetActivityGroup,
   useSetGroupIndex,
-} from "../Providers/AppStateProvider";
-import { ContentScrollable } from "../Templates/Content";
+} from "../Components/Providers/AppStateProvider";
+import { ContentScrollable } from "../Components/Templates/Content";
 import styles from "./Activity.module.css";
 import { TransactionGroup } from "./TransactionGroup";
 

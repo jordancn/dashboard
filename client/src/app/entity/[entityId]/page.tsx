@@ -14,18 +14,21 @@ import { getActivityGroupBy } from "@/Utils/helpers";
 import _ from "lodash";
 import { useParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
-import { Empty } from "../Atoms/Empty";
-import { Spinner } from "../Atoms/Spinner";
-import { EntityInsightActivityCard } from "../Molecules/EntityInsightActivityCard";
-import { EntityInsightBalanceCard } from "../Molecules/EntityInsightBalanceCard";
-import { NavigationBar } from "../Molecules/NavigationBar";
-import { SectionHeading } from "../Molecules/SectionHeading";
-import { BudgetCards } from "../Organisms/BudgetCards";
-import { InsightCards } from "../Organisms/InsightCards";
-import { TransactionCards } from "../Organisms/TransactionCards";
-import { TransactionGroupCards } from "../Organisms/TransactionGroupCards";
-import { ActivityGroup, useActivityGroup } from "../Providers/AppStateProvider";
-import { ContentScrollable } from "../Templates/Content";
+import { Empty } from "../Components/Atoms/Empty";
+import { Spinner } from "../Components/Atoms/Spinner";
+import { EntityInsightActivityCard } from "../Components/Molecules/EntityInsightActivityCard";
+import { EntityInsightBalanceCard } from "../Components/Molecules/EntityInsightBalanceCard";
+import { NavigationBar } from "../Components/Molecules/NavigationBar";
+import { SectionHeading } from "../Components/Molecules/SectionHeading";
+import { BudgetCards } from "../Components/Organisms/BudgetCards";
+import { InsightCards } from "../Components/Organisms/InsightCards";
+import { TransactionCards } from "../Components/Organisms/TransactionCards";
+import { TransactionGroupCards } from "../Components/Organisms/TransactionGroupCards";
+import {
+  ActivityGroup,
+  useActivityGroup,
+} from "../Components/Providers/AppStateProvider";
+import { ContentScrollable } from "../Components/Templates/Content";
 import styles from "./Entity.module.css";
 
 const useQuery = (args: {

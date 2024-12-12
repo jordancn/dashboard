@@ -497,3 +497,5 @@ export const Entity: React.FC<{ mode: "insights" | "budget" }> = (props) => {
     </Empty>
   );
 };
+
+export default Entity;
