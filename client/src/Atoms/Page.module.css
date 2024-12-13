@@ -1,0 +1,75 @@
+@media (orientation: portrait) and (max-device-width: var(--portrait-width)) {
+  .page {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+@media (orientation: portrait) and (min-device-width: var(--portrait-width)) {
+  .page {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+@media (orientation: landscape) and (max-device-width: var(--portrait-width)) {
+  .page {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+@media (orientation: landscape) and (min-device-width: var(--portrait-width)) {
+  .page {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon {
+    fill: white;
+  }
+
+  .icon-selected {
+    fill: #007aff;
+  }
+
+  .sidebar-icon {
+    fill: #007aff;
+  }
+
+  .sidebar-icon-selected {
+    fill: white;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .icon {
+    fill: #333333;
+  }
+
+  .icon-selected {
+    fill: #007aff;
+  }
+
+  .sidebar-icon {
+    fill: #007aff;
+  }
+
+  .sidebar-icon-selected {
+    fill: white;
+  }
+}

@@ -1,3 +1,4 @@
+import { DateRange } from "@/GraphQL/client.gen";
 import {
   format,
   formatDistance,
@@ -16,7 +17,6 @@ import {
   toShortMonthAndDate,
   toYear,
 } from "./date-iso";
-import { DateRange } from "@/app/client.gen";
 
 const usdFormater = new Intl.NumberFormat("en-US", {
   style: "currency",

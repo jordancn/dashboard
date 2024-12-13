@@ -1,0 +1,82 @@
+query EntityPageByEntityId(
+  $entityId: ID
+  $insightsDateRange: DateRange!
+  $transactionsDateRange: DateRange!
+  $changeThreshold: Float
+  $activityDateRange: DateRange!
+  $activityGroupBy: GroupBy!
+  $transactionGroupsDateRange: DateRange!
+) {
+  lastRefreshed
+
+  entity(entityId: $entityId) {
+    id
+    currentBalance
+    insights: categories(
+      dateRange: $insightsDateRange
+      changeThreshold: $changeThreshold
+    ) {
+      id
+      categoryId
+      name
+      categoryType
+      change {
+        id
+        currentTotal
+        previousTotal
+        changePercent
+
+        proratedPreviousTotal
+        proratedPreviousDateRange {
+          start
+          end
+        }
+        proratedChangePercent
+      }
+      budget {
+        currentBudgeted
+        performance(groupBy: Month) {
+          id
+          month
+          spent
+          budgeted
+        }
+      }
+    }
+    transactions(dateRange: $transactionsDateRange) {
+      id
+      date
+      description
+      amount
+      pending
+      category {
+        id
+        categoryId
+        name
+      }
+      vendor {
+        id
+        name
+        image
+      }
+    }
+    transactionGroups(dateRange: $transactionGroupsDateRange, groupBy: Month) {
+      id
+      start
+      end
+      total
+      count
+    }
+    activity: transactionGroups(
+      groupBy: $activityGroupBy
+      dateRange: $activityDateRange
+    ) {
+      groupIndex
+      start
+      end
+      total
+      totalIncome
+      totalExpenses
+    }
+  }
+}

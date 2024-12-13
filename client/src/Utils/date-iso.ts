@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import { reverse } from "lodash";
 import { isString } from "util";
 import { Brand } from "./core";
-import { shame } from "@/types/core";
+import { shame } from "@/Types/core";
 
 export type DateIso = Brand<string, "ISO8601Date">;
 export type DateTense = "today" | "past" | "future";

@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:graphql\" \"npm run dev:css\" \"npm run dev:next\" ",
+    "dev": "concurrently \"npm run dev:graphql\" \"npm run dev:css\" \"npm run dev:next\" \"npm run storybook\"",
     "dev:next": "next dev --turbopack",
     "dev:css": "tcm -w src",
     "dev:graphql": "graphql-codegen --watch",
+    "dev:storybook": "storybook dev -p 6006",
     "build": "npm run build:css && npm run build:graphql && npm run build:next",
     "build:next": "next build",
     "build:css": "tcm src",
     "build:graphql": "graphql-codegen",
+    "build:storybook": "storybook build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.12.2",
@@ -26,15 +29,24 @@
     "next": "15.1.0",
     "prettier": "^3.4.2",
     "react": "^19.0.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
     "@eslint/eslintrc": "^3",
     "@graphql-codegen/cli": "^5.0.3",
     "@graphql-codegen/typescript": "^4.1.2",
     "@graphql-codegen/typescript-operations": "^4.4.0",
     "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@parcel/watcher": "^2.5.0",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-onboarding": "^8.4.7",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/nextjs": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/test": "^8.4.7",
     "@types/lodash": "^4.17.13",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -42,7 +54,14 @@
     "concurrently": "^9.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
+    "eslint-plugin-storybook": "^0.11.1",
+    "storybook": "^8.4.7",
     "typed-css-modules": "^0.9.1",
     "typescript": "^5"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }

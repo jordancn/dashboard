@@ -1,5 +1,5 @@
 declare const styles: {
-  readonly "entity": string;
+  readonly "navigationBarContents": string;
 };
 export = styles;
 

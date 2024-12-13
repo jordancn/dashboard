@@ -19,9 +19,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family);
 }
 
 * {
@@ -39,4 +37,278 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+:root {
+  --font-family: "SF Pro Text", "SF Pro Display", -apple-system, system-ui,
+    BlinkMacSystemFont;
+  --rounded-font-family: "SF Pro Rounded", "SF Pro Display", -apple-system,
+    system-ui, BlinkMacSystemFont;
+  --monospace-font-family: "SF Mono", "SF Mono Display", -apple-system,
+    system-ui, BlinkMacSystemFont;
+
+  --sidebar-width: 320px;
+  --portrait-width: 600px;
+  --toolbar-height: 90px;
+  --content-width: 375px;
+
+  --card-size-half-width: 166.5px;
+  --card-size-single-width: 343px;
+  --card-size-double-width: 686px;
+  --card-size-triple-width: 1029px;
+  --card-size-quadruple-width: 1372px;
+
+  --toolbar-height: 90px;
+
+  --content-width: 375px;
+}
+
+.halfWidth {
+  width: var(--card-size-half-width);
+}
+
+.singleWidth {
+  width: var(--card-size-single-width);
+}
+
+.doubleWidth {
+  width: var(--card-size-double-width);
+}
+
+.tripleWidth {
+  width: var(--card-size-triple-width);
+}
+
+.quadrupleWidth {
+  width: var(--card-size-quadruple-width);
+}
+
+#root {
+  /* background-color: white !important; */
+}
+
+@media (orientation: portrait) and (max-device-width: var(--portrait-width)) {
+  #toolbar {
+    position: fixed;
+    right: 0;
+    height: var(--toolbar-height);
+    bottom: 0;
+    left: 0;
+  }
+
+  #content {
+    position: fixed;
+    height: calc(100vh - var(--toolbar-height));
+    top: 0;
+    right: 0;
+  }
+}
+
+@media (orientation: portrait) and (min-device-width: var(--portrait-width)) {
+  #toolbar {
+    display: hidden;
+    opacity: 0;
+  }
+
+  #content {
+    position: fixed;
+    height: calc(100vh);
+    top: 0;
+    right: 0;
+  }
+}
+
+@media (orientation: landscape) and (max-device-width: var(--portrait-width)) {
+  #toolbar {
+    position: fixed;
+    right: 0;
+    height: var(--toolbar-height);
+    bottom: 0;
+    left: 0;
+  }
+
+  #content {
+    position: fixed;
+    height: calc(100vh - var(--toolbar-height));
+    top: 0;
+    right: 0;
+  }
+}
+
+@media (orientation: landscape) and (min-device-width: var(--portrait-width)) {
+  #toolbar {
+    display: hidden;
+    opacity: 0;
+  }
+
+  #content {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    font-family: system;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #toolbar {
+    background-color: rgb(28, 29, 30);
+    color: white;
+  }
+
+  #content,
+  body {
+    background-color: rgb(18, 18, 18);
+    /* background-color: #272b2e; */
+    color: white;
+  }
+
+  #navigation-bar {
+    background-color: rgb(18, 18, 18);
+    color: white;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  #toolbar {
+    background-color: rgb(242, 242, 246);
+    color: #333333;
+  }
+
+  #content,
+  body {
+    /* background-color: rgb(255, 255, 255); */
+    /* background-color: #d2d6d7; */
+    background-color: #f2f2f7;
+    color: #333333;
+  }
+
+  #navigation-bar {
+    background-color: rgb(242, 242, 246);
+    color: #333333;
+  }
+}
+
+#toolbar {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+
+  z-index: 3;
+}
+
+#content {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+  z-index: 1;
+}
+
+#content-container {
+  z-index: 2;
+  width: var(--content-width);
+
+  height: 100%;
+}
+
+#content-scrollable {
+  overflow-y: auto;
+
+  z-index: 3;
+
+  height: calc(100%);
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+}
+
+@media (orientation: portrait) and (max-device-width: var(--portrait-width)) {
+  #fixed-sidebar {
+    display: hidden;
+    opacity: 0;
+  }
+
+  #floating-sidebar {
+    display: hidden;
+    opacity: 0;
+  }
+}
+
+@media (orientation: portrait) and (min-device-width: var(--portrait-width)) {
+  #fixed-sidebar {
+    display: hidden;
+    opacity: 0;
+  }
+
+  #floating-sidebar {
+    position: fixed;
+    top: 0;
+    width: var(--sidebar-width);
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+}
+
+@media (orientation: landscape) and (max-device-width: var(--portrait-width)) {
+  #fixed-sidebar {
+    display: hidden;
+    opacity: 0;
+  }
+
+  #floating-sidebar {
+    display: hidden;
+    opacity: 0;
+  }
+}
+
+@media (orientation: landscape) and (min-device-width: var(--portrait-width)) {
+  #fixed-sidebar {
+    position: fixed;
+    top: 0;
+    width: var(--sidebar-width);
+    bottom: 0;
+    left: 0;
+  }
+
+  #floating-sidebar {
+    display: hidden;
+    opacity: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #fixed-sidebar,
+  #floating-sidebar {
+    background-color: rgb(28, 29, 30);
+    color: white;
+    backdrop-filter: blur(8px);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  #fixed-sidebar,
+  #floating-sidebar {
+    background-color: rgb(242, 242, 246);
+    color: #333333;
+    backdrop-filter: blur(8px);
+  }
+}
+
+#fixed-sidebar {
+  z-index: 0;
+}
+
+#fixed-sidebar,
+#floating-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-y: auto;
 }

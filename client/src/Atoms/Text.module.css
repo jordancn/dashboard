@@ -1,0 +1,254 @@
+.text {
+  font-family:
+    "SF Pro Text",
+    "SF Pro Display",
+    -apple-system,
+    system-ui,
+    BlinkMacSystemFont;
+}
+
+.normalStyle {
+  font-style: normal;
+}
+
+.italicStyle {
+  font-style: italic;
+}
+
+.regularWeight {
+  font-weight: 400;
+}
+
+.boldWeight {
+  font-weight: 600;
+}
+
+.leftAlignment {
+  text-align: left;
+}
+
+.centerAlignment {
+  text-align: center;
+}
+
+.rightAlignment {
+  text-align: right;
+}
+
+.desktopLargeTitle {
+  font-size: 26px;
+  line-height: 32px;
+}
+
+.desktopTitle1 {
+  font-size: 22px;
+  line-height: 26px;
+}
+
+.desktopTitle2 {
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.desktopTitle3 {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.desktopHeadline {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.desktopBody {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.desktopCallout {
+  font-size: 12px;
+  line-height: 13px;
+}
+
+.desktopSubheadline {
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.desktopFootnote {
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.desktopCaption1 {
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.desktopCaption2 {
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.mobileLargeTitle {
+  font-size: 34px;
+  line-height: 41px;
+}
+
+.mobileTitle1 {
+  font-size: 28px;
+  line-height: 34px;
+}
+
+.mobileTitle2 {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.mobileTitle3 {
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.mobileHeadline {
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.mobileBody {
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.mobileCallout {
+  font-size: 16px;
+  line-height: 15px;
+}
+
+.mobileSubheadline {
+  font-size: 15px;
+  line-height: 14px;
+}
+
+.mobileFootnote {
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.mobileCaption1 {
+  font-size: 12px;
+  line-height: 13px;
+}
+
+.mobileCaption2 {
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.desktopLightOpaquePrimary {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.desktopLightOpaqueSecondary {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.desktopLightOpaqueTertiary {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.desktopDarkOpaquePrimary {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.desktopDarkOpaqueSecondary {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.desktopDarkOpaqueTertiary {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.desktopLightVibrantPrimary {
+  color: rgba(77, 77, 77, 1);
+}
+
+.desktopLightVibrantSecondary {
+  color: rgba(128, 128, 128, 1);
+}
+
+.desktopLightVibrantTertiary {
+  color: rgba(198, 198, 198, 1);
+}
+
+.desktopDarkVibrantPrimary {
+  color: rgba(229, 229, 229, 1);
+}
+
+.desktopDarkVibrantSecondary {
+  color: rgba(124, 124, 124, 1);
+}
+
+.desktopDarkVibrantTertiary {
+  color: rgba(65, 65, 65, 1);
+}
+
+.mobileLightOpaquePrimary {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.mobileLightOpaqueSecondary {
+  color: rgba(60, 60, 67, 0.6);
+}
+
+.mobileLightOpaqueTertiary {
+  color: rgba(60, 60, 60, 0.3);
+}
+
+.mobileLightOpaqueQuarternary {
+  color: rgba(60, 60, 60, 0.18);
+}
+
+.mobileDarkOpaquePrimary {
+  color: rgba(255, 255, 255, 1);
+}
+
+.mobileDarkOpaqueSecondary {
+  color: rgba(235, 235, 245, 0.6);
+}
+
+.mobileDarkOpaqueTertiary {
+  color: rgba(235, 235, 245, 0.3);
+}
+
+.mobileDarkOpaqueQuarternary {
+  color: rgba(235, 235, 245, 0.16);
+}
+
+.mobileLightVibrantPrimary {
+  color: rgba(77, 77, 77, 1);
+}
+
+.mobileLightVibrantSecondary {
+  color: rgba(128, 128, 128, 1);
+}
+
+.mobileLightVibrantTertiary {
+  color: rgba(198, 198, 198, 1);
+}
+
+.mobileDarkVibrantPrimary {
+  color: rgba(229, 229, 229, 1);
+}
+
+.mobileDarkVibrantSecondary {
+  color: rgba(124, 124, 124, 1);
+}
+
+.mobileDarkVibrantTertiary {
+  color: rgba(65, 65, 65, 1);
+}
+
+.mobileDarkVibrantQuarternary {
+  color: rgba(65, 65, 65, 0.6);
+}

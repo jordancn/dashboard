@@ -7,3 +7,5 @@ build
 dist
 node_modules
 out
+
+*storybook.log

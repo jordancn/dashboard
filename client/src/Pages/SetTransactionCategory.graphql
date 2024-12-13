@@ -1,9 +1,0 @@
-mutation SetTransactionCategory($transactionId: ID!, $categoryId: ID) {
-  setCategory(transactionId: $transactionId, categoryId: $categoryId) {
-    id
-    category {
-      id
-      name
-    }
-  }
-}

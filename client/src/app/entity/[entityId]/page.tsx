@@ -1,47 +1,50 @@
-import { useEntityQuery, useOverviewQuery } from "@/app/client.gen";
+"use client";
+
+import { Empty } from "@/Atoms/Empty";
+import { Spinner } from "@/Atoms/Spinner";
+import {
+  DateRange,
+  useEntityPageByEntityIdQuery,
+  useEntityPageOvervallQuery,
+} from "@/GraphQL/client.gen";
+import { EntityInsightActivityCard } from "@/Molecules/EntityInsightActivityCard";
+import { EntityInsightBalanceCard } from "@/Molecules/EntityInsightBalanceCard";
+import { NavigationBar } from "@/Molecules/NavigationBar";
+import { SectionHeading } from "@/Molecules/SectionHeading";
+import { InsightCards } from "@/Organisms/InsightCards";
+import { TransactionCards } from "@/Organisms/TransactionCards";
+import { TransactionGroupCards } from "@/Organisms/TransactionGroupCards";
+import { ActivityGroup, useActivityGroup } from "@/Providers/AppStateProvider";
+import { ContentScrollable } from "@/Templates/ContentScrollable";
+import { shame } from "@/Types/core";
 import {
   addDays,
   addMonths,
   addYears,
-  DateIso,
   getFirstDayOfMonth,
   getFirstDayOfYear,
   getYearFromIsoDate,
   lastDayOfMonth,
   today,
 } from "@/Utils/date-iso";
-import { getActivityGroupBy } from "@/Utils/helpers";
+import { getActivityGroupBy, useRouteParams } from "@/Utils/helpers";
+import { assertIsEntityParams } from "@/Utils/param-helpers";
 import _ from "lodash";
-import { useParams } from "next/navigation";
-import { useCallback, useMemo } from "react";
-import { Empty } from "../Components/Atoms/Empty";
-import { Spinner } from "../Components/Atoms/Spinner";
-import { EntityInsightActivityCard } from "../Components/Molecules/EntityInsightActivityCard";
-import { EntityInsightBalanceCard } from "../Components/Molecules/EntityInsightBalanceCard";
-import { NavigationBar } from "../Components/Molecules/NavigationBar";
-import { SectionHeading } from "../Components/Molecules/SectionHeading";
-import { BudgetCards } from "../Components/Organisms/BudgetCards";
-import { InsightCards } from "../Components/Organisms/InsightCards";
-import { TransactionCards } from "../Components/Organisms/TransactionCards";
-import { TransactionGroupCards } from "../Components/Organisms/TransactionGroupCards";
-import {
-  ActivityGroup,
-  useActivityGroup,
-} from "../Components/Providers/AppStateProvider";
-import { ContentScrollable } from "../Components/Templates/Content";
-import styles from "./Entity.module.css";
+import Link from "next/link";
+import * as React from "react";
+import styles from "./page.module.css";
 
 const useQuery = (args: {
   entityId?: string;
-  insightsDateRange: { start: DateIso; end: DateIso };
-  activityDateRange: { start: DateIso; end: DateIso };
+  insightsDateRange: DateRange;
+  activityDateRange: DateRange;
   activityGroup: ActivityGroup;
 }) => {
   const isEntity = !!args.entityId && args.entityId !== "overview";
 
-  const entityResults = useEntityQuery({
+  const entityResults = useEntityPageByEntityIdQuery({
     variables: {
-      entityId: args.entityId || "",
+      entityId: args.entityId,
       insightsDateRange: args.insightsDateRange,
       transactionsDateRange: {
         start: addDays(today(), -3),
@@ -51,13 +54,14 @@ const useQuery = (args: {
         start: getFirstDayOfYear(today()),
         end: today(),
       },
+      changeThreshold: 0.1,
       activityDateRange: args.activityDateRange,
       activityGroupBy: getActivityGroupBy(args.activityGroup),
     },
     skip: !isEntity,
   });
 
-  const overallResults = useOverviewQuery({
+  const overallResults = useEntityPageOvervallQuery({
     variables: {
       insightsDateRange: args.insightsDateRange,
       transactionsDateRange: {
@@ -68,6 +72,7 @@ const useQuery = (args: {
         start: getFirstDayOfYear(today()),
         end: today(),
       },
+      changeThreshold: 0.1,
       activityDateRange: args.activityDateRange,
       activityGroupBy: getActivityGroupBy(args.activityGroup),
     },
@@ -77,10 +82,8 @@ const useQuery = (args: {
   return isEntity ? entityResults : overallResults;
 };
 
-export const Entity = (props: { mode: "insights" | "budget" }) => {
-  // const navigate = useNavigate();
-
-  const params = useParams<{ entityId?: string }>();
+const EntityPage = () => {
+  const params = useRouteParams(assertIsEntityParams, { entityId: "overview" });
 
   const insightsDateRange = {
     start: getFirstDayOfMonth(today()),
@@ -89,7 +92,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
 
   const activityGroup = useActivityGroup();
 
-  const activityDateRange = useMemo(() => {
+  const activityDateRange = React.useMemo(() => {
     switch (activityGroup) {
       case "WeekDay":
         return {
@@ -111,8 +114,10 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
           start: addYears(today(), -3),
           end: today(),
         };
+      default:
+        throw new Error("Invalid activity group");
     }
-  }, []);
+  }, [activityGroup]);
 
   const results = useQuery({
     entityId: params.entityId,
@@ -121,7 +126,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
     activityGroup,
   });
 
-  const insights = useMemo(() => {
+  const insights = React.useMemo(() => {
     if (results.loading || !results.data) {
       return [];
     }
@@ -160,40 +165,40 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
       );
   }, [results]);
 
-  const budget = useMemo(() => {
-    return _.compact(
-      insights.map((category) => {
-        const budget = category.budget;
+  // const budget = React.useMemo(() => {
+  //   return _.compact(
+  //     insights.map((category) => {
+  //       const budget = category.budget;
 
-        if (!budget) {
-          return;
-        }
+  //       if (!budget) {
+  //         return;
+  //       }
 
-        if (!("performance" in budget)) {
-          return;
-        }
+  //       if (!("performance" in budget)) {
+  //         return;
+  //       }
 
-        const performance = _.first(budget.performance);
+  //       const performance = _.first(budget.performance);
 
-        if (!performance) {
-          return;
-        }
+  //       if (!performance) {
+  //         return;
+  //       }
 
-        return {
-          categoryName: category.categoryName,
-          id: category.id,
-          categoryId: category.categoryId,
-          budget: performance.budgeted,
-          amount: performance.spent,
-          percent: performance.budgeted
-            ? performance.spent / performance.budgeted
-            : Number.POSITIVE_INFINITY,
-        };
-      }),
-    );
-  }, [insights, results]);
+  //       return {
+  //         categoryName: category.categoryName,
+  //         id: category.id,
+  //         categoryId: category.categoryId,
+  //         budget: performance.budgeted,
+  //         amount: performance.spent,
+  //         percent: performance.budgeted
+  //           ? performance.spent / performance.budgeted
+  //           : Number.POSITIVE_INFINITY,
+  //       };
+  //     }),
+  //   );
+  // }, [insights, results]);
 
-  const pendingTransactions = useMemo(() => {
+  const pendingTransactions = React.useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -235,7 +240,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
     );
   }, [results]);
 
-  const latestTransactions = useMemo(() => {
+  const latestTransactions = React.useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -277,7 +282,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
     );
   }, [results]);
 
-  const groupedTransactions = useMemo(() => {
+  const groupedTransactions = React.useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -309,7 +314,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
     }));
   }, [results]);
 
-  const activity = useMemo(() => {
+  const activity = React.useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -342,22 +347,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
     }));
   }, [results]);
 
-  const onShowBudgetClicked = useCallback(() => {
-    // TODO
-    // navigate(`/entity/${params.entityId || 'overview'}/budget`);
-  }, [params.entityId]);
-
-  const onShowInsightsClicked = useCallback(() => {
-    // TODO
-    // navigate(`/entity/${params.entityId || 'overview'}/insights`);
-  }, [params.entityId]);
-
-  const onAccountsClicked = useCallback(() => {
-    // TODO
-    // navigate(`/entity/${params.entityId || 'overview'}/accounts`);
-  }, [params.entityId]);
-
-  const currentBalance = useMemo(() => {
+  const currentBalance = React.useMemo(() => {
     if (!results.data) {
       return 0;
     }
@@ -384,14 +374,10 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
     );
   }
 
-  // if (!results.data?.entity) {
-  //   return <NotFound />;
-  // }
-
   return (
     <Empty>
       <NavigationBar>
-        <div className={styles.entity}>
+        <div className={styles.navigationBarContents}>
           {/* <div>
             <svg xmlns='http://www.w3.org/2000/svg' width='20.99' height='21.194' viewBox='0 0 20.99 21.194'>
               <path
@@ -402,7 +388,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
               />
             </svg>
           </div> */}
-          <div onClick={onAccountsClicked}>
+          <Link href={`/entity/${params.entityId}/accounts`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="27.221"
@@ -416,10 +402,10 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
                 fill="#007aff"
               />
             </svg>
-          </div>
+          </Link>
         </div>
       </NavigationBar>
-      <ContentScrollable type="wrap-cards">
+      <ContentScrollable type="wrap-cards" navigationBar>
         <EntityInsightBalanceCard
           balance={currentBalance}
           date={results.data?.lastRefreshed}
@@ -431,25 +417,24 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
           entityId={params.entityId}
         />
 
-        {props.mode === "insights" && (
-          <Empty>
-            {!params.entityId && <SectionHeading title="Insights" />}
-            {params.entityId && (
-              <SectionHeading
-                title="Insights"
-                subtitle="Show Budget"
-                onClick={onShowBudgetClicked}
-              />
-            )}
-
-            <InsightCards
-              entityId={params.entityId}
-              insights={insights}
-              dateRange={insightsDateRange}
+        <Empty>
+          {!params.entityId && <SectionHeading title="Insights" />}
+          {params.entityId && (
+            <SectionHeading
+              title="Insights"
+              subtitle="Show Budget"
+              href={`/entity/${params.entityId}/budget`}
             />
-          </Empty>
-        )}
+          )}
 
+          <InsightCards
+            entityId={params.entityId}
+            insights={insights}
+            dateRange={insightsDateRange}
+          />
+        </Empty>
+
+        {/* 
         {props.mode === "budget" && budget && params.entityId && (
           <Empty>
             <SectionHeading
@@ -464,14 +449,14 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
               dateRange={insightsDateRange}
             />
           </Empty>
-        )}
+        )} */}
 
         {pendingTransactions.length > 0 && (
           <Empty>
             <SectionHeading title="Pending Transactions" />
 
             <TransactionCards
-              transactions={pendingTransactions}
+              transactions={pendingTransactions as shame /* TODO */}
               entityId={params.entityId}
             />
           </Empty>
@@ -482,7 +467,7 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
         )}
 
         <TransactionCards
-          transactions={latestTransactions}
+          transactions={latestTransactions as shame /* TODO */}
           entityId={params.entityId}
         />
 
@@ -496,3 +481,5 @@ export const Entity = (props: { mode: "insights" | "budget" }) => {
     </Empty>
   );
 };
+
+export default EntityPage;

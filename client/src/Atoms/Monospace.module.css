@@ -1,0 +1,24 @@
+.monospace {
+  font-family: var(--monospace-font-family);
+  font-size: 13px;
+}
+
+.primary {
+  @media (prefers-color-scheme: dark) {
+    color: #ffffff;
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: #000000;
+  }
+}
+
+.secondary {
+  @media (prefers-color-scheme: dark) {
+    color: rgba(130, 130, 130, 0.85);
+  }
+
+  @media (prefers-color-scheme: light) {
+    color: rgba(130, 130, 130, 0.85);
+  }
+}

@@ -1,0 +1,53 @@
+.contentScrollable {
+  padding: 16px;
+  padding-top: 0;
+  margin-bottom: 80px;
+}
+
+.withNavigationBar {
+  padding-top: 54px;
+}
+
+.withoutNavigationBar {
+  padding-top: 34px;
+}
+
+.fullWidth {
+  padding: 0;
+}
+
+.fullHeight {
+  padding-bottom: 0px;
+
+  &.navigationBar {
+    height: calc(100% - 54px - 16px);
+  }
+
+  :not(.navigationBar) {
+    height: calc(100% - 34px - 16px);
+  }
+}
+
+.wrapCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+&.wrapCardsColumn {
+  flex-direction: column;
+}
+
+.wrapCardsRow {
+  flex-direction: row;
+}
+
+.contentScrollableFullWidth {
+  width: 100%;
+}
+
+.contentScrollableFullHeight {
+  height: 100%;
+}

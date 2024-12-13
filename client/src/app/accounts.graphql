@@ -1,7 +1,0 @@
-query Accounts {
-  accounts {
-    id
-    name
-    currentBalance
-  }
-}

@@ -1,76 +1,81 @@
-import { GroupBy } from "@/app/client.gen";
-import {
-  CARD_SIZE_DOUBLE_WIDTH,
-  CARD_SIZE_HALF_WIDTH,
-  CARD_SIZE_QUADRUPLE_WIDTH,
-  CARD_SIZE_SINGLE_WIDTH,
-  CARD_SIZE_TRIPLE_WIDTH,
-  CONTENT_WIDTH,
-} from "@/Components/Configuration/Configuration";
-import { ActivityGroup } from "@/Components/Providers/AppStateProvider";
-import { useDeviceData } from "@/Components/Providers/DeviceDataProvider";
-import { shame } from "@/types/core";
+"use client";
+
+import { GroupBy } from "@/GraphQL/client.gen";
+import { ActivityGroup } from "@/Providers/AppStateProvider";
+import { useDeviceData } from "@/Providers/DeviceDataProvider";
 import { useParams } from "next/navigation";
 
-export const useContenWidth = () => {
-  const deviceData = useDeviceData();
-
-  if (deviceData.status !== "LOADED") {
-    return CONTENT_WIDTH;
-  }
-
-  if (deviceData.value.orientation === "landscape") {
-    return CONTENT_WIDTH * 2;
-  }
-
-  return CONTENT_WIDTH;
-};
-
-// TODO use stylesheets to do this?
-export const useRelativeSize = (
+export const useSize = (
   size?: "half" | "single" | "double" | "triple" | "quadruple",
 ) => {
   const deviceData = useDeviceData();
 
   if (deviceData.status !== "LOADED") {
-    return CARD_SIZE_SINGLE_WIDTH;
+    return "single";
   }
 
   if (deviceData.value.isMobile) {
     if (size === "half") {
-      return CARD_SIZE_HALF_WIDTH;
+      return "half";
     }
 
-    return CARD_SIZE_SINGLE_WIDTH;
+    return "single";
   }
 
   if (deviceData.value.orientation === "landscape") {
     switch (size) {
       case "half":
-        return CARD_SIZE_SINGLE_WIDTH;
+        return "single";
       case "single":
-        return CARD_SIZE_DOUBLE_WIDTH;
+        return "double";
       case "double":
       case "triple":
       case "quadruple":
-        return CARD_SIZE_QUADRUPLE_WIDTH;
+        return "quadruple";
     }
   }
 
   switch (size) {
     case "half":
-      return CARD_SIZE_HALF_WIDTH;
+      return "half";
     case "single":
-      return CARD_SIZE_SINGLE_WIDTH;
+      return "single";
     case "double":
-      return CARD_SIZE_DOUBLE_WIDTH;
+      return "double";
     case "triple":
-      return CARD_SIZE_TRIPLE_WIDTH;
+      return "triple";
     case "quadruple":
-      return CARD_SIZE_QUADRUPLE_WIDTH;
+      return "quadruple";
   }
 
-  return CARD_SIZE_SINGLE_WIDTH;
+  return "single";
+};
+
+export const getWidthClassName = (
+  size: "half" | "single" | "double" | "triple" | "quadruple",
+) => {
+  switch (size) {
+    case "half":
+      return {
+        halfWidth: true,
+      };
+    case "single":
+      return {
+        singleWidth: true,
+      };
+    case "double":
+      return {
+        singleWidth: false,
+      };
+    case "triple":
+      return {
+        tripleWidth: true,
+      };
+    case "quadruple":
+      return {
+        quadrupleWidth: true,
+      };
+  }
 };
 
 export const getRelativePosition = <T>(index: number, list: T[]) => {
@@ -124,9 +129,20 @@ export const getActivitySubGroup = (
   }
 };
 
-// TODO remove?
-export function useRouteParams<T>(): T {
-  const params = useParams();
+export function useRouteParams<T>(
+  assertIsFn: (params: unknown) => asserts params is T,
+  defaultParams?: T,
+): T {
+  const actualParams = useParams();
 
-  return params as shame as T;
+  const params =
+    actualParams && Object.keys(actualParams).length > 0
+      ? actualParams
+      : defaultParams;
+
+  console.log("params", params);
+
+  assertIsFn(params);
+
+  return params;
 }
