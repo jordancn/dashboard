@@ -140,8 +140,6 @@ export function useRouteParams<T>(
       ? actualParams
       : defaultParams;
 
-  console.log("params", params);
-
   assertIsFn(params);
 
   return params;

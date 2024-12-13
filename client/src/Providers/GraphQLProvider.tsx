@@ -3,9 +3,14 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost:5999/graphql",
+  uri: process.env.GRAPHQL_URL,
   cache: new InMemoryCache(),
 });
+
+console.log(
+  "NEXT_PUBLIC_GRAPHQL_ENDPOINT",
+  process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+);
 
 export const GraphQLProvider = ({
   children,

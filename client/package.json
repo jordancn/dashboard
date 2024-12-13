@@ -2,6 +2,9 @@
   "name": "dashboard",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "concurrently \"npm run dev:graphql\" \"npm run dev:css\" \"npm run dev:next\" \"npm run storybook\"",
     "dev:next": "next dev --turbopack",
