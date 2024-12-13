@@ -1,5 +1,4 @@
 import { PrismaClient } from ".prisma/client";
-import { ExpressContext } from "apollo-server-express";
 import * as uuid from "uuid";
 import { createPrismaClient } from "./prisma/prisma-client";
 import { Scope } from "./scope";
@@ -17,7 +16,7 @@ export type Context = {
   model: Data;
 };
 
-export const context = (expressContext: ExpressContext): Context => {
+export const context = (): Context => {
   const requestId = uuid.v4();
 
   return {

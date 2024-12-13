@@ -1,5 +1,5 @@
-import { ApolloServer } from "apollo-server";
 import { ApolloServerPluginLandingPageDisabled } from "apollo-server-core";
+import { ApolloServer } from "apollo-server-micro";
 import { context } from "./context";
 import { resolvers } from "./resolvers";
 import { getTypeDefs } from "./schema/schema";
@@ -12,9 +12,11 @@ const main = async () => {
     context,
   });
 
-  server.listen(5999).then(({ url }) => {
-    console.info(`🚀  GraphQL Server ready at ${url}`);
+  await server.start();
+
+  return server.createHandler({
+    path: "/api/graphql", // Used for serverless platforms
   });
 };
 
-void main();
+export default main();
