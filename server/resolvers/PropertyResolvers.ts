@@ -1,12 +1,12 @@
-import { Context } from "../context";
+import { Context } from "@/context";
+import { narrowScope, Parent, withScope } from "@/resolvers/helpers";
 import {
   PropertyPurpose,
   PropertyResolvers,
   PropertyType,
-} from "../types/graphql/server.gen";
-import { optional, required } from "../utils/core";
-import { toIsoDate } from "../utils/date-iso";
-import { narrowScope, Parent, withScope } from "./helpers";
+} from "@/types/graphql/server.gen";
+import { optional, required } from "@/utils/core";
+import { toIsoDate } from "@/utils/date-iso";
 
 export const propertyResolvers: PropertyResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {

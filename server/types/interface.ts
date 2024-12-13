@@ -1,4 +1,4 @@
-import { DateIso } from "../utils/date-iso";
+import { DateIso } from "@/utils/date-iso";
 
 export type Pagination = {
   limit: number;

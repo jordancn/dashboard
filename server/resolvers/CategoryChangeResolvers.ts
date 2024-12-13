@@ -1,8 +1,8 @@
+import { Context } from "@/context";
+import { Scope } from "@/scope";
+import { CategoryChangeResolvers } from "@/types/graphql/server.gen";
+import { required } from "@/utils/core";
 import * as uuid from "uuid";
-import { Context } from "../context";
-import { Scope } from "../scope";
-import { CategoryChangeResolvers } from "../types/graphql/server.gen";
-import { required } from "../utils/core";
 import {
   addDays,
   differenceInDays,

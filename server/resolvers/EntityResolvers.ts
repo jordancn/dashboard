@@ -1,8 +1,8 @@
-import { Context } from "../context";
-import { EntityResolvers } from "../types/graphql/server.gen";
-import { optional, required } from "../utils/core";
-import { today } from "../utils/date-iso";
-import { asId, narrowScope, Parent, withScope } from "./helpers";
+import { Context } from "@/context";
+import { asId, narrowScope, Parent, withScope } from "@/resolvers/helpers";
+import { EntityResolvers } from "@/types/graphql/server.gen";
+import { optional, required } from "@/utils/core";
+import { today } from "@/utils/date-iso";
 
 export const entityResolvers: EntityResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {

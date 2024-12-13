@@ -1,8 +1,8 @@
-import { Context } from "../context";
-import { QueryResolvers } from "../types/graphql/server.gen";
-import { optional, required } from "../utils/core";
-import { today } from "../utils/date-iso";
-import { asId, narrowScope, Parent, withScope } from "./helpers";
+import { Context } from "@/context";
+import { asId, narrowScope, Parent, withScope } from "@/resolvers/helpers";
+import { QueryResolvers } from "@/types/graphql/server.gen";
+import { optional, required } from "@/utils/core";
+import { today } from "@/utils/date-iso";
 
 export const queryResolvers: QueryResolvers<Context, Parent> = {
   lastRefreshed: async (parent, args, context, info) => {
@@ -24,7 +24,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
     if (args.name) {
       const entity = await context.model.Entity.findFirst.load({
         where: { name: args.name },
-        rejectOnNotFound: false,
       });
 
       if (!entity) {
@@ -52,7 +51,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
     if (args.name) {
       const institution = await context.model.Institution.findFirst.load({
         where: { name: args.name },
-        rejectOnNotFound: false,
       });
 
       if (!institution) {
@@ -81,7 +79,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
     if (args.name) {
       const category = await context.model.Category.findFirst.load({
         where: { name: args.name },
-        rejectOnNotFound: false,
       });
 
       if (!category) {
@@ -109,7 +106,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
     if (args.name) {
       const vendor = await context.model.Vendor.findFirst.load({
         where: { name: args.name },
-        rejectOnNotFound: false,
       });
 
       if (!vendor) {
@@ -137,7 +133,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
     if (args.name) {
       const account = await context.model.Account.findFirst.load({
         where: { name: args.name },
-        rejectOnNotFound: false,
       });
 
       if (!account) {
@@ -172,7 +167,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
     if (args.address) {
       const property = await context.model.Property.findFirst.load({
         where: { address: args.address },
-        rejectOnNotFound: false,
       });
 
       if (!property) {

@@ -1,7 +1,7 @@
-import { Context } from "../context";
-import { CategoryResolvers, CategoryType } from "../types/graphql/server.gen";
-import { optional, required } from "../utils/core";
-import { narrowScope, Parent, scopeKey, withScope } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent, scopeKey, withScope } from "@/resolvers/helpers";
+import { CategoryResolvers, CategoryType } from "@/types/graphql/server.gen";
+import { optional, required } from "@/utils/core";
 
 export const categoryResolvers: CategoryResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {
@@ -51,7 +51,6 @@ export const categoryResolvers: CategoryResolvers<Context, Parent> = {
         categoryId: required(scope.categoryId),
       },
       orderBy: [{ id: "asc" }],
-      rejectOnNotFound: false,
     });
 
     if (!budget) {

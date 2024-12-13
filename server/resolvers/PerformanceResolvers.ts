@@ -1,8 +1,8 @@
-import { Context } from "../context";
-import { PerformanceResolvers } from "../types/graphql/server.gen";
-import { required } from "../utils/core";
-import { parseToDate } from "../utils/date-iso";
-import { narrowScope, Parent } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent } from "@/resolvers/helpers";
+import { PerformanceResolvers } from "@/types/graphql/server.gen";
+import { required } from "@/utils/core";
+import { parseToDate } from "@/utils/date-iso";
 
 export const performanceResolvers: PerformanceResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {
@@ -35,7 +35,6 @@ export const performanceResolvers: PerformanceResolvers<Context, Parent> = {
       },
       orderBy: [{ startingAt: "desc" }],
       take: 1,
-      rejectOnNotFound: false,
     });
 
     return budgetAmount?.amount.toNumber() || 0;

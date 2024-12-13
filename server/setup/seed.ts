@@ -1,8 +1,8 @@
+import { createPrismaClient } from "@/prisma/prisma-client";
+import { required } from "@/utils/core";
+import { toIsoDate } from "@/utils/date-iso";
+import { configuration } from "@setup/configuration";
 import * as _ from "lodash";
-import { createPrismaClient } from "../prisma/prisma-client";
-import { required } from "../utils/core";
-import { toIsoDate } from "../utils/date-iso";
-import { configuration } from "./configuration";
 
 const prisma = createPrismaClient(true);
 

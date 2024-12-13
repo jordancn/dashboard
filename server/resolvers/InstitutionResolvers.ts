@@ -1,7 +1,7 @@
-import { Context } from "../context";
-import { InstitutionResolvers } from "../types/graphql/server.gen";
-import { required } from "../utils/core";
-import { narrowScope, Parent, withScope } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent, withScope } from "@/resolvers/helpers";
+import { InstitutionResolvers } from "@/types/graphql/server.gen";
+import { required } from "@/utils/core";
 
 export const institutionResolvers: InstitutionResolvers<Context, Parent> = {
   id: async (

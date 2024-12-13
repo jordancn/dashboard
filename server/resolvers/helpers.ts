@@ -1,8 +1,8 @@
+import { Scope } from "@/scope";
+import { Id } from "@/types/core";
+import { DateRange } from "@/types/interface";
+import { parseToDate, toIsoDate } from "@/utils/date-iso";
 import * as _ from "lodash";
-import { Scope } from "../scope";
-import { Id } from "../types/core";
-import { DateRange } from "../types/interface";
-import { parseToDate, toIsoDate } from "../utils/date-iso";
 
 export const asId = (idObj: { id: Id }) => {
   return idObj.id;

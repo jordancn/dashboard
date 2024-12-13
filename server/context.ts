@@ -1,10 +1,10 @@
 import { PrismaClient } from ".prisma/client";
+import { createPrismaClient } from "@/prisma/prisma-client";
+import { Scope } from "@/scope";
+import { Id } from "@/types/core";
+import { buildModel, Data } from "@/utils/data-loaders";
+import { Utilities, utilities } from "@/utils/transaction-utils";
 import * as uuid from "uuid";
-import { createPrismaClient } from "./prisma/prisma-client";
-import { Scope } from "./scope";
-import { Id } from "./types/core";
-import { buildModel, Data } from "./utils/data-loaders";
-import { Utilities, utilities } from "./utils/transaction-utils";
 
 export const prisma = createPrismaClient(true);
 

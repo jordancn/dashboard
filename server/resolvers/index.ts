@@ -1,16 +1,16 @@
-import { accountResolvers } from "./AccountResolvers";
-import { budgetResolvers } from "./BudgetResolvers";
-import { categoryChangeResolvers } from "./CategoryChangeResolvers";
-import { categoryResolvers } from "./CategoryResolvers";
-import { entityResolvers } from "./EntityResolvers";
-import { institutionResolvers } from "./InstitutionResolvers";
-import { mutationResolvers } from "./MutationResolvers";
-import { performanceResolvers } from "./PerformanceResolvers";
-import { propertyResolvers } from "./PropertyResolvers";
-import { queryResolvers } from "./QueryResolvers";
-import { transactionGroupResolvers } from "./TransactionGroupResolvers";
-import { transactionResolvers } from "./TransactionResolvers";
-import { vendorResolvers } from "./VendorResolvers";
+import { accountResolvers } from "@/resolvers/AccountResolvers";
+import { budgetResolvers } from "@/resolvers/BudgetResolvers";
+import { categoryChangeResolvers } from "@/resolvers/CategoryChangeResolvers";
+import { categoryResolvers } from "@/resolvers/CategoryResolvers";
+import { entityResolvers } from "@/resolvers/EntityResolvers";
+import { institutionResolvers } from "@/resolvers/InstitutionResolvers";
+import { mutationResolvers } from "@/resolvers/MutationResolvers";
+import { performanceResolvers } from "@/resolvers/PerformanceResolvers";
+import { propertyResolvers } from "@/resolvers/PropertyResolvers";
+import { queryResolvers } from "@/resolvers/QueryResolvers";
+import { transactionGroupResolvers } from "@/resolvers/TransactionGroupResolvers";
+import { transactionResolvers } from "@/resolvers/TransactionResolvers";
+import { vendorResolvers } from "@/resolvers/VendorResolvers";
 
 export const resolvers = {
   Query: queryResolvers,

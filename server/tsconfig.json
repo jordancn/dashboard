@@ -8,7 +8,7 @@
     "alwaysStrict": true,
     "esModuleInterop": true,
     "paths": {
-      "GraphQL/*": ["./types/graphql/*"],
+      "@/*": ["./*"]
     }
   },
 }

@@ -24,11 +24,11 @@ export const createPrismaClient = (queryLoggingEnabled: boolean) => {
       "warn",
       "error",
     ],
-    rejectOnNotFound: true,
   });
 
   if (queryLoggingEnabled) {
-    prisma.$on("query", (e: Prisma.QueryEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    prisma.$on("query", (e: any) => {
       // eslint-disable-next-line no-console
       console.info(
         `${e.duration}ms`,

@@ -1,8 +1,8 @@
+import { createPrismaClient } from "@/prisma/prisma-client";
+import { toIsoDate } from "@/utils/date-iso";
+import { DateTimeIso, now, toIsoDateTime } from "@/utils/date-time-iso";
 import * as fs from "fs";
 import _, { padStart } from "lodash";
-import { createPrismaClient } from "../prisma/prisma-client";
-import { toIsoDate } from "../utils/date-iso";
-import { DateTimeIso, now, toIsoDateTime } from "../utils/date-time-iso";
 const ofx = require("ofx");
 
 type OFXTransactionsResponse = {
@@ -165,7 +165,6 @@ const main = async () => {
   for (const balance of balances) {
     const account = await prisma.account.findFirst({
       where: { number: balance.account },
-      rejectOnNotFound: false,
     });
 
     if (!account) {
@@ -211,7 +210,6 @@ const main = async () => {
 
       const account = await prisma.account.findFirst({
         where: { number: accountNumber },
-        rejectOnNotFound: false,
       });
 
       if (!account) {

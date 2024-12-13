@@ -1,7 +1,7 @@
-import { Context } from "../context";
-import { TransactionGroupResolvers } from "../types/graphql/server.gen";
-import { optional, required } from "../utils/core";
-import { narrowScope, Parent, scopeKey } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent, scopeKey } from "@/resolvers/helpers";
+import { TransactionGroupResolvers } from "@/types/graphql/server.gen";
+import { optional, required } from "@/utils/core";
 
 export const transactionGroupResolvers: TransactionGroupResolvers<
   Context,

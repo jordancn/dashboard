@@ -1,9 +1,9 @@
+import { Brand } from "@/types/core";
+import { DateRange } from "@/types/graphql/server.gen";
 import * as DateFns from "date-fns";
 import * as _ from "lodash";
 import { reverse } from "lodash";
 import { isString } from "util";
-import { Brand } from "../types/core";
-import { DateRange } from "../types/graphql/server.gen";
 
 export type DateIso = Brand<string, "ISO8601Date">;
 export type DateTense = "today" | "past" | "future";

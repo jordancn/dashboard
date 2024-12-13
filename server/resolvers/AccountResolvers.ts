@@ -1,9 +1,9 @@
-import { Context } from "../context";
-import { AccountResolvers, AccountType } from "../types/graphql/server.gen";
-import { optional, required } from "../utils/core";
-import { today } from "../utils/date-iso";
-import { toIsoDateTime } from "../utils/date-time-iso";
-import { narrowScope, Parent, withScope } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent, withScope } from "@/resolvers/helpers";
+import { AccountResolvers, AccountType } from "@/types/graphql/server.gen";
+import { optional, required } from "@/utils/core";
+import { today } from "@/utils/date-iso";
+import { toIsoDateTime } from "@/utils/date-time-iso";
 
 export const accountResolvers: AccountResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {
@@ -97,7 +97,6 @@ export const accountResolvers: AccountResolvers<Context, Parent> = {
         },
         orderBy: [{ addedAt: "desc" }],
         take: 1,
-        rejectOnNotFound: false,
       });
 
       return balance?.balance.toNumber() || 0;

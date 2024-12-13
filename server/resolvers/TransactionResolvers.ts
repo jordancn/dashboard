@@ -1,8 +1,8 @@
-import { Context } from "../context";
-import { TransactionResolvers } from "../types/graphql/server.gen";
-import { required } from "../utils/core";
-import { isoStringToIsoDate } from "../utils/date-iso";
-import { narrowScope, Parent, withScope } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent, withScope } from "@/resolvers/helpers";
+import { TransactionResolvers } from "@/types/graphql/server.gen";
+import { required } from "@/utils/core";
+import { isoStringToIsoDate } from "@/utils/date-iso";
 
 export const transactionResolvers: TransactionResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {

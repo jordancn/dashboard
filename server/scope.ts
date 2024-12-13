@@ -1,5 +1,5 @@
-import { GroupBy } from "./types/graphql/server.gen";
-import { DateRange } from "./types/interface";
+import { GroupBy } from "@/types/graphql/server.gen";
+import { DateRange } from "@/types/interface";
 import {
   AccountId,
   BudgetId,
@@ -12,7 +12,7 @@ import {
   PropertyId,
   TransactionId,
   VendorId,
-} from "./types/model";
+} from "@/types/model";
 
 export type Scope = {
   entityId?: EntityId;

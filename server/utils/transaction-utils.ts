@@ -1,17 +1,14 @@
-import { Category } from "@prisma/client";
-import * as _ from "lodash";
-import * as uuid from "uuid";
-import { Context, prisma } from "../context";
+import { Context, prisma } from "@/context";
 import {
   asIds,
   scopeKey,
   whereDateRange,
   withScope,
-} from "../resolvers/helpers";
-import { Scope } from "../scope";
-import { GroupBy } from "../types/graphql/server.gen";
-import { DateRange, Pagination } from "../types/interface";
-import { required } from "./core";
+} from "@/resolvers/helpers";
+import { Scope } from "@/scope";
+import { GroupBy } from "@/types/graphql/server.gen";
+import { DateRange, Pagination } from "@/types/interface";
+import { required } from "@/utils/core";
 import {
   addDays,
   addMonths,
@@ -26,7 +23,10 @@ import {
   lastDayOfMonth,
   parseToDate,
   toIsoDate,
-} from "./date-iso";
+} from "@/utils/date-iso";
+import { Category } from "@prisma/client";
+import * as _ from "lodash";
+import * as uuid from "uuid";
 
 export type Utilities = {
   getDailyBalance: GetDailyBalance;
@@ -87,10 +87,7 @@ export const getDailyBalance: GetDailyBalance = async (
               },
               orderBy: [{ addedAt: "desc" }],
               take: 1,
-              rejectOnNotFound: false,
             });
-
-            console.log("🟠 ", balance);
 
             return balance?.balance.toNumber() || 0;
           }
@@ -103,7 +100,6 @@ export const getDailyBalance: GetDailyBalance = async (
             },
             orderBy: [{ date: "desc" }, { addedAt: "asc" }],
             take: 1,
-            rejectOnNotFound: false,
           });
 
           return transaction ? transaction.availableBalance.toNumber() : 0;
@@ -162,7 +158,6 @@ export const getMonthlyBalance: GetMonthlyBalance = async (
             },
             orderBy: [{ date: "desc" }, { addedAt: "asc" }],
             take: 1,
-            rejectOnNotFound: false,
           });
 
           return transaction ? transaction.availableBalance.toNumber() : 0;

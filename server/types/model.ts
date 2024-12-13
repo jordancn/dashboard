@@ -1,4 +1,4 @@
-import { Flavor, Id } from "./core";
+import { Flavor, Id } from "@/types/core";
 
 export type EntityId = Flavor<Id, "Entity">;
 export type InstitutionId = Flavor<Id, "Institution">;

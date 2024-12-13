@@ -1,7 +1,7 @@
-import { Context } from "../context";
-import { BudgetResolvers } from "../types/graphql/server.gen";
-import { required } from "../utils/core";
-import { narrowScope, Parent, withScope } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent, withScope } from "@/resolvers/helpers";
+import { BudgetResolvers } from "@/types/graphql/server.gen";
+import { required } from "@/utils/core";
 
 export const budgetResolvers: BudgetResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {

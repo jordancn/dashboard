@@ -1,8 +1,8 @@
-import { Base64Url } from "GraphQL/Base64Url";
-import { Context } from "../context";
-import { VendorResolvers } from "../types/graphql/server.gen";
-import { optional, required } from "../utils/core";
-import { narrowScope, Parent } from "./helpers";
+import { Context } from "@/context";
+import { narrowScope, Parent } from "@/resolvers/helpers";
+import { Base64Url } from "@/types/graphql/Base64Url";
+import { VendorResolvers } from "@/types/graphql/server.gen";
+import { optional, required } from "@/utils/core";
 
 export const vendorResolvers: VendorResolvers<Context, Parent> = {
   id: async (parent, args, context, info) => {
@@ -24,8 +24,8 @@ export const vendorResolvers: VendorResolvers<Context, Parent> = {
       await context.model.Vendor.findById.load(required(scope.vendorId))
     ).image;
 
-    if (buffer) {
-      return buffer.toString("base64") as Base64Url;
+    if (buffer instanceof Uint8Array) {
+      return Buffer.from(buffer).toString("base64") as Base64Url;
     }
 
     return null;

@@ -1,7 +1,7 @@
+import { Context } from "@/context";
+import { Parent } from "@/resolvers/helpers";
+import { MutationResolvers } from "@/types/graphql/server.gen";
 import { v4 } from "uuid";
-import { Context } from "../context";
-import { MutationResolvers } from "../types/graphql/server.gen";
-import { Parent } from "./helpers";
 
 export const mutationResolvers: MutationResolvers<Context, Parent> = {
   addVendor: async (parent, args, context, info) => {
