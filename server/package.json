@@ -13,7 +13,9 @@
     "db:import-legacy-transactions": "ts-node integrations/legacy/import-legacy-transactions",
     "db:import-legacy-refresh": "ts-node integrations/legacy/import-legacy-refresh",
     "db:import-legacy": "yarn db:dump-legacy-refresh && yarn db:dump-legacy-transactions && yarn db:seed && yarn db:import-legacy-transactions",
-    "start": "ts-node server.ts",
+    "build": "esbuild server.ts --bundle --outfile=dist/server.js --platform=node --target=node18",
+    "dev": "ts-node server.ts",
+    "start": "node dist/server.js",
     "schema:generate": "graphql-codegen"
   },
   "dependencies": {
@@ -29,6 +31,7 @@
     "dataloader": "^2.0.0",
     "date-fns": "^2.26.0",
     "date-fns-tz": "^1.1.6",
+    "esbuild": "^0.24.0",
     "graphql": "15",
     "graphql-tag": "^2.12.6",
     "igniculus": "^1.5.0",
