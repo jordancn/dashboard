@@ -15,10 +15,11 @@
     "db:import-legacy": "yarn db:dump-legacy-refresh && yarn db:dump-legacy-transactions && yarn db:seed && yarn db:import-legacy-transactions",
     "build": "npm run build:server && npm run build:serverless",
     "build:server": "esbuild server.ts --bundle --outfile=dist/server.js --platform=node --target=node22",
-    "build:serverless": "esbuild api/graphql.ts --bundle --outfile=api/graphql.js --platform=node --target=node22",
+    "build:serverless": "esbuild serverless.ts --bundle --outfile=api/graphql.js --platform=node --target=node22",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn -r tsconfig-paths/register server.ts",
     "start": "npm run start:server",
     "start:server": "cross-env NODE_ENV=production node dist/server.js",
+    "start:serverless": "cross-env NODE_ENV=production node api/graphql.js",
     "schema:generate": "graphql-codegen"
   },
   "dependencies": {
