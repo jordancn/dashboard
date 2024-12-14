@@ -1,7 +1,6 @@
 {
   "functions": {
     "api/graphql.js": {
-      "runtime": "nodejs@20.x",
       "memory": 1024,
       "maxDuration": 10
     }
