@@ -1,14 +1,13 @@
 .DS_Store
 .env*
 .next
+.vercel
 *.log*
 *.pem
+*storybook.log
 build
 dist
 node_modules
 out
-
-*storybook.log
-.vercel
-
+server/api/*.node
 server/api/graphql.js
