@@ -1,39 +1,28 @@
 import { context } from "@/context";
 import { resolvers } from "@/resolvers";
 import { getTypeDefs } from "@/schema/schema";
-import { ApolloServerPluginLandingPageDisabled } from "apollo-server-core";
-import { ApolloServer } from "apollo-server-micro";
+import { ApolloServer } from "@apollo/server";
+import { startServerAndCreateNextHandler } from "@as-integrations/next";
 
 const main = async () => {
   const server = new ApolloServer({
-    resolvers,
     typeDefs: await getTypeDefs(),
-    plugins: [ApolloServerPluginLandingPageDisabled()],
-    context,
+    resolvers,
+    plugins: [
+      {
+        async serverWillStart() {
+          console.info("🚀  GraphQL Server is starting...");
+        },
+      },
+    ],
   });
 
-  console.log("Starting Apollo Server");
-
-  await server.start();
-
-  console.log("Apollo Server started");
-
-  console.log("Creating Apollo Server handler");
-
-  const handler = server.createHandler({
-    path: "/api/graphql", // Used for serverless platforms
+  // Create a handler for Vercel
+  const handler = startServerAndCreateNextHandler(server, {
+    context: async () => context(),
   });
-
-  console.log("Apollo Server handler created");
 
   return handler;
 };
-
-console.log("Serverless");
-
-console.log(
-  "Database URL",
-  process.env.DATABASE_URL?.replace(/\:.*@/g, ":[REDACTED]@")
-);
 
 export default main();
