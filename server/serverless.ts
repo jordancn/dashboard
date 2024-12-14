@@ -13,19 +13,25 @@ import path from "path";
  * @param arrayOfFiles - Used for recursion to accumulate files.
  * @returns A list of all files and directories.
  */
+
+const isDirectory = (dirPath: string) => {
+  try {
+    return fs.statSync(dirPath).isDirectory();
+  } catch (error) {
+    console.error(`Error reading directory ${dirPath}:`, error);
+    return false;
+  }
+};
+
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
   const files = fs.readdirSync(dirPath);
 
   files.forEach((file) => {
     const fullPath = path.join(dirPath, file);
-    try {
-      if (fs.statSync(fullPath).isDirectory()) {
-        getAllFiles(fullPath, arrayOfFiles); // Recurse into subdirectory
-      } else {
-        arrayOfFiles.push(fullPath);
-      }
-    } catch (error) {
-      console.error(`Error reading directory ${dirPath}:`, error);
+    if (isDirectory(fullPath)) {
+      getAllFiles(fullPath, arrayOfFiles); // Recurse into subdirectory
+    } else {
+      arrayOfFiles.push(fullPath);
     }
   });
 
