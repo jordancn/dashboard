@@ -13,7 +13,7 @@
     "db:import-legacy-transactions": "ts-node integrations/legacy/import-legacy-transactions",
     "db:import-legacy-refresh": "ts-node integrations/legacy/import-legacy-refresh",
     "db:import-legacy": "yarn db:dump-legacy-refresh && yarn db:dump-legacy-transactions && yarn db:seed && yarn db:import-legacy-transactions",
-    "build": "npm run build:server && npm run build:serverless",
+    "build": "npm run prisma:generate && npm run build:server && npm run build:serverless",
     "build:server": "esbuild server.ts --bundle --outfile=dist/server.js --platform=node --target=node22",
     "build:serverless": "esbuild serverless.ts --bundle --outfile=api/graphql.js --platform=node --target=node22",
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn -r tsconfig-paths/register server.ts",
