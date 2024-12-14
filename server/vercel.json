@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "functions": {
-    "api/graphql.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
+  "builds": [
     {
-      "source": "/graphql",
-      "destination": "/api/graphql"
+      "src": "dist/api/graphql.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/graphql",
+      "dest": "dist/api/graphql.js"
     }
   ]
 }
