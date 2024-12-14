@@ -38,6 +38,8 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
   return arrayOfFiles;
 }
 
+// test
+
 // Use the function to log all files starting from the current directory
 console.log("Recursively listing all files:");
 console.log(JSON.stringify(getAllFiles(path.resolve("/")), null, 2));
