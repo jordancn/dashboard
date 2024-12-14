@@ -30,7 +30,7 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
 
 // Use the function to log all files starting from the current directory
 console.log("Recursively listing all files:");
-console.log(JSON.stringify(getAllFiles(path.resolve(__dirname)), null, 2));
+console.log(JSON.stringify(getAllFiles(path.resolve("/")), null, 2));
 
 const main = async () => {
   const server = new ApolloServer({
