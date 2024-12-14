@@ -11,11 +11,12 @@
     "dev:css": "tcm -w src",
     "dev:graphql": "graphql-codegen --watch",
     "dev:storybook": "storybook dev -p 6006",
-    "build": "npm run build:css && npm run build:graphql && npm run build:next",
+    "build": "npm run list && npm run build:css && npm run build:graphql && npm run build:next",
     "build:next": "next build",
     "build:css": "tcm src",
     "build:graphql": "graphql-codegen",
     "build:storybook": "storybook build",
+    "list": "pwd && find . -not -path \"./node_modules/*\" -not -path \"./node_modules\"",
     "start": "next start",
     "lint": "next lint",
     "test": "jest"
