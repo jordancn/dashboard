@@ -2,15 +2,14 @@
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
+const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
+
+console.info("GraphQL URL", graphqlUrl);
+
 const client = new ApolloClient({
-  uri: process.env.GRAPHQL_URL,
+  uri: graphqlUrl,
   cache: new InMemoryCache(),
 });
-
-console.log(
-  "NEXT_PUBLIC_GRAPHQL_ENDPOINT",
-  process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
-);
 
 export const GraphQLProvider = ({
   children,
