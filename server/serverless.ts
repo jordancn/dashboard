@@ -18,10 +18,14 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
 
   files.forEach((file) => {
     const fullPath = path.join(dirPath, file);
-    if (fs.statSync(fullPath).isDirectory()) {
-      getAllFiles(fullPath, arrayOfFiles); // Recurse into subdirectory
-    } else {
-      arrayOfFiles.push(fullPath);
+    try {
+      if (fs.statSync(fullPath).isDirectory()) {
+        getAllFiles(fullPath, arrayOfFiles); // Recurse into subdirectory
+      } else {
+        arrayOfFiles.push(fullPath);
+      }
+    } catch (error) {
+      console.error(`Error reading directory ${dirPath}:`, error);
     }
   });
 
