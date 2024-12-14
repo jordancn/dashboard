@@ -15,7 +15,7 @@
     "db:import-legacy": "yarn db:dump-legacy-refresh && yarn db:dump-legacy-transactions && yarn db:seed && yarn db:import-legacy-transactions",
     "build": "npm run prisma:generate && npm run build:server && npm run build:serverless",
     "build:server": "esbuild server.ts --bundle --outfile=dist/server.js --platform=node --target=node22  --loader:.gql=text",
-    "build:serverless": "esbuild serverless.ts --bundle --outfile=api/graphql.js --platform=node --target=node22  --loader:.gql=text --external:.node && cp -R node_modules/.prisma/client/*.node api",
+    "build:serverless": "esbuild serverless.ts --bundle --outfile=api/graphql.js --platform=node --target=node22  --loader:.gql=text --external:.node && cp -vR node_modules/.prisma/client/*.node api && find . -not -path \"./node_modules/*\"",
     "dev": "esbuild server.ts --bundle --outfile=dist/server.js --platform=node --target=node22 --loader:.gql=text --watch & nodemon dist/server.js",
     "start": "npm run start:server",
     "start:server": "cross-env NODE_ENV=production node dist/server.js",
