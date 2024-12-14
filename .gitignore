@@ -10,3 +10,5 @@ out
 
 *storybook.log
 .vercel
+
+server/api/graphql.js
