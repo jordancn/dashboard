@@ -1,17 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "dist/api/graphql.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/graphql",
-      "dest": "dist/api/graphql.js"
-    }
-  ],
   "functions": {
     "api/graphql.js": {
       "memory": 1024,
