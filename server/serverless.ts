@@ -12,11 +12,28 @@ const main = async () => {
     context,
   });
 
+  console.log("Starting Apollo Server");
+
   await server.start();
 
-  return server.createHandler({
+  console.log("Apollo Server started");
+
+  console.log("Creating Apollo Server handler");
+
+  const handler = server.createHandler({
     path: "/api/graphql", // Used for serverless platforms
   });
+
+  console.log("Apollo Server handler created");
+
+  return handler;
 };
+
+console.log("Serverless");
+
+console.log(
+  "Database URL",
+  process.env.DATABASE_URL?.replace(/\:.*@/g, ":[REDACTED]@")
+);
 
 export default main();

@@ -19,7 +19,7 @@
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn -r tsconfig-paths/register server.ts",
     "start": "npm run start:server",
     "start:server": "cross-env NODE_ENV=production node dist/server.js",
-    "start:serverless": "cross-env NODE_ENV=production node dist/serverless.js",
+    "start:serverless": "cross-env NODE_ENV=production node dist/api/graphql.js",
     "schema:generate": "graphql-codegen",
     "vercel-deploy": "npm run build:serverless && vercel --prod"
   },
