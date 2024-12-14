@@ -1,6 +1,7 @@
 {
+  "buildCommand": "npm run build:serverless",
   "functions": {
-    "graphql.js": {
+    "api/graphql.js": {
       "memory": 1024,
       "maxDuration": 10
     }
