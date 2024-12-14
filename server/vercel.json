@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/graphql.js": {
+    "graphql.js": {
       "memory": 1024,
       "maxDuration": 10
     }
