@@ -18,7 +18,6 @@ const isDirectory = (dirPath: string) => {
   try {
     return fs.statSync(dirPath).isDirectory();
   } catch (error) {
-    console.error(`Error reading directory ${dirPath}:`, error);
     return false;
   }
 };
