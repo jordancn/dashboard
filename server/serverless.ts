@@ -23,18 +23,22 @@ const isDirectory = (dirPath: string) => {
 };
 
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
-  const files = fs.readdirSync(dirPath);
+  try {
+    const files = fs.readdirSync(dirPath);
 
-  files.forEach((file) => {
-    const fullPath = path.join(dirPath, file);
-    if (isDirectory(fullPath)) {
-      getAllFiles(fullPath, arrayOfFiles); // Recurse into subdirectory
-    } else {
-      arrayOfFiles.push(fullPath);
-    }
-  });
+    files.forEach((file) => {
+      const fullPath = path.join(dirPath, file);
+      if (isDirectory(fullPath)) {
+        getAllFiles(fullPath, arrayOfFiles); // Recurse into subdirectory
+      } else {
+        arrayOfFiles.push(fullPath);
+      }
+    });
 
-  return arrayOfFiles;
+    return arrayOfFiles;
+  } catch (error) {
+    return [];
+  }
 }
 
 // test
