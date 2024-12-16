@@ -18,22 +18,22 @@ jobs:
       - name: Copy project files to Linode
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ vars.DEPLOY_HOSTNAME }}
-          username: ${{ vars.DEPLOY_USERNAME }}
+          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           source: .
-          target: /home/${{ vars.DEPLOY_USERNAME }}/app
+          target: /home/${{ secrets.DEPLOY_USERNAME }}/app
 
       # Step 3: SSH into Linode and deploy with Docker Compose
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: ${{ vars.DEPLOY_HOSTNAME }}
-          username: ${{ vars.DEPLOY_USERNAME }}
+          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           script: |
-            mkdir -p /home/${{ vars.DEPLOY_USERNAME }}/app
-            cd /home/${{ vars.DEPLOY_USERNAME }}/app
+            mkdir -p /home/${{ secrets.DEPLOY_USERNAME }}/app
+            cd /home/${{ secrets.DEPLOY_USERNAME }}/app
             docker-compose down || true
             docker-compose up -d --build
             docker system prune -f
