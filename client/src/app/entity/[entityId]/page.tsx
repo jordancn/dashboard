@@ -410,13 +410,11 @@ const EntityPage = () => {
           balance={currentBalance}
           date={results.data?.lastRefreshed}
         />
-
         <EntityInsightActivityCard
           activityGroup={activityGroup}
           activity={activity}
           entityId={params.entityId}
         />
-
         <Empty>
           {!params.entityId && <SectionHeading title="Insights" />}
           {params.entityId && (
@@ -433,7 +431,7 @@ const EntityPage = () => {
             dateRange={insightsDateRange}
           />
         </Empty>
-
+        TEST 1 2 3
         {/* 
         {props.mode === "budget" && budget && params.entityId && (
           <Empty>
@@ -450,7 +448,6 @@ const EntityPage = () => {
             />
           </Empty>
         )} */}
-
         {pendingTransactions.length > 0 && (
           <Empty>
             <SectionHeading title="Pending Transactions" />
@@ -461,18 +458,14 @@ const EntityPage = () => {
             />
           </Empty>
         )}
-
         {latestTransactions.length > 0 && (
           <SectionHeading title="Latest Transactions" />
         )}
-
         <TransactionCards
           transactions={latestTransactions as shame /* TODO */}
           entityId={params.entityId}
         />
-
         <SectionHeading title={getYearFromIsoDate(today())} />
-
         <TransactionGroupCards
           transactionGroups={groupedTransactions}
           entityId={params.entityId}

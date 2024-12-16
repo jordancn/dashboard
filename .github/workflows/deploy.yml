@@ -33,8 +33,7 @@ jobs:
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           debug: true
           script: |
-            whoami
-          # cd app
-          # docker-compose down || true
-          # docker-compose up -d --build
-          # docker system prune -f
+            cd app
+            docker-compose down || true
+            docker-compose up -d --build
+            docker system prune -f
