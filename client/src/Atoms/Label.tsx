@@ -12,6 +12,7 @@ export const Label = (props: {
       className={classNames(styles.label, {
         [styles.primary]: props.variant === "primary" || !props.variant,
         [styles.secondary]: props.variant === "secondary",
+        [styles.clickable]: props.onClick,
       })}
       onClick={props.onClick}
     >

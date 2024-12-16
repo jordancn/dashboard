@@ -5428,7 +5428,7 @@ var require_client = __commonJS({
       JsonNull: objectEnumValues2.classes.JsonNull,
       AnyNull: objectEnumValues2.classes.AnyNull
     };
-    var path = require("path");
+    var path2 = require("path");
     exports2.Prisma.TransactionIsolationLevel = makeStrictEnum2({
       ReadUncommitted: "ReadUncommitted",
       ReadCommitted: "ReadCommitted",
@@ -5622,17 +5622,17 @@ var require_client = __commonJS({
       "inlineSchemaHash": "f6333c992160407ac9c10c0b8356af6195e66f9090967b7b359879c771e0f4c3",
       "copyEngine": true
     };
-    var fs2 = require("fs");
+    var fs3 = require("fs");
     config2.dirname = __dirname;
-    if (!fs2.existsSync(path.join(__dirname, "schema.prisma"))) {
+    if (!fs3.existsSync(path2.join(__dirname, "schema.prisma"))) {
       const alternativePaths = [
         "node_modules/.prisma/client",
         ".prisma/client"
       ];
       const alternativePath = alternativePaths.find((altPath) => {
-        return fs2.existsSync(path.join(process.cwd(), altPath, "schema.prisma"));
+        return fs3.existsSync(path2.join(process.cwd(), altPath, "schema.prisma"));
       }) ?? alternativePaths[0];
-      config2.dirname = path.join(process.cwd(), alternativePath);
+      config2.dirname = path2.join(process.cwd(), alternativePath);
       config2.isBundled = true;
     }
     config2.runtimeDataModel = JSON.parse('{"models":{"Entity":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"name","kind":"scalar","isList":false,"isRequired":true,"isUnique":true,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"Account","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Account","nativeType":null,"relationName":"AccountToEntity","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"Property","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Property","nativeType":null,"relationName":"EntityToProperty","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"Budget","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Budget","nativeType":null,"relationName":"BudgetToEntity","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"includeInOverall","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"Boolean","nativeType":null,"default":false,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Institution":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"name","kind":"scalar","isList":false,"isRequired":true,"isUnique":true,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"Account","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Account","nativeType":null,"relationName":"AccountToInstitution","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Category":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"name","kind":"scalar","isList":false,"isRequired":true,"isUnique":true,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"categoryType","kind":"enum","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"CategoryType","nativeType":null,"default":"Expense","isGenerated":false,"isUpdatedAt":false},{"name":"Transaction","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Transaction","nativeType":null,"relationName":"CategoryToTransaction","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"Budget","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Budget","nativeType":null,"relationName":"BudgetToCategory","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Vendor":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"name","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"image","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Bytes","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"Transaction","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Transaction","nativeType":null,"relationName":"TransactionToVendor","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Account":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"externalId","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"name","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"number","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"institution","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Institution","nativeType":null,"relationName":"AccountToInstitution","relationFromFields":["institutionId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"institutionId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"RefreshLog","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"RefreshLog","nativeType":null,"relationName":"AccountToRefreshLog","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"Transaction","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Transaction","nativeType":null,"relationName":"AccountToTransaction","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"entity","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Entity","nativeType":null,"relationName":"AccountToEntity","relationFromFields":["entityId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"entityId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"Balance","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Balance","nativeType":null,"relationName":"AccountToBalance","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"accountType","kind":"enum","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"AccountType","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"Mortgage","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Mortgage","nativeType":null,"relationName":"AccountToMortgage","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[["institutionId","entityId","name"]],"uniqueIndexes":[{"name":null,"fields":["institutionId","entityId","name"]}],"isGenerated":false},"RefreshLog":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"refreshedAt","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"DateTime","nativeType":["Timestamptz",[]],"default":{"name":"now","args":[]},"isGenerated":false,"isUpdatedAt":false},{"name":"account","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Account","nativeType":null,"relationName":"AccountToRefreshLog","relationFromFields":["accountId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"accountId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Balance":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"account","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Account","nativeType":null,"relationName":"AccountToBalance","relationFromFields":["accountId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"addedAt","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"DateTime","nativeType":["Timestamptz",[]],"default":{"name":"now","args":[]},"isGenerated":false,"isUpdatedAt":false},{"name":"balance","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"accountId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Transaction":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"account","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Account","nativeType":null,"relationName":"AccountToTransaction","relationFromFields":["accountId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"accountId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"date","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"DateTime","nativeType":["Date",[]],"isGenerated":false,"isUpdatedAt":false},{"name":"addedAt","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"DateTime","nativeType":["Timestamptz",[]],"default":{"name":"now","args":[]},"isGenerated":false,"isUpdatedAt":false},{"name":"category","kind":"object","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Category","nativeType":null,"relationName":"CategoryToTransaction","relationFromFields":["categoryId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"categoryId","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"description","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"amount","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"availableBalance","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"property","kind":"object","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Property","nativeType":null,"relationName":"PropertyToTransaction","relationFromFields":["propertyId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"propertyId","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"pending","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"Boolean","nativeType":null,"default":false,"isGenerated":false,"isUpdatedAt":false},{"name":"vendor","kind":"object","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Vendor","nativeType":null,"relationName":"TransactionToVendor","relationFromFields":["vendorId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"vendorId","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[["accountId","date","description","amount","availableBalance"]],"uniqueIndexes":[{"name":null,"fields":["accountId","date","description","amount","availableBalance"]}],"isGenerated":false},"Budget":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"entity","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Entity","nativeType":null,"relationName":"BudgetToEntity","relationFromFields":["entityId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"entityId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"category","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Category","nativeType":null,"relationName":"BudgetToCategory","relationFromFields":["categoryId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"categoryId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"BudgetAmount","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"BudgetAmount","nativeType":null,"relationName":"BudgetToBudgetAmount","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"BudgetAmount":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"amount","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"startingAt","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"DateTime","nativeType":["Date",[]],"isGenerated":false,"isUpdatedAt":false},{"name":"budget","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Budget","nativeType":null,"relationName":"BudgetToBudgetAmount","relationFromFields":["budgetId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"budgetId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Property":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"externalId","kind":"scalar","isList":false,"isRequired":false,"isUnique":true,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"entity","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Entity","nativeType":null,"relationName":"EntityToProperty","relationFromFields":["entityId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"entityId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"address","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"city","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"state","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"zip","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"propertyType","kind":"enum","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"PropertyType","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"propertyPurpose","kind":"enum","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"PropertyPurpose","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"latitude","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"longitude","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"acquired","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"DateTime","nativeType":["Date",[]],"isGenerated":false,"isUpdatedAt":false},{"name":"dispositioned","kind":"scalar","isList":false,"isRequired":false,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"DateTime","nativeType":["Date",[]],"isGenerated":false,"isUpdatedAt":false},{"name":"Mortgage","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Mortgage","nativeType":null,"relationName":"MortgageToProperty","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"Value","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Value","nativeType":null,"relationName":"PropertyToValue","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false},{"name":"Transaction","kind":"object","isList":true,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Transaction","nativeType":null,"relationName":"PropertyToTransaction","relationFromFields":[],"relationToFields":[],"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[["entityId","address","city","state","zip"]],"uniqueIndexes":[{"name":null,"fields":["entityId","address","city","state","zip"]}],"isGenerated":false},"Mortgage":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"property","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Property","nativeType":null,"relationName":"MortgageToProperty","relationFromFields":["propertyId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"propertyId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"payment","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"account","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Account","nativeType":null,"relationName":"AccountToMortgage","relationFromFields":["accountId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"accountId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"startingBalance","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false},"Value":{"dbName":null,"schema":null,"fields":[{"name":"id","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":true,"isReadOnly":false,"hasDefaultValue":true,"type":"String","nativeType":null,"default":{"name":"uuid","args":[4]},"isGenerated":false,"isUpdatedAt":false},{"name":"addedAt","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":true,"type":"DateTime","nativeType":["Timestamptz",[]],"default":{"name":"now","args":[]},"isGenerated":false,"isUpdatedAt":false},{"name":"property","kind":"object","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Property","nativeType":null,"relationName":"PropertyToValue","relationFromFields":["propertyId"],"relationToFields":["id"],"isGenerated":false,"isUpdatedAt":false},{"name":"propertyId","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":true,"hasDefaultValue":false,"type":"String","nativeType":null,"isGenerated":false,"isUpdatedAt":false},{"name":"value","kind":"scalar","isList":false,"isRequired":true,"isUnique":false,"isId":false,"isReadOnly":false,"hasDefaultValue":false,"type":"Decimal","nativeType":null,"isGenerated":false,"isUpdatedAt":false}],"primaryKey":null,"uniqueFields":[],"uniqueIndexes":[],"isGenerated":false}},"enums":{"AccountType":{"values":[{"name":"Checking","dbName":null},{"name":"Savings","dbName":null},{"name":"Retirement","dbName":null},{"name":"Credit","dbName":null},{"name":"Mortgage","dbName":null}],"dbName":null},"PropertyType":{"values":[{"name":"SingleFamily","dbName":null},{"name":"Duplex","dbName":null}],"dbName":null},"PropertyPurpose":{"values":[{"name":"Rental","dbName":null},{"name":"LandContract","dbName":null},{"name":"Lender","dbName":null},{"name":"Wholesale","dbName":null}],"dbName":null},"CategoryType":{"values":[{"name":"Expense","dbName":null},{"name":"Income","dbName":null}],"dbName":null}},"types":{}}');
@@ -5640,16 +5640,16 @@ var require_client = __commonJS({
     config2.engineWasm = void 0;
     var { warnEnvConflicts: warnEnvConflicts2 } = require_library();
     warnEnvConflicts2({
-      rootEnvPath: config2.relativeEnvPaths.rootEnvPath && path.resolve(config2.dirname, config2.relativeEnvPaths.rootEnvPath),
-      schemaEnvPath: config2.relativeEnvPaths.schemaEnvPath && path.resolve(config2.dirname, config2.relativeEnvPaths.schemaEnvPath)
+      rootEnvPath: config2.relativeEnvPaths.rootEnvPath && path2.resolve(config2.dirname, config2.relativeEnvPaths.rootEnvPath),
+      schemaEnvPath: config2.relativeEnvPaths.schemaEnvPath && path2.resolve(config2.dirname, config2.relativeEnvPaths.schemaEnvPath)
     });
     var PrismaClient2 = getPrismaClient2(config2);
     exports2.PrismaClient = PrismaClient2;
     Object.assign(exports2, Prisma2);
-    path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
-    path.join(process.cwd(), "node_modules/.prisma/client/libquery_engine-darwin-arm64.dylib.node");
-    path.join(__dirname, "schema.prisma");
-    path.join(process.cwd(), "node_modules/.prisma/client/schema.prisma");
+    path2.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
+    path2.join(process.cwd(), "node_modules/.prisma/client/libquery_engine-darwin-arm64.dylib.node");
+    path2.join(__dirname, "schema.prisma");
+    path2.join(process.cwd(), "node_modules/.prisma/client/schema.prisma");
   }
 });
 
@@ -23742,11 +23742,11 @@ var require_lodash = __commonJS({
             return isFunction(object[key]);
           });
         }
-        function baseGet(object, path) {
-          path = castPath(path, object);
-          var index = 0, length = path.length;
+        function baseGet(object, path2) {
+          path2 = castPath(path2, object);
+          var index = 0, length = path2.length;
           while (object != null && index < length) {
-            object = object[toKey(path[index++])];
+            object = object[toKey(path2[index++])];
           }
           return index && index == length ? object : undefined2;
         }
@@ -23810,10 +23810,10 @@ var require_lodash = __commonJS({
           });
           return accumulator;
         }
-        function baseInvoke(object, path, args) {
-          path = castPath(path, object);
-          object = parent(object, path);
-          var func = object == null ? object : object[toKey(last(path))];
+        function baseInvoke(object, path2, args) {
+          path2 = castPath(path2, object);
+          object = parent(object, path2);
+          var func = object == null ? object : object[toKey(last(path2))];
           return func == null ? undefined2 : apply(func, object, args);
         }
         function baseIsArguments(value) {
@@ -23969,13 +23969,13 @@ var require_lodash = __commonJS({
             return object === source || baseIsMatch(object, source, matchData);
           };
         }
-        function baseMatchesProperty(path, srcValue) {
-          if (isKey(path) && isStrictComparable(srcValue)) {
-            return matchesStrictComparable(toKey(path), srcValue);
+        function baseMatchesProperty(path2, srcValue) {
+          if (isKey(path2) && isStrictComparable(srcValue)) {
+            return matchesStrictComparable(toKey(path2), srcValue);
           }
           return function(object) {
-            var objValue = get(object, path);
-            return objValue === undefined2 && objValue === srcValue ? hasIn(object, path) : baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG);
+            var objValue = get(object, path2);
+            return objValue === undefined2 && objValue === srcValue ? hasIn(object, path2) : baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG);
           };
         }
         function baseMerge(object, source, srcIndex, customizer, stack) {
@@ -24072,23 +24072,23 @@ var require_lodash = __commonJS({
           });
         }
         function basePick(object, paths) {
-          return basePickBy(object, paths, function(value, path) {
-            return hasIn(object, path);
+          return basePickBy(object, paths, function(value, path2) {
+            return hasIn(object, path2);
           });
         }
         function basePickBy(object, paths, predicate) {
           var index = -1, length = paths.length, result2 = {};
           while (++index < length) {
-            var path = paths[index], value = baseGet(object, path);
-            if (predicate(value, path)) {
-              baseSet(result2, castPath(path, object), value);
+            var path2 = paths[index], value = baseGet(object, path2);
+            if (predicate(value, path2)) {
+              baseSet(result2, castPath(path2, object), value);
             }
           }
           return result2;
         }
-        function basePropertyDeep(path) {
+        function basePropertyDeep(path2) {
           return function(object) {
-            return baseGet(object, path);
+            return baseGet(object, path2);
           };
         }
         function basePullAll(array, values2, iteratee2, comparator) {
@@ -24162,14 +24162,14 @@ var require_lodash = __commonJS({
           var array = values(collection);
           return shuffleSelf(array, baseClamp(n, 0, array.length));
         }
-        function baseSet(object, path, value, customizer) {
+        function baseSet(object, path2, value, customizer) {
           if (!isObject2(object)) {
             return object;
           }
-          path = castPath(path, object);
-          var index = -1, length = path.length, lastIndex = length - 1, nested = object;
+          path2 = castPath(path2, object);
+          var index = -1, length = path2.length, lastIndex = length - 1, nested = object;
           while (nested != null && ++index < length) {
-            var key = toKey(path[index]), newValue = value;
+            var key = toKey(path2[index]), newValue = value;
             if (key === "__proto__" || key === "constructor" || key === "prototype") {
               return object;
             }
@@ -24177,7 +24177,7 @@ var require_lodash = __commonJS({
               var objValue = nested[key];
               newValue = customizer ? customizer(objValue, key, nested) : undefined2;
               if (newValue === undefined2) {
-                newValue = isObject2(objValue) ? objValue : isIndex(path[index + 1]) ? [] : {};
+                newValue = isObject2(objValue) ? objValue : isIndex(path2[index + 1]) ? [] : {};
               }
             }
             assignValue(nested, key, newValue);
@@ -24343,13 +24343,13 @@ var require_lodash = __commonJS({
             }
           return result2;
         }
-        function baseUnset(object, path) {
-          path = castPath(path, object);
-          object = parent(object, path);
-          return object == null || delete object[toKey(last(path))];
+        function baseUnset(object, path2) {
+          path2 = castPath(path2, object);
+          object = parent(object, path2);
+          return object == null || delete object[toKey(last(path2))];
         }
-        function baseUpdate(object, path, updater, customizer) {
-          return baseSet(object, path, updater(baseGet(object, path)), customizer);
+        function baseUpdate(object, path2, updater, customizer) {
+          return baseSet(object, path2, updater(baseGet(object, path2)), customizer);
         }
         function baseWhile(array, predicate, isDrop, fromRight) {
           var length = array.length, index = fromRight ? length : -1;
@@ -25232,11 +25232,11 @@ var require_lodash = __commonJS({
           var match = source.match(reWrapDetails);
           return match ? match[1].split(reSplitDetails) : [];
         }
-        function hasPath(object, path, hasFunc) {
-          path = castPath(path, object);
-          var index = -1, length = path.length, result2 = false;
+        function hasPath(object, path2, hasFunc) {
+          path2 = castPath(path2, object);
+          var index = -1, length = path2.length, result2 = false;
           while (++index < length) {
-            var key = toKey(path[index]);
+            var key = toKey(path2[index]);
             if (!(result2 = object != null && hasFunc(object, key))) {
               break;
             }
@@ -25438,8 +25438,8 @@ var require_lodash = __commonJS({
             return apply(func, this, otherArgs);
           };
         }
-        function parent(object, path) {
-          return path.length < 2 ? object : baseGet(object, baseSlice(path, 0, -1));
+        function parent(object, path2) {
+          return path2.length < 2 ? object : baseGet(object, baseSlice(path2, 0, -1));
         }
         function reorder(array, indexes) {
           var arrLength = array.length, length = nativeMin(indexes.length, arrLength), oldArray = copyArray(array);
@@ -26074,10 +26074,10 @@ var require_lodash = __commonJS({
           }
           return isString2(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
         }
-        var invokeMap = baseRest(function(collection, path, args) {
-          var index = -1, isFunc = typeof path == "function", result2 = isArrayLike(collection) ? Array2(collection.length) : [];
+        var invokeMap = baseRest(function(collection, path2, args) {
+          var index = -1, isFunc = typeof path2 == "function", result2 = isArrayLike(collection) ? Array2(collection.length) : [];
           baseEach(collection, function(value) {
-            result2[++index] = isFunc ? apply(path, value, args) : baseInvoke(value, path, args);
+            result2[++index] = isFunc ? apply(path2, value, args) : baseInvoke(value, path2, args);
           });
           return result2;
         });
@@ -26729,15 +26729,15 @@ var require_lodash = __commonJS({
         function functionsIn(object) {
           return object == null ? [] : baseFunctions(object, keysIn(object));
         }
-        function get(object, path, defaultValue) {
-          var result2 = object == null ? undefined2 : baseGet(object, path);
+        function get(object, path2, defaultValue) {
+          var result2 = object == null ? undefined2 : baseGet(object, path2);
           return result2 === undefined2 ? defaultValue : result2;
         }
-        function has(object, path) {
-          return object != null && hasPath(object, path, baseHas);
+        function has(object, path2) {
+          return object != null && hasPath(object, path2, baseHas);
         }
-        function hasIn(object, path) {
-          return object != null && hasPath(object, path, baseHasIn);
+        function hasIn(object, path2) {
+          return object != null && hasPath(object, path2, baseHasIn);
         }
         var invert = createInverter(function(result2, value, key) {
           if (value != null && typeof value.toString != "function") {
@@ -26790,10 +26790,10 @@ var require_lodash = __commonJS({
             return result2;
           }
           var isDeep = false;
-          paths = arrayMap(paths, function(path) {
-            path = castPath(path, object);
-            isDeep || (isDeep = path.length > 1);
-            return path;
+          paths = arrayMap(paths, function(path2) {
+            path2 = castPath(path2, object);
+            isDeep || (isDeep = path2.length > 1);
+            return path2;
           });
           copyObject(object, getAllKeysIn(object), result2);
           if (isDeep) {
@@ -26819,19 +26819,19 @@ var require_lodash = __commonJS({
             return [prop];
           });
           predicate = getIteratee(predicate);
-          return basePickBy(object, props, function(value, path) {
-            return predicate(value, path[0]);
+          return basePickBy(object, props, function(value, path2) {
+            return predicate(value, path2[0]);
           });
         }
-        function result(object, path, defaultValue) {
-          path = castPath(path, object);
-          var index = -1, length = path.length;
+        function result(object, path2, defaultValue) {
+          path2 = castPath(path2, object);
+          var index = -1, length = path2.length;
           if (!length) {
             length = 1;
             object = undefined2;
           }
           while (++index < length) {
-            var value = object == null ? undefined2 : object[toKey(path[index])];
+            var value = object == null ? undefined2 : object[toKey(path2[index])];
             if (value === undefined2) {
               index = length;
               value = defaultValue;
@@ -26840,12 +26840,12 @@ var require_lodash = __commonJS({
           }
           return object;
         }
-        function set(object, path, value) {
-          return object == null ? object : baseSet(object, path, value);
+        function set(object, path2, value) {
+          return object == null ? object : baseSet(object, path2, value);
         }
-        function setWith(object, path, value, customizer) {
+        function setWith(object, path2, value, customizer) {
           customizer = typeof customizer == "function" ? customizer : undefined2;
-          return object == null ? object : baseSet(object, path, value, customizer);
+          return object == null ? object : baseSet(object, path2, value, customizer);
         }
         var toPairs = createToPairs(keys);
         var toPairsIn = createToPairs(keysIn);
@@ -26867,15 +26867,15 @@ var require_lodash = __commonJS({
           });
           return accumulator;
         }
-        function unset(object, path) {
-          return object == null ? true : baseUnset(object, path);
+        function unset(object, path2) {
+          return object == null ? true : baseUnset(object, path2);
         }
-        function update(object, path, updater) {
-          return object == null ? object : baseUpdate(object, path, castFunction(updater));
+        function update(object, path2, updater) {
+          return object == null ? object : baseUpdate(object, path2, castFunction(updater));
         }
-        function updateWith(object, path, updater, customizer) {
+        function updateWith(object, path2, updater, customizer) {
           customizer = typeof customizer == "function" ? customizer : undefined2;
-          return object == null ? object : baseUpdate(object, path, castFunction(updater), customizer);
+          return object == null ? object : baseUpdate(object, path2, castFunction(updater), customizer);
         }
         function values(object) {
           return object == null ? [] : baseValues(object, keys(object));
@@ -27256,17 +27256,17 @@ var require_lodash = __commonJS({
         function matches(source) {
           return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
         }
-        function matchesProperty(path, srcValue) {
-          return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
+        function matchesProperty(path2, srcValue) {
+          return baseMatchesProperty(path2, baseClone(srcValue, CLONE_DEEP_FLAG));
         }
-        var method = baseRest(function(path, args) {
+        var method = baseRest(function(path2, args) {
           return function(object) {
-            return baseInvoke(object, path, args);
+            return baseInvoke(object, path2, args);
           };
         });
         var methodOf = baseRest(function(object, args) {
-          return function(path) {
-            return baseInvoke(object, path, args);
+          return function(path2) {
+            return baseInvoke(object, path2, args);
           };
         });
         function mixin(object, source, options) {
@@ -27313,12 +27313,12 @@ var require_lodash = __commonJS({
         var over = createOver(arrayMap);
         var overEvery = createOver(arrayEvery);
         var overSome = createOver(arraySome);
-        function property(path) {
-          return isKey(path) ? baseProperty(toKey(path)) : basePropertyDeep(path);
+        function property(path2) {
+          return isKey(path2) ? baseProperty(toKey(path2)) : basePropertyDeep(path2);
         }
         function propertyOf(object) {
-          return function(path) {
-            return object == null ? undefined2 : baseGet(object, path);
+          return function(path2) {
+            return object == null ? undefined2 : baseGet(object, path2);
           };
         }
         var range3 = createRange();
@@ -27771,12 +27771,12 @@ var require_lodash = __commonJS({
         LazyWrapper.prototype.findLast = function(predicate) {
           return this.reverse().find(predicate);
         };
-        LazyWrapper.prototype.invokeMap = baseRest(function(path, args) {
-          if (typeof path == "function") {
+        LazyWrapper.prototype.invokeMap = baseRest(function(path2, args) {
+          if (typeof path2 == "function") {
             return new LazyWrapper(this);
           }
           return this.map(function(value) {
-            return baseInvoke(value, path, args);
+            return baseInvoke(value, path2, args);
           });
         });
         LazyWrapper.prototype.reject = function(predicate) {
@@ -31016,10 +31016,10 @@ var require_GraphQLError = __commonJS({
        */
       constructor(message, ...rawArgs) {
         var _this$nodes, _nodeLocations$, _ref;
-        const { nodes, source, positions, path, originalError, extensions } = toNormalizedOptions(rawArgs);
+        const { nodes, source, positions, path: path2, originalError, extensions } = toNormalizedOptions(rawArgs);
         super(message);
         this.name = "GraphQLError";
-        this.path = path !== null && path !== void 0 ? path : void 0;
+        this.path = path2 !== null && path2 !== void 0 ? path2 : void 0;
         this.originalError = originalError !== null && originalError !== void 0 ? originalError : void 0;
         this.nodes = undefinedIfEmpty(
           Array.isArray(nodes) ? nodes : nodes ? [nodes] : void 0
@@ -34231,14 +34231,14 @@ var require_visitor = __commonJS({
       let node = root;
       let key = void 0;
       let parent = void 0;
-      const path = [];
+      const path2 = [];
       const ancestors = [];
       do {
         index++;
         const isLeaving = index === keys.length;
         const isEdited = isLeaving && edits.length !== 0;
         if (isLeaving) {
-          key = ancestors.length === 0 ? void 0 : path[path.length - 1];
+          key = ancestors.length === 0 ? void 0 : path2[path2.length - 1];
           node = parent;
           parent = ancestors.pop();
           if (isEdited) {
@@ -34275,7 +34275,7 @@ var require_visitor = __commonJS({
           if (node === null || node === void 0) {
             continue;
           }
-          path.push(key);
+          path2.push(key);
         }
         let result;
         if (!Array.isArray(node)) {
@@ -34285,13 +34285,13 @@ var require_visitor = __commonJS({
             `Invalid AST Node: ${(0, _inspect.inspect)(node)}.`
           );
           const visitFn = isLeaving ? (_enterLeaveMap$get = enterLeaveMap.get(node.kind)) === null || _enterLeaveMap$get === void 0 ? void 0 : _enterLeaveMap$get.leave : (_enterLeaveMap$get2 = enterLeaveMap.get(node.kind)) === null || _enterLeaveMap$get2 === void 0 ? void 0 : _enterLeaveMap$get2.enter;
-          result = visitFn === null || visitFn === void 0 ? void 0 : visitFn.call(visitor, node, key, parent, path, ancestors);
+          result = visitFn === null || visitFn === void 0 ? void 0 : visitFn.call(visitor, node, key, parent, path2, ancestors);
           if (result === BREAK) {
             break;
           }
           if (result === false) {
             if (!isLeaving) {
-              path.pop();
+              path2.pop();
               continue;
             }
           } else if (result !== void 0) {
@@ -34300,7 +34300,7 @@ var require_visitor = __commonJS({
               if ((0, _ast.isNode)(result)) {
                 node = result;
               } else {
-                path.pop();
+                path2.pop();
                 continue;
               }
             }
@@ -34310,7 +34310,7 @@ var require_visitor = __commonJS({
           edits.push([key, node]);
         }
         if (isLeaving) {
-          path.pop();
+          path2.pop();
         } else {
           var _node$kind;
           stack = {
@@ -39534,8 +39534,8 @@ var require_printPathArray = __commonJS({
       value: true
     });
     exports2.printPathArray = printPathArray;
-    function printPathArray(path) {
-      return path.map(
+    function printPathArray(path2) {
+      return path2.map(
         (key) => typeof key === "number" ? "[" + key.toString() + "]" : "." + key
       ).join("");
     }
@@ -39558,9 +39558,9 @@ var require_Path = __commonJS({
         typename
       };
     }
-    function pathToArray(path) {
+    function pathToArray(path2) {
       const flattened = [];
-      let curr = path;
+      let curr = path2;
       while (curr) {
         flattened.push(curr.key);
         curr = curr.prev;
@@ -39591,21 +39591,21 @@ var require_coerceInputValue = __commonJS({
     function coerceInputValue(inputValue, type, onError = defaultOnError) {
       return coerceInputValueImpl(inputValue, type, onError, void 0);
     }
-    function defaultOnError(path, invalidValue, error) {
+    function defaultOnError(path2, invalidValue, error) {
       let errorPrefix = "Invalid value " + (0, _inspect.inspect)(invalidValue);
-      if (path.length > 0) {
-        errorPrefix += ` at "value${(0, _printPathArray.printPathArray)(path)}"`;
+      if (path2.length > 0) {
+        errorPrefix += ` at "value${(0, _printPathArray.printPathArray)(path2)}"`;
       }
       error.message = errorPrefix + ": " + error.message;
       throw error;
     }
-    function coerceInputValueImpl(inputValue, type, onError, path) {
+    function coerceInputValueImpl(inputValue, type, onError, path2) {
       if ((0, _definition.isNonNullType)(type)) {
         if (inputValue != null) {
-          return coerceInputValueImpl(inputValue, type.ofType, onError, path);
+          return coerceInputValueImpl(inputValue, type.ofType, onError, path2);
         }
         onError(
-          (0, _Path.pathToArray)(path),
+          (0, _Path.pathToArray)(path2),
           inputValue,
           new _GraphQLError.GraphQLError(
             `Expected non-nullable type "${(0, _inspect.inspect)(
@@ -39622,16 +39622,16 @@ var require_coerceInputValue = __commonJS({
         const itemType = type.ofType;
         if ((0, _isIterableObject.isIterableObject)(inputValue)) {
           return Array.from(inputValue, (itemValue, index) => {
-            const itemPath = (0, _Path.addPath)(path, index, void 0);
+            const itemPath = (0, _Path.addPath)(path2, index, void 0);
             return coerceInputValueImpl(itemValue, itemType, onError, itemPath);
           });
         }
-        return [coerceInputValueImpl(inputValue, itemType, onError, path)];
+        return [coerceInputValueImpl(inputValue, itemType, onError, path2)];
       }
       if ((0, _definition.isInputObjectType)(type)) {
         if (!(0, _isObjectLike.isObjectLike)(inputValue)) {
           onError(
-            (0, _Path.pathToArray)(path),
+            (0, _Path.pathToArray)(path2),
             inputValue,
             new _GraphQLError.GraphQLError(
               `Expected type "${type.name}" to be an object.`
@@ -39649,7 +39649,7 @@ var require_coerceInputValue = __commonJS({
             } else if ((0, _definition.isNonNullType)(field.type)) {
               const typeStr = (0, _inspect.inspect)(field.type);
               onError(
-                (0, _Path.pathToArray)(path),
+                (0, _Path.pathToArray)(path2),
                 inputValue,
                 new _GraphQLError.GraphQLError(
                   `Field "${field.name}" of required type "${typeStr}" was not provided.`
@@ -39662,7 +39662,7 @@ var require_coerceInputValue = __commonJS({
             fieldValue,
             field.type,
             onError,
-            (0, _Path.addPath)(path, field.name, type.name)
+            (0, _Path.addPath)(path2, field.name, type.name)
           );
         }
         for (const fieldName of Object.keys(inputValue)) {
@@ -39672,7 +39672,7 @@ var require_coerceInputValue = __commonJS({
               Object.keys(type.getFields())
             );
             onError(
-              (0, _Path.pathToArray)(path),
+              (0, _Path.pathToArray)(path2),
               inputValue,
               new _GraphQLError.GraphQLError(
                 `Field "${fieldName}" is not defined by type "${type.name}".` + (0, _didYouMean.didYouMean)(suggestions)
@@ -39684,7 +39684,7 @@ var require_coerceInputValue = __commonJS({
           const keys = Object.keys(coercedValue);
           if (keys.length !== 1) {
             onError(
-              (0, _Path.pathToArray)(path),
+              (0, _Path.pathToArray)(path2),
               inputValue,
               new _GraphQLError.GraphQLError(
                 `Exactly one key must be specified for OneOf type "${type.name}".`
@@ -39695,7 +39695,7 @@ var require_coerceInputValue = __commonJS({
           const value = coercedValue[key];
           if (value === null) {
             onError(
-              (0, _Path.pathToArray)(path).concat(key),
+              (0, _Path.pathToArray)(path2).concat(key),
               value,
               new _GraphQLError.GraphQLError(`Field "${key}" must be non-null.`)
             );
@@ -39709,10 +39709,10 @@ var require_coerceInputValue = __commonJS({
           parseResult = type.parseValue(inputValue);
         } catch (error) {
           if (error instanceof _GraphQLError.GraphQLError) {
-            onError((0, _Path.pathToArray)(path), inputValue, error);
+            onError((0, _Path.pathToArray)(path2), inputValue, error);
           } else {
             onError(
-              (0, _Path.pathToArray)(path),
+              (0, _Path.pathToArray)(path2),
               inputValue,
               new _GraphQLError.GraphQLError(
                 `Expected type "${type.name}". ` + error.message,
@@ -39726,7 +39726,7 @@ var require_coerceInputValue = __commonJS({
         }
         if (parseResult === void 0) {
           onError(
-            (0, _Path.pathToArray)(path),
+            (0, _Path.pathToArray)(path2),
             inputValue,
             new _GraphQLError.GraphQLError(`Expected type "${type.name}".`)
           );
@@ -39964,11 +39964,11 @@ var require_values = __commonJS({
         coercedValues[varName] = (0, _coerceInputValue.coerceInputValue)(
           value,
           varType,
-          (path, invalidValue, error) => {
+          (path2, invalidValue, error) => {
             let prefix = `Variable "$${varName}" got invalid value ` + (0, _inspect.inspect)(invalidValue);
-            if (path.length > 0) {
+            if (path2.length > 0) {
               prefix += ` at "${varName}${(0, _printPathArray.printPathArray)(
-                path
+                path2
               )}"`;
             }
             onError(
@@ -41700,7 +41700,7 @@ var require_locatedError = __commonJS({
     exports2.locatedError = locatedError;
     var _toError = require_toError();
     var _GraphQLError = require_GraphQLError();
-    function locatedError(rawOriginalError, nodes, path) {
+    function locatedError(rawOriginalError, nodes, path2) {
       var _nodes;
       const originalError = (0, _toError.toError)(rawOriginalError);
       if (isLocatedGraphQLError(originalError)) {
@@ -41710,7 +41710,7 @@ var require_locatedError = __commonJS({
         nodes: (_nodes = originalError.nodes) !== null && _nodes !== void 0 ? _nodes : nodes,
         source: originalError.source,
         positions: originalError.positions,
-        path,
+        path: path2,
         originalError
       });
     }
@@ -41905,27 +41905,27 @@ var require_execute = __commonJS({
         rootType,
         operation.selectionSet
       );
-      const path = void 0;
+      const path2 = void 0;
       switch (operation.operation) {
         case _ast.OperationTypeNode.QUERY:
-          return executeFields(exeContext, rootType, rootValue, path, rootFields);
+          return executeFields(exeContext, rootType, rootValue, path2, rootFields);
         case _ast.OperationTypeNode.MUTATION:
           return executeFieldsSerially(
             exeContext,
             rootType,
             rootValue,
-            path,
+            path2,
             rootFields
           );
         case _ast.OperationTypeNode.SUBSCRIPTION:
-          return executeFields(exeContext, rootType, rootValue, path, rootFields);
+          return executeFields(exeContext, rootType, rootValue, path2, rootFields);
       }
     }
-    function executeFieldsSerially(exeContext, parentType, sourceValue, path, fields) {
+    function executeFieldsSerially(exeContext, parentType, sourceValue, path2, fields) {
       return (0, _promiseReduce.promiseReduce)(
         fields.entries(),
         (results, [responseName, fieldNodes]) => {
-          const fieldPath = (0, _Path.addPath)(path, responseName, parentType.name);
+          const fieldPath = (0, _Path.addPath)(path2, responseName, parentType.name);
           const result = executeField(
             exeContext,
             parentType,
@@ -41948,12 +41948,12 @@ var require_execute = __commonJS({
         /* @__PURE__ */ Object.create(null)
       );
     }
-    function executeFields(exeContext, parentType, sourceValue, path, fields) {
+    function executeFields(exeContext, parentType, sourceValue, path2, fields) {
       const results = /* @__PURE__ */ Object.create(null);
       let containsPromise = false;
       try {
         for (const [responseName, fieldNodes] of fields.entries()) {
-          const fieldPath = (0, _Path.addPath)(path, responseName, parentType.name);
+          const fieldPath = (0, _Path.addPath)(path2, responseName, parentType.name);
           const result = executeField(
             exeContext,
             parentType,
@@ -41981,7 +41981,7 @@ var require_execute = __commonJS({
       }
       return (0, _promiseForObject.promiseForObject)(results);
     }
-    function executeField(exeContext, parentType, source, fieldNodes, path) {
+    function executeField(exeContext, parentType, source, fieldNodes, path2) {
       var _fieldDef$resolve;
       const fieldDef = getFieldDef(exeContext.schema, parentType, fieldNodes[0]);
       if (!fieldDef) {
@@ -41994,7 +41994,7 @@ var require_execute = __commonJS({
         fieldDef,
         fieldNodes,
         parentType,
-        path
+        path2
       );
       try {
         const args = (0, _values.getArgumentValues)(
@@ -42007,7 +42007,7 @@ var require_execute = __commonJS({
         let completed;
         if ((0, _isPromise.isPromise)(result)) {
           completed = result.then(
-            (resolved) => completeValue(exeContext, returnType, fieldNodes, info, path, resolved)
+            (resolved) => completeValue(exeContext, returnType, fieldNodes, info, path2, resolved)
           );
         } else {
           completed = completeValue(
@@ -42015,7 +42015,7 @@ var require_execute = __commonJS({
             returnType,
             fieldNodes,
             info,
-            path,
+            path2,
             result
           );
         }
@@ -42024,7 +42024,7 @@ var require_execute = __commonJS({
             const error = (0, _locatedError.locatedError)(
               rawError,
               fieldNodes,
-              (0, _Path.pathToArray)(path)
+              (0, _Path.pathToArray)(path2)
             );
             return handleFieldError(error, returnType, exeContext);
           });
@@ -42034,18 +42034,18 @@ var require_execute = __commonJS({
         const error = (0, _locatedError.locatedError)(
           rawError,
           fieldNodes,
-          (0, _Path.pathToArray)(path)
+          (0, _Path.pathToArray)(path2)
         );
         return handleFieldError(error, returnType, exeContext);
       }
     }
-    function buildResolveInfo(exeContext, fieldDef, fieldNodes, parentType, path) {
+    function buildResolveInfo(exeContext, fieldDef, fieldNodes, parentType, path2) {
       return {
         fieldName: fieldDef.name,
         fieldNodes,
         returnType: fieldDef.type,
         parentType,
-        path,
+        path: path2,
         schema: exeContext.schema,
         fragments: exeContext.fragments,
         rootValue: exeContext.rootValue,
@@ -42060,7 +42060,7 @@ var require_execute = __commonJS({
       exeContext.errors.push(error);
       return null;
     }
-    function completeValue(exeContext, returnType, fieldNodes, info, path, result) {
+    function completeValue(exeContext, returnType, fieldNodes, info, path2, result) {
       if (result instanceof Error) {
         throw result;
       }
@@ -42070,7 +42070,7 @@ var require_execute = __commonJS({
           returnType.ofType,
           fieldNodes,
           info,
-          path,
+          path2,
           result
         );
         if (completed === null) {
@@ -42089,7 +42089,7 @@ var require_execute = __commonJS({
           returnType,
           fieldNodes,
           info,
-          path,
+          path2,
           result
         );
       }
@@ -42102,7 +42102,7 @@ var require_execute = __commonJS({
           returnType,
           fieldNodes,
           info,
-          path,
+          path2,
           result
         );
       }
@@ -42112,7 +42112,7 @@ var require_execute = __commonJS({
           returnType,
           fieldNodes,
           info,
-          path,
+          path2,
           result
         );
       }
@@ -42121,7 +42121,7 @@ var require_execute = __commonJS({
         "Cannot complete value of unexpected output type: " + (0, _inspect.inspect)(returnType)
       );
     }
-    function completeListValue(exeContext, returnType, fieldNodes, info, path, result) {
+    function completeListValue(exeContext, returnType, fieldNodes, info, path2, result) {
       if (!(0, _isIterableObject.isIterableObject)(result)) {
         throw new _GraphQLError.GraphQLError(
           `Expected Iterable, but did not find one for field "${info.parentType.name}.${info.fieldName}".`
@@ -42130,7 +42130,7 @@ var require_execute = __commonJS({
       const itemType = returnType.ofType;
       let containsPromise = false;
       const completedResults = Array.from(result, (item, index) => {
-        const itemPath = (0, _Path.addPath)(path, index, void 0);
+        const itemPath = (0, _Path.addPath)(path2, index, void 0);
         try {
           let completedItem;
           if ((0, _isPromise.isPromise)(item)) {
@@ -42188,7 +42188,7 @@ var require_execute = __commonJS({
       }
       return serializedResult;
     }
-    function completeAbstractValue(exeContext, returnType, fieldNodes, info, path, result) {
+    function completeAbstractValue(exeContext, returnType, fieldNodes, info, path2, result) {
       var _returnType$resolveTy;
       const resolveTypeFn = (_returnType$resolveTy = returnType.resolveType) !== null && _returnType$resolveTy !== void 0 ? _returnType$resolveTy : exeContext.typeResolver;
       const contextValue = exeContext.contextValue;
@@ -42207,7 +42207,7 @@ var require_execute = __commonJS({
             ),
             fieldNodes,
             info,
-            path,
+            path2,
             result
           )
         );
@@ -42224,7 +42224,7 @@ var require_execute = __commonJS({
         ),
         fieldNodes,
         info,
-        path,
+        path2,
         result
       );
     }
@@ -42272,7 +42272,7 @@ var require_execute = __commonJS({
       }
       return runtimeType;
     }
-    function completeObjectValue(exeContext, returnType, fieldNodes, info, path, result) {
+    function completeObjectValue(exeContext, returnType, fieldNodes, info, path2, result) {
       const subFieldNodes = collectSubfields(exeContext, returnType, fieldNodes);
       if (returnType.isTypeOf) {
         const isTypeOf = returnType.isTypeOf(result, exeContext.contextValue, info);
@@ -42285,7 +42285,7 @@ var require_execute = __commonJS({
               exeContext,
               returnType,
               result,
-              path,
+              path2,
               subFieldNodes
             );
           });
@@ -42294,7 +42294,7 @@ var require_execute = __commonJS({
           throw invalidReturnTypeError(returnType, result, fieldNodes);
         }
       }
-      return executeFields(exeContext, returnType, result, path, subFieldNodes);
+      return executeFields(exeContext, returnType, result, path2, subFieldNodes);
     }
     function invalidReturnTypeError(returnType, result, fieldNodes) {
       return new _GraphQLError.GraphQLError(
@@ -43362,13 +43362,13 @@ var require_subscribe = __commonJS({
           }
         );
       }
-      const path = (0, _Path.addPath)(void 0, responseName, rootType.name);
+      const path2 = (0, _Path.addPath)(void 0, responseName, rootType.name);
       const info = (0, _execute.buildResolveInfo)(
         exeContext,
         fieldDef,
         fieldNodes,
         rootType,
-        path
+        path2
       );
       try {
         var _fieldDef$subscribe;
@@ -43388,7 +43388,7 @@ var require_subscribe = __commonJS({
         throw (0, _locatedError.locatedError)(
           error,
           fieldNodes,
-          (0, _Path.pathToArray)(path)
+          (0, _Path.pathToArray)(path2)
         );
       }
     }
@@ -50671,11 +50671,11 @@ function ApolloServerPluginCacheControl(options = /* @__PURE__ */ Object.create(
                   fieldPolicy.restrict({ maxAge: defaultMaxAge });
                 }
                 if (__testing__cacheHints && isRestricted(fieldPolicy)) {
-                  const path = (0, import_graphql35.responsePathAsArray)(info.path).join(".");
-                  if (__testing__cacheHints.has(path)) {
+                  const path2 = (0, import_graphql35.responsePathAsArray)(info.path).join(".");
+                  if (__testing__cacheHints.has(path2)) {
                     throw Error("shouldn't happen: addHint should only be called once per path");
                   }
-                  __testing__cacheHints.set(path, {
+                  __testing__cacheHints.set(path2, {
                     maxAge: fieldPolicy.maxAge,
                     scope: fieldPolicy.scope
                   });
@@ -61923,11 +61923,11 @@ var require_lodash2 = __commonJS({
     function baseForOwn(object, iteratee) {
       return object && baseFor(object, iteratee, keys);
     }
-    function baseGet(object, path) {
-      path = isKey(path, object) ? [path] : castPath(path);
-      var index = 0, length = path.length;
+    function baseGet(object, path2) {
+      path2 = isKey(path2, object) ? [path2] : castPath(path2);
+      var index = 0, length = path2.length;
       while (object != null && index < length) {
-        object = object[toKey(path[index++])];
+        object = object[toKey(path2[index++])];
       }
       return index && index == length ? object : void 0;
     }
@@ -62056,13 +62056,13 @@ var require_lodash2 = __commonJS({
         return object === source || baseIsMatch(object, source, matchData);
       };
     }
-    function baseMatchesProperty(path, srcValue) {
-      if (isKey(path) && isStrictComparable(srcValue)) {
-        return matchesStrictComparable(toKey(path), srcValue);
+    function baseMatchesProperty(path2, srcValue) {
+      if (isKey(path2) && isStrictComparable(srcValue)) {
+        return matchesStrictComparable(toKey(path2), srcValue);
       }
       return function(object) {
-        var objValue = get(object, path);
-        return objValue === void 0 && objValue === srcValue ? hasIn(object, path) : baseIsEqual(srcValue, objValue, void 0, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG);
+        var objValue = get(object, path2);
+        return objValue === void 0 && objValue === srcValue ? hasIn(object, path2) : baseIsEqual(srcValue, objValue, void 0, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG);
       };
     }
     function baseOrderBy(collection, iteratees, orders) {
@@ -62078,9 +62078,9 @@ var require_lodash2 = __commonJS({
         return compareMultiple(object, other, orders);
       });
     }
-    function basePropertyDeep(path) {
+    function basePropertyDeep(path2) {
       return function(object) {
-        return baseGet(object, path);
+        return baseGet(object, path2);
       };
     }
     function baseRest(func, start) {
@@ -62335,11 +62335,11 @@ var require_lodash2 = __commonJS({
         return result;
       };
     }
-    function hasPath(object, path, hasFunc) {
-      path = isKey(path, object) ? [path] : castPath(path);
-      var result, index = -1, length = path.length;
+    function hasPath(object, path2, hasFunc) {
+      path2 = isKey(path2, object) ? [path2] : castPath(path2);
+      var result, index = -1, length = path2.length;
       while (++index < length) {
-        var key = toKey(path[index]);
+        var key = toKey(path2[index]);
         if (!(result = object != null && hasFunc(object, key))) {
           break;
         }
@@ -62494,12 +62494,12 @@ var require_lodash2 = __commonJS({
     function toString(value) {
       return value == null ? "" : baseToString(value);
     }
-    function get(object, path, defaultValue) {
-      var result = object == null ? void 0 : baseGet(object, path);
+    function get(object, path2, defaultValue) {
+      var result = object == null ? void 0 : baseGet(object, path2);
       return result === void 0 ? defaultValue : result;
     }
-    function hasIn(object, path) {
-      return object != null && hasPath(object, path, baseHasIn);
+    function hasIn(object, path2) {
+      return object != null && hasPath(object, path2, baseHasIn);
     }
     function keys(object) {
       return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
@@ -62507,8 +62507,8 @@ var require_lodash2 = __commonJS({
     function identity(value) {
       return value;
     }
-    function property(path) {
-      return isKey(path) ? baseProperty(toKey(path)) : basePropertyDeep(path);
+    function property(path2) {
+      return isKey(path2) ? baseProperty(toKey(path2)) : basePropertyDeep(path2);
     }
     module2.exports = sortBy;
   }
@@ -63685,14 +63685,14 @@ var require_url_state_machine = __commonJS({
       return url.replace(/\u0009|\u000A|\u000D/g, "");
     }
     function shortenPath(url) {
-      const path = url.path;
-      if (path.length === 0) {
+      const path2 = url.path;
+      if (path2.length === 0) {
         return;
       }
-      if (url.scheme === "file" && path.length === 1 && isNormalizedWindowsDriveLetter(path[0])) {
+      if (url.scheme === "file" && path2.length === 1 && isNormalizedWindowsDriveLetter(path2[0])) {
         return;
       }
-      path.pop();
+      path2.pop();
     }
     function includesCredentials(url) {
       return url.username !== "" || url.password !== "";
@@ -65978,10 +65978,10 @@ function responsePathAsString(p) {
   }
   return res;
 }
-function responsePathFromArray(path, node) {
+function responsePathFromArray(path2, node) {
   let responsePath;
   let nodePtr = node;
-  for (const key of path) {
+  for (const key of path2) {
     nodePtr = nodePtr?.child?.find((child) => child.responseName === key);
     responsePath = {
       key,
@@ -66065,12 +66065,12 @@ var init_traceTreeBuilder = __esm({
           return () => {
           };
         }
-        const path = info.path;
-        const node = this.newNode(path);
+        const path2 = info.path;
+        const node = this.newNode(path2);
         node.type = info.returnType.toString();
         node.parentType = info.parentType.toString();
         node.startTime = durationHrTimeToNanos(process.hrtime(this.startHrTime));
-        if (typeof path.key === "string" && path.key !== info.fieldName) {
+        if (typeof path2.key === "string" && path2.key !== info.fieldName) {
           node.originalFieldName = info.fieldName;
         }
         return () => {
@@ -66089,7 +66089,7 @@ var init_traceTreeBuilder = __esm({
           this.addProtobufError(errorForReporting.path, errorToProtobufError(errorForReporting));
         });
       }
-      addProtobufError(path, error) {
+      addProtobufError(path2, error) {
         if (!this.startHrTime) {
           throw internalError("addProtobufError called before startTiming!");
         }
@@ -66097,12 +66097,12 @@ var init_traceTreeBuilder = __esm({
           throw internalError("addProtobufError called after stopTiming!");
         }
         let node = this.rootNode;
-        if (Array.isArray(path)) {
-          const specificNode = this.nodes.get(path.join("."));
+        if (Array.isArray(path2)) {
+          const specificNode = this.nodes.get(path2.join("."));
           if (specificNode) {
             node = specificNode;
           } else {
-            const responsePath = responsePathFromArray(path, this.rootNode);
+            const responsePath = responsePathFromArray(path2, this.rootNode);
             if (!responsePath) {
               throw internalError("addProtobufError called with invalid path!");
             }
@@ -66111,26 +66111,26 @@ var init_traceTreeBuilder = __esm({
         }
         node.error.push(error);
       }
-      newNode(path) {
+      newNode(path2) {
         const node = new Trace.Node();
-        const id2 = path.key;
+        const id2 = path2.key;
         if (typeof id2 === "number") {
           node.index = id2;
         } else {
           node.responseName = id2;
         }
-        this.nodes.set(responsePathAsString(path), node);
-        const parentNode = this.ensureParentNode(path);
+        this.nodes.set(responsePathAsString(path2), node);
+        const parentNode = this.ensureParentNode(path2);
         parentNode.child.push(node);
         return node;
       }
-      ensureParentNode(path) {
-        const parentPath = responsePathAsString(path.prev);
+      ensureParentNode(path2) {
+        const parentPath = responsePathAsString(path2.prev);
         const parentNode = this.nodes.get(parentPath);
         if (parentNode) {
           return parentNode;
         }
-        return this.newNode(path.prev);
+        return this.newNode(path2.prev);
       }
       transformAndNormalizeError(err) {
         if (this.transformError) {
@@ -66186,12 +66186,12 @@ function iterateOverQueryPlan(node, rootPath, f) {
   }
   return false;
 }
-function iterateOverTraceNode(node, path, f) {
-  if (f(node, path)) {
+function iterateOverTraceNode(node, path2, f) {
+  if (f(node, path2)) {
     return true;
   }
   return node.child?.some((child) => {
-    const childPath = child.responseName ? path.child(child.responseName) : path;
+    const childPath = child.responseName ? path2.child(child.responseName) : path2;
     return iterateOverTraceNode(child, childPath, f);
   }) ?? false;
 }
@@ -66532,11 +66532,11 @@ var init_stats = __esm({
         }
         let hasError = false;
         const errorPathStats = /* @__PURE__ */ new Set();
-        const traceNodeStats = (node, path) => {
+        const traceNodeStats = (node, path2) => {
           if (node.error?.length) {
             hasError = true;
             let currPathErrorStats = this.queryLatencyStats.rootErrorStats;
-            path.toArray().forEach((subPath) => {
+            path2.toArray().forEach((subPath) => {
               currPathErrorStats = currPathErrorStats.getChild(subPath, sizeEstimator);
             });
             errorPathStats.add(currPathErrorStats);
@@ -66557,11 +66557,11 @@ var init_stats = __esm({
           return false;
         };
         iterateOverTrace(trace, traceNodeStats, true);
-        for (const { subgraph, path } of nonFtv1ErrorPaths) {
+        for (const { subgraph, path: path2 } of nonFtv1ErrorPaths) {
           hasError = true;
-          if (path) {
+          if (path2) {
             let currPathErrorStats = this.queryLatencyStats.rootErrorStats.getChild(`service:${subgraph}`, sizeEstimator);
-            path.forEach((subPath) => {
+            path2.forEach((subPath) => {
               if (typeof subPath === "string") {
                 currPathErrorStats = currPathErrorStats.getChild(subPath, sizeEstimator);
               }
@@ -68786,12 +68786,12 @@ var require_errors = __commonJS({
       return new graphql_1.GraphQLError(message, options === null || options === void 0 ? void 0 : options.nodes, options === null || options === void 0 ? void 0 : options.source, options === null || options === void 0 ? void 0 : options.positions, options === null || options === void 0 ? void 0 : options.path, options === null || options === void 0 ? void 0 : options.originalError, options === null || options === void 0 ? void 0 : options.extensions);
     }
     exports2.createGraphQLError = createGraphQLError;
-    function relocatedError(originalError, path) {
+    function relocatedError(originalError, path2) {
       return createGraphQLError(originalError.message, {
         nodes: originalError.nodes,
         source: originalError.source,
         positions: originalError.positions,
-        path: path == null ? originalError.path : path,
+        path: path2 == null ? originalError.path : path2,
         originalError,
         extensions: originalError.extensions
       });
@@ -70162,11 +70162,11 @@ var require_comments = __commonJS({
           keys.push(argument);
         }
       }
-      const path = keys.join(".");
-      if (!commentsRegistry2[path]) {
-        commentsRegistry2[path] = [];
+      const path2 = keys.join(".");
+      if (!commentsRegistry2[path2]) {
+        commentsRegistry2[path2] = [];
       }
-      commentsRegistry2[path].push(comment);
+      commentsRegistry2[path2].push(comment);
     }
     exports2.pushComment = pushComment2;
     function printComment2(comment) {
@@ -70181,10 +70181,10 @@ var require_comments = __commonJS({
       return (_a2 = maybeArray === null || maybeArray === void 0 ? void 0 : maybeArray.some((str) => str.includes("\n"))) !== null && _a2 !== void 0 ? _a2 : false;
     }
     function addDescription2(cb) {
-      return (node, _key, _parent, path, ancestors) => {
+      return (node, _key, _parent, path2, ancestors) => {
         var _a2;
         const keys = [];
-        const parent = path.reduce((prev, key2) => {
+        const parent = path2.reduce((prev, key2) => {
           if (["fields", "arguments", "values"].includes(key2) && prev.name) {
             keys.push(prev.name.value);
           }
@@ -70195,7 +70195,7 @@ var require_comments = __commonJS({
         if (node.kind.includes("Definition") && commentsRegistry2[key]) {
           items.push(...commentsRegistry2[key]);
         }
-        return join3([...items.map(printComment2), node.description, cb(node, _key, _parent, path, ancestors)], "\n");
+        return join3([...items.map(printComment2), node.description, cb(node, _key, _parent, path2, ancestors)], "\n");
       };
     }
     function indent2(maybeString) {
@@ -70599,7 +70599,7 @@ var require_build_operation_for_field = __commonJS({
         }
       };
     }
-    function resolveSelectionSet({ parent, type, models, firstCall, path, ancestors, ignore, depthLimit, circularReferenceDepth, schema, depth, argNames, selectedFields, rootTypeNames }) {
+    function resolveSelectionSet({ parent, type, models, firstCall, path: path2, ancestors, ignore, depthLimit, circularReferenceDepth, schema, depth, argNames, selectedFields, rootTypeNames }) {
       if (typeof selectedFields === "boolean" && depth > depthLimit) {
         return;
       }
@@ -70623,7 +70623,7 @@ var require_build_operation_for_field = __commonJS({
                 parent: type,
                 type: t,
                 models,
-                path,
+                path: path2,
                 ancestors,
                 ignore,
                 depthLimit,
@@ -70661,7 +70661,7 @@ var require_build_operation_for_field = __commonJS({
                 parent: type,
                 type: t,
                 models,
-                path,
+                path: path2,
                 ancestors,
                 ignore,
                 depthLimit,
@@ -70680,7 +70680,7 @@ var require_build_operation_for_field = __commonJS({
         };
       }
       if ((0, graphql_1.isObjectType)(type) && !rootTypeNames.has(type.name)) {
-        const isIgnored = ignore.includes(type.name) || ignore.includes(`${parent.name}.${path[path.length - 1]}`);
+        const isIgnored = ignore.includes(type.name) || ignore.includes(`${parent.name}.${path2[path2.length - 1]}`);
         const isModel = models.includes(type.name);
         if (!firstCall && isModel && !isIgnored) {
           return {
@@ -70710,7 +70710,7 @@ var require_build_operation_for_field = __commonJS({
                 type,
                 field: fields[fieldName],
                 models,
-                path: [...path, fieldName],
+                path: [...path2, fieldName],
                 ancestors,
                 ignore,
                 depthLimit,
@@ -70770,16 +70770,16 @@ var require_build_operation_for_field = __commonJS({
         type: resolveVariableType(arg.type)
       };
     }
-    function getArgumentName(name, path) {
-      return [...path, name].join("_");
+    function getArgumentName(name, path2) {
+      return [...path2, name].join("_");
     }
-    function resolveField({ type, field, models, firstCall, path, ancestors, ignore, depthLimit, circularReferenceDepth, schema, depth, argNames, selectedFields, rootTypeNames }) {
+    function resolveField({ type, field, models, firstCall, path: path2, ancestors, ignore, depthLimit, circularReferenceDepth, schema, depth, argNames, selectedFields, rootTypeNames }) {
       const namedType = (0, graphql_1.getNamedType)(field.type);
       let args = [];
       let removeField = false;
       if (field.args && field.args.length) {
         args = field.args.map((arg) => {
-          const argumentName = getArgumentName(arg.name, path);
+          const argumentName = getArgumentName(arg.name, path2);
           if (argNames && !argNames.includes(argumentName)) {
             if ((0, graphql_1.isNonNullType)(arg.type)) {
               removeField = true;
@@ -70799,7 +70799,7 @@ var require_build_operation_for_field = __commonJS({
               kind: graphql_1.Kind.VARIABLE,
               name: {
                 kind: graphql_1.Kind.NAME,
-                value: getArgumentName(arg.name, path)
+                value: getArgumentName(arg.name, path2)
               }
             }
           };
@@ -70808,7 +70808,7 @@ var require_build_operation_for_field = __commonJS({
       if (removeField) {
         return null;
       }
-      const fieldPath = [...path, field.name];
+      const fieldPath = [...path2, field.name];
       const fieldPathStr = fieldPath.join(".");
       let fieldName = field.name;
       if (fieldTypeMap.has(fieldPathStr) && fieldTypeMap.get(fieldPathStr) !== field.type.toString()) {
@@ -73407,9 +73407,9 @@ var require_Path2 = __commonJS({
       return { prev, key, typename };
     }
     exports2.addPath = addPath;
-    function pathToArray(path) {
+    function pathToArray(path2) {
       const flattened = [];
-      let curr = path;
+      let curr = path2;
       while (curr) {
         flattened.push(curr.key);
         curr = curr.prev;
@@ -73417,8 +73417,8 @@ var require_Path2 = __commonJS({
       return flattened.reverse();
     }
     exports2.pathToArray = pathToArray;
-    function printPathArray(path) {
-      return path.map((key) => typeof key === "number" ? "[" + key.toString() + "]" : "." + key).join("");
+    function printPathArray(path2) {
+      return path2.map((key) => typeof key === "number" ? "[" + key.toString() + "]" : "." + key).join("");
     }
     exports2.printPathArray = printPathArray;
   }
@@ -76435,11 +76435,11 @@ var require_cacheControl = __commonJS({
                       fieldPolicy.restrict({ maxAge: defaultMaxAge });
                     }
                     if (__testing__cacheHints && isRestricted2(fieldPolicy)) {
-                      const path = (0, graphql_1.responsePathAsArray)(info.path).join(".");
-                      if (__testing__cacheHints.has(path)) {
+                      const path2 = (0, graphql_1.responsePathAsArray)(info.path).join(".");
+                      if (__testing__cacheHints.has(path2)) {
                         throw Error("shouldn't happen: addHint should only be called once per path");
                       }
-                      __testing__cacheHints.set(path, {
+                      __testing__cacheHints.set(path2, {
                         maxAge: fieldPolicy.maxAge,
                         scope: fieldPolicy.scope
                       });
@@ -76614,12 +76614,12 @@ var require_traceTreeBuilder = __commonJS({
           return () => {
           };
         }
-        const path = info.path;
-        const node = this.newNode(path);
+        const path2 = info.path;
+        const node = this.newNode(path2);
         node.type = info.returnType.toString();
         node.parentType = info.parentType.toString();
         node.startTime = durationHrTimeToNanos2(process.hrtime(this.startHrTime));
-        if (typeof path.key === "string" && path.key !== info.fieldName) {
+        if (typeof path2.key === "string" && path2.key !== info.fieldName) {
           node.originalFieldName = info.fieldName;
         }
         return () => {
@@ -76638,7 +76638,7 @@ var require_traceTreeBuilder = __commonJS({
           this.addProtobufError(errorForReporting.path, errorToProtobufError2(errorForReporting));
         });
       }
-      addProtobufError(path, error) {
+      addProtobufError(path2, error) {
         if (!this.startHrTime) {
           throw internalError2("addProtobufError called before startTiming!");
         }
@@ -76646,12 +76646,12 @@ var require_traceTreeBuilder = __commonJS({
           throw internalError2("addProtobufError called after stopTiming!");
         }
         let node = this.rootNode;
-        if (Array.isArray(path)) {
-          const specificNode = this.nodes.get(path.join("."));
+        if (Array.isArray(path2)) {
+          const specificNode = this.nodes.get(path2.join("."));
           if (specificNode) {
             node = specificNode;
           } else {
-            const responsePath = responsePathFromArray2(path, this.rootNode);
+            const responsePath = responsePathFromArray2(path2, this.rootNode);
             if (!responsePath) {
               throw internalError2("addProtobufError called with invalid path!");
             }
@@ -76660,26 +76660,26 @@ var require_traceTreeBuilder = __commonJS({
         }
         node.error.push(error);
       }
-      newNode(path) {
+      newNode(path2) {
         const node = new usage_reporting_protobuf_1.Trace.Node();
-        const id2 = path.key;
+        const id2 = path2.key;
         if (typeof id2 === "number") {
           node.index = id2;
         } else {
           node.responseName = id2;
         }
-        this.nodes.set(responsePathAsString2(path), node);
-        const parentNode = this.ensureParentNode(path);
+        this.nodes.set(responsePathAsString2(path2), node);
+        const parentNode = this.ensureParentNode(path2);
         parentNode.child.push(node);
         return node;
       }
-      ensureParentNode(path) {
-        const parentPath = responsePathAsString2(path.prev);
+      ensureParentNode(path2) {
+        const parentPath = responsePathAsString2(path2.prev);
         const parentNode = this.nodes.get(parentPath);
         if (parentNode) {
           return parentNode;
         }
-        return this.newNode(path.prev);
+        return this.newNode(path2.prev);
       }
       transformAndNormalizeError(err) {
         if (this.transformError) {
@@ -76717,10 +76717,10 @@ var require_traceTreeBuilder = __commonJS({
       }
       return res;
     }
-    function responsePathFromArray2(path, node) {
+    function responsePathFromArray2(path2, node) {
       let responsePath;
       let nodePtr = node;
-      for (const key of path) {
+      for (const key of path2) {
         nodePtr = nodePtr?.child?.find((child) => child.responseName === key);
         responsePath = {
           key,
@@ -76784,12 +76784,12 @@ var require_iterateOverTrace = __commonJS({
       }
       return false;
     }
-    function iterateOverTraceNode2(node, path, f) {
-      if (f(node, path)) {
+    function iterateOverTraceNode2(node, path2, f) {
+      if (f(node, path2)) {
         return true;
       }
       return node.child?.some((child) => {
-        const childPath = child.responseName ? path.child(child.responseName) : path;
+        const childPath = child.responseName ? path2.child(child.responseName) : path2;
         return iterateOverTraceNode2(child, childPath, f);
       }) ?? false;
     }
@@ -77146,11 +77146,11 @@ var require_stats = __commonJS({
         }
         let hasError = false;
         const errorPathStats = /* @__PURE__ */ new Set();
-        const traceNodeStats = (node, path) => {
+        const traceNodeStats = (node, path2) => {
           if (node.error?.length) {
             hasError = true;
             let currPathErrorStats = this.queryLatencyStats.rootErrorStats;
-            path.toArray().forEach((subPath) => {
+            path2.toArray().forEach((subPath) => {
               currPathErrorStats = currPathErrorStats.getChild(subPath, sizeEstimator);
             });
             errorPathStats.add(currPathErrorStats);
@@ -77171,11 +77171,11 @@ var require_stats = __commonJS({
           return false;
         };
         (0, iterateOverTrace_js_1.iterateOverTrace)(trace, traceNodeStats, true);
-        for (const { subgraph, path } of nonFtv1ErrorPaths) {
+        for (const { subgraph, path: path2 } of nonFtv1ErrorPaths) {
           hasError = true;
-          if (path) {
+          if (path2) {
             let currPathErrorStats = this.queryLatencyStats.rootErrorStats.getChild(`service:${subgraph}`, sizeEstimator);
-            path.forEach((subPath) => {
+            path2.forEach((subPath) => {
               if (typeof subPath === "string") {
                 currPathErrorStats = currPathErrorStats.getChild(subPath, sizeEstimator);
               }
@@ -82430,11 +82430,11 @@ function pushComment(node, entity, field, argument) {
       keys.push(argument);
     }
   }
-  const path = keys.join(".");
-  if (!commentsRegistry[path]) {
-    commentsRegistry[path] = [];
+  const path2 = keys.join(".");
+  if (!commentsRegistry[path2]) {
+    commentsRegistry[path2] = [];
   }
-  commentsRegistry[path].push(comment);
+  commentsRegistry[path2].push(comment);
 }
 function printComment(comment) {
   return "\n# " + comment.replace(/\n/g, "\n# ");
@@ -82447,10 +82447,10 @@ function hasMultilineItems(maybeArray) {
   return (_a2 = maybeArray === null || maybeArray === void 0 ? void 0 : maybeArray.some((str) => str.includes("\n"))) !== null && _a2 !== void 0 ? _a2 : false;
 }
 function addDescription(cb) {
-  return (node, _key, _parent, path, ancestors) => {
+  return (node, _key, _parent, path2, ancestors) => {
     var _a2;
     const keys = [];
-    const parent = path.reduce((prev, key2) => {
+    const parent = path2.reduce((prev, key2) => {
       if (["fields", "arguments", "values"].includes(key2) && prev.name) {
         keys.push(prev.name.value);
       }
@@ -82461,7 +82461,7 @@ function addDescription(cb) {
     if (node.kind.includes("Definition") && commentsRegistry[key]) {
       items.push(...commentsRegistry[key]);
     }
-    return join2([...items.map(printComment), node.description, cb(node, _key, _parent, path, ancestors)], "\n");
+    return join2([...items.map(printComment), node.description, cb(node, _key, _parent, path2, ancestors)], "\n");
   };
 }
 function indent(maybeString) {
@@ -86357,6 +86357,30 @@ function cloneObject(object) {
 
 // serverless.ts
 var import_next = __toESM(require_dist10());
+var import_fs = __toESM(require("fs"));
+var import_path = __toESM(require("path"));
+var isDirectory = (dirPath) => {
+  try {
+    return import_fs.default.statSync(dirPath).isDirectory();
+  } catch (error) {
+    console.error(`Error reading directory ${dirPath}:`, error);
+    return false;
+  }
+};
+function getAllFiles(dirPath, arrayOfFiles = []) {
+  const files = import_fs.default.readdirSync(dirPath);
+  files.forEach((file) => {
+    const fullPath = import_path.default.join(dirPath, file);
+    if (isDirectory(fullPath)) {
+      getAllFiles(fullPath, arrayOfFiles);
+    } else {
+      arrayOfFiles.push(fullPath);
+    }
+  });
+  return arrayOfFiles;
+}
+console.log("Recursively listing all files:");
+console.log(JSON.stringify(getAllFiles(import_path.default.resolve("/")), null, 2));
 var main = async () => {
   const server = new ApolloServer({
     typeDefs: await getTypeDefs(),

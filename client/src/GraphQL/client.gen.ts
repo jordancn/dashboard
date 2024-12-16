@@ -549,6 +549,13 @@ export type EntityPageOvervallQueryVariables = Exact<{
 
 export type EntityPageOvervallQuery = { __typename?: 'Query', lastRefreshed: DateIso, currentBalance: number, insights: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType, change: { __typename?: 'CategoryChange', id: string, currentTotal: number, previousTotal: number, changePercent?: number | null, proratedPreviousTotal: number, proratedChangePercent?: number | null, proratedPreviousDateRange: { __typename?: 'DateRangeValue', start: DateIso, end: DateIso } }, budget?: { __typename?: 'Budget', currentBudgeted: number, performance: Array<{ __typename?: 'Performance', id: string, month: string, spent: number, budgeted: number }> } | null }>, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
 
+export type TransactionQueryVariables = Exact<{
+  transactionId: Scalars['ID']['input'];
+}>;
+
+
+export type TransactionQuery = { __typename?: 'Query', transaction?: { __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string }, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null } | null };
+
 
 export const SidebarContentsDocument = gql`
     query SidebarContents {
@@ -923,3 +930,61 @@ export type EntityPageOvervallQueryHookResult = ReturnType<typeof useEntityPageO
 export type EntityPageOvervallLazyQueryHookResult = ReturnType<typeof useEntityPageOvervallLazyQuery>;
 export type EntityPageOvervallSuspenseQueryHookResult = ReturnType<typeof useEntityPageOvervallSuspenseQuery>;
 export type EntityPageOvervallQueryResult = Apollo.QueryResult<EntityPageOvervallQuery, EntityPageOvervallQueryVariables>;
+export const TransactionDocument = gql`
+    query Transaction($transactionId: ID!) {
+  transaction(transactionId: $transactionId) {
+    id
+    account {
+      id
+      name
+      number
+    }
+    date
+    category {
+      id
+      name
+    }
+    description
+    amount
+    pending
+    vendor {
+      id
+      name
+      image
+    }
+  }
+}
+    `;
+
+/**
+ * __useTransactionQuery__
+ *
+ * To run a query within a React component, call `useTransactionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionQuery({
+ *   variables: {
+ *      transactionId: // value for 'transactionId'
+ *   },
+ * });
+ */
+export function useTransactionQuery(baseOptions: Apollo.QueryHookOptions<TransactionQuery, TransactionQueryVariables> & ({ variables: TransactionQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TransactionQuery, TransactionQueryVariables>(TransactionDocument, options);
+      }
+export function useTransactionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TransactionQuery, TransactionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TransactionQuery, TransactionQueryVariables>(TransactionDocument, options);
+        }
+export function useTransactionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TransactionQuery, TransactionQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionQuery, TransactionQueryVariables>(TransactionDocument, options);
+        }
+export type TransactionQueryHookResult = ReturnType<typeof useTransactionQuery>;
+export type TransactionLazyQueryHookResult = ReturnType<typeof useTransactionLazyQuery>;
+export type TransactionSuspenseQueryHookResult = ReturnType<typeof useTransactionSuspenseQuery>;
+export type TransactionQueryResult = Apollo.QueryResult<TransactionQuery, TransactionQueryVariables>;

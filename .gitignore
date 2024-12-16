@@ -11,3 +11,4 @@ node_modules
 out
 server/api/*.node
 server/api/graphql.js
+/deployment/*

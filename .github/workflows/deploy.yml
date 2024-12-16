@@ -1,0 +1,38 @@
+name: Deploy to Linode
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Copy files to Linode server
+      - name: Copy project files to Linode
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          source: .
+          target: /home/${{ secrets.DEPLOY_USERNAME }}/app
+
+      # Step 3: SSH into Linode and deploy with Docker Compose
+      - name: Deploy with Docker Compose
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          script: |
+            cd /home/${{ secrets.DEPLOY_USERNAME }}/app
+            docker-compose down || true
+            docker-compose up -d --build
+            docker system prune -f

@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prisma:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:seed": "ts-node setup/seed.ts",
     "db:import-transactions": "ts-node integrations/import-transactions `date +%Y-%m-%d`",
@@ -13,14 +12,12 @@
     "db:import-legacy-transactions": "ts-node integrations/legacy/import-legacy-transactions",
     "db:import-legacy-refresh": "ts-node integrations/legacy/import-legacy-refresh",
     "db:import-legacy": "yarn db:dump-legacy-refresh && yarn db:dump-legacy-transactions && yarn db:seed && yarn db:import-legacy-transactions",
-    "build": "npm run prisma:generate && npm run build:server && npm run build:serverless",
+    "build": "npm run build:prisma && npm run build:schema && npm run build:server",
+    "build:schema": "graphql-codegen",
+    "build:prisma": "prisma generate",
     "build:server": "esbuild server.ts --bundle --outfile=dist/server.js --platform=node --target=node22  --loader:.gql=text",
-    "build:serverless": "esbuild serverless.ts --bundle --outfile=api/graphql.js --platform=node --target=node22  --loader:.gql=text --external:.node && cp -vR node_modules/.prisma/client/*.node api && find . -not -path \"./node_modules/*\"",
     "dev": "esbuild server.ts --bundle --outfile=dist/server.js --platform=node --target=node22 --loader:.gql=text --watch & nodemon dist/server.js",
-    "start": "npm run start:server",
-    "start:server": "cross-env NODE_ENV=production node dist/server.js",
-    "start:serverless": "cross-env NODE_ENV=production node api/graphql.js",
-    "schema:generate": "graphql-codegen"
+    "start": "cross-env NODE_ENV=production node dist/server.js"
   },
   "files": [
     "node_modules/.prisma",
@@ -49,6 +46,7 @@
     "json-stable-stringify": "^1.0.1",
     "lodash": "^4.17.21",
     "ofx": "^0.5.0",
+    "pkg": "^5.8.1",
     "prettier": "^2.4.1",
     "sql-formatter": "^4.0.2",
     "ts-node": "^10.9.2",

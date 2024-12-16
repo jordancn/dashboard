@@ -1,0 +1,138 @@
+.navigationBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 44px;
+}
+
+.navigationBarBackButtonContainer {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.navigationBarTitle {
+  font-size: 17px;
+  color: #007aff;
+  font-family: var(--font-family);
+  margin-top: -4px;
+  margin-left: 10px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  & img {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.cardSubheadline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardAmount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardDate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardAccount {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.cardAccountHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.cardAccountHeaderAccountContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardAccountHeaderAccountNumberContainer {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+}
+
+.cardAccountDescriptionContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.cardAccountDescription {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.categoryName {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryChevron {
+  align-self: flex-start;
+  padding-top: 6px;
+}
+
+.merchantContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.merchantName {
+  display: flex;
+  flex-direction: column;
+}
+
+.merchantChevron {
+  align-self: flex-start;
+  padding-top: 6px;
+}
+
+.amazonContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.amazonDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.amazonChevron {
+  align-self: flex-start;
+  padding-top: 6px;
+}

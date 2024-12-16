@@ -1,17 +1,5 @@
 schema: "./schema/schema.gql"
-documents: ../client/**/*.graphql
 generates:
-  ../client/src/types/graphql/client.gen.ts:
-    plugins:
-      - typescript
-      - typescript-operations
-      - typescript-react-apollo
-      - add:
-          content:
-            - 'import { Base64Url } from "./Base64Url";'
-    config:
-      scalars:
-        Base64Url: Base64Url
   ./types/graphql/server.gen.ts:
     plugins:
       - typescript

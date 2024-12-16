@@ -21,6 +21,13 @@ export function assertIsTransactionParams(
   );
 }
 
+export function assertIsIsEntityAndTransactionParams(
+  params: unknown,
+): asserts params is { entityId: string; transactionId: string } {
+  assertIsEntityParams(params);
+  assertIsTransactionParams(params);
+}
+
 export function assertIsTransactionGroupParams(
   params: unknown,
 ): asserts params is { entityId: string; start: string; end: string } {

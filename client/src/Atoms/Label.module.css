@@ -22,3 +22,7 @@
     color: #007aff;
   }
 }
+
+.clickable {
+  cursor: pointer;
+}

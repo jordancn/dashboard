@@ -11,13 +11,14 @@
     "dev:css": "tcm -w src",
     "dev:graphql": "graphql-codegen --watch",
     "dev:storybook": "storybook dev -p 6006",
-    "build": "npm run list && npm run build:css && npm run build:graphql && npm run build:next",
+    "build": "npm run build:css && npm run build:graphql && npm run build:next && npm run build:storybook",
     "build:next": "next build",
     "build:css": "tcm src",
     "build:graphql": "graphql-codegen",
     "build:storybook": "storybook build",
-    "list": "pwd && find . -not -path \"./node_modules/*\" -not -path \"./node_modules\"",
-    "start": "next start",
+    "start": "concurrently \"npm run start:nextjs\" \"npm run start:storybook\"",
+    "start:nextjs": "next start",
+    "start:storybook": "serve storybook-static -p 6006",
     "lint": "next lint",
     "test": "jest"
   },
@@ -34,7 +35,8 @@
     "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "serve": "^14.2.4"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
