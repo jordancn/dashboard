@@ -31,6 +31,7 @@ jobs:
           host: ${{ secrets.DEPLOY_HOSTNAME }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          debug: true
           script: |
             mkdir -p /home/${{ secrets.DEPLOY_USERNAME }}/app
             cd /home/${{ secrets.DEPLOY_USERNAME }}/app
