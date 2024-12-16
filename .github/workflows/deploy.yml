@@ -14,25 +14,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Copy files to Linode server
+      # Step 2: Echo deploy hostname
+      - name: Echo deploy hostname
+        run: echo "Deploy hostname: ${{ vars.DEPLOY_HOSTNAME }}"
+
+      # Step 3: Echo deploy username
+      - name: Echo deploy username
+        run: echo "Deploy username: ${{ vars.DEPLOY_USERNAME }}"
+
+      # Step 4: Copy files to Linode server
       - name: Copy project files to Linode
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          host: ${{ vars.DEPLOY_HOSTNAME }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           source: .
-          target: /home/${{ secrets.DEPLOY_USERNAME }}/app
+          target: /home/${{ vars.DEPLOY_USERNAME }}/app
 
-      # Step 3: SSH into Linode and deploy with Docker Compose
+      # Step 5: SSH into Linode and deploy with Docker Compose
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: ${{ secrets.DEPLOY_HOSTNAME }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
+          host: ${{ vars.DEPLOY_HOSTNAME }}
+          username: ${{ vars.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           script: |
-            cd /home/${{ secrets.DEPLOY_USERNAME }}/app
+            mkdir -p /home/${{ vars.DEPLOY_USERNAME }}/app
+            cd /home/${{ vars.DEPLOY_USERNAME }}/app
             docker-compose down || true
             docker-compose up -d --build
             docker system prune -f
