@@ -431,7 +431,6 @@ const EntityPage = () => {
             dateRange={insightsDateRange}
           />
         </Empty>
-        TEST 1 2 3
         {/* 
         {props.mode === "budget" && budget && params.entityId && (
           <Empty>
