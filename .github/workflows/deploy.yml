@@ -19,7 +19,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ vars.DEPLOY_HOSTNAME }}
-          username: ${{ svars.DEPLOY_USERNAME }}
+          username: ${{ vars.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           source: .
           target: /home/${{ vars.DEPLOY_USERNAME }}/app
