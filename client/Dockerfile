@@ -15,6 +15,9 @@ COPY . .
 
 RUN mv -f env.docker .env.local
 
+# Set the Node.js memory limit to 768 MB
+ENV NODE_OPTIONS=--max-old-space-size=768
+
 # Build the application (adjust command if using a different build step)
 RUN npm run build
 
