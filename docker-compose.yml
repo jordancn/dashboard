@@ -11,6 +11,8 @@ services:
       - NEXT_PUBLIC_GRAPHQL_ENDPOINT=/graphql
     depends_on:
       - graphql
+    networks:
+      - shared-network
 
   storybook:
     build:
@@ -45,6 +47,7 @@ services:
       POSTGRES_DB: dashboard
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      
 
 volumes:
   postgres_data:
