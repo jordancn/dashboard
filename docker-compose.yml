@@ -23,6 +23,8 @@ services:
       - "6006:6006"
     environment:
       - NODE_ENV=production
+    networks:
+      - shared-network
 
   graphql:
     build:
@@ -35,6 +37,8 @@ services:
       - DATABASE_URL=postgres://postgres:password@postgres:5432/dashboard
     depends_on:
       - postgres
+    networks:
+      - shared-network
 
   postgres:
     image: postgres:14
