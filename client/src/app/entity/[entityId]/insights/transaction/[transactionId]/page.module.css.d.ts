@@ -11,10 +11,11 @@ declare const styles: {
   readonly "cardAmount": string;
   readonly "cardDate": string;
   readonly "cardSubheadline": string;
-  readonly "cards": string;
   readonly "categoryChevron": string;
   readonly "categoryContainer": string;
   readonly "categoryName": string;
+  readonly "header": string;
+  readonly "image": string;
   readonly "merchantChevron": string;
   readonly "merchantContainer": string;
   readonly "merchantName": string;

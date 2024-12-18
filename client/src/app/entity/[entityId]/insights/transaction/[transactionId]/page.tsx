@@ -96,56 +96,64 @@ const Transaction = () => {
         </div>
       </NavigationBar>
       <ContentScrollable>
-        <div
-          className={classNames(styles.cards, {
-            ...getWidthClassName("full"),
-          })}
-        >
-          {transaction.vendor?.image && (
-            <Image
-              alt={transaction.vendor?.name || ""}
-              src={`data:image/png;base64,${transaction.vendor.image}`}
+        <div className={styles.header}>
+          <div
+            className={classNames(styles.image, {
+              ...getWidthClassName("full"),
+            })}
+          >
+            {transaction.vendor?.image && (
+              <Image
+                alt={transaction.vendor?.name || ""}
+                src={`data:image/png;base64,${transaction.vendor.image}`}
+                width={45}
+                height={45}
+              />
+            )}
+          </div>
+          <div
+            className={classNames(styles.cardSubheadline, {
+              ...getWidthClassName("full"),
+            })}
+          >
+            <Subheadline title={transaction.vendor?.name || ""} />
+          </div>
+          <div
+            className={classNames(styles.cardAmount, {
+              ...getWidthClassName("full"),
+            })}
+          >
+            <TransactionAmount
+              value={transaction.amount}
+              formatter={formatCurrency.format}
+              size="large"
             />
-          )}
-        </div>
-        <div
-          className={classNames(styles.cardSubheadline, {
-            ...getWidthClassName("full"),
-          })}
-        >
-          <Subheadline title={transaction.vendor?.name || ""} />
-        </div>
-        <div
-          className={classNames(styles.cardAmount, {
-            ...getWidthClassName("full"),
-          })}
-        >
-          <TransactionAmount
-            value={transaction.amount}
-            formatter={formatCurrency.format}
-          />
-        </div>
-        <div
-          className={classNames(styles.cardDate, {
-            ...getWidthClassName("full"),
-          })}
-        >
-          {transaction.pending && <Caption1 title="Pending" />}
-          {!transaction.pending && (
-            <Caption1 title={formatDate(transaction.date)} />
-          )}
+          </div>
+          <div
+            className={classNames(styles.cardDate, {
+              ...getWidthClassName("full"),
+            })}
+          >
+            {transaction.pending && <Caption1 title="Pending" />}
+            {!transaction.pending && (
+              <Caption1 title={formatDate(transaction.date)} />
+            )}
+          </div>
         </div>
         <div
           className={classNames(styles.cardAccount, {
             ...getWidthClassName("full"),
           })}
         >
-          <Card size="full">
+          <Card size="full" withSeparators>
             <CardContents position="start">
               <div className={styles.cardAccountHeader}>
                 <div className={styles.cardAccountHeaderAccountContainer}>
                   <div>
-                    <Caption1 weight="Bold" title={transaction.account?.name} />
+                    <Subheadline
+                      weight="Bold"
+                      title={transaction.account?.name}
+                    />
                   </div>
                   <div>
                     <Caption1 title="Account Number" ordinal="Secondary" />
@@ -162,12 +170,12 @@ const Transaction = () => {
               </div>
             </CardContents>
           </Card>
-          <Card size="full">
+          <Card size="full" withSeparators>
             <CardContents position="middle">
               <div className={styles.cardAccountDescriptionContainer}>
                 <div className={styles.cardAccountDescription}>
                   <div>
-                    <Caption1 weight="Bold" title="Description" />
+                    <Subheadline weight="Bold" title="Description" />
                   </div>
                   <div>
                     <Caption1
@@ -182,12 +190,13 @@ const Transaction = () => {
           <Card
             size="full"
             href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/category?description=${transaction?.description}`}
+            withSeparators
           >
             <CardContents position="middle">
               <div className={styles.categoryContainer}>
                 <div className={styles.categoryName}>
                   <div>
-                    <Caption1 weight="Bold" title="Category" />
+                    <Subheadline weight="Bold" title="Category" />
                   </div>
                   <div>
                     <Caption1
@@ -205,12 +214,13 @@ const Transaction = () => {
           <Card
             size="full"
             href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/vendor?description=${transaction?.description}`}
+            withSeparators
           >
             <CardContents position="end">
               <div className={styles.merchantContainer}>
                 <div className={styles.merchantName}>
                   <div>
-                    <Caption1 weight="Bold" title="Merchant" />
+                    <Subheadline weight="Bold" title="Merchant" />
                   </div>
                   <div>
                     <Caption1
@@ -229,6 +239,7 @@ const Transaction = () => {
             <Card
               size="full"
               href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/amazon-order-details?description=${transaction?.description}`}
+              withSeparators
             >
               <CardContents position="end">
                 <div className={styles.amazonContainer}>

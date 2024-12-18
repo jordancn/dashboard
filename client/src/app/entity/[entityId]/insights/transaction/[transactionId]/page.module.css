@@ -1,3 +1,7 @@
+:root {
+  --transaction-detail-card-gap: 5px;
+}
+
 .navigationBar {
   display: flex;
   width: 100%;
@@ -22,12 +26,22 @@
   margin-left: 10px;
 }
 
-.cards {
+.header {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 20px;
+
+  gap: 10px;
+}
+
+.image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   & img {
     width: 45px;
@@ -70,6 +84,7 @@
 .cardAccountHeaderAccountContainer {
   display: flex;
   flex-direction: column;
+  gap: var(--transaction-detail-card-gap);
 }
 
 .cardAccountHeaderAccountNumberContainer {
@@ -87,6 +102,7 @@
 .cardAccountDescription {
   display: flex;
   flex-direction: column;
+  gap: var(--transaction-detail-card-gap);
 }
 
 .categoryContainer {
@@ -98,6 +114,7 @@
 .categoryName {
   display: flex;
   flex-direction: column;
+  gap: var(--transaction-detail-card-gap);
 }
 
 .categoryChevron {
@@ -109,11 +126,13 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  gap: var(--transaction-detail-card-gap);
 }
 
 .merchantName {
   display: flex;
   flex-direction: column;
+  gap: var(--transaction-detail-card-gap);
 }
 
 .merchantChevron {
