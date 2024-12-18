@@ -1,9 +1,27 @@
+:root {
+  --card-contents-width: calc(var(--card-width) - var(--card-padding) * 2);
+  --card-contents-padding: 10px;
+  --card-contents-padding-bottom: 10px;
+
+  --separator-container-width: calc(100% + var(--card-contents-padding) * 2);
+  --separator-container-margin: calc(var(--card-contents-padding) * -1);
+  --separator-container-left-padding: 0px;
+
+  --separator-width: calc(
+    var(--separator-container-width) - var(--separator-container-left-padding)
+  );
+}
+
 .cardContentsContainer {
   position: relative;
 }
 
 .cardContents {
-  padding: 10px;
+  padding-top: var(--card-contents-padding);
+  padding-left: var(--card-contents-padding);
+  padding-right: var(--card-contents-padding);
+  padding-bottom: var(--card-contents-padding-bottom);
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

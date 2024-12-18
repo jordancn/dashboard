@@ -6,15 +6,18 @@ declare const styles: {
   readonly "desktopCaption1": string;
   readonly "desktopCaption2": string;
   readonly "desktopDarkOpaquePrimary": string;
+  readonly "desktopDarkOpaqueQuarternary": string;
   readonly "desktopDarkOpaqueSecondary": string;
   readonly "desktopDarkOpaqueTertiary": string;
   readonly "desktopDarkVibrantPrimary": string;
+  readonly "desktopDarkVibrantQuarternary": string;
   readonly "desktopDarkVibrantSecondary": string;
   readonly "desktopDarkVibrantTertiary": string;
   readonly "desktopFootnote": string;
   readonly "desktopHeadline": string;
   readonly "desktopLargeTitle": string;
   readonly "desktopLightOpaquePrimary": string;
+  readonly "desktopLightOpaqueQuarternary": string;
   readonly "desktopLightOpaqueSecondary": string;
   readonly "desktopLightOpaqueTertiary": string;
   readonly "desktopLightVibrantPrimary": string;

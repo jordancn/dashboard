@@ -149,14 +149,14 @@ const Transaction = () => {
                     <Caption1 weight="Bold" title={transaction.account?.name} />
                   </div>
                   <div>
-                    <Caption1 title="Account Number" color="Secondary" />
+                    <Caption1 title="Account Number" ordinal="Secondary" />
                   </div>
                 </div>
                 <div className={styles.cardAccountHeaderAccountNumberContainer}>
                   <div>
                     <Caption1
                       title={`· · · · ${transaction.account?.number}`}
-                      color="Secondary"
+                      ordinal="Secondary"
                     />
                   </div>
                 </div>
@@ -173,7 +173,7 @@ const Transaction = () => {
                   <div>
                     <Caption1
                       title={transaction.description}
-                      color="Secondary"
+                      ordinal="Secondary"
                     />
                   </div>
                 </div>
@@ -193,7 +193,7 @@ const Transaction = () => {
                   <div>
                     <Caption1
                       title={transaction.category?.name || "No Category"}
-                      color="Secondary"
+                      ordinal="Secondary"
                     />
                   </div>
                 </div>
@@ -216,7 +216,7 @@ const Transaction = () => {
                   <div>
                     <Caption1
                       title={transaction.vendor?.name || "No Vendor"}
-                      color="Secondary"
+                      ordinal="Secondary"
                     />
                   </div>
                 </div>
@@ -239,7 +239,10 @@ const Transaction = () => {
                     </div>
                     <div>
                       {/* https://www.amazon.com/gp/your-account/order-details/?orderID=111-3298699-4870603 */}
-                      <Caption1 title="111-3298699-4870603" color="Secondary" />
+                      <Caption1
+                        title="111-3298699-4870603"
+                        ordinal="Secondary"
+                      />
                     </div>
                   </div>
                   <div className={styles.amazonChevron}>

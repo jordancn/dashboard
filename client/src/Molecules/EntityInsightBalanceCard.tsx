@@ -18,7 +18,7 @@ export const EntityInsightBalanceCard = (props: {
         <Caption1 title={props.label || "Balance"} />
         <Title3 title={formatCurrency.formatK(props.balance)} />
         {props.date && (
-          <Caption1 title={formatDate(props.date)} color="Secondary" />
+          <Caption1 title={formatDate(props.date)} ordinal="Secondary" />
         )}
       </CardContents>
     </Card>

@@ -1,0 +1,11 @@
+.expenseUpIndicator {
+  width: var(--indicator-size);
+  height: var(--indicator-size);
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.path {
+  fill: #ff3b30;
+}

@@ -87,13 +87,13 @@ export const BudgetCard = (props: {
           <div>
             <Caption1
               title={formatCurrency.format(props.amount)}
-              color="Secondary"
+              ordinal="Secondary"
             />
           </div>
           <div>
             <Caption1
               title={formatCurrency.format(props.budget || 0)}
-              color="Secondary"
+              ordinal="Secondary"
             />
           </div>
         </div>

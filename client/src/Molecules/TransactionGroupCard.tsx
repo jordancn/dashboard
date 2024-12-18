@@ -29,7 +29,7 @@ export const TransactionGroupCard = (props: {
             <div>
               <Caption1
                 title={`${props.transactionCount} transactions`}
-                color="Secondary"
+                ordinal="Secondary"
               />
             </div>
           </div>

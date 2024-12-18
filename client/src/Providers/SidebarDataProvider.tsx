@@ -34,10 +34,10 @@ export const useSidebarData = (): ContextState => {
   return contextState;
 };
 
-const FloatingSidebar: React.FC<{
+const FloatingSidebar = (props: {
   visible: boolean;
   children?: React.ReactNode;
-}> = (props) => {
+}) => {
   return (
     <div
       id="floating-sidebar"
@@ -50,10 +50,10 @@ const FloatingSidebar: React.FC<{
   );
 };
 
-const FixedSidebar: React.FC<{
+const FixedSidebar = (props: {
   visible: boolean;
   children?: React.ReactNode;
-}> = (props) => {
+}) => {
   return (
     <div
       id="fixed-sidebar"
@@ -66,9 +66,9 @@ const FixedSidebar: React.FC<{
   );
 };
 
-const SidebarAction: React.FC<{
+const SidebarAction = (props: {
   onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
-}> = (props) => {
+}) => {
   return (
     <div className={styles.sidebarAction}>
       <SidebarButton onClick={props.onClick} />
@@ -76,7 +76,7 @@ const SidebarAction: React.FC<{
   );
 };
 
-export const Sidebar: React.FC<{ children?: React.ReactNode }> = (props) => {
+export const Sidebar = (props: { children?: React.ReactNode }) => {
   const sidebarData = useSidebarData();
 
   if (sidebarData.status !== "LOADED") {
@@ -97,9 +97,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = (props) => {
   );
 };
 
-export const SidebarDataProvider: React.FC<{ children?: React.ReactNode }> = (
-  props,
-) => {
+export const SidebarDataProvider = (props: { children?: React.ReactNode }) => {
   const device = useDeviceData();
 
   const [state, setState] = React.useState<ContextState>({

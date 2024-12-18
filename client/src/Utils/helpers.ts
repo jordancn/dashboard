@@ -52,8 +52,12 @@ export const useSize = (
 };
 
 export const getWidthClassName = (
-  size: "half" | "single" | "double" | "triple" | "quadruple",
+  size?: "half" | "single" | "double" | "triple" | "quadruple",
 ) => {
+  if (!size) {
+    return {};
+  }
+
   switch (size) {
     case "half":
       return {

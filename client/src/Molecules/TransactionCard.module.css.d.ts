@@ -1,12 +1,12 @@
 declare const styles: {
-  readonly "additionalContainer": string;
-  readonly "amount": string;
-  readonly "chevronContainer": string;
+  readonly "amountAndCategory": string;
+  readonly "chevron": string;
+  readonly "date": string;
   readonly "image": string;
   readonly "imageContainer": string;
-  readonly "secondaryContainer": string;
   readonly "transactionCard": string;
-  readonly "vendorContainer": string;
+  readonly "vendor": string;
+  readonly "vendorAndDate": string;
 };
 export = styles;
 

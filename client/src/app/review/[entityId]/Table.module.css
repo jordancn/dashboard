@@ -1,0 +1,13 @@
+.regularCell {
+  border: 1px solid transparent;
+}
+
+.selectedCell {
+  background-color: lightblue;
+  border: 1px solid black;
+}
+
+.editingCell {
+  background-color: lightgreen;
+  border: 1px solid blue;
+}

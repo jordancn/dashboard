@@ -7,7 +7,7 @@ import {
   useSize,
 } from "@/Utils/helpers";
 import classNames from "classnames";
-import { useCallback } from "react";
+import { useMemo } from "react";
 import styles from "./TransactionCards.module.css";
 
 export const TransactionCards = (props: {
@@ -23,22 +23,10 @@ export const TransactionCards = (props: {
   entityId?: string;
 }) => {
   const size = useSize("single");
-  // const navigate = useNavigate();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onClick = useCallback((transactionId: string) => {
-    // TODO
-    // navigate(`/entity/${props.entityId || 'overview'}/insights/transaction/${transactionId}`);
-  }, []);
-
-  return (
-    <div
-      className={classNames(styles.transactionCards, {
-        ...getWidthClassName(size),
-      })}
-    >
-      {/* TODO memoize */}
-      {props.transactions.map((transaction, index) => {
+  const transactionCards = useMemo(
+    () =>
+      props.transactions.map((transaction, index) => {
         return (
           <TransactionCard
             relativePosition={getRelativePosition(index, props.transactions)}
@@ -53,7 +41,17 @@ export const TransactionCards = (props: {
             image={transaction.image}
           />
         );
+      }),
+    [props.transactions],
+  );
+
+  return (
+    <div
+      className={classNames(styles.transactionCards, {
+        ...getWidthClassName(size),
       })}
+    >
+      {transactionCards}
     </div>
   );
 };

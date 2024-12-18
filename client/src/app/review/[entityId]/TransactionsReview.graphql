@@ -1,0 +1,39 @@
+query TransactionsReview($dateRange: DateRange!) {
+  transactions(dateRange: $dateRange) {
+    id
+    date
+    description
+    amount
+    pending
+    account {
+      id
+      name
+      number
+      entity {
+        id
+        name
+      }
+    }
+    category {
+      id
+      categoryId
+      name
+    }
+    vendor {
+      id
+      name
+      image
+    }
+  }
+
+  categories(dateRange: $dateRange) {
+    id
+    categoryId
+    name
+  }
+
+  vendors {
+    id
+    name
+  }
+}

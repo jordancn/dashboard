@@ -4,7 +4,7 @@ import styles from "./SidebarListItem.module.css";
 
 export const SidebarListItem = (props: {
   title: string;
-  icon?: string | React.FC<{ className: string }>;
+  icon?: string | ((props: { className: string }) => React.ReactNode);
   path: string;
   entityId: string | "overview";
 }) => {

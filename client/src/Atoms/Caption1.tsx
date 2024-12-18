@@ -1,8 +1,8 @@
-import { Alignment, Color, Style, Text, Variant, Weight } from "./Text";
+import { Alignment, Ordinal, Style, Text, Variant, Weight } from "./Text";
 
 export const Caption1 = (props: {
   title: string;
-  color?: Color;
+  ordinal?: Ordinal;
   variant?: Variant;
   weight?: Weight;
   style?: Style;
@@ -10,7 +10,7 @@ export const Caption1 = (props: {
 }) => {
   return (
     <Text
-      color={props.color}
+      ordinal={props.ordinal}
       variant={props.variant}
       weight={props.weight}
       style={props.style}

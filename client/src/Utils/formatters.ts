@@ -78,8 +78,21 @@ export const formatNumber = {
   formatPercent: (v: number): string => {
     return `${censorNumber(v * 100)}%`;
   },
-  formatPercentInt: (v: number): string => {
-    return `${censorNumber(v * 100)}%`.replace(/\.[0-9]+/, "");
+  formatPercentInt: (
+    v: number | undefined | null,
+    options: { withSign: boolean } = { withSign: true },
+  ): string => {
+    if (v === undefined || v === null) {
+      return "";
+    }
+
+    const formatted = `${censorNumber(v * 100)}%`.replace(/\.[0-9]+/, "");
+
+    if (options?.withSign) {
+      return formatted;
+    }
+
+    return formatted.replace(/^\-/, "");
   },
   formatWeight: (v: number): string => {
     return censorNumber(v, weightNumberFormatter);

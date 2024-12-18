@@ -1,0 +1,7 @@
+.disabled {
+  fill: var(--disabled-color);
+}
+
+.enabled {
+  fill: var(--button-color);
+}

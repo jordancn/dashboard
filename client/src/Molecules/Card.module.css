@@ -1,3 +1,24 @@
+:root {
+  --card-width: calc(var(--screen-width) - var(--screen-horizontal-margin) * 2);
+  --card-padding: 10px;
+}
+
 .clickable {
   cursor: pointer;
+}
+
+.withSeparators {
+  position: relative; /* Ensures proper positioning for the pseudo-element */
+}
+
+.withSeparators + .withSeparators::before {
+  content: "";
+  display: block;
+  width: calc(100% - 20px); /* Adjust width to include a "margin" */
+  height: 1px; /* Border thickness */
+  background-color: silver; /* Border color */
+  position: absolute;
+  top: 0; /* Position it at the top of the element */
+  left: 10px; /* Adds left "margin" */
+  z-index: 1;
 }

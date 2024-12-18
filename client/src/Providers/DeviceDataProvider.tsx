@@ -8,6 +8,9 @@ import {
   useState,
 } from "react";
 
+import isMobile from "is-mobile";
+import _ from "lodash";
+
 type ContextState =
   | { status: "LOADING" | "ERROR" }
   | {
@@ -15,7 +18,6 @@ type ContextState =
       value: {
         isMobile: boolean;
         orientation: "landscape" | "portrait";
-        size: "small" | "large";
       };
     };
 
@@ -69,45 +71,77 @@ function useMediaQuery(initalQuery: string) {
 
 // consider using react-device-detect
 
+const isPortrait = (type: ScreenOrientation["type"]) => {
+  return type === "portrait-primary" || type === "portrait-secondary";
+};
+
+const getOrientation = (orientation: ScreenOrientation) => {
+  return isPortrait(orientation.type)
+    ? ("portrait" as const)
+    : ("landscape" as const);
+};
+
 export const DeviceDataProvider = (props: { children?: ReactNode }) => {
   const [state, setState] = useState<ContextState>({
     status: "LOADING",
   });
 
-  const [isPortraitMobile] = useMediaQuery(
-    `screen and (orientation: portrait) and (max-device-width: var(--portrait-width))`,
-  );
-  const [isPortraitTablet] = useMediaQuery(
-    `screen and (orientation: portrait) and (min-device-width: var(--portrait-width))`,
-  );
-  const [isLandscapeMobile] = useMediaQuery(
-    `screen and (orientation: landscape) and (max-device-width: var(--portrait-width))`,
-  );
-  const [isLandscapeTablet] = useMediaQuery(
-    `screen and (orientation: landscape) and (min-device-width: var(--portrait-width))`,
-  );
+  const isMobileTablet = isMobile({ tablet: true });
+  const isMobilePhone = isMobile({ tablet: false });
+
+  const orientationChangeEventHandler = _.throttle((event: Event) => {
+    if (event.target instanceof ScreenOrientation) {
+      const type = event.target.type;
+      const angle = event.target.angle;
+      console.log(`ScreenOrientation change: ${type}, ${angle} degrees.`);
+
+      if (state.status !== "LOADED") {
+        return;
+      }
+
+      const newOrientation = getOrientation(event.target);
+
+      if (state.value.orientation === newOrientation) {
+        return;
+      }
+
+      setState((prevState) => {
+        if (prevState.status !== "LOADED") {
+          return prevState;
+        }
+
+        return {
+          ...prevState,
+          value: {
+            ...prevState.value,
+            orientation: newOrientation,
+          },
+        };
+      });
+    }
+  }, 500);
 
   useEffect(() => {
-    const isMobile = isPortraitMobile || isLandscapeMobile;
-    const isPortrait = isPortraitMobile || isPortraitTablet;
+    screen.orientation.addEventListener(
+      "change",
+      orientationChangeEventHandler,
+    );
+
+    const orientation = window.screen.orientation;
 
     setState({
       status: "LOADED",
       value: {
-        isMobile,
-        orientation: isPortrait
-          ? ("portrait" as const)
-          : ("landscape" as const),
-        size: isMobile ? ("small" as const) : ("large" as const),
+        isMobile: isMobilePhone || isMobileTablet,
+        orientation: getOrientation(orientation),
       },
     });
-  }, [
-    // media,
-    isPortraitMobile,
-    isPortraitTablet,
-    isLandscapeMobile,
-    isLandscapeTablet,
-  ]);
+
+    console.log("isMobilePhone", isMobilePhone);
+    console.log("isMobileTable", isMobileTablet);
+    console.log("isMobile", isMobile);
+    console.log("orientation", orientation);
+  }, [isMobileTablet, isMobilePhone]);
 
   return <Context.Provider value={state}>{props.children}</Context.Provider>;
 };

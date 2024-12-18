@@ -1,6 +1,6 @@
 .scrollMarker {
   scroll-snap-align: start;
-  scroll-margin-left: 16px;
+  scroll-margin-left: 8px;
 }
 
 .fullHeight {

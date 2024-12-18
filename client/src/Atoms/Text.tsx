@@ -1,11 +1,12 @@
 import { useDeviceData } from "@/Providers/DeviceDataProvider";
+import { useSystemTheme } from "@/Utils/use-system-theme/use-system-theme";
 import classNames from "classnames";
 import styles from "./Text.module.css";
 
 export type Platform = "Desktop" | "Mobile";
-export type Mode = "Light" | "Dark";
+export type Mode = "light" | "dark";
 export type Variant = "Opaque" | "Vibrant";
-export type Color = "Primary" | "Secondary" | "Tertiary" | "Quarternary";
+export type Ordinal = "Primary" | "Secondary" | "Tertiary" | "Quarternary";
 export type Weight = "Regular" | "Bold";
 export type Style = "Normal" | "Italic";
 export type Alignment = "Left" | "Center" | "Right";
@@ -24,7 +25,7 @@ export type Size =
 
 export const Text = (props: {
   mode?: Mode;
-  color?: Color;
+  ordinal?: Ordinal;
   variant?: Variant;
   weight?: Weight;
   style?: Style;
@@ -33,153 +34,159 @@ export const Text = (props: {
   value: string;
 }) => {
   const deviceData = useDeviceData();
+  const systemTheme = useSystemTheme();
 
-  const platform =
-    deviceData.status === "LOADED"
-      ? deviceData.value.isMobile
-        ? "Mobile"
-        : "Desktop"
-      : "Desktop";
+  if (deviceData.status !== "LOADED") {
+    return null;
+  }
 
-  const mode = props.mode || "Light";
+  const isMobile = deviceData.value.isMobile;
+  const isDesktop = !isMobile;
 
-  const color = props.color || "Primary";
+  const mode = props.mode || systemTheme;
+
+  const ordinal = props.ordinal || "Primary";
   const variant = props.variant || "Opaque";
   const weight = props.weight || "Regular";
   const style = props.style || "Normal";
   const alignment = props.alignment || "Left";
 
-  return (
-    <div
-      className={classNames(styles.text, {
-        [styles.normalStyle]: style === "Normal",
-        [styles.italicStyle]: style !== "Normal",
-        [styles.regularWeight]: weight === "Regular",
-        [styles.boldWeight]: weight !== "Regular",
-        [styles.leftAlignment]: alignment === "Left",
-        [styles.centerAlignment]: alignment === "Center",
-        [styles.rightAlignment]: alignment === "Right",
+  console.log(props);
 
-        [styles.desktopLargeTitle]:
-          platform === "Desktop" && props.size === "LargeTitle",
-        [styles.desktopTitle1]:
-          platform === "Desktop" && props.size === "Title1",
-        [styles.desktopTitle2]:
-          platform === "Desktop" && props.size === "Title2",
-        [styles.desktopTitle3]:
-          platform === "Desktop" && props.size === "Title3",
-        [styles.desktopHeadline]:
-          platform === "Desktop" && props.size === "Headline",
-        [styles.desktopBody]: platform === "Desktop" && props.size === "Body",
-        [styles.desktopCallout]:
-          platform === "Desktop" && props.size === "Callout",
-        [styles.desktopSubheadline]:
-          platform === "Desktop" && props.size === "Subheadline",
-        [styles.desktopFootnote]:
-          platform === "Desktop" && props.size === "Footnote",
-        [styles.desktopCaption1]:
-          platform === "Desktop" && props.size === "Caption1",
-        [styles.desktopCaption2]:
-          platform === "Desktop" && props.size === "Caption2",
+  console.log(mode, ordinal, variant, weight, style, alignment);
 
-        [styles.mobileLargeTitle]:
-          platform === "Mobile" && props.size === "LargeTitle",
-        [styles.mobileTitle1]: platform === "Mobile" && props.size === "Title1",
-        [styles.mobileTitle2]: platform === "Mobile" && props.size === "Title2",
-        [styles.mobileTitle3]: platform === "Mobile" && props.size === "Title3",
-        [styles.mobileHeadline]:
-          platform === "Mobile" && props.size === "Headline",
-        [styles.mobileBody]: platform === "Mobile" && props.size === "Body",
-        [styles.mobileCallout]:
-          platform === "Mobile" && props.size === "Callout",
-        [styles.mobileSubheadline]:
-          platform === "Mobile" && props.size === "Subheadline",
-        [styles.mobileFootnote]:
-          platform === "Mobile" && props.size === "Footnote",
-        [styles.mobileCaption1]:
-          platform === "Mobile" && props.size === "Caption1",
-        [styles.mobileCaption2]:
-          platform === "Mobile" && props.size === "Caption2",
+  console.log(`${isDesktop ? "desktop" : "mobile"}${mode}${variant}${ordinal}`);
 
-        [styles.mobileLightOpaquePrimary]:
-          platform === "Mobile" &&
-          mode === "Light" &&
-          color === "Primary" &&
-          variant === "Opaque",
-        [styles.mobileLightOpaqueSecondary]:
-          platform === "Mobile" &&
-          mode === "Light" &&
-          color === "Secondary" &&
-          variant === "Opaque",
-        [styles.mobileLightOpaqueTertiary]:
-          platform === "Mobile" &&
-          mode === "Light" &&
-          color === "Tertiary" &&
-          variant === "Opaque",
-        [styles.mobileLightOpaqueQuarternary]:
-          platform === "Mobile" &&
-          mode === "Light" &&
-          color === "Quarternary" &&
-          variant === "Opaque",
-        [styles.mobileDarkOpaquePrimary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Primary" &&
-          variant === "Opaque",
-        [styles.mobileDarkOpaqueSecondary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Secondary" &&
-          variant === "Opaque",
-        [styles.mobileDarkOpaqueTertiary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Tertiary" &&
-          variant === "Opaque",
-        [styles.mobileDarkOpaqueQuarternary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Quarternary" &&
-          variant === "Opaque",
-        [styles.mobileLightVibrantPrimary]:
-          platform === "Mobile" &&
-          mode === "Light" &&
-          color === "Primary" &&
-          variant === "Vibrant",
-        [styles.mobileLightVibrantSecondary]:
-          platform === "Mobile" &&
-          mode === "Light" &&
-          color === "Secondary" &&
-          variant === "Vibrant",
-        [styles.mobileLightVibrantTertiary]:
-          platform === "Mobile" &&
-          mode === "Light" &&
-          color === "Tertiary" &&
-          variant === "Vibrant",
-        [styles.mobileDarkVibrantPrimary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Primary" &&
-          variant === "Vibrant",
-        [styles.mobileDarkVibrantSecondary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Secondary" &&
-          variant === "Vibrant",
-        [styles.mobileDarkVibrantTertiary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Tertiary" &&
-          variant === "Vibrant",
+  const className = classNames(styles.text, {
+    // Style
+    [styles.normalStyle]: style === "Normal",
+    [styles.italicStyle]: style !== "Normal",
 
-        [styles.mobileDarkVibrantQuarternary]:
-          platform === "Mobile" &&
-          mode === "Dark" &&
-          color === "Quarternary" &&
-          variant === "Vibrant",
-      })}
-    >
-      {props.value}
-    </div>
-  );
+    // Weight
+    [styles.regularWeight]: weight === "Regular",
+    [styles.boldWeight]: weight !== "Regular",
+
+    // Alignment
+    [styles.leftAlignment]: alignment === "Left",
+    [styles.centerAlignment]: alignment === "Center",
+    [styles.rightAlignment]: alignment === "Right",
+
+    // Desktop
+    ...(isDesktop
+      ? {
+          // Size
+          [styles.desktopLargeTitle]: props.size === "LargeTitle",
+          [styles.desktopTitle1]: props.size === "Title1",
+          [styles.desktopTitle2]: props.size === "Title2",
+          [styles.desktopTitle3]: props.size === "Title3",
+          [styles.desktopHeadline]: props.size === "Headline",
+          [styles.desktopBody]: props.size === "Body",
+          [styles.desktopCallout]: props.size === "Callout",
+          [styles.desktopSubheadline]: props.size === "Subheadline",
+          [styles.desktopFootnote]: props.size === "Footnote",
+          [styles.desktopCaption1]: props.size === "Caption1",
+          [styles.desktopCaption2]: props.size === "Caption2",
+
+          // Colors
+          [styles.desktopLightOpaquePrimary]:
+            mode === "light" && ordinal === "Primary" && variant === "Opaque",
+          [styles.desktopLightOpaqueSecondary]:
+            mode === "light" && ordinal === "Secondary" && variant === "Opaque",
+          [styles.desktopLightOpaqueTertiary]:
+            mode === "light" && ordinal === "Tertiary" && variant === "Opaque",
+          [styles.desktopLightOpaqueQuarternary]:
+            mode === "light" &&
+            ordinal === "Quarternary" &&
+            variant === "Opaque",
+          [styles.desktopDarkOpaquePrimary]:
+            mode === "dark" && ordinal === "Primary" && variant === "Opaque",
+          [styles.desktopDarkOpaqueSecondary]:
+            mode === "dark" && ordinal === "Secondary" && variant === "Opaque",
+          [styles.desktopDarkOpaqueTertiary]:
+            mode === "dark" && ordinal === "Tertiary" && variant === "Opaque",
+          [styles.desktopDarkOpaqueQuarternary]:
+            mode === "dark" &&
+            ordinal === "Quarternary" &&
+            variant === "Opaque",
+          [styles.desktopLightVibrantPrimary]:
+            mode === "light" && ordinal === "Primary" && variant === "Vibrant",
+          [styles.desktopLightVibrantSecondary]:
+            mode === "light" &&
+            ordinal === "Secondary" &&
+            variant === "Vibrant",
+          [styles.desktopLightVibrantTertiary]:
+            mode === "light" && ordinal === "Tertiary" && variant === "Vibrant",
+          [styles.desktopDarkVibrantPrimary]:
+            mode === "dark" && ordinal === "Primary" && variant === "Vibrant",
+          [styles.desktopDarkVibrantSecondary]:
+            mode === "dark" && ordinal === "Secondary" && variant === "Vibrant",
+          [styles.desktopDarkVibrantTertiary]:
+            mode === "dark" && ordinal === "Tertiary" && variant === "Vibrant",
+          [styles.desktopDarkVibrantQuarternary]:
+            mode === "dark" &&
+            ordinal === "Quarternary" &&
+            variant === "Vibrant",
+        }
+      : {}),
+
+    // Mobile
+    ...(isMobile
+      ? {
+          // Size
+          [styles.mobileLargeTitle]: props.size === "LargeTitle",
+          [styles.mobileTitle1]: props.size === "Title1",
+          [styles.mobileTitle2]: props.size === "Title2",
+          [styles.mobileTitle3]: props.size === "Title3",
+          [styles.mobileHeadline]: props.size === "Headline",
+          [styles.mobileBody]: props.size === "Body",
+          [styles.mobileCallout]: props.size === "Callout",
+          [styles.mobileSubheadline]: props.size === "Subheadline",
+          [styles.mobileFootnote]: props.size === "Footnote",
+          [styles.mobileCaption1]: props.size === "Caption1",
+          [styles.mobileCaption2]: props.size === "Caption2",
+
+          // Colors
+          [styles.mobileLightOpaquePrimary]:
+            mode === "light" && ordinal === "Primary" && variant === "Opaque",
+          [styles.mobileLightOpaqueSecondary]:
+            mode === "light" && ordinal === "Secondary" && variant === "Opaque",
+          [styles.mobileLightOpaqueTertiary]:
+            mode === "light" && ordinal === "Tertiary" && variant === "Opaque",
+          [styles.mobileLightOpaqueQuarternary]:
+            mode === "light" &&
+            ordinal === "Quarternary" &&
+            variant === "Opaque",
+          [styles.mobileDarkOpaquePrimary]:
+            mode === "dark" && ordinal === "Primary" && variant === "Opaque",
+          [styles.mobileDarkOpaqueSecondary]:
+            mode === "dark" && ordinal === "Secondary" && variant === "Opaque",
+          [styles.mobileDarkOpaqueTertiary]:
+            mode === "dark" && ordinal === "Tertiary" && variant === "Opaque",
+          [styles.mobileDarkOpaqueQuarternary]:
+            mode === "dark" &&
+            ordinal === "Quarternary" &&
+            variant === "Opaque",
+          [styles.mobileLightVibrantPrimary]:
+            mode === "light" && ordinal === "Primary" && variant === "Vibrant",
+          [styles.mobileLightVibrantSecondary]:
+            mode === "light" &&
+            ordinal === "Secondary" &&
+            variant === "Vibrant",
+          [styles.mobileLightVibrantTertiary]:
+            mode === "light" && ordinal === "Tertiary" && variant === "Vibrant",
+          [styles.mobileDarkVibrantPrimary]:
+            mode === "dark" && ordinal === "Primary" && variant === "Vibrant",
+          [styles.mobileDarkVibrantSecondary]:
+            mode === "dark" && ordinal === "Secondary" && variant === "Vibrant",
+          [styles.mobileDarkVibrantTertiary]:
+            mode === "dark" && ordinal === "Tertiary" && variant === "Vibrant",
+          [styles.mobileDarkVibrantQuarternary]:
+            mode === "dark" &&
+            ordinal === "Quarternary" &&
+            variant === "Vibrant",
+        }
+      : {}),
+  });
+
+  return <div className={className}>{props.value}</div>;
 };

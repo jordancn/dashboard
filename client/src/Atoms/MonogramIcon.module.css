@@ -1,9 +1,7 @@
-.monogramIcon {
-  & > text {
-    font-family: var(--font-family);
-    font-weight: 500;
-    fill: white;
-    font-size: 62px;
-    text-anchor: middle;
-  }
+.text {
+  font-family: var(--font-family);
+  font-weight: 400;
+  fill: white;
+  font-size: 62px;
+  text-anchor: middle;
 }

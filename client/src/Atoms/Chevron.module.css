@@ -1,11 +1,11 @@
 @media (prefers-color-scheme: dark) {
   .chevron {
-    fill: #ffffff;
+    color: silver;
   }
 }
 
 @media (prefers-color-scheme: light) {
   .chevron {
-    fill: #000000;
+    fill: silver;
   }
 }

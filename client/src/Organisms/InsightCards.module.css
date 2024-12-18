@@ -1,9 +1,9 @@
 .insightCards {
   margin-left: -16px;
   margin-right: -16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  height: 220px;
+  padding-left: 8px;
+  padding-right: 8px;
+  height: 190px;
   overflow-y: hidden;
   overflow-x: auto;
 

@@ -1,5 +1,5 @@
 declare const styles: {
-  readonly "monogramIcon": string;
+  readonly "text": string;
 };
 export = styles;
 

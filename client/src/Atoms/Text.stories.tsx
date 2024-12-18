@@ -9,7 +9,7 @@ const meta: Meta<typeof Text> = {
       control: "select",
       options: ["Light", "Dark"],
     },
-    color: {
+    ordinal: {
       control: "select",
       options: ["Primary", "Secondary", "Tertiary", "Quarternary"],
     },

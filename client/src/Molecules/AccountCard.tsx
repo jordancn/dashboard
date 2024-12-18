@@ -50,11 +50,11 @@ export const AccountCard = (props: {
                 {params?.entityId === "overview" && (
                   <Caption1
                     title={`${props.entity.name} ${props.accountType}`}
-                    color="Secondary"
+                    ordinal="Secondary"
                   />
                 )}
                 {params?.entityId !== "overview" && (
-                  <Caption1 title={props.accountType} color="Secondary" />
+                  <Caption1 title={props.accountType} ordinal="Secondary" />
                 )}
               </div>
             </div>
@@ -64,7 +64,7 @@ export const AccountCard = (props: {
               {formatCurrency.format(props.currentBalance)}
             </div>
             <div>
-              <Caption1 title={`· · · · ${props.number}`} color="Secondary" />
+              <Caption1 title={`· · · · ${props.number}`} ordinal="Secondary" />
             </div>
           </div>
           <div className={styles.chevron}>

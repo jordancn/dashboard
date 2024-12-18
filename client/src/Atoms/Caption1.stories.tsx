@@ -22,7 +22,7 @@ export const Default: Story = {
 export const WithColor: Story = {
   args: {
     title: "Colored Caption1 text",
-    color: "Primary",
+    ordinal: "Primary",
   },
 };
 

@@ -1,6 +1,7 @@
 import { Caption1 } from "@/Atoms/Caption1";
 import { Chevron } from "@/Atoms/Chevron";
 import { MonogramIcon } from "@/Atoms/MonogramIcon";
+import { Subheadline } from "@/Atoms/Subheadline";
 import { Base64Url } from "@/GraphQL/Base64Url";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
@@ -26,6 +27,7 @@ export const TransactionCard = (props: {
     <Card
       size="single"
       href={`/entity/${props.entityId}/insights/transaction/${props.id}`}
+      withSeparators
     >
       <CardTitle />
       <CardContents
@@ -49,28 +51,31 @@ export const TransactionCard = (props: {
             )}
             {!props.image && <MonogramIcon name={props.vendorName || ""} />}
           </div>
-          <div className={styles.additionalContainer}>
-            <div className={styles.vendorContainer}>
-              <Caption1 weight="Bold" title={props.vendorName || ""} />
+          <div className={styles.vendorAndDate}>
+            <div className={styles.vendor}>
+              <Subheadline weight="Bold" title={props.vendorName || ""} />
             </div>
             <div>
-              <div className={styles.secondaryContainer}>
+              <div className={styles.date}>
                 {props.pending && (
-                  <Caption1 title="Pending" color="Secondary" />
+                  <Caption1 title="Pending" ordinal="Secondary" />
                 )}
                 {!props.pending && (
-                  <Caption1 title={formatDate(props.date)} color="Secondary" />
+                  <Caption1
+                    title={formatDate(props.date)}
+                    ordinal="Secondary"
+                  />
                 )}
               </div>
             </div>
           </div>
-          <div className={styles.amount}>
+          <div className={styles.amountAndCategory}>
             <div>{formatCurrency.format(props.amount)}</div>
             <div>
-              <Caption1 title={props.categoryName || ""} color="Secondary" />
+              <Caption1 title={props.categoryName || ""} ordinal="Secondary" />
             </div>
           </div>
-          <div className={styles.chevronContainer}>
+          <div className={styles.chevron}>
             <Chevron />
           </div>
         </div>

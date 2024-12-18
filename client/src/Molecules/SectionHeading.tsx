@@ -9,28 +9,34 @@ export const SectionHeading = (props: {
   title: string;
   subtitle?: string;
   href?: string;
+  size?: "single" | "inline";
 }) => {
-  const size = useSize("single");
+  const size = props.size !== "inline" ? useSize("single") : undefined;
 
   return (
-    <div
-      className={classNames(styles.sectionHeading, {
-        ...getWidthClassName(size),
-      })}
-    >
+    <>
       {props.href && (
-        <Link href={props.href}>
-          <Headline title={props.title} />
+        <Link
+          href={props.href}
+          className={classNames(styles.sectionHeading, {
+            ...getWidthClassName(size),
+          })}
+        >
+          <Headline weight="Bold" title={props.title} />
           {props.subtitle && <Label title={props.subtitle} />}
         </Link>
       )}
 
       {!props.href && (
-        <>
-          <Headline title={props.title} />
+        <div
+          className={classNames(styles.sectionHeading, {
+            ...getWidthClassName(size),
+          })}
+        >
+          <Headline weight="Bold" title={props.title} />
           {props.subtitle && <Label title={props.subtitle} />}
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };

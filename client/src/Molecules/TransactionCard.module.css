@@ -1,47 +1,67 @@
-.transactionCard {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+:root {
+  --transaction-card-image-size: 45px;
+  --transaction-card-gap: 10px;
+  --transaction-card-sections: 4;
+  --transaction-card-amount-and-category-width: 100px;
+  --transaction-card-vendor-width: calc(
+    var(--card-contents-width) - var(--transaction-card-image-size) -
+      var(--transaction-card-amount-and-category-width) -
+      (var(--transaction-card-gap) * var(--transaction-card-sections))
+  );
 }
 
-.secondaryContainer {
+.transactionCard {
+  align-items: center;
   display: flex;
-  flex-direction: row;
-  flex: 2;
-  align-items: baseline;
+  gap: var(--transaction-card-gap);
+  justify-content: space-between;
+  width: var(--transaction-card-inside-width);
 }
 
 .imageContainer {
-  width: 45px;
-  height: 45px;
+  height: var(--transaction-card-image-size);
+  min-height: var(--transaction-card-image-size);
+  min-width: var(--transaction-card-image-size);
   overflow: hidden;
+  width: var(--transaction-card-image-size);
 }
 
 .image {
-  width: 45px;
-  height: 45px;
+  height: var(--transaction-card-image-size);
+  width: var(--transaction-card-image-size);
 }
 
-.additionalContainer {
+.vendorAndDate {
   display: flex;
   flex-direction: column;
   flex: 2;
 }
 
-.vendorContainer {
+.vendor {
+  display: block;
   height: 20px;
-  overflow-y: hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: var(--transaction-card-vendor-width);
 }
 
-.amount {
+.date {
+  align-items: baseline;
+  display: flex;
+  flex-direction: row;
+  flex: 2;
+}
+
+.amountAndCategory {
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  min-width: var(--transaction-card-amount-and-category-width);
+  width: var(--transaction-card-amount-and-category-width);
 }
 
-.chevronContainer {
+.chevron {
   align-self: flex-start;
   padding-top: 6px;
 }

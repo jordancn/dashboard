@@ -556,6 +556,13 @@ export type TransactionQueryVariables = Exact<{
 
 export type TransactionQuery = { __typename?: 'Query', transaction?: { __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string }, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null } | null };
 
+export type TransactionsReviewQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type TransactionsReviewQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string, entity: { __typename?: 'Entity', id: string, name: string } }, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string }>, vendors: Array<{ __typename?: 'Vendor', id: string, name: string }> };
+
 
 export const SidebarContentsDocument = gql`
     query SidebarContents {
@@ -988,3 +995,75 @@ export type TransactionQueryHookResult = ReturnType<typeof useTransactionQuery>;
 export type TransactionLazyQueryHookResult = ReturnType<typeof useTransactionLazyQuery>;
 export type TransactionSuspenseQueryHookResult = ReturnType<typeof useTransactionSuspenseQuery>;
 export type TransactionQueryResult = Apollo.QueryResult<TransactionQuery, TransactionQueryVariables>;
+export const TransactionsReviewDocument = gql`
+    query TransactionsReview($dateRange: DateRange!) {
+  transactions(dateRange: $dateRange) {
+    id
+    date
+    description
+    amount
+    pending
+    account {
+      id
+      name
+      number
+      entity {
+        id
+        name
+      }
+    }
+    category {
+      id
+      categoryId
+      name
+    }
+    vendor {
+      id
+      name
+      image
+    }
+  }
+  categories(dateRange: $dateRange) {
+    id
+    categoryId
+    name
+  }
+  vendors {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useTransactionsReviewQuery__
+ *
+ * To run a query within a React component, call `useTransactionsReviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionsReviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionsReviewQuery({
+ *   variables: {
+ *      dateRange: // value for 'dateRange'
+ *   },
+ * });
+ */
+export function useTransactionsReviewQuery(baseOptions: Apollo.QueryHookOptions<TransactionsReviewQuery, TransactionsReviewQueryVariables> & ({ variables: TransactionsReviewQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TransactionsReviewQuery, TransactionsReviewQueryVariables>(TransactionsReviewDocument, options);
+      }
+export function useTransactionsReviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TransactionsReviewQuery, TransactionsReviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TransactionsReviewQuery, TransactionsReviewQueryVariables>(TransactionsReviewDocument, options);
+        }
+export function useTransactionsReviewSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TransactionsReviewQuery, TransactionsReviewQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionsReviewQuery, TransactionsReviewQueryVariables>(TransactionsReviewDocument, options);
+        }
+export type TransactionsReviewQueryHookResult = ReturnType<typeof useTransactionsReviewQuery>;
+export type TransactionsReviewLazyQueryHookResult = ReturnType<typeof useTransactionsReviewLazyQuery>;
+export type TransactionsReviewSuspenseQueryHookResult = ReturnType<typeof useTransactionsReviewSuspenseQuery>;
+export type TransactionsReviewQueryResult = Apollo.QueryResult<TransactionsReviewQuery, TransactionsReviewQueryVariables>;
