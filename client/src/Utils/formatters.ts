@@ -48,10 +48,18 @@ const censorCurrency = (value: number) => {
 };
 
 export const formatCurrency = {
-  format: (v: number): string => {
+  format: (v: number | null | undefined): string => {
+    if (v === null || v === undefined) {
+      return "";
+    }
+
     return censorCurrency(v);
   },
-  formatK: (v: number): string => {
+  formatK: (v: number | null | undefined): string => {
+    if (v === null || v === undefined) {
+      return "";
+    }
+
     return `${censorCurrency(v / 1000)}k`;
   },
 };

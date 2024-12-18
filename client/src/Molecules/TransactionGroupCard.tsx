@@ -1,5 +1,6 @@
 import { Caption1 } from "@/Atoms/Caption1";
 import { Chevron } from "@/Atoms/Chevron";
+import { Subheadline } from "@/Atoms/Subheadline";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
@@ -15,13 +16,13 @@ export const TransactionGroupCard = (props: {
   href?: string;
 }) => {
   return (
-    <Card size="single" href={props.href}>
+    <Card size="full" href={props.href}>
       <CardTitle />
       <CardContents position={props.relativePosition}>
         <div className={styles.transactionGroupCard}>
           <div className={styles.titleContainer}>
             <div>
-              <Caption1 weight="Bold" title={props.title || ""} />
+              <Subheadline weight="Bold" title={props.title || ""} />
             </div>
           </div>
           <div className={styles.amountContainer}>

@@ -21,7 +21,7 @@ export const InsightCard = (props: {
 
   return (
     <Card
-      className={styles.insightCard}
+      size="half"
       href={`/entity/${props.entityId}/insights/category/${props.categoryId}/${props.dateRange.start}/${props.dateRange.end}`}
     >
       <CardContents>
@@ -30,7 +30,10 @@ export const InsightCard = (props: {
         <div className={styles.changeContainer}>
           <ChangeIndicator change={change} categoryType={props.categoryType} />
           <TransactionAmount
-            title={`${formatNumber.formatPercentInt(props.changePercent, { withSign: false })}`}
+            value={props.changePercent}
+            formatter={(value) =>
+              formatNumber.formatPercentInt(value, { withSign: false })
+            }
             size="small"
           />
         </div>

@@ -1,0 +1,15 @@
+.targetIndicator {
+  margin-left: 5px;
+}
+
+.targetIndicatorCircle {
+  fill: var(--target-color);
+}
+
+.targetWarningIndicatorCircle {
+  fill: var(--target-warning-color);
+}
+
+.targetDangerIndicatorCircle {
+  fill: var(--target-danger-color);
+}

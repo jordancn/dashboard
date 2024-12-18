@@ -1,4 +1,3 @@
-import { Empty } from "@/Atoms/Empty";
 import { SidebarTitle } from "@/Atoms/SidebarTitle";
 import { Spinner } from "@/Atoms/Spinner";
 import { useSidebarContentsQuery } from "@/GraphQL/client.gen";
@@ -29,7 +28,7 @@ export const SidebarContents = () => {
   }
 
   return (
-    <Empty>
+    <>
       <SidebarTitle title="Finances" />
       <SidebarListItem
         entityId="overview"
@@ -61,6 +60,6 @@ export const SidebarContents = () => {
         icon="tasks"
         path="/review/2022-06-01/2022-06-30"
       />
-    </Empty>
+    </>
   );
 };

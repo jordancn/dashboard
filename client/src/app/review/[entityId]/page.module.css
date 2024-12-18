@@ -35,7 +35,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 10px;
+  gap: var(--card-gap);
   flex-direction: row;
 
   overflow-x: scroll;

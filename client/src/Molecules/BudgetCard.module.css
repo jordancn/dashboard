@@ -1,12 +1,18 @@
-.titleContainer {
+.changeContainer {
   display: flex;
   align-items: center;
+  width: 100%;
+  column-gap: 8px;
+
+  margin-top: 4px;
+}
+
+.balanceContainer {
+  display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.secondaryContainer {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+.insightCard {
+  width: calc(var(--card-size-half-width) - 16px);
 }

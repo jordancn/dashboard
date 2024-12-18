@@ -25,7 +25,6 @@ export const EntityInsightActivityCard = (props: {
     totalIncome: number;
     totalExpenses: number;
   }>;
-  size?: "half" | "single";
 }) => {
   const maxActivity =
     _.max([
@@ -45,9 +44,6 @@ export const EntityInsightActivityCard = (props: {
         case "WeekDay":
           return `${toDayOfWeek(start)}`;
         case "Week": {
-          if (props.size !== "single") {
-            return `${getDayFromIsoDate(start)}`;
-          }
           return `${getDayFromIsoDate(start)}–${getDayFromIsoDate(end)}`;
         }
         case "Month":
@@ -58,19 +54,18 @@ export const EntityInsightActivityCard = (props: {
           throw new Error("Invalid ActivityGroup");
       }
     },
-    [props.activityGroup, props.size],
+    [props.activityGroup],
   );
 
   return (
     <Card
-      size={props.size || "half"}
+      size={"half"}
       href={`/entity/${props.entityId}/insights/activity/${props.activityGroup}`}
     >
       <CardContents>
         <div className={styles.cardContents}>
-          {props.size !== "single" && (
-            <Subheadline title={`${props.activityGroup}ly Activity`} />
-          )}
+          <Subheadline title={`${props.activityGroup}ly Activity`} />
+
           <div className={styles.activityContainer}>
             {activity.map((act) => {
               return (

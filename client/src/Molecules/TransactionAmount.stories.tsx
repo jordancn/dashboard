@@ -15,18 +15,18 @@ type Story = StoryObj<typeof TransactionAmount>;
 
 export const Default: Story = {
   args: {
-    title: "$1,234.56",
+    value: "$1,234.56",
   },
 };
 
 export const LargeAmount: Story = {
   args: {
-    title: "$1,234,567,890,123,456.78",
+    value: "$1,234,567,890,123,456.78",
   },
 };
 
 export const SmallAmount: Story = {
   args: {
-    title: "$1",
+    value: "$1",
   },
 };

@@ -1,9 +1,9 @@
+import { shame } from "@/Types/core";
 import * as DateFns from "date-fns";
 import * as _ from "lodash";
 import { reverse } from "lodash";
 import { isString } from "util";
 import { Brand } from "./core";
-import { shame } from "@/Types/core";
 
 export type DateIso = Brand<string, "ISO8601Date">;
 export type DateTense = "today" | "past" | "future";
@@ -43,7 +43,7 @@ export const isBefore = (x: DateIso, y: DateIso) =>
   DateFns.isBefore(validateAndParse(x), validateAndParse(y));
 
 // TODO: Fix this
-export const today = (): DateIso => toIsoDate(new Date("2022-02-03"));
+export const today = (): DateIso => toIsoDate(new Date("2021-10-31"));
 
 export const thisYear = (): string => getYearFromIsoDate(toIsoDate(new Date()));
 export const lastYear = (): string =>

@@ -1,8 +1,4 @@
 :root {
-  --card-contents-width: calc(var(--card-width) - var(--card-padding) * 2);
-  --card-contents-padding: 10px;
-  --card-contents-padding-bottom: 10px;
-
   --separator-container-width: calc(100% + var(--card-contents-padding) * 2);
   --separator-container-margin: calc(var(--card-contents-padding) * -1);
   --separator-container-left-padding: 0px;
@@ -10,6 +6,8 @@
   --separator-width: calc(
     var(--separator-container-width) - var(--separator-container-left-padding)
   );
+
+  --card-contents-gap: 5px;
 }
 
 .cardContentsContainer {
@@ -26,6 +24,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: var(--card-contents-gap);
 
   width: 100%;
 }

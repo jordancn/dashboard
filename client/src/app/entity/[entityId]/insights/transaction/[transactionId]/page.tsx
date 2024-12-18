@@ -2,7 +2,6 @@
 
 import { Caption1 } from "@/Atoms/Caption1";
 import { Chevron } from "@/Atoms/Chevron";
-import { Empty } from "@/Atoms/Empty";
 import { NavigationChevron } from "@/Atoms/NavigationChevron";
 import { Spinner } from "@/Atoms/Spinner";
 import { Subheadline } from "@/Atoms/Subheadline";
@@ -13,7 +12,7 @@ import { NavigationBar } from "@/Molecules/NavigationBar";
 import { TransactionAmount } from "@/Molecules/TransactionAmount";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { formatCurrency, formatDate } from "@/Utils/formatters";
-import { getWidthClassName, useRouteParams, useSize } from "@/Utils/helpers";
+import { getWidthClassName, useRouteParams } from "@/Utils/helpers";
 import { assertIsIsEntityAndTransactionParams } from "@/Utils/param-helpers";
 import classNames from "classnames";
 import Image from "next/image";
@@ -22,7 +21,6 @@ import React from "react";
 import styles from "./page.module.css";
 
 const Transaction = () => {
-  const size = useSize("single");
   const router = useRouter();
 
   const params = useRouteParams(assertIsIsEntityAndTransactionParams);
@@ -60,12 +58,12 @@ const Transaction = () => {
 
   if (results.loading) {
     return (
-      <Empty>
+      <>
         <NavigationBar></NavigationBar>
         <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
-      </Empty>
+      </>
     );
   }
 
@@ -76,7 +74,7 @@ const Transaction = () => {
   }
 
   return (
-    <Empty>
+    <>
       <NavigationBar>
         <div className={styles.navigationBar}>
           <div
@@ -87,11 +85,11 @@ const Transaction = () => {
               <NavigationChevron />
             </div>
             <div className={styles.navigationBarTitle}>
-              <Empty>Back</Empty>
+              <>Back</>
               {/* {props.mode === "insights" ? (
-                <Empty>Insights</Empty>
+                <>Insights</>
               ) : (
-                <Empty>Back</Empty>
+                <>Back</>
               )} */}
             </div>
           </div>
@@ -100,7 +98,7 @@ const Transaction = () => {
       <ContentScrollable>
         <div
           className={classNames(styles.cards, {
-            ...getWidthClassName(size),
+            ...getWidthClassName("full"),
           })}
         >
           {transaction.vendor?.image && (
@@ -112,23 +110,24 @@ const Transaction = () => {
         </div>
         <div
           className={classNames(styles.cardSubheadline, {
-            ...getWidthClassName(size),
+            ...getWidthClassName("full"),
           })}
         >
           <Subheadline title={transaction.vendor?.name || ""} />
         </div>
         <div
           className={classNames(styles.cardAmount, {
-            ...getWidthClassName(size),
+            ...getWidthClassName("full"),
           })}
         >
           <TransactionAmount
-            title={formatCurrency.format(transaction.amount)}
+            value={transaction.amount}
+            formatter={formatCurrency.format}
           />
         </div>
         <div
           className={classNames(styles.cardDate, {
-            ...getWidthClassName(size),
+            ...getWidthClassName("full"),
           })}
         >
           {transaction.pending && <Caption1 title="Pending" />}
@@ -138,10 +137,10 @@ const Transaction = () => {
         </div>
         <div
           className={classNames(styles.cardAccount, {
-            ...getWidthClassName(size),
+            ...getWidthClassName("full"),
           })}
         >
-          <Card size="single">
+          <Card size="full">
             <CardContents position="start">
               <div className={styles.cardAccountHeader}>
                 <div className={styles.cardAccountHeaderAccountContainer}>
@@ -163,7 +162,7 @@ const Transaction = () => {
               </div>
             </CardContents>
           </Card>
-          <Card size="single">
+          <Card size="full">
             <CardContents position="middle">
               <div className={styles.cardAccountDescriptionContainer}>
                 <div className={styles.cardAccountDescription}>
@@ -181,7 +180,7 @@ const Transaction = () => {
             </CardContents>
           </Card>
           <Card
-            size="single"
+            size="full"
             href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/category?description=${transaction?.description}`}
           >
             <CardContents position="middle">
@@ -204,7 +203,7 @@ const Transaction = () => {
             </CardContents>
           </Card>
           <Card
-            size="single"
+            size="full"
             href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/vendor?description=${transaction?.description}`}
           >
             <CardContents position="end">
@@ -228,7 +227,7 @@ const Transaction = () => {
           </Card>
           {transaction.vendor?.name === "Amazon" && (
             <Card
-              size="single"
+              size="full"
               href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/amazon-order-details?description=${transaction?.description}`}
             >
               <CardContents position="end">
@@ -280,7 +279,7 @@ const Transaction = () => {
           </Card> */}
         </div>
       </ContentScrollable>
-    </Empty>
+    </>
   );
 };
 

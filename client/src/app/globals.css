@@ -49,49 +49,61 @@ a {
     system-ui, BlinkMacSystemFont;
 
   /* Dimensions */
+
+  /* Screen */
   --screen-width: 100vw;
-  --screen-horizontal-margin: 8px;
+  --screen-horizontal-margin: 16px;
 
+  /* Sidebar */
   --sidebar-width: 320px;
+
+  /* Portrait */
   --portrait-width: 600px;
-  --toolbar-height: 90px;
-  --content-width: 100vw;
-  --horizontal-margin: 16px;
 
-  --card-size-half-width: calc(var(--content-width) / 2);
-  --card-size-single-width: calc(
-    var(--content-width) - var(--horizontal-margin)
-  );
-  --card-size-double-width: 686px;
-  --card-size-triple-width: 1029px;
-  --card-size-quadruple-width: 1372px;
+  /* Toolbar */
   --toolbar-height: 90px;
 
+  /* Indicator */
   --indicator-size: 25px;
+
+  /* Card */
+  --card-gap: 10px;
+  --card-padding: 10px;
+
+  --content-width: calc(
+    var(--screen-width) - var(--screen-horizontal-margin) * 2
+  );
+
+  --card-full-width: calc(
+    var(--screen-width) - var(--screen-horizontal-margin) * 2
+  );
+
+  --card-contents-width: calc(var(--card-full-width) - var(--card-padding) * 2);
+  --card-contents-padding: 10px;
+  --card-contents-padding-bottom: 10px;
+
+  --card-half-width: calc((var(--card-full-width) / 2) - var(--card-gap));
+  --card-quarter-width: calc(var(--card-full-width) / 4) - var(--card-gap) * 3;
 
   /* Colors */
   --disabled-color: #8e8e93;
   --button-color: #007aff;
+
+  --target-color: #1ed555;
+  --target-warning-color: #ede73c;
+  --target-danger-color: #ff3b30;
+}
+
+.fullWidth {
+  width: var(--card-full-width);
 }
 
 .halfWidth {
-  width: var(--card-size-half-width);
+  width: var(--card-half-width);
 }
 
-.singleWidth {
-  width: var(--card-size-single-width);
-}
-
-.doubleWidth {
-  width: var(--card-size-double-width);
-}
-
-.tripleWidth {
-  width: var(--card-size-triple-width);
-}
-
-.quadrupleWidth {
-  width: var(--card-size-quadruple-width);
+.quarterWidth {
+  width: var(--card-quarter-width);
 }
 
 #root {

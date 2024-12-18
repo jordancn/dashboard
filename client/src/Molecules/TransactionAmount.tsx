@@ -2,8 +2,9 @@ import classNames from "classnames";
 import styles from "./TransactionAmount.module.css";
 
 export const TransactionAmount = (props: {
-  title: string;
+  value: number | null | undefined;
   size?: "small" | "large" | "medium";
+  formatter: (value: number | null | undefined) => string;
 }) => {
   const sizeClass = props.size ?? "medium";
 
@@ -15,7 +16,7 @@ export const TransactionAmount = (props: {
         [styles.medium]: sizeClass === "medium",
       })}
     >
-      {props.title}
+      {props.formatter(props.value)}
     </div>
   );
 };

@@ -1,6 +1,4 @@
-:root {
-  --card-width: calc(var(--screen-width) - var(--screen-horizontal-margin) * 2);
-  --card-padding: 10px;
+.card {
 }
 
 .clickable {

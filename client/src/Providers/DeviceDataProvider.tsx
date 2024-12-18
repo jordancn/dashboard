@@ -93,7 +93,6 @@ export const DeviceDataProvider = (props: { children?: ReactNode }) => {
     if (event.target instanceof ScreenOrientation) {
       const type = event.target.type;
       const angle = event.target.angle;
-      console.log(`ScreenOrientation change: ${type}, ${angle} degrees.`);
 
       if (state.status !== "LOADED") {
         return;
@@ -136,11 +135,6 @@ export const DeviceDataProvider = (props: { children?: ReactNode }) => {
         orientation: getOrientation(orientation),
       },
     });
-
-    console.log("isMobilePhone", isMobilePhone);
-    console.log("isMobileTable", isMobileTablet);
-    console.log("isMobile", isMobile);
-    console.log("orientation", orientation);
   }, [isMobileTablet, isMobilePhone]);
 
   return <Context.Provider value={state}>{props.children}</Context.Provider>;

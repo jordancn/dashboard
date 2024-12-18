@@ -1,6 +1,5 @@
 "use client";
 
-import { Empty } from "@/Atoms/Empty";
 import { SidebarButton } from "@/Molecules/SidebarButton";
 import { useDeviceData } from "@/Providers/DeviceDataProvider";
 import classNames from "classnames";
@@ -135,8 +134,8 @@ export const SidebarDataProvider = (props: { children?: React.ReactNode }) => {
   }, [device, visible, show, hide]);
 
   return (
-    <Empty>
+    <>
       <Context.Provider value={state}>{props.children}</Context.Provider>
-    </Empty>
+    </>
   );
 };

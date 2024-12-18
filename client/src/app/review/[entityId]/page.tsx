@@ -11,8 +11,8 @@ import styles from "./page.module.css";
 // make a hook that returns the data for the table
 
 const TransactionsTable = () => {
-  const start = toDateIso("2022-02-01");
-  const end = toDateIso("2022-02-28");
+  const start = toDateIso("2021-10-01");
+  const end = toDateIso("2021-10-31");
 
   const results = useTransactionsReviewQuery({
     variables: {
@@ -129,17 +129,17 @@ const TransactionsReview = () => {
 
 //   if (results.loading) {
 //     return (
-//       <Empty>
+//       <>
 //         <NavigationBar></NavigationBar>
 //         <ContentScrollable type="wrap-cards">
 //           <Spinner />
 //         </ContentScrollable>
-//       </Empty>
+//       </>
 //     );
 //   }
 
 //   return (
-//     <Empty>
+//     <>
 //       <NavigationBar>
 //         <div className={styles.navigationBar}>
 //           <div className={styles.backButtonContainer} onClick={onBackClicked}>
@@ -288,7 +288,7 @@ const TransactionsReview = () => {
 //           })}
 //         </div>
 //       </ContentScrollable>
-//     </Empty>
+//     </>
 //   );
 // };
 

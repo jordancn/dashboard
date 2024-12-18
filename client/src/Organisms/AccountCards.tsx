@@ -1,4 +1,3 @@
-import { Empty } from "@/Atoms/Empty";
 import { AccountCard } from "@/Molecules/AccountCard";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import {
@@ -46,7 +45,7 @@ export const AccountCards = (props: {
         const accounts = accountGroups[institutionName];
 
         return (
-          <Empty key={institutionName}>
+          <div key={institutionName}>
             <SectionHeading title={institutionName} />
 
             <div
@@ -75,7 +74,7 @@ export const AccountCards = (props: {
                 );
               })}
             </div>
-          </Empty>
+          </div>
         );
       })}
     </div>

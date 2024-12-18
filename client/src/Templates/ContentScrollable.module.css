@@ -1,5 +1,5 @@
 .contentScrollable {
-  padding: 16px;
+  padding: var(--screen-horizontal-margin);
   padding-top: 0;
   margin-bottom: 80px;
 }
@@ -31,8 +31,8 @@
 .wrapCards {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  gap: var(--card-gap);
+  justify-content: space-between;
   align-items: flex-start;
 }
 

@@ -2,58 +2,9 @@
 
 import { GroupBy } from "@/GraphQL/client.gen";
 import { ActivityGroup } from "@/Providers/AppStateProvider";
-import { useDeviceData } from "@/Providers/DeviceDataProvider";
 import { useParams } from "next/navigation";
 
-export const useSize = (
-  size?: "half" | "single" | "double" | "triple" | "quadruple",
-) => {
-  const deviceData = useDeviceData();
-
-  if (deviceData.status !== "LOADED") {
-    return "single";
-  }
-
-  if (deviceData.value.isMobile) {
-    if (size === "half") {
-      return "half";
-    }
-
-    return "single";
-  }
-
-  if (deviceData.value.orientation === "landscape") {
-    switch (size) {
-      case "half":
-        return "single";
-      case "single":
-        return "double";
-      case "double":
-      case "triple":
-      case "quadruple":
-        return "quadruple";
-    }
-  }
-
-  switch (size) {
-    case "half":
-      return "half";
-    case "single":
-      return "single";
-    case "double":
-      return "double";
-    case "triple":
-      return "triple";
-    case "quadruple":
-      return "quadruple";
-  }
-
-  return "single";
-};
-
-export const getWidthClassName = (
-  size?: "half" | "single" | "double" | "triple" | "quadruple",
-) => {
+export const getWidthClassName = (size?: "full" | "half" | "quarter") => {
   if (!size) {
     return {};
   }
@@ -63,21 +14,13 @@ export const getWidthClassName = (
       return {
         halfWidth: true,
       };
-    case "single":
+    case "quarter":
       return {
-        singleWidth: true,
+        quarterWidth: true,
       };
-    case "double":
+    case "full":
       return {
-        singleWidth: false,
-      };
-    case "triple":
-      return {
-        tripleWidth: true,
-      };
-    case "quadruple":
-      return {
-        quadrupleWidth: true,
+        fullWidth: true,
       };
   }
 };

@@ -1,11 +1,7 @@
 import { Base64Url } from "@/GraphQL/Base64Url";
 import { TransactionCard } from "@/Molecules/TransactionCard";
 import { DateIso } from "@/Utils/date-iso";
-import {
-  getRelativePosition,
-  getWidthClassName,
-  useSize,
-} from "@/Utils/helpers";
+import { getRelativePosition, getWidthClassName } from "@/Utils/helpers";
 import classNames from "classnames";
 import { useMemo } from "react";
 import styles from "./TransactionCards.module.css";
@@ -22,8 +18,6 @@ export const TransactionCards = (props: {
   }>;
   entityId?: string;
 }) => {
-  const size = useSize("single");
-
   const transactionCards = useMemo(
     () =>
       props.transactions.map((transaction, index) => {
@@ -48,7 +42,7 @@ export const TransactionCards = (props: {
   return (
     <div
       className={classNames(styles.transactionCards, {
-        ...getWidthClassName(size),
+        ...getWidthClassName("full"),
       })}
     >
       {transactionCards}

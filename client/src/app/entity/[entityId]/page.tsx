@@ -1,7 +1,6 @@
 "use client";
 
 import { AccountsIcon } from "@/Atoms/AccountsIcon";
-import { Empty } from "@/Atoms/Empty";
 import { SearchIcon } from "@/Atoms/SearchIcon";
 import { Spinner } from "@/Atoms/Spinner";
 import {
@@ -9,10 +8,11 @@ import {
   useEntityPageByEntityIdQuery,
   useEntityPageOvervallQuery,
 } from "@/GraphQL/client.gen";
+import { BalanceCard } from "@/Molecules/BalanceCard";
 import { EntityInsightActivityCard } from "@/Molecules/EntityInsightActivityCard";
-import { EntityInsightBalanceCard } from "@/Molecules/EntityInsightBalanceCard";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { SectionHeading } from "@/Molecules/SectionHeading";
+import { BudgetCards } from "@/Organisms/BudgetCards";
 import { InsightCards } from "@/Organisms/InsightCards";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { TransactionGroupCards } from "@/Organisms/TransactionGroupCards";
@@ -31,7 +31,6 @@ import {
 import { getActivityGroupBy, useRouteParams } from "@/Utils/helpers";
 import { assertIsEntityParams } from "@/Utils/param-helpers";
 import _ from "lodash";
-import Link from "next/link";
 import * as React from "react";
 import styles from "./page.module.css";
 
@@ -90,6 +89,8 @@ const EntityPage = () => {
     start: getFirstDayOfMonth(today()),
     end: lastDayOfMonth(today()),
   };
+
+  const [mode, setMode] = React.useState<"insights" | "budget">("insights");
 
   const activityGroup = useActivityGroup();
 
@@ -166,38 +167,38 @@ const EntityPage = () => {
       );
   }, [results]);
 
-  // const budget = React.useMemo(() => {
-  //   return _.compact(
-  //     insights.map((category) => {
-  //       const budget = category.budget;
+  const budget = React.useMemo(() => {
+    return _.compact(
+      insights.map((category) => {
+        const budget = category.budget;
 
-  //       if (!budget) {
-  //         return;
-  //       }
+        if (!budget) {
+          return;
+        }
 
-  //       if (!("performance" in budget)) {
-  //         return;
-  //       }
+        if (!("performance" in budget)) {
+          return;
+        }
 
-  //       const performance = _.first(budget.performance);
+        const performance = _.first(budget.performance);
 
-  //       if (!performance) {
-  //         return;
-  //       }
+        if (!performance) {
+          return;
+        }
 
-  //       return {
-  //         categoryName: category.categoryName,
-  //         id: category.id,
-  //         categoryId: category.categoryId,
-  //         budget: performance.budgeted,
-  //         amount: performance.spent,
-  //         percent: performance.budgeted
-  //           ? performance.spent / performance.budgeted
-  //           : Number.POSITIVE_INFINITY,
-  //       };
-  //     }),
-  //   );
-  // }, [insights, results]);
+        return {
+          categoryName: category.categoryName,
+          id: category.id,
+          categoryId: category.categoryId,
+          budget: performance.budgeted,
+          amount: performance.spent,
+          percent: performance.budgeted
+            ? performance.spent / performance.budgeted
+            : Number.POSITIVE_INFINITY,
+        };
+      }),
+    );
+  }, [insights, results]);
 
   const pendingTransactions = React.useMemo(() => {
     if (results.loading) {
@@ -338,14 +339,16 @@ const EntityPage = () => {
 
     const act = getActivity();
 
-    return act.map((activity) => ({
-      groupIndex: activity.groupIndex,
-      start: activity.start,
-      end: activity.end,
-      value: Math.abs(activity.total),
-      totalIncome: Math.abs(activity.totalIncome),
-      totalExpenses: Math.abs(activity.totalExpenses),
-    }));
+    return act
+      .filter((activity) => activity.groupIndex >= 0)
+      .map((activity) => ({
+        groupIndex: activity.groupIndex,
+        start: activity.start,
+        end: activity.end,
+        value: Math.abs(activity.total),
+        totalIncome: Math.abs(activity.totalIncome),
+        totalExpenses: Math.abs(activity.totalExpenses),
+      }));
   }, [results]);
 
   const currentBalance = React.useMemo(() => {
@@ -364,31 +367,37 @@ const EntityPage = () => {
     return 0;
   }, [results]);
 
+  const onShowBudgetClicked = () => {
+    setMode("budget");
+  };
+
+  const onShowInsightsClicked = () => {
+    setMode("insights");
+  };
+
   if (results.loading) {
     return (
-      <Empty>
+      <>
         <NavigationBar></NavigationBar>
         <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
-      </Empty>
+      </>
     );
   }
 
   return (
-    <Empty>
+    <>
       <NavigationBar>
         <div className={styles.navigationBarContents}>
           <div>
             <SearchIcon disabled />
           </div>
-          <Link href={`/entity/${params.entityId}/accounts`}>
-            <AccountsIcon disabled />
-          </Link>
+          <AccountsIcon disabled />
         </div>
       </NavigationBar>
-      <ContentScrollable type="wrap-cards" navigationBar>
-        <EntityInsightBalanceCard
+      <ContentScrollable type="wrap-cards" hasNavigationBar>
+        <BalanceCard
           balance={currentBalance}
           date={results.data?.lastRefreshed}
         />
@@ -397,29 +406,26 @@ const EntityPage = () => {
           activity={activity}
           entityId={params.entityId}
         />
-        <>
-          {!params.entityId && (
-            <SectionHeading title="Insights" size="inline" />
-          )}
+        {mode === "insights" && (
+          <>
+            {!params.entityId && <SectionHeading title="Insights" />}
 
-          {params.entityId && (
-            <SectionHeading
-              title="Insights"
-              subtitle="Show Budget"
-              href={`/entity/${params.entityId}/budget`}
-              size="inline"
+            {params.entityId && (
+              <div onClick={onShowBudgetClicked}>
+                <SectionHeading title="Insights" subtitle="Show Budget" />
+              </div>
+            )}
+
+            <InsightCards
+              entityId={params.entityId}
+              insights={insights}
+              dateRange={insightsDateRange}
             />
-          )}
+          </>
+        )}
 
-          <InsightCards
-            entityId={params.entityId}
-            insights={insights}
-            dateRange={insightsDateRange}
-          />
-        </>
-        {/* 
-        {props.mode === "budget" && budget && params.entityId && (
-          <Empty>
+        {mode === "budget" && (
+          <>
             <SectionHeading
               title="Budget"
               subtitle="Show Insights"
@@ -431,18 +437,20 @@ const EntityPage = () => {
               entityId={params.entityId}
               dateRange={insightsDateRange}
             />
-          </Empty>
-        )} */}
+          </>
+        )}
+
         {pendingTransactions.length > 0 && (
-          <Empty>
+          <>
             <SectionHeading title="Pending Transactions" />
 
             <TransactionCards
               transactions={pendingTransactions}
               entityId={params.entityId}
             />
-          </Empty>
+          </>
         )}
+
         {latestTransactions.length > 0 && (
           <SectionHeading title="Latest Transactions" />
         )}
@@ -450,13 +458,14 @@ const EntityPage = () => {
           transactions={latestTransactions}
           entityId={params.entityId}
         />
+
         <SectionHeading title={getYearFromIsoDate(today())} />
         <TransactionGroupCards
           transactionGroups={groupedTransactions}
           entityId={params.entityId}
         />
       </ContentScrollable>
-    </Empty>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Headline } from "@/Atoms/Headline";
 import { Label } from "@/Atoms/Label";
-import { getWidthClassName, useSize } from "@/Utils/helpers";
+import { getWidthClassName } from "@/Utils/helpers";
 import classNames from "classnames";
 import Link from "next/link";
 import styles from "./SectionHeading.module.css";
@@ -9,17 +9,16 @@ export const SectionHeading = (props: {
   title: string;
   subtitle?: string;
   href?: string;
-  size?: "single" | "inline";
+  onClick?: () => void;
+  size?: "full" | "half" | "quarter";
 }) => {
-  const size = props.size !== "inline" ? useSize("single") : undefined;
-
   return (
     <>
       {props.href && (
         <Link
           href={props.href}
           className={classNames(styles.sectionHeading, {
-            ...getWidthClassName(size),
+            ...getWidthClassName(props.size),
           })}
         >
           <Headline weight="Bold" title={props.title} />
@@ -30,8 +29,9 @@ export const SectionHeading = (props: {
       {!props.href && (
         <div
           className={classNames(styles.sectionHeading, {
-            ...getWidthClassName(size),
+            ...getWidthClassName(props.size),
           })}
+          onClick={props.onClick}
         >
           <Headline weight="Bold" title={props.title} />
           {props.subtitle && <Label title={props.subtitle} />}

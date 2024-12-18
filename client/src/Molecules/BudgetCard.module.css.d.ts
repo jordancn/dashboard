@@ -1,6 +1,7 @@
 declare const styles: {
-  readonly "secondaryContainer": string;
-  readonly "titleContainer": string;
+  readonly "balanceContainer": string;
+  readonly "changeContainer": string;
+  readonly "insightCard": string;
 };
 export = styles;
 

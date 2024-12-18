@@ -51,12 +51,6 @@ export const Text = (props: {
   const style = props.style || "Normal";
   const alignment = props.alignment || "Left";
 
-  console.log(props);
-
-  console.log(mode, ordinal, variant, weight, style, alignment);
-
-  console.log(`${isDesktop ? "desktop" : "mobile"}${mode}${variant}${ordinal}`);
-
   const className = classNames(styles.text, {
     // Style
     [styles.normalStyle]: style === "Normal",

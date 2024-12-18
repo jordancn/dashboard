@@ -1,17 +1,17 @@
-import { EntityInsightBalanceCard } from "@/Molecules/EntityInsightBalanceCard";
+import { BalanceCard } from "@/Molecules/BalanceCard";
 import { toDateIso } from "@/Utils/date-iso";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof EntityInsightBalanceCard> = {
-  title: "Molecules/EntityInsightBalanceCard",
-  component: EntityInsightBalanceCard,
+const meta: Meta<typeof BalanceCard> = {
+  title: "Molecules/BalanceCard",
+  component: BalanceCard,
   parameters: {
     layout: "centered",
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof EntityInsightBalanceCard>;
+type Story = StoryObj<typeof BalanceCard>;
 
 export const Default: Story = {
   args: {

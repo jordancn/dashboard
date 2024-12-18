@@ -1,12 +1,12 @@
 import { Caption1 } from "@/Atoms/Caption1";
-import { Title3 } from "@/Atoms/Title3";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
+import { TransactionAmount } from "@/Molecules/TransactionAmount";
 import { DateIso } from "@/Utils/date-iso";
 import { formatCurrency, formatDate } from "@/Utils/formatters";
 
-export const EntityInsightBalanceCard = (props: {
-  size?: "half" | "single" | "double" | "triple" | "quadruple";
+export const BalanceCard = (props: {
+  size?: "half" | "full" | "quarter";
   label?: string;
   balance: number;
   date?: DateIso;
@@ -16,7 +16,11 @@ export const EntityInsightBalanceCard = (props: {
     <Card size={props.size || "half"} href={props.href}>
       <CardContents>
         <Caption1 title={props.label || "Balance"} />
-        <Title3 title={formatCurrency.formatK(props.balance)} />
+        <TransactionAmount
+          size="small"
+          value={props.balance}
+          formatter={formatCurrency.formatK}
+        />
         {props.date && (
           <Caption1 title={formatDate(props.date)} ordinal="Secondary" />
         )}

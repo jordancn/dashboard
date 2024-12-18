@@ -4,7 +4,7 @@ import styles from "./ContentScrollable.module.css";
 export const ContentScrollable = (props: {
   type?: "block" | "wrap-cards";
   direction?: "row" | "column";
-  navigationBar?: boolean;
+  hasNavigationBar?: boolean;
   fullHeight?: boolean;
   children?: React.ReactNode;
   fullWidth?: boolean;
@@ -16,13 +16,13 @@ export const ContentScrollable = (props: {
           [styles.contentScrollableFullWidth]: props.fullWidth,
           [styles.contentScrollableFullHeight]: props.fullHeight,
           [styles.wrapCards]: props.type === "wrap-cards",
-          [styles.navigationBar]: props.navigationBar,
+          [styles.navigationBar]: props.hasNavigationBar,
           [styles.wrapCardsColumn]:
             props.type === "wrap-cards" && props.direction === "column",
           [styles.wrapCardsRow]:
             props.type === "wrap-cards" && props.direction === "row",
-          [styles.withNavigationBar]: props.navigationBar,
-          [styles.withoutNavigationBar]: !props.navigationBar,
+          [styles.withNavigationBar]: props.hasNavigationBar,
+          [styles.withoutNavigationBar]: !props.hasNavigationBar,
         })}
       >
         {props.children}

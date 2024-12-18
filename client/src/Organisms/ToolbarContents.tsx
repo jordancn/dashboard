@@ -1,4 +1,3 @@
-import { Empty } from "@/Atoms/Empty";
 import { Spinner } from "@/Atoms/Spinner";
 import { useSidebarContentsQuery } from "@/GraphQL/client.gen";
 import { ToolbarItem } from "@/Molecules/ToolbarItem";
@@ -28,7 +27,7 @@ export const ToolbarContents = () => {
   }
 
   return (
-    <Empty>
+    <>
       <ToolbarItem
         title="Overview"
         entityId="overview"
@@ -54,6 +53,6 @@ export const ToolbarContents = () => {
         );
       })}
       {/* <ToolbarItem title='Test' icon='radiation' path='/test/Month' /> */}
-    </Empty>
+    </>
   );
 };

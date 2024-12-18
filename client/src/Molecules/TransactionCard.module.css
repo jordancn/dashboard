@@ -1,21 +1,22 @@
 :root {
   --transaction-card-image-size: 45px;
-  --transaction-card-gap: 10px;
   --transaction-card-sections: 4;
   --transaction-card-amount-and-category-width: 100px;
+  --transaction-card-width: var(--card-contents-width);
+
   --transaction-card-vendor-width: calc(
-    var(--card-contents-width) - var(--transaction-card-image-size) -
+    var(--transaction-card-width) - var(--transaction-card-image-size) -
       var(--transaction-card-amount-and-category-width) -
-      (var(--transaction-card-gap) * var(--transaction-card-sections))
+      (var(--card-gap) * var(--transaction-card-sections))
   );
 }
 
 .transactionCard {
   align-items: center;
   display: flex;
-  gap: var(--transaction-card-gap);
+  gap: var(--card-gap);
   justify-content: space-between;
-  width: var(--transaction-card-inside-width);
+  width: var(--transaction-card-width);
 }
 
 .imageContainer {
@@ -54,9 +55,11 @@
 }
 
 .amountAndCategory {
-  align-items: flex-end;
   display: flex;
   flex-direction: column;
+
+  align-items: flex-end;
+
   min-width: var(--transaction-card-amount-and-category-width);
   width: var(--transaction-card-amount-and-category-width);
 }

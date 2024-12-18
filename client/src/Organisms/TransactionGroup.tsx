@@ -1,4 +1,3 @@
-import { Empty } from "@/Atoms/Empty";
 import { NavigationChevron } from "@/Atoms/NavigationChevron";
 import { Spinner } from "@/Atoms/Spinner";
 import {
@@ -93,17 +92,17 @@ export const TransactionGroup = () => {
 
   if (results.loading) {
     return (
-      <Empty>
+      <>
         <NavigationBar></NavigationBar>
         <ContentScrollable type="wrap-cards">
           <Spinner />
         </ContentScrollable>
-      </Empty>
+      </>
     );
   }
 
   return (
-    <Empty>
+    <>
       <NavigationBar>
         <div className={styles.navigationBar}>
           <div className={styles.backButtonContainer} onClick={onBackClicked}>
@@ -128,6 +127,6 @@ export const TransactionGroup = () => {
           />
         </div>
       </ContentScrollable>
-    </Empty>
+    </>
   );
 };

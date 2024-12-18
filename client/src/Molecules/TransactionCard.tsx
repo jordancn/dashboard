@@ -25,7 +25,7 @@ export const TransactionCard = (props: {
 }) => {
   return (
     <Card
-      size="single"
+      size="full"
       href={`/entity/${props.entityId}/insights/transaction/${props.id}`}
       withSeparators
     >
@@ -72,7 +72,11 @@ export const TransactionCard = (props: {
           <div className={styles.amountAndCategory}>
             <div>{formatCurrency.format(props.amount)}</div>
             <div>
-              <Caption1 title={props.categoryName || ""} ordinal="Secondary" />
+              <Caption1
+                title={props.categoryName || ""}
+                ordinal="Secondary"
+                alignment="Right"
+              />
             </div>
           </div>
           <div className={styles.chevron}>
