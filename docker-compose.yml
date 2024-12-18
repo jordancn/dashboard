@@ -39,6 +39,7 @@ services:
       - postgres
     networks:
       - shared-network
+      - internal-network
 
   postgres:
     image: postgres:14
@@ -51,7 +52,8 @@ services:
       POSTGRES_DB: dashboard
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      
+    networks:
+      - internal-network
 
 volumes:
   postgres_data:
@@ -59,3 +61,5 @@ volumes:
 networks:
   shared-network:
     external: true
+  internal-network:
+    external: false
