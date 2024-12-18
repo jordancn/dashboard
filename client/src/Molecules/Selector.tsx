@@ -1,13 +1,13 @@
-import { getWidthClassName, useSize } from "@/Utils/helpers";
+import { getWidthClassName } from "@/Utils/helpers";
 import classNames from "classnames";
 import styles from "./Selector.module.css";
 
 export const Selector = (props: {
-  size: "half" | "single" | "double" | "triple" | "quadruple";
+  size: "full" | "half" | "quarter";
   options: Array<{ label: string; onClick: () => void; disabled?: boolean }>;
   selectedOptionLabel: string;
 }) => {
-  const size = useSize(props.size);
+  const { size } = props;
 
   return (
     <div

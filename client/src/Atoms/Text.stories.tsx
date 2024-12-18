@@ -63,14 +63,14 @@ export const Default: Story = {
 
 export const MobileLight: Story = {
   args: {
-    mode: "Light",
+    mode: "light",
     value: "Mobile Light Text",
   },
 };
 
 export const DesktopDark: Story = {
   args: {
-    mode: "Dark",
+    mode: "dark",
     value: "Desktop Dark Text",
   },
 };

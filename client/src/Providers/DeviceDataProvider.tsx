@@ -35,39 +35,39 @@ export const useDeviceData = (): ContextState => {
   return contextState;
 };
 
-function useMediaQuery(initalQuery: string) {
-  const [query, setQuery] = useState(initalQuery);
-  const [matches, setMatches] = useState(false);
+// function useMediaQuery(initalQuery: string) {
+//   const [query, setQuery] = useState(initalQuery);
+//   const [matches, setMatches] = useState(false);
 
-  // check query and listen for media change.
-  useEffect(() => {
-    if (!query) return;
+//   // check query and listen for media change.
+//   useEffect(() => {
+//     if (!query) return;
 
-    const _onChange = (mql: MediaQueryListEvent) => {
-      setMatches(mql.matches);
-    };
+//     const _onChange = (mql: MediaQueryListEvent) => {
+//       setMatches(mql.matches);
+//     };
 
-    const mql = window.matchMedia(query);
+//     const mql = window.matchMedia(query);
 
-    setMatches(mql.matches);
+//     setMatches(mql.matches);
 
-    try {
-      mql.addEventListener("change", _onChange);
-    } catch {
-      mql.addListener(_onChange);
-    }
+//     try {
+//       mql.addEventListener("change", _onChange);
+//     } catch {
+//       mql.addListener(_onChange);
+//     }
 
-    return () => {
-      try {
-        mql.removeEventListener("change", _onChange);
-      } catch {
-        mql.removeListener(_onChange);
-      }
-    };
-  }, [query]);
+//     return () => {
+//       try {
+//         mql.removeEventListener("change", _onChange);
+//       } catch {
+//         mql.removeListener(_onChange);
+//       }
+//     };
+//   }, [query]);
 
-  return [matches, setQuery] as const;
-}
+//   return [matches, setQuery] as const;
+// }
 
 // consider using react-device-detect
 
@@ -91,9 +91,6 @@ export const DeviceDataProvider = (props: { children?: ReactNode }) => {
 
   const orientationChangeEventHandler = _.throttle((event: Event) => {
     if (event.target instanceof ScreenOrientation) {
-      const type = event.target.type;
-      const angle = event.target.angle;
-
       if (state.status !== "LOADED") {
         return;
       }
@@ -135,7 +132,7 @@ export const DeviceDataProvider = (props: { children?: ReactNode }) => {
         orientation: getOrientation(orientation),
       },
     });
-  }, [isMobileTablet, isMobilePhone]);
+  }, [isMobileTablet, isMobilePhone, orientationChangeEventHandler]);
 
   return <Context.Provider value={state}>{props.children}</Context.Provider>;
 };

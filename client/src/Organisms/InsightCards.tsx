@@ -19,24 +19,26 @@ export const InsightCards = (props: {
   }>;
   dateRange: DateRange;
 }) => {
-  const insights = useMemo(() => {
-    return sortInsights(filterInsights(props.insights)).map((category) => {
+  const { entityId, insights, dateRange } = props;
+
+  const insightCards = useMemo(() => {
+    return sortInsights(filterInsights(insights)).map((category) => {
       return (
         <ScrollMarker key={category.id}>
           <InsightCard
-            entityId={props.entityId}
+            entityId={entityId}
             categoryId={category.categoryId}
             categoryName={category.categoryName}
             categoryType={category.categoryType}
             changePercent={category.changePercent}
             currentTotal={category.currentTotal}
             previousTotal={category.previousTotal}
-            dateRange={props.dateRange}
+            dateRange={dateRange}
           />
         </ScrollMarker>
       );
     });
-  }, [props.insights, props.dateRange]);
+  }, [entityId, insights, dateRange]);
 
   return (
     <div
@@ -44,7 +46,7 @@ export const InsightCards = (props: {
         [styles.short]: props.insights.length <= 2,
       })}
     >
-      {insights}
+      {insightCards}
       <ScrollMarker fullHeight>
         <div className={styles.scrollMarker}></div>
       </ScrollMarker>

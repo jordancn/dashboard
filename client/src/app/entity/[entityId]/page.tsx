@@ -198,7 +198,7 @@ const EntityPage = () => {
         };
       }),
     );
-  }, [insights, results]);
+  }, [insights]);
 
   const pendingTransactions = React.useMemo(() => {
     if (results.loading) {

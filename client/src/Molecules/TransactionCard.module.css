@@ -1,16 +1,3 @@
-:root {
-  --transaction-card-image-size: 45px;
-  --transaction-card-sections: 4;
-  --transaction-card-amount-and-category-width: 100px;
-  --transaction-card-width: var(--card-contents-width);
-
-  --transaction-card-vendor-width: calc(
-    var(--transaction-card-width) - var(--transaction-card-image-size) -
-      var(--transaction-card-amount-and-category-width) -
-      (var(--card-gap) * var(--transaction-card-sections))
-  );
-}
-
 .transactionCard {
   align-items: center;
   display: flex;

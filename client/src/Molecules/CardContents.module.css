@@ -1,15 +1,3 @@
-:root {
-  --separator-container-width: calc(100% + var(--card-contents-padding) * 2);
-  --separator-container-margin: calc(var(--card-contents-padding) * -1);
-  --separator-container-left-padding: 0px;
-
-  --separator-width: calc(
-    var(--separator-container-width) - var(--separator-container-left-padding)
-  );
-
-  --card-contents-gap: 5px;
-}
-
 .cardContentsContainer {
   position: relative;
 }

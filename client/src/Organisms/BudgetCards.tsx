@@ -17,25 +17,27 @@ export const BudgetCards = (props: {
   }>;
   dateRange: DateRange;
 }) => {
+  const { entityId, budget, dateRange } = props;
+
   const bugdetCards = useMemo(() => {
-    return _.orderBy(props.budget, (c) => Math.abs(c.percent), "desc").map(
+    return _.orderBy(budget, (c) => Math.abs(c.percent), "desc").map(
       (category) => {
         return (
           <ScrollMarker key={category.categoryId}>
             <BudgetCard
-              entityId={props.entityId}
+              entityId={entityId}
               categoryId={category.categoryId}
               categoryName={category.categoryName}
               amount={category.amount}
               budget={category.budget}
               percent={category.percent}
-              dateRange={props.dateRange}
+              dateRange={dateRange}
             />
           </ScrollMarker>
         );
       },
     );
-  }, [props.budget, props.dateRange]);
+  }, [entityId, budget, dateRange]);
 
   return (
     <div className={styles.budgetCards}>

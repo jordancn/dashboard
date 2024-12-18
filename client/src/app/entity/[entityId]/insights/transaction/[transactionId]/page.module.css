@@ -1,7 +1,3 @@
-:root {
-  --transaction-detail-card-gap: 5px;
-}
-
 .navigationBar {
   display: flex;
   width: 100%;

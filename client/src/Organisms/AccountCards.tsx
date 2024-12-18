@@ -1,10 +1,6 @@
 import { AccountCard } from "@/Molecules/AccountCard";
 import { SectionHeading } from "@/Molecules/SectionHeading";
-import {
-  getRelativePosition,
-  getWidthClassName,
-  useSize,
-} from "@/Utils/helpers";
+import { getRelativePosition, getWidthClassName } from "@/Utils/helpers";
 import classNames from "classnames";
 import _ from "lodash";
 import { useMemo } from "react";
@@ -28,8 +24,6 @@ export const AccountCards = (props: {
   }>;
   entityId?: string;
 }) => {
-  const size = useSize("single");
-
   const accountGroups = useMemo(() => {
     return _.groupBy(props.accounts, (account) => account.institution.name);
   }, [props.accounts]);
@@ -37,7 +31,7 @@ export const AccountCards = (props: {
   return (
     <div
       className={classNames(styles.accountCards, {
-        ...getWidthClassName(size),
+        ...getWidthClassName("full"),
       })}
     >
       {/* TODO memoize */}
@@ -50,7 +44,7 @@ export const AccountCards = (props: {
 
             <div
               className={classNames(styles.section, {
-                ...getWidthClassName(size),
+                ...getWidthClassName("full"),
               })}
             >
               {_.orderBy(

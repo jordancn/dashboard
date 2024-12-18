@@ -24,7 +24,6 @@ const DeviceDataDisplay = () => {
     <div>
       <div>Is Mobile: {deviceData.value.isMobile.toString()}</div>
       <div>Orientation: {deviceData.value.orientation}</div>
-      <div>Size: {deviceData.value.size}</div>
     </div>
   );
 };

@@ -92,6 +92,32 @@ a {
   --target-color: #1ed555;
   --target-warning-color: #ede73c;
   --target-danger-color: #ff3b30;
+
+  /* Card Contents */
+  --separator-container-width: calc(100% + var(--card-contents-padding) * 2);
+  --separator-container-margin: calc(var(--card-contents-padding) * -1);
+  --separator-container-left-padding: 0px;
+
+  --separator-width: calc(
+    var(--separator-container-width) - var(--separator-container-left-padding)
+  );
+
+  --card-contents-gap: 5px;
+
+  /* Transaction Card */
+  --transaction-card-image-size: 45px;
+  --transaction-card-sections: 4;
+  --transaction-card-amount-and-category-width: 100px;
+  --transaction-card-width: var(--card-contents-width);
+
+  --transaction-card-vendor-width: calc(
+    var(--transaction-card-width) - var(--transaction-card-image-size) -
+      var(--transaction-card-amount-and-category-width) -
+      (var(--card-gap) * var(--transaction-card-sections))
+  );
+
+  /* Transaction Page */
+  --transaction-detail-card-gap: 5px;
 }
 
 .fullWidth {

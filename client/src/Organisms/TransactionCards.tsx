@@ -18,25 +18,27 @@ export const TransactionCards = (props: {
   }>;
   entityId?: string;
 }) => {
+  const { entityId, transactions } = props;
+
   const transactionCards = useMemo(
     () =>
-      props.transactions.map((transaction, index) => {
+      transactions.map((transaction, index) => {
         return (
           <TransactionCard
-            relativePosition={getRelativePosition(index, props.transactions)}
+            relativePosition={getRelativePosition(index, transactions)}
             key={transaction.id}
             categoryName={transaction.categoryName}
             date={transaction.date}
             id={transaction.id}
             vendorName={transaction.vendorName}
             amount={transaction.amount}
-            entityId={props.entityId}
+            entityId={entityId}
             pending={transaction.pending}
             image={transaction.image}
           />
         );
       }),
-    [props.transactions],
+    [entityId, transactions],
   );
 
   return (

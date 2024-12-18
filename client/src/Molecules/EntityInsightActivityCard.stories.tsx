@@ -46,7 +46,6 @@ export const WeekdayActivity: Story = {
     entityId: "123",
     activityGroup: "WeekDay",
     activity: mockActivity,
-    size: "half",
   },
 };
 
@@ -55,7 +54,6 @@ export const WeekActivity: Story = {
     entityId: "123",
     activityGroup: "Week",
     activity: mockActivity,
-    size: "half",
   },
 };
 
@@ -64,7 +62,6 @@ export const MonthActivity: Story = {
     entityId: "123",
     activityGroup: "Month",
     activity: mockActivity,
-    size: "half",
   },
 };
 
@@ -73,6 +70,5 @@ export const YearActivity: Story = {
     entityId: "123",
     activityGroup: "Year",
     activity: mockActivity,
-    size: "half",
   },
 };

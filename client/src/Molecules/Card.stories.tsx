@@ -22,37 +22,21 @@ export const HalfSize: Story = {
 
 export const SingleSize: Story = {
   args: {
-    size: "single",
+    size: "full",
     children: <div style={{ padding: "20px" }}>Single Size Card Content</div>,
   },
 };
 
-export const DoubleSize: Story = {
+export const QuarterSize: Story = {
   args: {
-    size: "double",
-    children: <div style={{ padding: "20px" }}>Double Size Card Content</div>,
-  },
-};
-
-export const TripleSize: Story = {
-  args: {
-    size: "triple",
-    children: <div style={{ padding: "20px" }}>Triple Size Card Content</div>,
-  },
-};
-
-export const QuadrupleSize: Story = {
-  args: {
-    size: "quadruple",
-    children: (
-      <div style={{ padding: "20px" }}>Quadruple Size Card Content</div>
-    ),
+    size: "quarter",
+    children: <div style={{ padding: "20px" }}>Quarter Size Card Content</div>,
   },
 };
 
 export const Clickable: Story = {
   args: {
-    size: "single",
+    size: "full",
     href: "/entity/123/insights",
     children: <div style={{ padding: "20px" }}>Click me!</div>,
   },

@@ -33,7 +33,7 @@ export const AccountCard = (props: {
   const icon: string | undefined = undefined;
 
   return (
-    <Card size="single" href={props.href}>
+    <Card size="full" href={props.href}>
       <CardTitle />
       <CardContents position={props.relativePosition}>
         <div className={styles.container}>

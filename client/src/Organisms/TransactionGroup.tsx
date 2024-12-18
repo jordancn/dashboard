@@ -9,7 +9,7 @@ import { SectionHeading } from "@/Molecules/SectionHeading";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { DateIso, formatLongMonthYear, toDateIso } from "@/Utils/date-iso";
-import { getWidthClassName, useRouteParams, useSize } from "@/Utils/helpers";
+import { getWidthClassName, useRouteParams } from "@/Utils/helpers";
 import { assertIsTransactionGroupParams } from "@/Utils/param-helpers";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
@@ -50,7 +50,6 @@ const useQuery = (args: {
 export const TransactionGroup = () => {
   const router = useRouter();
 
-  const size = useSize("single");
   const params = useRouteParams(assertIsTransactionGroupParams);
 
   const results = useQuery({
@@ -118,7 +117,7 @@ export const TransactionGroup = () => {
 
         <div
           className={classNames(styles.transactionCardsContainer, {
-            ...getWidthClassName(size),
+            ...getWidthClassName("full"),
           })}
         >
           <TransactionCards

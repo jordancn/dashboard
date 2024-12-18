@@ -40,9 +40,9 @@ export const WithLink: Story = {
   },
 };
 
-export const SingleWidth: Story = {
+export const FullWidth: Story = {
   args: {
-    size: "single",
+    size: "full",
     balance: 55000,
   },
 };
