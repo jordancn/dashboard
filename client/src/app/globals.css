@@ -48,8 +48,6 @@ a {
   --monospace-font-family: "SF Mono", "SF Mono Display", -apple-system,
     system-ui, BlinkMacSystemFont;
 
-  /* Dimensions */
-
   /* Screen */
   --screen-width: 100vw;
   --screen-horizontal-margin: 16px;
