@@ -133,7 +133,7 @@ export function isTomorrow(_today: DateIso, date: DateIso): boolean {
 /**
  * Sunday is 0, Saturday is 6
  */
-export function getWeekDayFromIsoDate(date: DateIso): number {
+export function getWeekdayFromIsoDate(date: DateIso): number {
   return DateFns.getDay(validateAndParse(date));
 }
 
@@ -230,7 +230,7 @@ export const getYearlyWeekGroups = (dateRange: {
   start: DateIso;
   end: DateIso;
 }): DateGroup[] => {
-  const weekDay = getWeekDayFromIsoDate(getFirstDayOfYear(dateRange.start));
+  const weekDay = getWeekdayFromIsoDate(getFirstDayOfYear(dateRange.start));
 
   const startYear = Number.parseInt(getYearFromIsoDate(dateRange.start));
   const startMonth = get0BasedMonthFromIsoDate(dateRange.start);
@@ -371,4 +371,10 @@ export function getPreviousDateRange(dateRange: {
 
   const end = addDays(toIsoDate(dateRange.start), -1);
   return { start, end };
+}
+
+export function assertIsDateIso(date: string): asserts date is DateIso {
+  if (!VALID_REGEX.test(date)) {
+    throw new Error(`Invalid IsoDate ${date}`);
+  }
 }

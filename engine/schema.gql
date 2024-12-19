@@ -212,7 +212,7 @@ input Pagination {
 }
 
 enum GroupBy {
-  WeekDay
+  Weekday
   Year
   Month
   Week

@@ -113,25 +113,23 @@ export const SidebarDataProvider = (props: { children?: React.ReactNode }) => {
     setVisible(false);
   }, []);
 
-  React.useEffect(() => {
-    if (device.status !== "LOADED") {
-      return;
-    }
+  const { isMobile, orientation } =
+    device.status === "LOADED"
+      ? device.value
+      : { isMobile: false, orientation: "landscape" };
 
+  React.useEffect(() => {
     setState({
       status: "LOADED",
       value: {
-        type:
-          device.value.isMobile || device.value.orientation === "portrait"
-            ? "floating"
-            : "fixed",
+        type: isMobile || orientation === "portrait" ? "floating" : "fixed",
         button: visible ? "hide" : "show",
         visible,
         show,
         hide,
       },
     });
-  }, [device, visible, show, hide]);
+  }, [isMobile, orientation, visible, show, hide]);
 
   return (
     <>

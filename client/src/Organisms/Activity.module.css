@@ -1,0 +1,36 @@
+.loading {
+  height: 400px;
+}
+
+.sectionContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
+.sectionTitle {
+  height: 20px;
+  overflow-y: hidden;
+}
+
+.sectionValueAndCount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.testContainerExpenses {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

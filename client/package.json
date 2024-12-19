@@ -38,6 +38,8 @@
     "react": "^19.0.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0",
+    "react-swipeable-views": "^0.14.0",
+    "react-swipeable-views-utils": "^0.14.0",
     "serve": "^14.2.4"
   },
   "devDependencies": {
@@ -61,6 +63,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-swipeable-views": "^0.13.6",
+    "@types/react-swipeable-views-utils": "^0.13.7",
     "concurrently": "^9.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",

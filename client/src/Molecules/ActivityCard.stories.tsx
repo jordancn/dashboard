@@ -1,10 +1,10 @@
-import { EntityInsightActivityCard } from "@/Molecules/EntityInsightActivityCard";
+import { ActivityCard } from "@/Molecules/ActivityCard";
 import { toDateIso } from "@/Utils/date-iso";
 import { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof EntityInsightActivityCard> = {
-  title: "Molecules/EntityInsightActivityCard",
-  component: EntityInsightActivityCard,
+const meta: Meta<typeof ActivityCard> = {
+  title: "Molecules/ActivityCard",
+  component: ActivityCard,
   parameters: {
     layout: "centered",
   },
@@ -12,7 +12,7 @@ const meta: Meta<typeof EntityInsightActivityCard> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof EntityInsightActivityCard>;
+type Story = StoryObj<typeof ActivityCard>;
 
 const mockActivity = [
   {
@@ -44,7 +44,7 @@ const mockActivity = [
 export const WeekdayActivity: Story = {
   args: {
     entityId: "123",
-    activityGroup: "WeekDay",
+    activityGroup: "Weekday",
     activity: mockActivity,
   },
 };

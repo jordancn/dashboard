@@ -8,8 +8,8 @@ import {
   useEntityPageByEntityIdQuery,
   useEntityPageOvervallQuery,
 } from "@/GraphQL/client.gen";
+import { ActivityCard } from "@/Molecules/ActivityCard";
 import { BalanceCard } from "@/Molecules/BalanceCard";
-import { EntityInsightActivityCard } from "@/Molecules/EntityInsightActivityCard";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import { BudgetCards } from "@/Organisms/BudgetCards";
@@ -96,7 +96,7 @@ const EntityPage = () => {
 
   const activityDateRange = React.useMemo(() => {
     switch (activityGroup) {
-      case "WeekDay":
+      case "Weekday":
         return {
           start: today(),
           end: today(),
@@ -401,10 +401,11 @@ const EntityPage = () => {
           balance={currentBalance}
           date={results.data?.lastRefreshed}
         />
-        <EntityInsightActivityCard
+        <ActivityCard
           activityGroup={activityGroup}
           activity={activity}
           entityId={params.entityId}
+          size="half"
         />
         {mode === "insights" && (
           <>

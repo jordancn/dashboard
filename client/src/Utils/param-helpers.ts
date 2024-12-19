@@ -1,3 +1,4 @@
+import { assertIsDateIso, DateIso } from "@/Utils/date-iso";
 import assert from "assert";
 
 export function assertIsEntityParams(
@@ -44,8 +45,8 @@ export function assertIsTransactionGroupParams(
 export function assertIsActivityParams(params: unknown): asserts params is {
   entityId: string;
   groupType: string;
-  start: string;
-  end: string;
+  start: DateIso | undefined;
+  end: DateIso | undefined;
 } {
   assert(params, "params is required");
   assert(typeof params === "object", "params is not an object");
@@ -53,6 +54,14 @@ export function assertIsActivityParams(params: unknown): asserts params is {
   assert(typeof params.entityId === "string", "entityId is not a string");
   assert("groupType" in params, "groupType is required");
   assert(typeof params.groupType === "string", "groupType is not a string");
-  assert("start" in params, "start is required");
-  assert(typeof params.start === "string", "start is not a string");
+
+  if ("start" in params) {
+    assert(typeof params.start === "string", "start is not a string");
+    assertIsDateIso(params.start);
+  }
+
+  if ("end" in params) {
+    assert(typeof params.end === "string", "end is not a string");
+    assertIsDateIso(params.end);
+  }
 }

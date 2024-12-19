@@ -1,25 +1,33 @@
-.navigationBarContainer {
-  position: absolute;
-  top: 0;
-  left: 16px;
-  right: 16px; /* TODO */
-  height: 44px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  z-index: 4;
-}
-
 .navigationBar {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
   height: 44px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 4;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+.centerLeft {
+  justify-content: flex-start;
+}
+
+.toggleButton {
   display: flex;
   flex-direction: row;
   z-index: 4;
   transition: 0.5s ease;
+
+  width: 100%;
 }
 
 .show {

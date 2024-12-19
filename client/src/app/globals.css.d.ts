@@ -6,7 +6,6 @@ declare const styles: {
   readonly "floating-sidebar": string;
   readonly "fullWidth": string;
   readonly "halfWidth": string;
-  readonly "navigation-bar": string;
   readonly "quarterWidth": string;
   readonly "root": string;
   readonly "toolbar": string;

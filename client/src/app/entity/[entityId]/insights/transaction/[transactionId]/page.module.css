@@ -6,7 +6,7 @@
 }
 
 .navigationBarBackButtonContainer {
-  margin-left: 5px;
+  /* margin-left: 5px; */
   display: flex;
   align-items: center;
   height: 44px;

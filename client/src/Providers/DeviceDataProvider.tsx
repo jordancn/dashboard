@@ -3,6 +3,7 @@
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -89,33 +90,37 @@ export const DeviceDataProvider = (props: { children?: ReactNode }) => {
   const isMobileTablet = isMobile({ tablet: true });
   const isMobilePhone = isMobile({ tablet: false });
 
-  const orientationChangeEventHandler = _.throttle((event: Event) => {
-    if (event.target instanceof ScreenOrientation) {
-      if (state.status !== "LOADED") {
-        return;
-      }
+  const orientationChangeEventHandler = useCallback(
+    () =>
+      _.throttle((event: Event) => {
+        if (event.target instanceof ScreenOrientation) {
+          if (state.status !== "LOADED") {
+            return;
+          }
 
-      const newOrientation = getOrientation(event.target);
+          const newOrientation = getOrientation(event.target);
 
-      if (state.value.orientation === newOrientation) {
-        return;
-      }
+          if (state.value.orientation === newOrientation) {
+            return;
+          }
 
-      setState((prevState) => {
-        if (prevState.status !== "LOADED") {
-          return prevState;
+          setState((prevState) => {
+            if (prevState.status !== "LOADED") {
+              return prevState;
+            }
+
+            return {
+              ...prevState,
+              value: {
+                ...prevState.value,
+                orientation: newOrientation,
+              },
+            };
+          });
         }
-
-        return {
-          ...prevState,
-          value: {
-            ...prevState.value,
-            orientation: newOrientation,
-          },
-        };
-      });
-    }
-  }, 500);
+      }, 500),
+    [setState, state],
+  );
 
   useEffect(() => {
     screen.orientation.addEventListener(

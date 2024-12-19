@@ -199,7 +199,7 @@ export type EntityTransactionsArgs = {
 export enum GroupBy {
   Month = 'Month',
   Week = 'Week',
-  WeekDay = 'WeekDay',
+  Weekday = 'Weekday',
   Year = 'Year'
 }
 

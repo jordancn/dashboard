@@ -1,10 +1,12 @@
-.selectorContainer {
+/* .selectorContainer {
   display: flex;
   flex-direction: row;
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-}
+
+  border: 1px solid red;
+} */
 
 .optionsContainer {
   display: flex;
@@ -43,6 +45,6 @@
   }
 }
 
-:not(&.disabled) {
+.enabled {
   cursor: pointer;
 }

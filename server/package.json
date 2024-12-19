@@ -1,7 +1,6 @@
 {
-  "name": "new-server",
+  "name": "dashboard-server",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "db:migrate": "prisma migrate dev",

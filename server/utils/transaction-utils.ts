@@ -17,7 +17,7 @@ import {
   differenceInMonths,
   getMonthGroups,
   getPreviousDateRange,
-  getWeekDayGroups,
+  getWeekdayGroups,
   getWeekGroups,
   getYearGroups,
   lastDayOfMonth,
@@ -444,8 +444,8 @@ export const getTransactionGroups: GetTransactionGroups = (
         return getMonthGroups(dateRange);
       case GroupBy.Week:
         return getWeekGroups(dateRange);
-      case GroupBy.WeekDay:
-        return getWeekDayGroups(dateRange);
+      case GroupBy.Weekday:
+        return getWeekdayGroups(dateRange);
       default:
         throw new Error("Invalid GroupBy");
     }

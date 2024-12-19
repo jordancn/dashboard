@@ -214,3 +214,11 @@ export const createIntervals = (
   intervals.push({ start: current, end });
   return intervals;
 };
+
+export function assertIsDateTimeIso(
+  dateTime: string,
+): asserts dateTime is DateTimeIso {
+  if (!VALID_REGEX.test(dateTime)) {
+    throw new Error(`Invalid IsoDateTime ${dateTime}`);
+  }
+}

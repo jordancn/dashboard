@@ -210,11 +210,6 @@ a {
     /* background-color: #272b2e; */
     color: white;
   }
-
-  #navigation-bar {
-    background-color: rgb(18, 18, 18);
-    color: white;
-  }
 }
 
 @media (prefers-color-scheme: light) {
@@ -228,11 +223,6 @@ a {
     /* background-color: rgb(255, 255, 255); */
     /* background-color: #d2d6d7; */
     background-color: #f2f2f7;
-    color: #333333;
-  }
-
-  #navigation-bar {
-    background-color: rgb(242, 242, 246);
     color: #333333;
   }
 }

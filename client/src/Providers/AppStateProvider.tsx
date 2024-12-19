@@ -9,7 +9,7 @@ import {
   useReducer,
 } from "react";
 
-export type ActivityGroup = "WeekDay" | "Week" | "Month" | "Year";
+export type ActivityGroup = "Weekday" | "Week" | "Month" | "Year";
 
 type ContextState = { activityGroup: ActivityGroup; groupIndex: number };
 

@@ -1,11 +1,9 @@
-@media (prefers-color-scheme: dark) {
-  .chevron {
-    color: silver;
+.chevron {
+  @media (prefers-color-scheme: dark) {
+    fill: silver;
   }
-}
 
-@media (prefers-color-scheme: light) {
-  .chevron {
+  @media (prefers-color-scheme: light) {
     fill: silver;
   }
 }

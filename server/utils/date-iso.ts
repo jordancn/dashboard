@@ -105,7 +105,7 @@ export function isTomorrow(_today: DateIso, date: DateIso): boolean {
 /**
  * Sunday is 0, Saturday is 6
  */
-export function getWeekDayFromIsoDate(date: DateIso): number {
+export function getWeekdayFromIsoDate(date: DateIso): number {
   return DateFns.getDay(validateAndParse(date));
 }
 
@@ -217,7 +217,7 @@ export const getWeekGroups = (dateRange: DateRange) => {
   );
 };
 
-export const getWeekDayGroups = (dateRange: DateRange) => {
+export const getWeekdayGroups = (dateRange: DateRange) => {
   return _.compact(
     _.range(0, 7).map((weekDayNumber) => {
       const date = addDays(dateRange.start, weekDayNumber);
@@ -283,8 +283,8 @@ export function getPreviousDateRange(dateRange: DateRange) {
   const isMonth = firstDoM === dateRange.start && lastDoM === dateRange.end;
 
   const isWeek =
-    getWeekDayFromIsoDate(dateRange.start) === 0 &&
-    getWeekDayFromIsoDate(dateRange.end) === 6;
+    getWeekdayFromIsoDate(dateRange.start) === 0 &&
+    getWeekdayFromIsoDate(dateRange.end) === 6;
 
   if (isMonth) {
     const start = addMonths(firstDoM, -1);

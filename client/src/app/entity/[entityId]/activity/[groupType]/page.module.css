@@ -1,0 +1,24 @@
+.root {
+}
+
+.slide {
+}
+
+.navigationBarBackButtonContainer {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  cursor: pointer;
+}
+
+.navigationBarTitle {
+  font-size: 17px;
+  color: #007aff;
+  font-family: var(--font-family);
+  margin-top: -4px;
+  margin-left: 10px;
+}
+
+.selectorContainer {
+  margin: 0 auto;
+}
