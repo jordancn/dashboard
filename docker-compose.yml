@@ -4,6 +4,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
       target: nextjs
+      container_name: nextjs
     ports:
       - "3000:3000"
     environment:
@@ -19,6 +20,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
       target: storybook
+      container_name: storybook
     ports:
       - "6006:6006"
     environment:
@@ -30,6 +32,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
+      container_name: graphql
     ports:
       - "4000:4000"
     environment:
@@ -51,12 +54,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dashboard
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ../postgres_data:/var/lib/postgresql/data
     networks:
       - internal-network
-
-volumes:
-  postgres_data:
 
 networks:
   shared-network:

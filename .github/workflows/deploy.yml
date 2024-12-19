@@ -33,10 +33,12 @@ jobs:
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           debug: true
           script: |
-            cd app
-            docker-compose down || true
-            cd ../${{ github.sha }}
-            docker-compose up -d --build
-            docker system prune -f
-            cd ../
             ln -sf ${{ github.sha }} app
+            cd app
+            docker-compose up -d --build
+
+# cd app
+# docker-compose down || true
+# docker system prune -f
+# cd ..
+# rm -f app
