@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           source: .
-          target: /home/${{ secrets.DEPLOY_USERNAME }}/app
+          target: /home/${{ secrets.DEPLOY_USERNAME }}/${{ github.sha }}
 
       # Step 3: SSH into Linode and deploy with Docker Compose
       - name: Deploy with Docker Compose
@@ -35,5 +35,8 @@ jobs:
           script: |
             cd app
             docker-compose down || true
+            cd ../${{ github.sha }}
             docker-compose up -d --build
             docker system prune -f
+            cd ../
+            ln -sf ${{ github.sha }} app
