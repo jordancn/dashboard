@@ -77,6 +77,10 @@ export const ActivityCard = (props: {
     [props.activityGroup],
   );
 
+  if (!props.activity || props.activity.length === 0) {
+    return null;
+  }
+
   const title = getActivityGroupName({
     activityGroup: getActivityParentGroup(props.activityGroup),
     start: props.activity[0].start,
