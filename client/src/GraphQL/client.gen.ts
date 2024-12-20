@@ -556,7 +556,7 @@ export type EntityActivityQueryVariables = Exact<{
 }>;
 
 
-export type EntityActivityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> } | null };
+export type EntityActivityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType, change: { __typename?: 'CategoryChange', changePercent?: number | null } }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> } | null };
 
 export type EntityActivityOverviewQueryVariables = Exact<{
   dateRange: DateRange;
@@ -564,7 +564,7 @@ export type EntityActivityOverviewQueryVariables = Exact<{
 }>;
 
 
-export type EntityActivityOverviewQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
+export type EntityActivityOverviewQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType, change: { __typename?: 'CategoryChange', changePercent?: number | null } }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
 
 export type TransactionQueryVariables = Exact<{
   transactionId: Scalars['ID']['input'];
@@ -965,6 +965,9 @@ export const EntityActivityDocument = gql`
       total
       count
       categoryType
+      change {
+        changePercent
+      }
     }
     activity: transactionGroups(groupBy: $activityGroupBy, dateRange: $dateRange) {
       groupIndex
@@ -1021,6 +1024,9 @@ export const EntityActivityOverviewDocument = gql`
     total
     count
     categoryType
+    change {
+      changePercent
+    }
   }
   activity: transactionGroups(groupBy: $activityGroupBy, dateRange: $dateRange) {
     groupIndex

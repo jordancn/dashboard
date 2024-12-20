@@ -27,7 +27,7 @@ export const ActivityContainer = (props: {
       })}
     >
       <div className={styles.titleContainer}>
-        <Title1 title={title} />
+        <Title1 weight="Bold" title={title} />
       </div>
 
       <Activity

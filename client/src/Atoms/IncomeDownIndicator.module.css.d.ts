@@ -1,6 +1,9 @@
 declare const styles: {
-  readonly "incomeDownIndicator": string;
-  readonly "path": string;
+  readonly "desaturated": string;
+  readonly "indicator": string;
+  readonly "medium": string;
+  readonly "saturated": string;
+  readonly "small": string;
 };
 export = styles;
 

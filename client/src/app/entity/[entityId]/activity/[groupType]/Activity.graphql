@@ -1,4 +1,8 @@
-query EntityActivity($entityId: ID, $dateRange: DateRange!, $activityGroupBy: GroupBy!) {
+query EntityActivity(
+  $entityId: ID
+  $dateRange: DateRange!
+  $activityGroupBy: GroupBy!
+) {
   entity(entityId: $entityId) {
     id
     categories(dateRange: $dateRange) {
@@ -8,8 +12,14 @@ query EntityActivity($entityId: ID, $dateRange: DateRange!, $activityGroupBy: Gr
       total
       count
       categoryType
+      change {
+        changePercent
+      }
     }
-    activity: transactionGroups(groupBy: $activityGroupBy, dateRange: $dateRange) {
+    activity: transactionGroups(
+      groupBy: $activityGroupBy
+      dateRange: $dateRange
+    ) {
       groupIndex
       start
       end

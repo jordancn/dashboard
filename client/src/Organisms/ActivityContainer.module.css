@@ -1,7 +1,4 @@
 .activityContainer {
-  padding-left: 16px;
-  padding-right: 16px;
-
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -10,5 +7,5 @@
 }
 
 .titleContainer {
-  margin-left: 10px;
+  margin-bottom: 10px;
 }

@@ -62,7 +62,7 @@ a {
   --toolbar-height: 90px;
 
   /* Indicator */
-  --indicator-size: 25px;
+  --indicator-container-size: 25px;
 
   /* Card */
   --card-gap: 10px;

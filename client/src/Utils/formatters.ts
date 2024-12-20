@@ -35,32 +35,45 @@ const weightNumberFormatter = new Intl.NumberFormat("en-US", {
 
 const ShouldCensor = false;
 
-const censorCurrency = (value: number) => {
+const censorCurrency = (
+  value: number,
+  options: { withSign: boolean } = { withSign: true },
+) => {
   const formatted = usdFormater.format(value);
   const digits = usdFormater.format(value).replace("$", "").replace(/,/g, "");
   const length = digits.length - 3;
 
-  if (ShouldCensor) {
-    return usdFormater.format(Math.random() * Math.pow(10, length - 1));
+  const maybeCensored = ShouldCensor
+    ? usdFormater.format(Math.random() * Math.pow(10, length - 1))
+    : formatted;
+
+  if (options?.withSign) {
+    return maybeCensored;
   }
 
-  return formatted;
+  return maybeCensored.replace(/^\-/, "");
 };
 
 export const formatCurrency = {
-  format: (v: number | null | undefined): string => {
+  format: (
+    v: number | null | undefined,
+    options: { withSign: boolean } = { withSign: true },
+  ): string => {
     if (v === null || v === undefined) {
       return "";
     }
 
-    return censorCurrency(v);
+    return censorCurrency(v, options);
   },
-  formatK: (v: number | null | undefined): string => {
+  formatK: (
+    v: number | null | undefined,
+    options: { withSign: boolean } = { withSign: true },
+  ): string => {
     if (v === null || v === undefined) {
       return "";
     }
 
-    return `${censorCurrency(v / 1000)}k`;
+    return `${censorCurrency(v / 1000, options)}k`;
   },
 };
 

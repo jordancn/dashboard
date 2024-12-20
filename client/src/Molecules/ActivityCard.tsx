@@ -51,9 +51,6 @@ export const ActivityCard = (props: {
 
   const getLabel = React.useCallback(
     (start: DateIso, end: DateIso, groupIndex: number) => {
-      console.log(props.activityGroup);
-      console.log(start, end);
-
       switch (props.activityGroup) {
         case "Weekday":
           return toDayOfWeek(

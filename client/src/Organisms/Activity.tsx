@@ -1,6 +1,6 @@
 import { Caption1 } from "@/Atoms/Caption1";
+import { Headline } from "@/Atoms/Headline";
 import { Spinner } from "@/Atoms/Spinner";
-import { Subheadline } from "@/Atoms/Subheadline";
 import {
   CategoryType,
   useEntityActivityOverviewQuery,
@@ -123,6 +123,118 @@ export const Activity = (props: {
     }));
   }, [results]);
 
+  const totalIncome = React.useMemo(
+    () =>
+      _.sum(
+        (categories || [])
+          .filter(
+            (category) =>
+              category.total !== 0 &&
+              category.categoryType === CategoryType.Income,
+          )
+          .map((category) => category.total),
+      ),
+    [categories],
+  );
+
+  const totalIncomeCount = React.useMemo(
+    () =>
+      _.sum(
+        (categories || [])
+          .filter(
+            (category) =>
+              category.total !== 0 &&
+              category.categoryType === CategoryType.Income,
+          )
+          .map((category) => category.count),
+      ),
+    [categories],
+  );
+
+  const totalExpense = React.useMemo(
+    () =>
+      _.sum(
+        (categories || [])
+          .filter(
+            (category) =>
+              category.total !== 0 &&
+              category.categoryType === CategoryType.Expense,
+          )
+          .map((category) => category.total),
+      ),
+    [categories],
+  );
+
+  const totalExpenseCount = React.useMemo(
+    () =>
+      _.sum(
+        (categories || [])
+          .filter(
+            (category) =>
+              category.total !== 0 &&
+              category.categoryType === CategoryType.Expense,
+          )
+          .map((category) => category.count),
+      ),
+    [categories],
+  );
+
+  const incomeCards = React.useMemo(
+    () =>
+      _.orderBy(
+        (categories || []).filter(
+          (category) =>
+            category.total !== 0 &&
+            category.categoryType === CategoryType.Income,
+        ),
+        (category) => category.total,
+        "desc",
+      ).map((category, index, list) => {
+        return (
+          <TransactionGroupCard
+            relativePosition={getRelativePosition(index, list)}
+            key={category.categoryId}
+            title={category.name}
+            id={category.categoryId}
+            total={category.total}
+            transactionCount={category.count}
+            changePercent={category.change.changePercent}
+            categoryType={CategoryType.Expense}
+            href={`/entity/${params.entityId || "overview"}/activity/${props.type}/${category.categoryId}/${props.start}/${props.end}`}
+          />
+        );
+      }),
+    [categories],
+  );
+
+  const expenseCards = React.useMemo(
+    () =>
+      _.orderBy(
+        (categories || []).filter(
+          (category) =>
+            category.total !== 0 &&
+            category.categoryType === CategoryType.Expense,
+        ),
+        (category) => category.total,
+        "asc",
+      ).map((category, index, list) => {
+        return (
+          <TransactionGroupCard
+            relativePosition={getRelativePosition(index, list)}
+            key={category.categoryId}
+            title={category.name}
+            id={category.categoryId}
+            total={category.total}
+            transactionCount={category.count}
+            changePercent={category.change.changePercent}
+            categoryType={CategoryType.Expense}
+            href={`/entity/${params.entityId || "overview"}/activity/${props.type}/${category.categoryId}/${props.start}/${props.end}`}
+          />
+        );
+      }),
+    [categories],
+  );
+
   if (results.loading) {
     return (
       <>
@@ -140,42 +252,6 @@ export const Activity = (props: {
     );
   }
 
-  const totalIncome = _.sum(
-    (categories || [])
-      .filter(
-        (category) =>
-          category.total !== 0 && category.categoryType === CategoryType.Income,
-      )
-      .map((category) => category.total),
-  );
-  const totalIncomeCount = _.sum(
-    (categories || [])
-      .filter(
-        (category) =>
-          category.total !== 0 && category.categoryType === CategoryType.Income,
-      )
-      .map((category) => category.count),
-  );
-
-  const totalExpense = _.sum(
-    (categories || [])
-      .filter(
-        (category) =>
-          category.total !== 0 &&
-          category.categoryType === CategoryType.Expense,
-      )
-      .map((category) => category.total),
-  );
-  const totalExpenseCount = _.sum(
-    (categories || [])
-      .filter(
-        (category) =>
-          category.total !== 0 &&
-          category.categoryType === CategoryType.Expense,
-      )
-      .map((category) => category.count),
-  );
-
   return (
     <>
       <ActivityCard
@@ -191,7 +267,7 @@ export const Activity = (props: {
           <div className={styles.sectionContainer}>
             <div className={styles.section}>
               <div className={styles.sectionTitle}>
-                <Subheadline title="Income" />
+                <Headline weight="Bold" title="Income" />
               </div>
             </div>
             <div className={styles.sectionValueAndCount}>
@@ -207,27 +283,7 @@ export const Activity = (props: {
         </CardContents>
       </Card>
 
-      {_.orderBy(
-        (categories || []).filter(
-          (category) =>
-            category.total !== 0 &&
-            category.categoryType === CategoryType.Income,
-        ),
-        (category) => category.total,
-        "desc",
-      ).map((category, index, list) => {
-        return (
-          <TransactionGroupCard
-            relativePosition={getRelativePosition(index, list)}
-            key={category.categoryId}
-            title={category.name}
-            id={category.categoryId}
-            total={category.total}
-            transactionCount={category.count}
-            href={`/entity/${params.entityId || "overview"}/activity/${props.type}/${category.categoryId}/${props.start}/${props.end}`}
-          />
-        );
-      })}
+      {incomeCards}
 
       {/* subtitle='Show Merchants' /> */}
 
@@ -237,11 +293,13 @@ export const Activity = (props: {
           <div className={styles.sectionContainer}>
             <div className={styles.section}>
               <div className={styles.sectionTitle}>
-                <Subheadline title="Expenses" />
+                <Headline weight="Bold" title="Expenses" />
               </div>
             </div>
             <div className={styles.sectionValueAndCount}>
-              <div>{formatCurrency.format(totalExpense || 0)}</div>
+              <div>
+                {formatCurrency.format(totalExpense || 0, { withSign: false })}
+              </div>
               <div>
                 <Caption1
                   title={`${totalExpenseCount || 0} transactions`}
@@ -253,27 +311,7 @@ export const Activity = (props: {
         </CardContents>
       </Card>
 
-      {_.orderBy(
-        (categories || []).filter(
-          (category) =>
-            category.total !== 0 &&
-            category.categoryType === CategoryType.Expense,
-        ),
-        (category) => category.total,
-        "asc",
-      ).map((category, index, list) => {
-        return (
-          <TransactionGroupCard
-            relativePosition={getRelativePosition(index, list)}
-            key={category.categoryId}
-            title={category.name}
-            id={category.categoryId}
-            total={category.total}
-            transactionCount={category.count}
-            href={`/entity/${params.entityId || "overview"}/activity/${props.type}/${category.categoryId}/${props.start}/${props.end}`}
-          />
-        );
-      })}
+      {expenseCards}
     </>
   );
 };

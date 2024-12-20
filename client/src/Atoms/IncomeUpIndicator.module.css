@@ -1,11 +1,25 @@
-.incomeUpIndicator {
-  width: var(--indicator-size);
-  height: var(--indicator-size);
+.indicator {
+  width: var(--indicator-container-size);
+  height: var(--indicator-container-size);
   margin-left: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.path {
+.saturated {
   fill: #34c759;
+}
+
+.desaturated {
+  fill: silver;
+}
+
+.small {
+  height: 14px;
+  width: 14px;
+}
+
+.medium {
+  height: 19.92px;
+  width: 19.92px;
 }

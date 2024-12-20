@@ -1,3 +1,5 @@
+# TODO: Build on GitHub's servers, then copy dist to server
+
 name: Deploy to Linode
 
 on:
