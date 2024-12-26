@@ -42,8 +42,7 @@ export const isAfter = (x: DateIso, y: DateIso) =>
 export const isBefore = (x: DateIso, y: DateIso) =>
   DateFns.isBefore(validateAndParse(x), validateAndParse(y));
 
-// TODO: Fix this
-export const today = (): DateIso => toIsoDate(new Date("2021-10-31"));
+export const today = (): DateIso => toIsoDate(new Date());
 
 export const thisYear = (): string => getYearFromIsoDate(toIsoDate(new Date()));
 export const lastYear = (): string =>

@@ -1,20 +1,9 @@
 enum AccountType {
   Checking
   Savings
-  Retirement
   Credit
-}
-
-enum PropertyType {
-  SingleFamily
-  Duplex
-}
-
-enum PropertyPurpose {
-  Rental
-  LandContract
-  Lender
-  Wholesale
+  Loan
+  Investment
 }
 
 scalar DateIso
@@ -24,7 +13,6 @@ type Entity {
   id: ID!
   name: String!
   accounts: [Account!]!
-  properties: [Property!]!
   transactions(
     dateRange: DateRange!
     pagination: Pagination
@@ -173,37 +161,9 @@ type Transaction {
   category: Category
   description: String!
   amount: Float!
-  property: Property
   addedAt: DateTimeIso!
   vendor: Vendor
   pending: Boolean!
-}
-
-type Property {
-  id: ID!
-  externalId: String
-  entity: Entity!
-  address: String!
-  city: String!
-  state: String!
-  zip: String!
-  propertyType: PropertyType!
-  propertyPurpose: PropertyPurpose!
-  latitude: Float!
-  longitude: Float!
-  acquired: DateIso
-  dispositioned: DateIso
-  categories(dateRange: DateRange!, changeThreshold: Float): [Category!]!
-  transactions(
-    dateRange: DateRange!
-    pagination: Pagination
-    categoryId: ID
-    vendorId: ID
-  ): [Transaction!]!
-  transactionGroups(
-    dateRange: DateRange!
-    groupBy: GroupBy!
-  ): [TransactionGroup!]!
 }
 
 input Pagination {
@@ -251,7 +211,6 @@ input Scope {
   accountId: ID
   transactionId: ID
   budgetId: ID
-  propertyId: ID
 }
 
 type Query {
@@ -261,7 +220,6 @@ type Query {
   category(categoryId: ID, name: String, dateRange: DateRange): Category
   account(accountId: ID, name: String): Account
   transaction(transactionId: ID!): Transaction
-  property(propertyId: ID, address: String): Property
 
   currentBalance: Float!
   monthlyBalance(dateRange: DateRange!): [MonthlyBalance!]!
@@ -284,7 +242,6 @@ type Query {
     dateRange: DateRange!
     groupBy: GroupBy!
   ): [TransactionGroup!]!
-  properties: [Property!]!
   budget(entityId: ID!, categoryId: ID!): Budget
 }
 

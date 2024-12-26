@@ -9,7 +9,6 @@ import {
   InstitutionId,
   MonthlyBalanceId,
   PerformanceId,
-  PropertyId,
   TransactionId,
   VendorId,
 } from "@/types/model";
@@ -22,7 +21,6 @@ export type Scope = {
   accountId?: AccountId;
   transactionId?: TransactionId;
   budgetId?: BudgetId;
-  propertyId?: PropertyId;
   performanceId?: PerformanceId;
   monthlyBalanceId?: MonthlyBalanceId;
   dailyBalanceId?: DailyBalanceId;

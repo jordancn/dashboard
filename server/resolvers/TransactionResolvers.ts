@@ -78,21 +78,6 @@ export const transactionResolvers: TransactionResolvers<Context, Parent> = {
       )
     ).addedAt;
   },
-  property: async (parent, args, context, info) => {
-    const scope = narrowScope(parent.scope);
-
-    return withScope(
-      {
-        id: required(
-          await context.model.Transaction.findById.load(
-            required(scope.transactionId)
-          )
-        ).propertyId,
-      },
-      scope,
-      (id) => ({ propertyId: id })
-    );
-  },
   vendor: async (parent, args, context, info) => {
     const scope = narrowScope(parent.scope);
 

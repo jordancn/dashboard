@@ -6,7 +6,6 @@ import { entityResolvers } from "@/resolvers/EntityResolvers";
 import { institutionResolvers } from "@/resolvers/InstitutionResolvers";
 import { mutationResolvers } from "@/resolvers/MutationResolvers";
 import { performanceResolvers } from "@/resolvers/PerformanceResolvers";
-import { propertyResolvers } from "@/resolvers/PropertyResolvers";
 import { queryResolvers } from "@/resolvers/QueryResolvers";
 import { transactionGroupResolvers } from "@/resolvers/TransactionGroupResolvers";
 import { transactionResolvers } from "@/resolvers/TransactionResolvers";
@@ -23,7 +22,6 @@ export const resolvers = {
   Transaction: transactionResolvers,
   TransactionGroup: transactionGroupResolvers,
   Budget: budgetResolvers,
-  Property: propertyResolvers,
   Performance: performanceResolvers,
   Mutation: mutationResolvers,
 };

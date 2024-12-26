@@ -6,7 +6,6 @@ import {
   CategoryId,
   EntityId,
   InstitutionId,
-  PropertyId,
   TransactionId,
   VendorId,
 } from "@/types/model";
@@ -18,7 +17,6 @@ import {
   Category,
   Entity,
   Institution,
-  Property,
   Transaction,
   Vendor,
 } from "@prisma/client";
@@ -113,17 +111,6 @@ export type Data = {
     findMany: DataLoader<
       Parameters<typeof prisma.budgetAmount.findMany>[0],
       BudgetAmount[]
-    >;
-  };
-  Property: {
-    findById: DataLoader<PropertyId, Property | null>;
-    findFirst: DataLoader<
-      Parameters<typeof prisma.property.findFirst>[0],
-      Property | null
-    >;
-    findMany: DataLoader<
-      Parameters<typeof prisma.property.findMany>[0],
-      Property[]
     >;
   };
   RefreshLog: {
@@ -433,44 +420,6 @@ export const buildModel = () => {
           const results = await Promise.all(
             options.map((option) => {
               return prisma.budgetAmount.findMany(option);
-            })
-          );
-
-          return results;
-        },
-        { cacheKeyFn }
-      ),
-    },
-    Property: {
-      findById: new DataLoader(
-        async (options) => {
-          const results = await prisma.property.findMany({
-            where: { id: { in: [...options] } },
-          });
-
-          const keyed = _.keyBy(results, (r) => r.id);
-
-          return options.map((option) => keyed[option]);
-        },
-        { cacheKeyFn }
-      ),
-      findFirst: new DataLoader(
-        async (options) => {
-          const results = await Promise.all(
-            options.map((option) => {
-              return prisma.property.findFirst(option);
-            })
-          );
-
-          return results;
-        },
-        { cacheKeyFn }
-      ),
-      findMany: new DataLoader(
-        async (options) => {
-          const results = await Promise.all(
-            options.map((option) => {
-              return prisma.property.findMany(option);
             })
           );
 

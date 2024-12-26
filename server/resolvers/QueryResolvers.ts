@@ -155,33 +155,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
 
     return { id: args.transactionId, scope };
   },
-  property: async (parent, args, context, info) => {
-    if (args.propertyId) {
-      const scope = narrowScope(context.scope, {
-        propertyId: args.propertyId,
-      });
-
-      return { id: args.propertyId, scope };
-    }
-
-    if (args.address) {
-      const property = await context.model.Property.findFirst.load({
-        where: { address: args.address },
-      });
-
-      if (!property) {
-        return null;
-      }
-
-      const scope = narrowScope(context.scope, {
-        propertyId: property.id,
-      });
-
-      return { id: property.id, scope };
-    }
-
-    return null;
-  },
   entities: async (parent, args, context, info) => {
     const scope = narrowScope(context.scope, {});
 
@@ -254,18 +227,6 @@ export const queryResolvers: QueryResolvers<Context, Parent> = {
       pagination: optional(args.pagination),
     });
   },
-  properties: async (parent, args, context, info) => {
-    const scope = narrowScope(context.scope, {});
-
-    return withScope(
-      await context.model.Property.findMany.load({
-        orderBy: [{ id: "asc" }],
-      }),
-      scope,
-      (property) => ({ propertyId: property.id })
-    );
-  },
-
   currentBalance: async (parent, args, context, info) => {
     const scope = narrowScope(context.scope, {});
 

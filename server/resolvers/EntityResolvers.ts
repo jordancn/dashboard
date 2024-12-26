@@ -145,17 +145,4 @@ export const entityResolvers: EntityResolvers<Context, Parent> = {
       dailyBalanceId: balance.id,
     }));
   },
-  properties: async (parent, args, context, info) => {
-    const scope = narrowScope(parent.scope);
-
-    return withScope(
-      await context.model.Property.findMany.load({
-        select: { id: true },
-        where: { entityId: required(scope.entityId) },
-        orderBy: [{ id: "asc" }],
-      }),
-      scope,
-      (property) => ({ propertyId: property.id })
-    );
-  },
 };

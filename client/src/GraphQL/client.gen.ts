@@ -67,7 +67,8 @@ export type AccountTransactionsArgs = {
 export enum AccountType {
   Checking = 'Checking',
   Credit = 'Credit',
-  Retirement = 'Retirement',
+  Investment = 'Investment',
+  Loan = 'Loan',
   Savings = 'Savings'
 }
 
@@ -157,7 +158,6 @@ export type Entity = {
   id: Scalars['ID']['output'];
   monthlyBalance: Array<MonthlyBalance>;
   name: Scalars['String']['output'];
-  properties: Array<Property>;
   transactionGroups: Array<TransactionGroup>;
   transactions: Array<Transaction>;
 };
@@ -276,58 +276,6 @@ export type Performance = {
   spent: Scalars['Float']['output'];
 };
 
-export type Property = {
-  __typename?: 'Property';
-  acquired?: Maybe<Scalars['DateIso']['output']>;
-  address: Scalars['String']['output'];
-  categories: Array<Category>;
-  city: Scalars['String']['output'];
-  dispositioned?: Maybe<Scalars['DateIso']['output']>;
-  entity: Entity;
-  externalId?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  latitude: Scalars['Float']['output'];
-  longitude: Scalars['Float']['output'];
-  propertyPurpose: PropertyPurpose;
-  propertyType: PropertyType;
-  state: Scalars['String']['output'];
-  transactionGroups: Array<TransactionGroup>;
-  transactions: Array<Transaction>;
-  zip: Scalars['String']['output'];
-};
-
-
-export type PropertyCategoriesArgs = {
-  changeThreshold?: InputMaybe<Scalars['Float']['input']>;
-  dateRange: DateRange;
-};
-
-
-export type PropertyTransactionGroupsArgs = {
-  dateRange: DateRange;
-  groupBy: GroupBy;
-};
-
-
-export type PropertyTransactionsArgs = {
-  categoryId?: InputMaybe<Scalars['ID']['input']>;
-  dateRange: DateRange;
-  pagination?: InputMaybe<Pagination>;
-  vendorId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-export enum PropertyPurpose {
-  LandContract = 'LandContract',
-  Lender = 'Lender',
-  Rental = 'Rental',
-  Wholesale = 'Wholesale'
-}
-
-export enum PropertyType {
-  Duplex = 'Duplex',
-  SingleFamily = 'SingleFamily'
-}
-
 export type Query = {
   __typename?: 'Query';
   account?: Maybe<Account>;
@@ -343,8 +291,6 @@ export type Query = {
   institutions: Array<Institution>;
   lastRefreshed: Scalars['DateIso']['output'];
   monthlyBalance: Array<MonthlyBalance>;
-  properties: Array<Property>;
-  property?: Maybe<Property>;
   transaction?: Maybe<Transaction>;
   transactionGroups: Array<TransactionGroup>;
   transactions: Array<Transaction>;
@@ -400,12 +346,6 @@ export type QueryMonthlyBalanceArgs = {
 };
 
 
-export type QueryPropertyArgs = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  propertyId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
 export type QueryTransactionArgs = {
   transactionId: Scalars['ID']['input'];
 };
@@ -436,7 +376,6 @@ export type Scope = {
   categoryId?: InputMaybe<Scalars['ID']['input']>;
   entityId?: InputMaybe<Scalars['ID']['input']>;
   institutionId?: InputMaybe<Scalars['ID']['input']>;
-  propertyId?: InputMaybe<Scalars['ID']['input']>;
   transactionId?: InputMaybe<Scalars['ID']['input']>;
   vendorId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -451,7 +390,6 @@ export type Transaction = {
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   pending: Scalars['Boolean']['output'];
-  property?: Maybe<Property>;
   vendor?: Maybe<Vendor>;
 };
 

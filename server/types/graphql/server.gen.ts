@@ -65,7 +65,8 @@ export type AccountTransactionsArgs = {
 export enum AccountType {
   Checking = 'Checking',
   Credit = 'Credit',
-  Retirement = 'Retirement',
+  Investment = 'Investment',
+  Loan = 'Loan',
   Savings = 'Savings'
 }
 
@@ -155,7 +156,6 @@ export type Entity = {
   id: Scalars['ID'];
   monthlyBalance: Array<MonthlyBalance>;
   name: Scalars['String'];
-  properties: Array<Property>;
   transactionGroups: Array<TransactionGroup>;
   transactions: Array<Transaction>;
 };
@@ -274,58 +274,6 @@ export type Performance = {
   spent: Scalars['Float'];
 };
 
-export type Property = {
-  __typename: 'Property';
-  acquired?: Maybe<Scalars['DateIso']>;
-  address: Scalars['String'];
-  categories: Array<Category>;
-  city: Scalars['String'];
-  dispositioned?: Maybe<Scalars['DateIso']>;
-  entity: Entity;
-  externalId?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
-  propertyPurpose: PropertyPurpose;
-  propertyType: PropertyType;
-  state: Scalars['String'];
-  transactionGroups: Array<TransactionGroup>;
-  transactions: Array<Transaction>;
-  zip: Scalars['String'];
-};
-
-
-export type PropertyCategoriesArgs = {
-  changeThreshold?: InputMaybe<Scalars['Float']>;
-  dateRange: DateRange;
-};
-
-
-export type PropertyTransactionGroupsArgs = {
-  dateRange: DateRange;
-  groupBy: GroupBy;
-};
-
-
-export type PropertyTransactionsArgs = {
-  categoryId?: InputMaybe<Scalars['ID']>;
-  dateRange: DateRange;
-  pagination?: InputMaybe<Pagination>;
-  vendorId?: InputMaybe<Scalars['ID']>;
-};
-
-export enum PropertyPurpose {
-  LandContract = 'LandContract',
-  Lender = 'Lender',
-  Rental = 'Rental',
-  Wholesale = 'Wholesale'
-}
-
-export enum PropertyType {
-  Duplex = 'Duplex',
-  SingleFamily = 'SingleFamily'
-}
-
 export type Query = {
   __typename: 'Query';
   account?: Maybe<Account>;
@@ -341,8 +289,6 @@ export type Query = {
   institutions: Array<Institution>;
   lastRefreshed: Scalars['DateIso'];
   monthlyBalance: Array<MonthlyBalance>;
-  properties: Array<Property>;
-  property?: Maybe<Property>;
   transaction?: Maybe<Transaction>;
   transactionGroups: Array<TransactionGroup>;
   transactions: Array<Transaction>;
@@ -398,12 +344,6 @@ export type QueryMonthlyBalanceArgs = {
 };
 
 
-export type QueryPropertyArgs = {
-  address?: InputMaybe<Scalars['String']>;
-  propertyId?: InputMaybe<Scalars['ID']>;
-};
-
-
 export type QueryTransactionArgs = {
   transactionId: Scalars['ID'];
 };
@@ -434,7 +374,6 @@ export type Scope = {
   categoryId?: InputMaybe<Scalars['ID']>;
   entityId?: InputMaybe<Scalars['ID']>;
   institutionId?: InputMaybe<Scalars['ID']>;
-  propertyId?: InputMaybe<Scalars['ID']>;
   transactionId?: InputMaybe<Scalars['ID']>;
   vendorId?: InputMaybe<Scalars['ID']>;
 };
@@ -449,7 +388,6 @@ export type Transaction = {
   description: Scalars['String'];
   id: Scalars['ID'];
   pending: Scalars['Boolean'];
-  property?: Maybe<Property>;
   vendor?: Maybe<Vendor>;
 };
 
@@ -593,9 +531,6 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   Pagination: Pagination;
   Performance: ResolverTypeWrapper<Performance>;
-  Property: ResolverTypeWrapper<Property>;
-  PropertyPurpose: PropertyPurpose;
-  PropertyType: PropertyType;
   Query: ResolverTypeWrapper<{}>;
   Scope: Scope;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -629,7 +564,6 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   Pagination: Pagination;
   Performance: Performance;
-  Property: Property;
   Query: {};
   Scope: Scope;
   String: Scalars['String'];
@@ -727,7 +661,6 @@ export type EntityResolvers<ContextType = any, ParentType = ResolversParentTypes
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   monthlyBalance?: Resolver<Array<ResolversTypes['MonthlyBalance']>, ParentType, ContextType, RequireFields<EntityMonthlyBalanceArgs, 'dateRange'>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  properties?: Resolver<Array<ResolversTypes['Property']>, ParentType, ContextType>;
   transactionGroups?: Resolver<Array<ResolversTypes['TransactionGroup']>, ParentType, ContextType, RequireFields<EntityTransactionGroupsArgs, 'dateRange' | 'groupBy'>>;
   transactions?: Resolver<Array<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<EntityTransactionsArgs, 'dateRange'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -762,26 +695,6 @@ export type PerformanceResolvers<ContextType = any, ParentType = ResolversParent
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type PropertyResolvers<ContextType = any, ParentType = ResolversParentTypes['Property']> = ResolversObject<{
-  acquired?: Resolver<Maybe<ResolversTypes['DateIso']>, ParentType, ContextType>;
-  address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<PropertyCategoriesArgs, 'dateRange'>>;
-  city?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  dispositioned?: Resolver<Maybe<ResolversTypes['DateIso']>, ParentType, ContextType>;
-  entity?: Resolver<ResolversTypes['Entity'], ParentType, ContextType>;
-  externalId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  latitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  longitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  propertyPurpose?: Resolver<ResolversTypes['PropertyPurpose'], ParentType, ContextType>;
-  propertyType?: Resolver<ResolversTypes['PropertyType'], ParentType, ContextType>;
-  state?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  transactionGroups?: Resolver<Array<ResolversTypes['TransactionGroup']>, ParentType, ContextType, RequireFields<PropertyTransactionGroupsArgs, 'dateRange' | 'groupBy'>>;
-  transactions?: Resolver<Array<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<PropertyTransactionsArgs, 'dateRange'>>;
-  zip?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes['Query']> = ResolversObject<{
   account?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, Partial<QueryAccountArgs>>;
   accounts?: Resolver<Array<ResolversTypes['Account']>, ParentType, ContextType>;
@@ -796,8 +709,6 @@ export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes[
   institutions?: Resolver<Array<ResolversTypes['Institution']>, ParentType, ContextType>;
   lastRefreshed?: Resolver<ResolversTypes['DateIso'], ParentType, ContextType>;
   monthlyBalance?: Resolver<Array<ResolversTypes['MonthlyBalance']>, ParentType, ContextType, RequireFields<QueryMonthlyBalanceArgs, 'dateRange'>>;
-  properties?: Resolver<Array<ResolversTypes['Property']>, ParentType, ContextType>;
-  property?: Resolver<Maybe<ResolversTypes['Property']>, ParentType, ContextType, Partial<QueryPropertyArgs>>;
   transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionArgs, 'transactionId'>>;
   transactionGroups?: Resolver<Array<ResolversTypes['TransactionGroup']>, ParentType, ContextType, RequireFields<QueryTransactionGroupsArgs, 'dateRange' | 'groupBy'>>;
   transactions?: Resolver<Array<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QueryTransactionsArgs, 'dateRange'>>;
@@ -814,7 +725,6 @@ export type TransactionResolvers<ContextType = any, ParentType = ResolversParent
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   pending?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  property?: Resolver<Maybe<ResolversTypes['Property']>, ParentType, ContextType>;
   vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -859,7 +769,6 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   MonthlyBalance?: MonthlyBalanceResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Performance?: PerformanceResolvers<ContextType>;
-  Property?: PropertyResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Transaction?: TransactionResolvers<ContextType>;
   TransactionGroup?: TransactionGroupResolvers<ContextType>;
