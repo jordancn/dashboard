@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.vendorNameContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkmarkContainer {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}

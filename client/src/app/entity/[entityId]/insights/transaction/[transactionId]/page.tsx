@@ -2,7 +2,7 @@
 
 import { Caption1 } from "@/Atoms/Caption1";
 import { Chevron } from "@/Atoms/Chevron";
-import { NavigationChevron } from "@/Atoms/NavigationChevron";
+import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { Spinner } from "@/Atoms/Spinner";
 import { Subheadline } from "@/Atoms/Subheadline";
 import { useTransactionQuery } from "@/GraphQL/client.gen";
@@ -22,39 +22,19 @@ import styles from "./page.module.css";
 
 const Transaction = () => {
   const router = useRouter();
-
-  const params = useRouteParams(assertIsIsEntityAndTransactionParams);
-  // const navigate = useNavigate();
+  const { transactionId, entityId } = useRouteParams(
+    assertIsIsEntityAndTransactionParams,
+  );
 
   const results = useTransactionQuery({
     variables: {
-      transactionId: params.transactionId,
+      transactionId,
     },
   });
 
   const onBackClicked = React.useCallback(() => {
     router.back();
   }, [router]);
-
-  // const onMerchantClick = React.useCallback(() => {
-  //   const transaction = results.data?.transaction;
-
-  //   if (!transaction) {
-  //     return;
-  //   }
-
-  //   // TODO
-  //   // navigate(
-  //   //   `/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/vendor?description=${transaction?.description}`,
-  //   // );
-  // }, []);
-
-  // const onCategoryClick = React.useCallback(() => {
-  //   // TODO
-  //   //  navigate(
-  //   //   `/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/category?description=${transaction?.description}`,
-  //   // );
-  // }, []);
 
   if (results.loading) {
     return (
@@ -82,16 +62,9 @@ const Transaction = () => {
             onClick={onBackClicked}
           >
             <div>
-              <NavigationChevron />
+              <NavigationChevronLeft />
             </div>
-            <div className={styles.navigationBarTitle}>
-              <>Back</>
-              {/* {props.mode === "insights" ? (
-                <>Insights</>
-              ) : (
-                <>Back</>
-              )} */}
-            </div>
+            <div className={styles.navigationBarTitle}>Back</div>
           </div>
         </div>
       </NavigationBar>
@@ -145,7 +118,7 @@ const Transaction = () => {
             ...getWidthClassName("full"),
           })}
         >
-          <Card size="full" withSeparators>
+          <Card withSeparators>
             <CardContents position="start">
               <div className={styles.cardAccountHeader}>
                 <div className={styles.cardAccountHeaderAccountContainer}>
@@ -170,7 +143,7 @@ const Transaction = () => {
               </div>
             </CardContents>
           </Card>
-          <Card size="full" withSeparators>
+          <Card withSeparators>
             <CardContents position="middle">
               <div className={styles.cardAccountDescriptionContainer}>
                 <div className={styles.cardAccountDescription}>
@@ -188,8 +161,7 @@ const Transaction = () => {
             </CardContents>
           </Card>
           <Card
-            size="full"
-            href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/category?description=${transaction?.description}`}
+            href={`/entity/${entityId || "overview"}/insights/transaction/${transactionId}/category`}
             withSeparators
           >
             <CardContents position="middle">
@@ -212,8 +184,7 @@ const Transaction = () => {
             </CardContents>
           </Card>
           <Card
-            size="full"
-            href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/vendor?description=${transaction?.description}`}
+            href={`/entity/${entityId || "overview"}/insights/transaction/${transactionId}/vendor`}
             withSeparators
           >
             <CardContents position="end">
@@ -235,59 +206,6 @@ const Transaction = () => {
               </div>
             </CardContents>
           </Card>
-          {transaction.vendor?.name === "Amazon" && (
-            <Card
-              size="full"
-              href={`/entity/${params.entityId || "overview"}/insights/transaction/${params.transactionId}/amazon-order-details?description=${transaction?.description}`}
-              withSeparators
-            >
-              <CardContents position="end">
-                <div className={styles.amazonContainer}>
-                  <div className={styles.amazonDetails}>
-                    <div>
-                      <Caption1 weight="Bold" title="Details" />
-                    </div>
-                    <div>
-                      {/* https://www.amazon.com/gp/your-account/order-details/?orderID=111-3298699-4870603 */}
-                      <Caption1
-                        title="111-3298699-4870603"
-                        ordinal="Secondary"
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.amazonChevron}>
-                    <Chevron />
-                  </div>
-                </div>
-              </CardContents>
-            </Card>
-          )}
-          {/* <Card size='single'>
-            <CardContents position='end'>
-              <div
-                css={css`
-                  display: flex;
-                  width: 100%;
-                  justify-content: space-between;
-                  height: 150px;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: column;
-                  `}
-                >
-                  <div>
-                    <Headline title='Notes' />
-                  </div>
-                  <div>
-                    <TextInput onChange={() => {}} value='' placeholder='' multiline />
-                  </div>
-                </div>
-              </div>
-            </CardContents>
-          </Card> */}
         </div>
       </ContentScrollable>
     </>

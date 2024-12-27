@@ -2,7 +2,13 @@ import classNames from "classnames";
 import { useCallback } from "react";
 import styles from "./ToolbarItem.module.css";
 
-export const ToolbarItem = (props: {
+export const ToolbarItem = ({
+  title,
+  icon,
+  path,
+  base,
+  entityId,
+}: {
   title: string;
   icon?: string | ((props: { className: string }) => React.ReactNode);
   path: string;
@@ -11,11 +17,9 @@ export const ToolbarItem = (props: {
 }) => {
   // const navigate = useNavigate();
 
-  const Icon = props.icon;
+  const Icon = icon;
 
-  const match = props.entityId
-    ? window.location.href.includes(props.entityId)
-    : false;
+  const match = entityId ? window.location.href.includes(entityId) : false;
 
   const onClick = useCallback(() => {
     // TODO
@@ -37,7 +41,7 @@ export const ToolbarItem = (props: {
           )}
         </div>
       </div>
-      <div className={styles.title}>{props.title}</div>
+      <div className={styles.title}>{title}</div>
     </div>
   );
 };

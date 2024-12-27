@@ -36,42 +36,6 @@ export const useDeviceData = (): ContextState => {
   return contextState;
 };
 
-// function useMediaQuery(initalQuery: string) {
-//   const [query, setQuery] = useState(initalQuery);
-//   const [matches, setMatches] = useState(false);
-
-//   // check query and listen for media change.
-//   useEffect(() => {
-//     if (!query) return;
-
-//     const _onChange = (mql: MediaQueryListEvent) => {
-//       setMatches(mql.matches);
-//     };
-
-//     const mql = window.matchMedia(query);
-
-//     setMatches(mql.matches);
-
-//     try {
-//       mql.addEventListener("change", _onChange);
-//     } catch {
-//       mql.addListener(_onChange);
-//     }
-
-//     return () => {
-//       try {
-//         mql.removeEventListener("change", _onChange);
-//       } catch {
-//         mql.removeListener(_onChange);
-//       }
-//     };
-//   }, [query]);
-
-//   return [matches, setQuery] as const;
-// }
-
-// consider using react-device-detect
-
 const isPortrait = (type: ScreenOrientation["type"]) => {
   return type === "portrait-primary" || type === "portrait-secondary";
 };
@@ -82,7 +46,7 @@ const getOrientation = (orientation: ScreenOrientation) => {
     : ("landscape" as const);
 };
 
-export const DeviceDataProvider = (props: { children?: ReactNode }) => {
+export const DeviceDataProvider = ({ children }: { children?: ReactNode }) => {
   const [state, setState] = useState<ContextState>({
     status: "LOADING",
   });
@@ -139,5 +103,5 @@ export const DeviceDataProvider = (props: { children?: ReactNode }) => {
     });
   }, [isMobileTablet, isMobilePhone]);
 
-  return <Context.Provider value={state}>{props.children}</Context.Provider>;
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 };

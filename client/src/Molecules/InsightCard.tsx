@@ -7,7 +7,16 @@ import { TransactionAmount } from "@/Molecules/TransactionAmount";
 import { formatCurrency, formatNumber } from "@/Utils/formatters";
 import styles from "./InsightCard.module.css";
 
-export const InsightCard = (props: {
+export const InsightCard = ({
+  entityId,
+  categoryId,
+  categoryName,
+  categoryType,
+  changePercent,
+  currentTotal,
+  previousTotal,
+  dateRange,
+}: {
   entityId?: string;
   categoryId: string;
   categoryName: string;
@@ -17,20 +26,20 @@ export const InsightCard = (props: {
   previousTotal: number;
   dateRange: DateRange;
 }) => {
-  const change = props.currentTotal - props.previousTotal;
+  const change = currentTotal - previousTotal;
 
   return (
     <Card
       size="half"
-      href={`/entity/${props.entityId}/insights/category/${props.categoryId}/${props.dateRange.start}/${props.dateRange.end}`}
+      href={`/entity/${entityId}/insights/category/${categoryId}/${dateRange.start}/${dateRange.end}`}
     >
       <CardContents>
-        <Caption1 title={props.categoryName} />
+        <Caption1 title={categoryName} />
 
         <div className={styles.changeContainer}>
-          <ChangeIndicator change={change} categoryType={props.categoryType} />
+          <ChangeIndicator change={change} categoryType={categoryType} />
           <TransactionAmount
-            value={props.changePercent}
+            value={changePercent}
             formatter={(value) =>
               formatNumber.formatPercentInt(value, { withSign: false })
             }
@@ -41,7 +50,7 @@ export const InsightCard = (props: {
         <div className={styles.balanceContainer}>
           <div>
             <Caption1
-              title={formatCurrency.format(props.previousTotal)}
+              title={formatCurrency.format(previousTotal)}
               ordinal="Secondary"
             />
           </div>

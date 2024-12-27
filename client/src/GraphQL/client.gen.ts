@@ -243,6 +243,7 @@ export type Mutation = {
 
 
 export type MutationAddCategoryArgs = {
+  categoryType: CategoryType;
   name: Scalars['String']['input'];
 };
 
@@ -442,6 +443,37 @@ export type VendorTransactionsArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type AddCategoryMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  categoryType: CategoryType;
+}>;
+
+
+export type AddCategoryMutation = { __typename?: 'Mutation', addCategory: { __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType } };
+
+export type AddVendorMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type AddVendorMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'Vendor', id: string, name: string } };
+
+export type SetTransactionCategoryMutationVariables = Exact<{
+  transactionId: Scalars['ID']['input'];
+  categoryId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type SetTransactionCategoryMutation = { __typename?: 'Mutation', setCategory?: { __typename?: 'Transaction', id: string, category?: { __typename?: 'Category', id: string, name: string } | null } | null };
+
+export type SetTransactionVendorMutationVariables = Exact<{
+  transactionId: Scalars['ID']['input'];
+  vendorId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type SetTransactionVendorMutation = { __typename?: 'Mutation', setVendor?: { __typename?: 'Transaction', id: string, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null } | null };
+
 export type SidebarContentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -504,12 +536,46 @@ export type EntityActivityOverviewQueryVariables = Exact<{
 
 export type EntityActivityOverviewQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, total: number, count: number, categoryType: CategoryType, change: { __typename?: 'CategoryChange', changePercent?: number | null } }>, activity: Array<{ __typename?: 'TransactionGroup', groupIndex: number, start: DateIso, end: DateIso, total: number, totalIncome: number, totalExpenses: number }> };
 
+export type TransactionCategoryGroupQueryVariables = Exact<{
+  entityId: Scalars['ID']['input'];
+  dateRange: DateRange;
+  categoryId: Scalars['ID']['input'];
+  groupBy: GroupBy;
+}>;
+
+
+export type TransactionCategoryGroupQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: string, currentBalance: number, category: { __typename?: 'Category', id: string, name: string, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> }> } } | null };
+
+export type TransactionCategoryGroupOverallQueryVariables = Exact<{
+  dateRange: DateRange;
+  categoryId: Scalars['ID']['input'];
+  groupBy: GroupBy;
+}>;
+
+
+export type TransactionCategoryGroupOverallQuery = { __typename?: 'Query', currentBalance: number, category?: { __typename?: 'Category', id: string, name: string, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, transactionGroups: Array<{ __typename?: 'TransactionGroup', id: string, start: DateIso, end: DateIso, total: number, count: number, transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }> }> } | null };
+
 export type TransactionQueryVariables = Exact<{
   transactionId: Scalars['ID']['input'];
 }>;
 
 
 export type TransactionQuery = { __typename?: 'Query', transaction?: { __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string }, category?: { __typename?: 'Category', id: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null } | null };
+
+export type TransactionCategoryQueryVariables = Exact<{
+  transactionId: Scalars['ID']['input'];
+  dateRange: DateRange;
+}>;
+
+
+export type TransactionCategoryQuery = { __typename?: 'Query', transaction?: { __typename?: 'Transaction', id: string, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null } | null, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string, categoryType: CategoryType }> };
+
+export type TransactionVendorQueryVariables = Exact<{
+  transactionId: Scalars['ID']['input'];
+}>;
+
+
+export type TransactionVendorQuery = { __typename?: 'Query', transaction?: { __typename?: 'Transaction', id: string, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null } | null, vendors: Array<{ __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null }> };
 
 export type TransactionsReviewQueryVariables = Exact<{
   dateRange: DateRange;
@@ -519,6 +585,154 @@ export type TransactionsReviewQueryVariables = Exact<{
 export type TransactionsReviewQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', id: string, date: DateIso, description: string, amount: number, pending: boolean, account: { __typename?: 'Account', id: string, name: string, number: string, entity: { __typename?: 'Entity', id: string, name: string } }, category?: { __typename?: 'Category', id: string, categoryId: string, name: string } | null, vendor?: { __typename?: 'Vendor', id: string, name: string, image?: Base64Url | null } | null }>, categories: Array<{ __typename?: 'Category', id: string, categoryId: string, name: string }>, vendors: Array<{ __typename?: 'Vendor', id: string, name: string }> };
 
 
+export const AddCategoryDocument = gql`
+    mutation AddCategory($name: String!, $categoryType: CategoryType!) {
+  addCategory(name: $name, categoryType: $categoryType) {
+    id
+    categoryId
+    name
+    categoryType
+  }
+}
+    `;
+export type AddCategoryMutationFn = Apollo.MutationFunction<AddCategoryMutation, AddCategoryMutationVariables>;
+
+/**
+ * __useAddCategoryMutation__
+ *
+ * To run a mutation, you first call `useAddCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCategoryMutation, { data, loading, error }] = useAddCategoryMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      categoryType: // value for 'categoryType'
+ *   },
+ * });
+ */
+export function useAddCategoryMutation(baseOptions?: Apollo.MutationHookOptions<AddCategoryMutation, AddCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddCategoryMutation, AddCategoryMutationVariables>(AddCategoryDocument, options);
+      }
+export type AddCategoryMutationHookResult = ReturnType<typeof useAddCategoryMutation>;
+export type AddCategoryMutationResult = Apollo.MutationResult<AddCategoryMutation>;
+export type AddCategoryMutationOptions = Apollo.BaseMutationOptions<AddCategoryMutation, AddCategoryMutationVariables>;
+export const AddVendorDocument = gql`
+    mutation AddVendor($name: String!) {
+  addVendor(name: $name) {
+    id
+    name
+  }
+}
+    `;
+export type AddVendorMutationFn = Apollo.MutationFunction<AddVendorMutation, AddVendorMutationVariables>;
+
+/**
+ * __useAddVendorMutation__
+ *
+ * To run a mutation, you first call `useAddVendorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddVendorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addVendorMutation, { data, loading, error }] = useAddVendorMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useAddVendorMutation(baseOptions?: Apollo.MutationHookOptions<AddVendorMutation, AddVendorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddVendorMutation, AddVendorMutationVariables>(AddVendorDocument, options);
+      }
+export type AddVendorMutationHookResult = ReturnType<typeof useAddVendorMutation>;
+export type AddVendorMutationResult = Apollo.MutationResult<AddVendorMutation>;
+export type AddVendorMutationOptions = Apollo.BaseMutationOptions<AddVendorMutation, AddVendorMutationVariables>;
+export const SetTransactionCategoryDocument = gql`
+    mutation SetTransactionCategory($transactionId: ID!, $categoryId: ID) {
+  setCategory(transactionId: $transactionId, categoryId: $categoryId) {
+    id
+    category {
+      id
+      name
+    }
+  }
+}
+    `;
+export type SetTransactionCategoryMutationFn = Apollo.MutationFunction<SetTransactionCategoryMutation, SetTransactionCategoryMutationVariables>;
+
+/**
+ * __useSetTransactionCategoryMutation__
+ *
+ * To run a mutation, you first call `useSetTransactionCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetTransactionCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setTransactionCategoryMutation, { data, loading, error }] = useSetTransactionCategoryMutation({
+ *   variables: {
+ *      transactionId: // value for 'transactionId'
+ *      categoryId: // value for 'categoryId'
+ *   },
+ * });
+ */
+export function useSetTransactionCategoryMutation(baseOptions?: Apollo.MutationHookOptions<SetTransactionCategoryMutation, SetTransactionCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetTransactionCategoryMutation, SetTransactionCategoryMutationVariables>(SetTransactionCategoryDocument, options);
+      }
+export type SetTransactionCategoryMutationHookResult = ReturnType<typeof useSetTransactionCategoryMutation>;
+export type SetTransactionCategoryMutationResult = Apollo.MutationResult<SetTransactionCategoryMutation>;
+export type SetTransactionCategoryMutationOptions = Apollo.BaseMutationOptions<SetTransactionCategoryMutation, SetTransactionCategoryMutationVariables>;
+export const SetTransactionVendorDocument = gql`
+    mutation SetTransactionVendor($transactionId: ID!, $vendorId: ID) {
+  setVendor(transactionId: $transactionId, vendorId: $vendorId) {
+    id
+    vendor {
+      id
+      name
+      image
+    }
+  }
+}
+    `;
+export type SetTransactionVendorMutationFn = Apollo.MutationFunction<SetTransactionVendorMutation, SetTransactionVendorMutationVariables>;
+
+/**
+ * __useSetTransactionVendorMutation__
+ *
+ * To run a mutation, you first call `useSetTransactionVendorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetTransactionVendorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setTransactionVendorMutation, { data, loading, error }] = useSetTransactionVendorMutation({
+ *   variables: {
+ *      transactionId: // value for 'transactionId'
+ *      vendorId: // value for 'vendorId'
+ *   },
+ * });
+ */
+export function useSetTransactionVendorMutation(baseOptions?: Apollo.MutationHookOptions<SetTransactionVendorMutation, SetTransactionVendorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetTransactionVendorMutation, SetTransactionVendorMutationVariables>(SetTransactionVendorDocument, options);
+      }
+export type SetTransactionVendorMutationHookResult = ReturnType<typeof useSetTransactionVendorMutation>;
+export type SetTransactionVendorMutationResult = Apollo.MutationResult<SetTransactionVendorMutation>;
+export type SetTransactionVendorMutationOptions = Apollo.BaseMutationOptions<SetTransactionVendorMutation, SetTransactionVendorMutationVariables>;
 export const SidebarContentsDocument = gql`
     query SidebarContents {
   entities {
@@ -1010,6 +1224,180 @@ export type EntityActivityOverviewQueryHookResult = ReturnType<typeof useEntityA
 export type EntityActivityOverviewLazyQueryHookResult = ReturnType<typeof useEntityActivityOverviewLazyQuery>;
 export type EntityActivityOverviewSuspenseQueryHookResult = ReturnType<typeof useEntityActivityOverviewSuspenseQuery>;
 export type EntityActivityOverviewQueryResult = Apollo.QueryResult<EntityActivityOverviewQuery, EntityActivityOverviewQueryVariables>;
+export const TransactionCategoryGroupDocument = gql`
+    query TransactionCategoryGroup($entityId: ID!, $dateRange: DateRange!, $categoryId: ID!, $groupBy: GroupBy!) {
+  entity(entityId: $entityId) {
+    id
+    currentBalance
+    category(dateRange: $dateRange, categoryId: $categoryId) {
+      id
+      name
+      total
+      count
+      transactions {
+        id
+        date
+        description
+        amount
+        pending
+        category {
+          id
+          name
+        }
+        vendor {
+          id
+          name
+          image
+        }
+      }
+      transactionGroups(groupBy: $groupBy) {
+        id
+        start
+        end
+        total
+        count
+        transactions {
+          id
+          date
+          description
+          amount
+          pending
+          category {
+            id
+            name
+          }
+          vendor {
+            id
+            name
+            image
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTransactionCategoryGroupQuery__
+ *
+ * To run a query within a React component, call `useTransactionCategoryGroupQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionCategoryGroupQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionCategoryGroupQuery({
+ *   variables: {
+ *      entityId: // value for 'entityId'
+ *      dateRange: // value for 'dateRange'
+ *      categoryId: // value for 'categoryId'
+ *      groupBy: // value for 'groupBy'
+ *   },
+ * });
+ */
+export function useTransactionCategoryGroupQuery(baseOptions: Apollo.QueryHookOptions<TransactionCategoryGroupQuery, TransactionCategoryGroupQueryVariables> & ({ variables: TransactionCategoryGroupQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TransactionCategoryGroupQuery, TransactionCategoryGroupQueryVariables>(TransactionCategoryGroupDocument, options);
+      }
+export function useTransactionCategoryGroupLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TransactionCategoryGroupQuery, TransactionCategoryGroupQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TransactionCategoryGroupQuery, TransactionCategoryGroupQueryVariables>(TransactionCategoryGroupDocument, options);
+        }
+export function useTransactionCategoryGroupSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TransactionCategoryGroupQuery, TransactionCategoryGroupQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionCategoryGroupQuery, TransactionCategoryGroupQueryVariables>(TransactionCategoryGroupDocument, options);
+        }
+export type TransactionCategoryGroupQueryHookResult = ReturnType<typeof useTransactionCategoryGroupQuery>;
+export type TransactionCategoryGroupLazyQueryHookResult = ReturnType<typeof useTransactionCategoryGroupLazyQuery>;
+export type TransactionCategoryGroupSuspenseQueryHookResult = ReturnType<typeof useTransactionCategoryGroupSuspenseQuery>;
+export type TransactionCategoryGroupQueryResult = Apollo.QueryResult<TransactionCategoryGroupQuery, TransactionCategoryGroupQueryVariables>;
+export const TransactionCategoryGroupOverallDocument = gql`
+    query TransactionCategoryGroupOverall($dateRange: DateRange!, $categoryId: ID!, $groupBy: GroupBy!) {
+  currentBalance
+  category(dateRange: $dateRange, categoryId: $categoryId) {
+    id
+    name
+    total
+    count
+    transactions {
+      id
+      date
+      description
+      amount
+      pending
+      category {
+        id
+        name
+      }
+      vendor {
+        id
+        name
+        image
+      }
+    }
+    transactionGroups(groupBy: $groupBy) {
+      id
+      start
+      end
+      total
+      count
+      transactions {
+        id
+        date
+        description
+        amount
+        pending
+        category {
+          id
+          name
+        }
+        vendor {
+          id
+          name
+          image
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTransactionCategoryGroupOverallQuery__
+ *
+ * To run a query within a React component, call `useTransactionCategoryGroupOverallQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionCategoryGroupOverallQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionCategoryGroupOverallQuery({
+ *   variables: {
+ *      dateRange: // value for 'dateRange'
+ *      categoryId: // value for 'categoryId'
+ *      groupBy: // value for 'groupBy'
+ *   },
+ * });
+ */
+export function useTransactionCategoryGroupOverallQuery(baseOptions: Apollo.QueryHookOptions<TransactionCategoryGroupOverallQuery, TransactionCategoryGroupOverallQueryVariables> & ({ variables: TransactionCategoryGroupOverallQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TransactionCategoryGroupOverallQuery, TransactionCategoryGroupOverallQueryVariables>(TransactionCategoryGroupOverallDocument, options);
+      }
+export function useTransactionCategoryGroupOverallLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TransactionCategoryGroupOverallQuery, TransactionCategoryGroupOverallQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TransactionCategoryGroupOverallQuery, TransactionCategoryGroupOverallQueryVariables>(TransactionCategoryGroupOverallDocument, options);
+        }
+export function useTransactionCategoryGroupOverallSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TransactionCategoryGroupOverallQuery, TransactionCategoryGroupOverallQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionCategoryGroupOverallQuery, TransactionCategoryGroupOverallQueryVariables>(TransactionCategoryGroupOverallDocument, options);
+        }
+export type TransactionCategoryGroupOverallQueryHookResult = ReturnType<typeof useTransactionCategoryGroupOverallQuery>;
+export type TransactionCategoryGroupOverallLazyQueryHookResult = ReturnType<typeof useTransactionCategoryGroupOverallLazyQuery>;
+export type TransactionCategoryGroupOverallSuspenseQueryHookResult = ReturnType<typeof useTransactionCategoryGroupOverallSuspenseQuery>;
+export type TransactionCategoryGroupOverallQueryResult = Apollo.QueryResult<TransactionCategoryGroupOverallQuery, TransactionCategoryGroupOverallQueryVariables>;
 export const TransactionDocument = gql`
     query Transaction($transactionId: ID!) {
   transaction(transactionId: $transactionId) {
@@ -1068,6 +1456,108 @@ export type TransactionQueryHookResult = ReturnType<typeof useTransactionQuery>;
 export type TransactionLazyQueryHookResult = ReturnType<typeof useTransactionLazyQuery>;
 export type TransactionSuspenseQueryHookResult = ReturnType<typeof useTransactionSuspenseQuery>;
 export type TransactionQueryResult = Apollo.QueryResult<TransactionQuery, TransactionQueryVariables>;
+export const TransactionCategoryDocument = gql`
+    query TransactionCategory($transactionId: ID!, $dateRange: DateRange!) {
+  transaction(transactionId: $transactionId) {
+    id
+    category {
+      id
+      categoryId
+      name
+    }
+  }
+  categories(dateRange: $dateRange) {
+    id
+    categoryId
+    name
+    categoryType
+  }
+}
+    `;
+
+/**
+ * __useTransactionCategoryQuery__
+ *
+ * To run a query within a React component, call `useTransactionCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionCategoryQuery({
+ *   variables: {
+ *      transactionId: // value for 'transactionId'
+ *      dateRange: // value for 'dateRange'
+ *   },
+ * });
+ */
+export function useTransactionCategoryQuery(baseOptions: Apollo.QueryHookOptions<TransactionCategoryQuery, TransactionCategoryQueryVariables> & ({ variables: TransactionCategoryQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TransactionCategoryQuery, TransactionCategoryQueryVariables>(TransactionCategoryDocument, options);
+      }
+export function useTransactionCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TransactionCategoryQuery, TransactionCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TransactionCategoryQuery, TransactionCategoryQueryVariables>(TransactionCategoryDocument, options);
+        }
+export function useTransactionCategorySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TransactionCategoryQuery, TransactionCategoryQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionCategoryQuery, TransactionCategoryQueryVariables>(TransactionCategoryDocument, options);
+        }
+export type TransactionCategoryQueryHookResult = ReturnType<typeof useTransactionCategoryQuery>;
+export type TransactionCategoryLazyQueryHookResult = ReturnType<typeof useTransactionCategoryLazyQuery>;
+export type TransactionCategorySuspenseQueryHookResult = ReturnType<typeof useTransactionCategorySuspenseQuery>;
+export type TransactionCategoryQueryResult = Apollo.QueryResult<TransactionCategoryQuery, TransactionCategoryQueryVariables>;
+export const TransactionVendorDocument = gql`
+    query TransactionVendor($transactionId: ID!) {
+  transaction(transactionId: $transactionId) {
+    id
+    vendor {
+      id
+      name
+      image
+    }
+  }
+  vendors {
+    id
+    name
+    image
+  }
+}
+    `;
+
+/**
+ * __useTransactionVendorQuery__
+ *
+ * To run a query within a React component, call `useTransactionVendorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTransactionVendorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTransactionVendorQuery({
+ *   variables: {
+ *      transactionId: // value for 'transactionId'
+ *   },
+ * });
+ */
+export function useTransactionVendorQuery(baseOptions: Apollo.QueryHookOptions<TransactionVendorQuery, TransactionVendorQueryVariables> & ({ variables: TransactionVendorQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TransactionVendorQuery, TransactionVendorQueryVariables>(TransactionVendorDocument, options);
+      }
+export function useTransactionVendorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TransactionVendorQuery, TransactionVendorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TransactionVendorQuery, TransactionVendorQueryVariables>(TransactionVendorDocument, options);
+        }
+export function useTransactionVendorSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TransactionVendorQuery, TransactionVendorQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TransactionVendorQuery, TransactionVendorQueryVariables>(TransactionVendorDocument, options);
+        }
+export type TransactionVendorQueryHookResult = ReturnType<typeof useTransactionVendorQuery>;
+export type TransactionVendorLazyQueryHookResult = ReturnType<typeof useTransactionVendorLazyQuery>;
+export type TransactionVendorSuspenseQueryHookResult = ReturnType<typeof useTransactionVendorSuspenseQuery>;
+export type TransactionVendorQueryResult = Apollo.QueryResult<TransactionVendorQuery, TransactionVendorQueryVariables>;
 export const TransactionsReviewDocument = gql`
     query TransactionsReview($dateRange: DateRange!) {
   transactions(dateRange: $dateRange) {

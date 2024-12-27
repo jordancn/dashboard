@@ -1,4 +1,4 @@
-import { NavigationChevron } from "@/Atoms/NavigationChevron";
+import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { Spinner } from "@/Atoms/Spinner";
 import {
   useTransactionGroupOverviewQuery,
@@ -106,7 +106,7 @@ export const TransactionGroup = () => {
         <div className={styles.navigationBar}>
           <div className={styles.backButtonContainer} onClick={onBackClicked}>
             <div>
-              <NavigationChevron />
+              <NavigationChevronLeft />
             </div>
             <div className={styles.title}>Insights</div>
           </div>

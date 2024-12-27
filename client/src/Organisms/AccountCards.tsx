@@ -6,7 +6,10 @@ import _ from "lodash";
 import { useMemo } from "react";
 import styles from "./AccountCards.module.css";
 
-export const AccountCards = (props: {
+export const AccountCards = ({
+  accounts,
+  entityId,
+}: {
   accounts: Array<{
     id: string;
     name: string;
@@ -25,8 +28,8 @@ export const AccountCards = (props: {
   entityId?: string;
 }) => {
   const accountGroups = useMemo(() => {
-    return _.groupBy(props.accounts, (account) => account.institution.name);
-  }, [props.accounts]);
+    return _.groupBy(accounts, (account) => account.institution.name);
+  }, [accounts]);
 
   return (
     <div
@@ -60,7 +63,7 @@ export const AccountCards = (props: {
                     institution={account.institution}
                     currentBalance={account.currentBalance}
                     id={account.id}
-                    href={`/entity/${props.entityId || "overview"}/insights/account/${account.id}`}
+                    href={`/entity/${entityId || "overview"}/insights/account/${account.id}`}
                     number={account.number}
                     accountType={account.accountType}
                     entity={account.entity}

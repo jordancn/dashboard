@@ -14,7 +14,7 @@ import { useActivityGroup } from "@/Providers/AppStateProvider";
 import { today } from "@/Utils/date-iso";
 import React from "react";
 
-export const SlideableActivity = (props: { index: number }) => {
+export const SlideableActivity = ({ index }: { index: number }) => {
   const activityGroup = useActivityGroup();
 
   const date = today();
@@ -24,27 +24,27 @@ export const SlideableActivity = (props: { index: number }) => {
       case "Week": {
         const dayOfWeek = getWeekdayFromIsoDate(date);
 
-        const start = addDays(date, -dayOfWeek + 7 * props.index);
-        const end = addDays(date, 6 - dayOfWeek + 7 * props.index);
+        const start = addDays(date, -dayOfWeek + 7 * index);
+        const end = addDays(date, 6 - dayOfWeek + 7 * index);
 
         return { start, end };
       }
       case "Month": {
-        const start = getFirstDayOfMonth(addMonths(date, props.index));
-        const end = getLastDayOfMonth(addMonths(date, props.index));
+        const start = getFirstDayOfMonth(addMonths(date, index));
+        const end = getLastDayOfMonth(addMonths(date, index));
 
         return { start, end };
       }
       case "Year":
-        const start = getFirstDayOfYear(addYears(date, props.index));
-        const end = getLastDayOfYear(addYears(date, props.index));
+        const start = getFirstDayOfYear(addYears(date, index));
+        const end = getLastDayOfYear(addYears(date, index));
 
         return { start, end };
 
       default:
         return;
     }
-  }, [activityGroup, date, props.index]);
+  }, [activityGroup, date, index]);
 
   if (!dateRange) {
     return null;
@@ -52,17 +52,19 @@ export const SlideableActivity = (props: { index: number }) => {
 
   return (
     <ActivityContainer
-      index={props.index}
+      index={index}
       start={dateRange.start}
       end={dateRange.end}
-      type={activityGroup}
     />
   );
 };
 
-export const ActivitySlideRenderer = (props: {
+export const ActivitySlideRenderer = ({
+  index,
+  key,
+}: {
   index: number;
   key: number;
 }) => {
-  return <SlideableActivity key={props.key} index={props.index} />;
+  return <SlideableActivity key={key} index={index} />;
 };

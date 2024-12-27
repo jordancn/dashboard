@@ -11,7 +11,17 @@ import { assertIsEntityParams } from "@/Utils/param-helpers";
 import Image from "next/image";
 import styles from "./AccountCard.module.css";
 
-export const AccountCard = (props: {
+export const AccountCard = ({
+  id,
+  name,
+  currentBalance,
+  institution,
+  entity,
+  number,
+  accountType,
+  relativePosition,
+  href,
+}: {
   id: string;
   name: string;
   currentBalance: number;
@@ -33,38 +43,38 @@ export const AccountCard = (props: {
   const icon: string | undefined = undefined;
 
   return (
-    <Card size="full" href={props.href}>
+    <Card href={href}>
       <CardTitle />
-      <CardContents position={props.relativePosition}>
+      <CardContents position={relativePosition}>
         <div className={styles.container}>
           <div className={styles.icon}>
-            {icon && <Image alt={props.name} src={icon} />}
-            {!icon && <MonogramIcon name={props.name} />}
+            {icon && <Image alt={name} src={icon} />}
+            {!icon && <MonogramIcon name={name} />}
           </div>
           <div className={styles.nameTypeContainer}>
             <div className={styles.name}>
-              <Headline title={props.name} weight="Bold" />
+              <Headline title={name} weight="Bold" />
             </div>
             <div>
               <div className={styles.accountType}>
                 {params?.entityId === "overview" && (
                   <Caption1
-                    title={`${props.entity.name} ${props.accountType}`}
+                    title={`${entity.name} ${accountType}`}
                     ordinal="Secondary"
                   />
                 )}
                 {params?.entityId !== "overview" && (
-                  <Caption1 title={props.accountType} ordinal="Secondary" />
+                  <Caption1 title={accountType} ordinal="Secondary" />
                 )}
               </div>
             </div>
           </div>
           <div className={styles.balanceContainer}>
             <div className={styles.balance}>
-              {formatCurrency.format(props.currentBalance)}
+              {formatCurrency.format(currentBalance)}
             </div>
             <div>
-              <Caption1 title={`· · · · ${props.number}`} ordinal="Secondary" />
+              <Caption1 title={`· · · · ${number}`} ordinal="Secondary" />
             </div>
           </div>
           <div className={styles.chevron}>

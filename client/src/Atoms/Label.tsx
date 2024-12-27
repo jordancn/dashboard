@@ -1,8 +1,11 @@
 import classNames from "classnames";
-import * as React from "react";
 import styles from "./Label.module.css";
 
-export const Label = (props: {
+export const Label = ({
+  title,
+  variant,
+  onClick,
+}: {
   title: string;
   variant?: "primary" | "secondary";
   onClick?: () => void;
@@ -10,13 +13,13 @@ export const Label = (props: {
   return (
     <div
       className={classNames(styles.label, {
-        [styles.primary]: props.variant === "primary" || !props.variant,
-        [styles.secondary]: props.variant === "secondary",
-        [styles.clickable]: props.onClick,
+        [styles.primary]: variant === "primary" || !variant,
+        [styles.secondary]: variant === "secondary",
+        [styles.clickable]: onClick,
       })}
-      onClick={props.onClick}
+      onClick={onClick}
     >
-      {props.title}
+      {title}
     </div>
   );
 };

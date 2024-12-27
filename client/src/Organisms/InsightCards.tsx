@@ -6,7 +6,11 @@ import classNames from "classnames";
 import { useMemo } from "react";
 import styles from "./InsightCards.module.css";
 
-export const InsightCards = (props: {
+export const InsightCards = ({
+  entityId,
+  insights,
+  dateRange,
+}: {
   entityId?: string;
   insights: Array<{
     id: string;
@@ -19,8 +23,6 @@ export const InsightCards = (props: {
   }>;
   dateRange: DateRange;
 }) => {
-  const { entityId, insights, dateRange } = props;
-
   const insightCards = useMemo(() => {
     return sortInsights(filterInsights(insights)).map((category) => {
       return (
@@ -43,7 +45,7 @@ export const InsightCards = (props: {
   return (
     <div
       className={classNames(styles.insightCards, {
-        [styles.short]: props.insights.length <= 2,
+        [styles.short]: insights.length <= 2,
       })}
     >
       {insightCards}

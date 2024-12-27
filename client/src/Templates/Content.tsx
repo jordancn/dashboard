@@ -2,7 +2,7 @@ import { useSidebarData } from "@/Providers/SidebarDataProvider";
 import classNames from "classnames";
 import styles from "./Content.module.css";
 
-export const Content = (props: { children?: React.ReactNode }) => {
+export const Content = ({ children }: { children?: React.ReactNode }) => {
   const sidebarData = useSidebarData();
 
   if (sidebarData.status !== "LOADED") {
@@ -18,7 +18,7 @@ export const Content = (props: { children?: React.ReactNode }) => {
       })}
     >
       <div id="content-container" className={styles.contentContainer}>
-        {props.children}
+        {children}
       </div>
     </div>
   );

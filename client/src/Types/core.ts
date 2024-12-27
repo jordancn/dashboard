@@ -21,3 +21,5 @@ export type Brand<T, BrandT> = T & Branding<BrandT>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type shame = any;
+
+export type Defined<T> = Exclude<T, undefined | null>;

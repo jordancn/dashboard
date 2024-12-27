@@ -5,7 +5,11 @@ import _ from "lodash";
 import { useMemo } from "react";
 import styles from "./BudgetCards.module.css";
 
-export const BudgetCards = (props: {
+export const BudgetCards = ({
+  entityId,
+  budget,
+  dateRange,
+}: {
   entityId?: string;
   budget: Array<{
     id: string;
@@ -17,8 +21,6 @@ export const BudgetCards = (props: {
   }>;
   dateRange: DateRange;
 }) => {
-  const { entityId, budget, dateRange } = props;
-
   const bugdetCards = useMemo(() => {
     return _.orderBy(budget, (c) => Math.abs(c.percent), "desc").map(
       (category) => {

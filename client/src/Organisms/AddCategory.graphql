@@ -1,0 +1,8 @@
+mutation AddCategory($name: String!, $categoryType: CategoryType!) {
+  addCategory(name: $name, categoryType: $categoryType) {
+    id
+    categoryId
+    name
+    categoryType
+  }
+}

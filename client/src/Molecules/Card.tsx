@@ -3,30 +3,33 @@ import Link from "next/link";
 import React from "react";
 import styles from "./Card.module.css";
 
-export const Card = (props: {
+export const Card = ({
+  size,
+  href,
+  onClick,
+  children,
+  className,
+  withSeparators,
+}: {
   size?: "full" | "half" | "quarter";
   href?: string;
+  onClick?: () => void;
   children?: React.ReactNode;
   className?: string;
   withSeparators?: boolean;
 }) => {
   return (
     <div
-      className={classNames(styles.card, props.className, {
-        [styles.clickable]: props.href,
-        fullWidth:
-          (!props.className && props.size === "full") ||
-          (!props.className && !props.size),
-        halfWidth: !props.className && props.size === "half",
-        quarterWidth: !props.className && props.size === "quarter",
-        [styles.withSeparators]: props.withSeparators,
+      className={classNames(styles.card, className, {
+        [styles.clickable]: href,
+        fullWidth: (!className && size === "full") || (!className && !size),
+        halfWidth: !className && size === "half",
+        quarterWidth: !className && size === "quarter",
+        [styles.withSeparators]: withSeparators,
       })}
+      onClick={onClick}
     >
-      {props.href ? (
-        <Link href={props.href}>{props.children}</Link>
-      ) : (
-        props.children
-      )}
+      {href ? <Link href={href}>{children}</Link> : children}
     </div>
   );
 };

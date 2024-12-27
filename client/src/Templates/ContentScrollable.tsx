@@ -1,7 +1,14 @@
 import classNames from "classnames";
 import styles from "./ContentScrollable.module.css";
 
-export const ContentScrollable = (props: {
+export const ContentScrollable = ({
+  type,
+  direction,
+  hasNavigationBar,
+  fullHeight,
+  children,
+  fullWidth,
+}: {
   type?: "block" | "wrap-cards";
   direction?: "row" | "column";
   hasNavigationBar?: boolean;
@@ -13,19 +20,18 @@ export const ContentScrollable = (props: {
     <div id="content-scrollable">
       <div
         className={classNames(styles.contentScrollable, {
-          [styles.contentScrollableFullWidth]: props.fullWidth,
-          [styles.contentScrollableFullHeight]: props.fullHeight,
-          [styles.wrapCards]: props.type === "wrap-cards",
-          [styles.navigationBar]: props.hasNavigationBar,
+          [styles.contentScrollableFullWidth]: fullWidth,
+          [styles.contentScrollableFullHeight]: fullHeight,
+          [styles.wrapCards]: type === "wrap-cards",
+          [styles.navigationBar]: hasNavigationBar,
           [styles.wrapCardsColumn]:
-            props.type === "wrap-cards" && props.direction === "column",
-          [styles.wrapCardsRow]:
-            props.type === "wrap-cards" && props.direction === "row",
-          [styles.withNavigationBar]: props.hasNavigationBar,
-          [styles.withoutNavigationBar]: !props.hasNavigationBar,
+            type === "wrap-cards" && direction === "column",
+          [styles.wrapCardsRow]: type === "wrap-cards" && direction === "row",
+          [styles.withNavigationBar]: hasNavigationBar,
+          [styles.withoutNavigationBar]: !hasNavigationBar,
         })}
       >
-        {props.children}
+        {children}
       </div>
     </div>
   );

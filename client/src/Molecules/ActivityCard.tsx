@@ -19,7 +19,12 @@ import _ from "lodash";
 import React from "react";
 import styles from "./ActivityCard.module.css";
 
-export const ActivityCard = (props: {
+export const ActivityCard = ({
+  entityId,
+  activityGroup,
+  activity: activityProp,
+  size,
+}: {
   entityId?: string;
   activityGroup: ActivityGroup;
   activity: Array<{
@@ -35,27 +40,27 @@ export const ActivityCard = (props: {
   const maxActivity = React.useMemo(() => {
     return (
       _.max([
-        ...props.activity.map((activity) => activity.totalIncome),
-        ...props.activity.map((activity) => activity.totalExpenses),
+        ...activityProp.map((activity) => activity.totalIncome),
+        ...activityProp.map((activity) => activity.totalExpenses),
       ]) || 1
     );
-  }, [props.activity]);
+  }, [activityProp]);
 
   const activity = React.useMemo(() => {
-    return props.activity.map((act) => ({
+    return activityProp.map((act) => ({
       ...act,
       incomePercentage: (act.totalIncome * 1.0) / maxActivity,
       expensePercentage: (act.totalExpenses * 1.0) / maxActivity,
     }));
-  }, [props.activity, maxActivity]);
+  }, [activityProp, maxActivity]);
 
   const getLabel = React.useCallback(
     (start: DateIso, end: DateIso, groupIndex: number) => {
-      switch (props.activityGroup) {
+      switch (activityGroup) {
         case "Weekday":
           return toDayOfWeek(
             getActivityGroupDate({
-              activityGroup: props.activityGroup,
+              activityGroup,
               start,
               groupIndex,
             }),
@@ -71,31 +76,29 @@ export const ActivityCard = (props: {
           throw new Error("Invalid ActivityGroup");
       }
     },
-    [props.activityGroup],
+    [activityGroup],
   );
 
-  if (!props.activity || props.activity.length === 0) {
+  if (!activity || activity.length === 0) {
     return null;
   }
 
   const title = getActivityGroupName({
-    activityGroup: getActivityParentGroup(props.activityGroup),
-    start: props.activity[0].start,
-    end: props.activity[props.activity.length - 1].end,
+    activityGroup: getActivityParentGroup(activityGroup),
+    start: activity[0].start,
+    end: activity[activity.length - 1].end,
   });
 
   return (
     <Card
-      size={props.size ?? "half"}
-      href={`/entity/${props.entityId}/activity/${props.activityGroup}`}
+      size={size ?? "half"}
+      href={`/entity/${entityId}/activity/${activityGroup}`}
     >
       <CardContents>
         <div className={styles.cardContents}>
-          {props.size === "half" && (
-            <Caption1 title={title} ordinal="Secondary" />
-          )}
+          {size === "half" && <Caption1 title={title} ordinal="Secondary" />}
 
-          {props.size === "full" && (
+          {size === "full" && (
             <Caption1 title="Total Income/Expenses" ordinal="Secondary" />
           )}
 
@@ -105,14 +108,10 @@ export const ActivityCard = (props: {
                 <div key={act.groupIndex} className={styles.activity}>
                   <div>
                     <ActivityGraph
-                      size={props.size ?? "half"}
+                      size={size ?? "half"}
                       key={act.groupIndex}
-                      activityGroup={props.activityGroup}
-                      groupIndex={act.groupIndex}
                       incomePercentage={act.incomePercentage}
                       expensePercentage={act.expensePercentage}
-                      start={act.start}
-                      end={act.end}
                     />
                   </div>
                   <div>

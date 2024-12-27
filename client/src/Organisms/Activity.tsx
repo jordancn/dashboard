@@ -1,5 +1,3 @@
-import { Caption1 } from "@/Atoms/Caption1";
-import { Headline } from "@/Atoms/Headline";
 import { Spinner } from "@/Atoms/Spinner";
 import {
   CategoryType,
@@ -7,13 +5,13 @@ import {
   useEntityActivityQuery,
 } from "@/GraphQL/client.gen";
 import { ActivityCard } from "@/Molecules/ActivityCard";
+import { ActivityHeading } from "@/Molecules/ActivityHeading";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
 import { TransactionGroupCard } from "@/Molecules/TransactionGroupCard";
 import { ActivityGroup, useActivityGroup } from "@/Providers/AppStateProvider";
 import { DateIso } from "@/Utils/date-iso";
-import { formatCurrency } from "@/Utils/formatters";
 import {
   getActivitySubGroup,
   getActivitySubGroupBy,
@@ -59,21 +57,16 @@ const useQuery = (args: {
   return isEntity ? entityResults : overallResults;
 };
 
-export const Activity = (props: {
-  index: number;
-  type: ActivityGroup;
-  start: DateIso;
-  end: DateIso;
-}) => {
+export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
   const activityGroup = useActivityGroup();
 
-  const params = useRouteParams(assertIsEntityParams);
+  const { entityId } = useRouteParams(assertIsEntityParams);
 
   const results = useQuery({
-    entityId: params.entityId,
-    start: props.start,
-    end: props.end,
-    activityGroup: props.type,
+    entityId,
+    start,
+    end,
+    activityGroup: activityGroup,
   });
 
   const categories = React.useMemo(() => {
@@ -111,9 +104,9 @@ export const Activity = (props: {
       return [];
     };
 
-    const act = getActivity();
+    const activities = getActivity();
 
-    return act.map((activity) => ({
+    return activities.map((activity) => ({
       groupIndex: activity.groupIndex,
       start: activity.start,
       end: activity.end,
@@ -200,11 +193,11 @@ export const Activity = (props: {
             transactionCount={category.count}
             changePercent={category.change.changePercent}
             categoryType={CategoryType.Expense}
-            href={`/entity/${params.entityId || "overview"}/activity/${props.type}/${category.categoryId}/${props.start}/${props.end}`}
+            href={`/entity/${entityId || "overview"}/activity/${activityGroup}/${category.categoryId}/${start}/${end}`}
           />
         );
       }),
-    [categories],
+    [categories, entityId, activityGroup, start, end],
   );
 
   const expenseCards = React.useMemo(
@@ -228,89 +221,49 @@ export const Activity = (props: {
             transactionCount={category.count}
             changePercent={category.change.changePercent}
             categoryType={CategoryType.Expense}
-            href={`/entity/${params.entityId || "overview"}/activity/${props.type}/${category.categoryId}/${props.start}/${props.end}`}
+            href={`/entity/${entityId || "overview"}/activity/${activityGroup}/${category.categoryId}/${start}/${end}`}
           />
         );
       }),
-    [categories],
+    [categories, entityId, activityGroup, start, end],
   );
 
   if (results.loading) {
     return (
-      <>
-        <div>
-          <Card size="full">
-            <CardTitle />
-            <CardContents variant="transparent">
-              <div className={styles.loading}>
-                <Spinner />
-              </div>
-            </CardContents>
-          </Card>
-        </div>
-      </>
+      <div>
+        <Card>
+          <CardTitle />
+          <CardContents variant="transparent">
+            <div className={styles.loading}>
+              <Spinner />
+            </div>
+          </CardContents>
+        </Card>
+      </div>
     );
   }
 
   return (
     <>
       <ActivityCard
-        entityId={params.entityId}
+        entityId={entityId}
         activity={activity}
         activityGroup={getActivitySubGroup(activityGroup)}
         size="full"
       />
 
-      <Card size="full">
-        <CardTitle />
-        <CardContents variant="transparent">
-          <div className={styles.sectionContainer}>
-            <div className={styles.section}>
-              <div className={styles.sectionTitle}>
-                <Headline weight="Bold" title="Income" />
-              </div>
-            </div>
-            <div className={styles.sectionValueAndCount}>
-              <div>{formatCurrency.format(totalIncome || 0)}</div>
-              <div>
-                <Caption1
-                  title={`${totalIncomeCount || 0} transactions`}
-                  ordinal="Secondary"
-                />
-              </div>
-            </div>
-          </div>
-        </CardContents>
-      </Card>
-
+      <ActivityHeading
+        title="Income"
+        value={totalIncome}
+        count={totalIncomeCount}
+      />
       {incomeCards}
 
-      {/* subtitle='Show Merchants' /> */}
-
-      <Card size="full">
-        <CardTitle />
-        <CardContents variant="transparent">
-          <div className={styles.sectionContainer}>
-            <div className={styles.section}>
-              <div className={styles.sectionTitle}>
-                <Headline weight="Bold" title="Expenses" />
-              </div>
-            </div>
-            <div className={styles.sectionValueAndCount}>
-              <div>
-                {formatCurrency.format(totalExpense || 0, { withSign: false })}
-              </div>
-              <div>
-                <Caption1
-                  title={`${totalExpenseCount || 0} transactions`}
-                  ordinal="Secondary"
-                />
-              </div>
-            </div>
-          </div>
-        </CardContents>
-      </Card>
-
+      <ActivityHeading
+        title="Expenses"
+        value={totalExpense}
+        count={totalExpenseCount}
+      />
       {expenseCards}
     </>
   );

@@ -11,7 +11,17 @@ import { formatCurrency, formatDate } from "@/Utils/formatters";
 import Image from "next/image";
 import styles from "./TransactionCard.module.css";
 
-export const TransactionCard = (props: {
+export const TransactionCard = ({
+  id,
+  date,
+  vendorName,
+  categoryName,
+  amount,
+  relativePosition,
+  pending,
+  image,
+  entityId,
+}: {
   id: string;
   date: DateIso;
   vendorName: string | undefined;
@@ -19,61 +29,52 @@ export const TransactionCard = (props: {
   amount: number;
   relativePosition: "start" | "middle" | "end" | "single";
   pending: boolean;
-  onClick?: () => void;
   image?: Base64Url;
   entityId?: string;
 }) => {
   return (
     <Card
-      size="full"
-      href={`/entity/${props.entityId}/insights/transaction/${props.id}`}
+      href={`/entity/${entityId}/insights/transaction/${id}`}
       withSeparators
     >
       <CardTitle />
       <CardContents
-        position={props.relativePosition}
+        position={relativePosition}
         variant={
-          props.pending || props.categoryName === "Transfer"
-            ? "translucent"
-            : undefined
+          pending || categoryName === "Transfer" ? "translucent" : undefined
         }
       >
         <div className={styles.transactionCard}>
           <div className={styles.imageContainer}>
-            {props.image && (
+            {image && (
               <Image
-                alt={props.vendorName || ""}
+                alt={vendorName || ""}
                 className={styles.image}
-                src={`data:image/png;base64,${props.image}`}
+                src={`data:image/png;base64,${image}`}
                 width={45}
                 height={45}
               />
             )}
-            {!props.image && <MonogramIcon name={props.vendorName || ""} />}
+            {!image && <MonogramIcon name={vendorName || ""} />}
           </div>
           <div className={styles.vendorAndDate}>
             <div className={styles.vendor}>
-              <Subheadline weight="Bold" title={props.vendorName || ""} />
+              <Subheadline weight="Bold" title={vendorName || ""} />
             </div>
             <div>
               <div className={styles.date}>
-                {props.pending && (
-                  <Caption1 title="Pending" ordinal="Secondary" />
-                )}
-                {!props.pending && (
-                  <Caption1
-                    title={formatDate(props.date)}
-                    ordinal="Secondary"
-                  />
+                {pending && <Caption1 title="Pending" ordinal="Secondary" />}
+                {!pending && (
+                  <Caption1 title={formatDate(date)} ordinal="Secondary" />
                 )}
               </div>
             </div>
           </div>
           <div className={styles.amountAndCategory}>
-            <div>{formatCurrency.format(props.amount)}</div>
+            <div>{formatCurrency.format(amount)}</div>
             <div>
               <Caption1
-                title={props.categoryName || ""}
+                title={categoryName || ""}
                 ordinal="Secondary"
                 alignment="Right"
               />

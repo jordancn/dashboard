@@ -29,6 +29,7 @@ export const mutationResolvers: MutationResolvers<Context, Parent> = {
       data: {
         id: id,
         name: args.name,
+        categoryType: args.categoryType,
       },
     });
 

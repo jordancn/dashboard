@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
+.title {
+  overflow-y: hidden;
+}
+
+.valueAndCount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}

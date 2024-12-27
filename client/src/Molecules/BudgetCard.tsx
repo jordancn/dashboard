@@ -8,7 +8,17 @@ import { TransactionAmount } from "@/Molecules/TransactionAmount";
 import { formatCurrency, formatNumber } from "@/Utils/formatters";
 import styles from "./BudgetCard.module.css";
 
-export const BudgetCard = (props: {
+export const BudgetCard = ({
+  size,
+  entityId,
+  categoryId,
+  categoryName,
+  budget,
+  amount,
+  percent,
+  dateRange,
+}: {
+  size?: "half" | "full";
   entityId?: string;
   categoryId: string;
   categoryName: string;
@@ -20,16 +30,16 @@ export const BudgetCard = (props: {
   return (
     <Card
       size="half"
-      href={`/entity/${props.entityId}/insights/category/${props.categoryId}/${props.dateRange.start}/${props.dateRange.end}`}
+      href={`/entity/${entityId}/insights/category/${categoryId}/${dateRange.start}/${dateRange.end}`}
     >
       <CardTitle />
       <CardContents>
-        <Caption1 title={props.categoryName} />
+        <Caption1 title={categoryName} />
         <div className={styles.changeContainer}>
-          <TargetIndicator percent={props.percent} />
+          <TargetIndicator percent={percent} />
 
           <TransactionAmount
-            value={props.percent}
+            value={percent}
             formatter={formatNumber.formatPercentInt}
             size="small"
           />
@@ -38,13 +48,13 @@ export const BudgetCard = (props: {
         <div className={styles.balanceContainer}>
           <div>
             <Caption1
-              title={formatCurrency.format(props.amount)}
+              title={formatCurrency.format(amount)}
               ordinal="Secondary"
             />
           </div>
           <div>
             <Caption1
-              title={formatCurrency.format(props.budget || 0)}
+              title={formatCurrency.format(budget || 0)}
               ordinal="Secondary"
             />
           </div>

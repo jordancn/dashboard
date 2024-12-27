@@ -2,7 +2,11 @@ import classNames from "classnames";
 import * as React from "react";
 import styles from "./ScrollMarker.module.css";
 
-export const ScrollMarker = (props: {
+export const ScrollMarker = ({
+  id,
+  fullHeight,
+  children,
+}: {
   id?: string;
   fullHeight?: boolean;
   children?: React.ReactNode;
@@ -10,10 +14,10 @@ export const ScrollMarker = (props: {
   return (
     <div
       className={classNames(styles.scrollMarker, {
-        [styles.fullHeight]: props.fullHeight,
+        [styles.fullHeight]: fullHeight,
       })}
     >
-      <span id={props.id}>{props.children}</span>
+      <span id={id}>{children}</span>
     </div>
   );
 };

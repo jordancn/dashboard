@@ -1,7 +1,11 @@
 import classNames from "classnames";
 import styles from "./Tag.module.css";
 
-export const Tag = (props: {
+export const Tag = ({
+  title,
+  variant,
+  onClick,
+}: {
   title: string;
   variant?: "Primary" | "Secondary";
   onClick?: () => void;
@@ -9,12 +13,12 @@ export const Tag = (props: {
   return (
     <div
       className={classNames(styles.tag, {
-        [styles.primary]: props.variant === "Primary",
-        [styles.secondary]: props.variant === "Secondary",
+        [styles.primary]: variant === "Primary",
+        [styles.secondary]: variant === "Secondary",
       })}
-      onClick={props.onClick}
+      onClick={onClick}
     >
-      {props.title}
+      {title}
     </div>
   );
 };

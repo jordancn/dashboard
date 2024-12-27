@@ -5,7 +5,13 @@ import classNames from "classnames";
 import Link from "next/link";
 import styles from "./SectionHeading.module.css";
 
-export const SectionHeading = (props: {
+export const SectionHeading = ({
+  title,
+  subtitle,
+  href,
+  onClick,
+  size,
+}: {
   title: string;
   subtitle?: string;
   href?: string;
@@ -14,27 +20,27 @@ export const SectionHeading = (props: {
 }) => {
   return (
     <>
-      {props.href && (
+      {href && (
         <Link
-          href={props.href}
+          href={href}
           className={classNames(styles.sectionHeading, {
-            ...getWidthClassName(props.size),
+            ...getWidthClassName(size),
           })}
         >
-          <Headline weight="Bold" title={props.title} />
-          {props.subtitle && <Label title={props.subtitle} />}
+          <Headline weight="Bold" title={title} />
+          {subtitle && <Label title={subtitle} />}
         </Link>
       )}
 
-      {!props.href && (
+      {!href && (
         <div
           className={classNames(styles.sectionHeading, {
-            ...getWidthClassName(props.size),
+            ...getWidthClassName(size),
           })}
-          onClick={props.onClick}
+          onClick={onClick}
         >
-          <Headline weight="Bold" title={props.title} />
-          {props.subtitle && <Label title={props.subtitle} />}
+          <Headline weight="Bold" title={title} />
+          {subtitle && <Label title={subtitle} />}
         </div>
       )}
     </>

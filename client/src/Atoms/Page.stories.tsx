@@ -1,10 +1,10 @@
-import styles from "./Page.module.css";
 import type { Meta, StoryObj } from "@storybook/react";
+import styles from "./Page.module.css";
 
-export const Page = (props: { children?: React.ReactNode }) => {
+export const Page = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div id="page" className={styles.page}>
-      {props.children}
+      {children}
     </div>
   );
 };

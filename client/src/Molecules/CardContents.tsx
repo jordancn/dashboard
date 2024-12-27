@@ -2,7 +2,12 @@ import classNames from "classnames";
 import React from "react";
 import styles from "./CardContents.module.css";
 
-export const CardContents = (props: {
+export const CardContents = ({
+  state,
+  position,
+  variant,
+  children,
+}: {
   state?: "normal" | "error";
   position?: "start" | "middle" | "end" | "single";
   variant?: "transparent" | "translucent";
@@ -12,18 +17,17 @@ export const CardContents = (props: {
     <div className={styles.cardContentsContainer}>
       <div
         className={classNames(styles.cardContents, {
-          [styles.start]: props.position === "start",
-          [styles.middle]: props.position === "middle",
-          [styles.end]: props.position === "end",
-          [styles.single]:
-            props.position === "single" || props.position === undefined,
-          [styles.opaque]: props.variant !== "transparent",
-          [styles.transparent]: props.variant === "transparent",
-          [styles.translucent]: props.variant === "translucent",
-          [styles.error]: props.state === "error",
+          [styles.start]: position === "start",
+          [styles.middle]: position === "middle",
+          [styles.end]: position === "end",
+          [styles.single]: position === "single" || position === undefined,
+          [styles.opaque]: variant !== "transparent",
+          [styles.transparent]: variant === "transparent",
+          [styles.translucent]: variant === "translucent",
+          [styles.error]: state === "error",
         })}
       >
-        {props.children}
+        {children}
       </div>
     </div>
   );

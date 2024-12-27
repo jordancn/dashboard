@@ -106,15 +106,13 @@ export const useSetGroupIndex = () => {
   return setGroupIndex;
 };
 
-export const AppStateProvider = (props: { children?: ReactNode }) => {
+export const AppStateProvider = ({ children }: { children?: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, {
     activityGroup: "Month",
     groupIndex: 0,
   });
 
   return (
-    <Context.Provider value={[state, dispatch]}>
-      {props.children}
-    </Context.Provider>
+    <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
   );
 };

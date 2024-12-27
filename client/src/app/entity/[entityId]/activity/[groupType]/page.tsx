@@ -1,6 +1,6 @@
 "use client";
 
-import { NavigationChevron } from "@/Atoms/NavigationChevron";
+import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { Selector } from "@/Molecules/Selector";
 import { ActivitySlideRenderer } from "@/Organisms/SlideableActivity";
@@ -22,7 +22,7 @@ import styles from "./page.module.css";
 const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
 
 const ActivityPage = () => {
-  const params = useRouteParams(assertIsActivityParams);
+  const { entityId } = useRouteParams(assertIsActivityParams);
   const activityGroup = useActivityGroup();
   const setActivityGroup = useSetActivityGroup();
   const groupIndex = useGroupIndex();
@@ -37,7 +37,7 @@ const ActivityPage = () => {
           setActivityGroup("Week");
           setGroupIndex(0);
 
-          router.push(`/entity/${params.entityId || "overview"}/activity/Week`);
+          router.push(`/entity/${entityId || "overview"}/activity/Week`);
         },
       },
       {
@@ -46,9 +46,7 @@ const ActivityPage = () => {
           setActivityGroup("Month");
           setGroupIndex(0);
 
-          router.push(
-            `/entity/${params.entityId || "overview"}/activity/Month`,
-          );
+          router.push(`/entity/${entityId || "overview"}/activity/Month`);
         },
       },
       {
@@ -57,15 +55,15 @@ const ActivityPage = () => {
           setActivityGroup("Year");
           setGroupIndex(0);
 
-          router.push(`/entity/${params.entityId || "overview"}/activity/Year`);
+          router.push(`/entity/${entityId || "overview"}/activity/Year`);
         },
       },
     ];
-  }, [setActivityGroup, setGroupIndex, router, params.entityId]);
+  }, [setActivityGroup, setGroupIndex, router, entityId]);
 
   const onBackClicked = React.useCallback(() => {
-    router.back();
-  }, [router]);
+    router.push(`/entity/${entityId || "overview"}`);
+  }, [router, entityId]);
 
   return (
     <>
@@ -75,19 +73,13 @@ const ActivityPage = () => {
           onClick={onBackClicked}
         >
           <div>
-            <NavigationChevron />
+            <NavigationChevronLeft />
           </div>
-          <div className={styles.navigationBarTitle}>
-            <>Back</>
-          </div>
+          <div className={styles.navigationBarTitle}>Back</div>
         </div>
 
         <div className={styles.selectorContainer}>
-          <Selector
-            size="half"
-            options={options}
-            selectedOptionLabel={activityGroup}
-          />
+          <Selector options={options} selectedOptionLabel={activityGroup} />
         </div>
       </NavigationBar>
       <ContentScrollable

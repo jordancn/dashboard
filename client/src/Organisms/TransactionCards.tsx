@@ -6,7 +6,10 @@ import classNames from "classnames";
 import { useMemo } from "react";
 import styles from "./TransactionCards.module.css";
 
-export const TransactionCards = (props: {
+export const TransactionCards = ({
+  transactions: transactionsProp,
+  entityId,
+}: {
   transactions: Array<{
     id: string;
     date: DateIso;
@@ -18,14 +21,12 @@ export const TransactionCards = (props: {
   }>;
   entityId?: string;
 }) => {
-  const { entityId, transactions } = props;
-
   const transactionCards = useMemo(
     () =>
-      transactions.map((transaction, index) => {
+      transactionsProp.map((transaction, index) => {
         return (
           <TransactionCard
-            relativePosition={getRelativePosition(index, transactions)}
+            relativePosition={getRelativePosition(index, transactionsProp)}
             key={transaction.id}
             categoryName={transaction.categoryName}
             date={transaction.date}
@@ -38,7 +39,7 @@ export const TransactionCards = (props: {
           />
         );
       }),
-    [entityId, transactions],
+    [entityId, transactionsProp],
   );
 
   return (

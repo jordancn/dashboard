@@ -6,7 +6,10 @@ import _ from "lodash";
 import { useMemo } from "react";
 import styles from "./TransactionGroupCards.module.css";
 
-export const TransactionGroupCards = (props: {
+export const TransactionGroupCards = ({
+  transactionGroups: transactionGroupsProp,
+  entityId,
+}: {
   transactionGroups: Array<{
     id: string;
     count: number;
@@ -17,7 +20,7 @@ export const TransactionGroupCards = (props: {
   entityId?: string;
 }) => {
   const transactionGroups = useMemo(() => {
-    return _.orderBy(props.transactionGroups, (t) => t.start, "desc").map(
+    return _.orderBy(transactionGroupsProp, (t) => t.start, "desc").map(
       (transactionGroup, index) => {
         return (
           <TransactionGroupCard
@@ -26,16 +29,13 @@ export const TransactionGroupCards = (props: {
             title={`${formatLongMonth(transactionGroup.start)}`}
             total={transactionGroup.total}
             transactionCount={transactionGroup.count}
-            relativePosition={getRelativePosition(
-              index,
-              props.transactionGroups,
-            )}
-            href={`/entity/${props.entityId || "overview"}/insights/transactionGroup/${transactionGroup.start}/${transactionGroup.end}`}
+            relativePosition={getRelativePosition(index, transactionGroupsProp)}
+            href={`/entity/${entityId || "overview"}/insights/transactionGroup/${transactionGroup.start}/${transactionGroup.end}`}
           />
         );
       },
     );
-  }, [props.transactionGroups, props.entityId]);
+  }, [transactionGroupsProp, entityId]);
 
   return (
     <div

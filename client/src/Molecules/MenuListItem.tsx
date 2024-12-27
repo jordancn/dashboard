@@ -1,13 +1,17 @@
 import Link from "next/link";
 import styles from "./MenuListItem.module.css";
 
-export const MenuListItem = (props: {
+export const MenuListItem = ({
+  title,
+  icon,
+  path,
+}: {
   title: string;
   icon?: string | ((props: { className: string }) => React.ReactNode);
   path: string;
 }) => {
   return (
-    <Link href={props.path} className={styles.menuListItem}>
+    <Link href={path} className={styles.menuListItem}>
       {/* <div
         css={css`
           margin-right: 0px;
@@ -28,7 +32,7 @@ export const MenuListItem = (props: {
         )}
         {Icon && typeof Icon !== "string" && <Icon className="sidebar-icon" />}
       </div> */}
-      <div className={styles.title}>{props.title}</div>
+      <div className={styles.title}>{title}</div>
     </Link>
   );
 };

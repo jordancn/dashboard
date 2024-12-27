@@ -3,7 +3,10 @@ import { useSidebarData } from "@/Providers/SidebarDataProvider";
 import classNames from "classnames";
 import styles from "./NavigationBar.module.css";
 
-export const NavigationBar = (props: {
+export const NavigationBar = ({
+  mode,
+  children,
+}: {
   mode?: "space-between" | "center-left";
   children?: React.ReactNode;
 }) => {
@@ -16,8 +19,8 @@ export const NavigationBar = (props: {
   return (
     <div
       className={classNames(styles.navigationBar, {
-        [styles.spaceBetween]: props.mode === "space-between" || !props.mode,
-        [styles.centerLeft]: props.mode === "center-left",
+        [styles.spaceBetween]: mode === "space-between" || !mode,
+        [styles.centerLeft]: mode === "center-left",
       })}
     >
       {sidebarData.value.button === "show" && (
@@ -36,7 +39,7 @@ export const NavigationBar = (props: {
           />
         </div>
       )}
-      {props.children}
+      {children}
     </div>
   );
 };

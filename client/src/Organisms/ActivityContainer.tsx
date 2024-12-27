@@ -1,24 +1,50 @@
+import { NavigationCircleLeft } from "@/Atoms/NavigationCircleLeft";
+import { NavigationCircleRight } from "@/Atoms/NavigationCircleRight";
 import { Title1 } from "@/Atoms/Title1";
 import { Activity } from "@/Organisms/Activity";
-import { ActivityGroup, useActivityGroup } from "@/Providers/AppStateProvider";
+import {
+  useActivityGroup,
+  useSetGroupIndex,
+} from "@/Providers/AppStateProvider";
 import { DateIso } from "@/Utils/date-iso";
 import { getActivityGroupName, getWidthClassName } from "@/Utils/helpers";
 import classNames from "classnames";
+import React from "react";
 import styles from "./ActivityContainer.module.css";
 
-export const ActivityContainer = (props: {
+export const ActivityContainer = ({
+  index,
+  start,
+  end,
+}: {
   index: number;
-  type: ActivityGroup;
   start: DateIso;
   end: DateIso;
 }) => {
   const activityGroup = useActivityGroup();
+  const setGroupIndex = useSetGroupIndex();
 
   const title = getActivityGroupName({
-    activityGroup: props.type,
-    start: props.start,
-    end: props.end,
+    activityGroup,
+    start,
+    end,
   });
+
+  const goBack = React.useCallback(() => {
+    setGroupIndex(index - 1);
+  }, [index, setGroupIndex]);
+
+  const goForward = React.useCallback(() => {
+    if (index === 0) {
+      return;
+    }
+
+    setGroupIndex(index + 1);
+  }, [index, setGroupIndex]);
+
+  const isForwardDisabled = React.useMemo(() => {
+    return index === 0;
+  }, [index]);
 
   return (
     <div
@@ -27,15 +53,16 @@ export const ActivityContainer = (props: {
       })}
     >
       <div className={styles.titleContainer}>
+        <div onClick={goBack}>
+          <NavigationCircleLeft />
+        </div>
         <Title1 weight="Bold" title={title} />
+        <div onClick={goForward}>
+          <NavigationCircleRight disabled={isForwardDisabled} />
+        </div>
       </div>
 
-      <Activity
-        end={props.end}
-        index={props.index}
-        start={props.start}
-        type={activityGroup}
-      />
+      <Activity start={start} end={end} />
     </div>
   );
 };

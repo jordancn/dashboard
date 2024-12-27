@@ -33,7 +33,10 @@ export const useSidebarData = (): ContextState => {
   return contextState;
 };
 
-const FloatingSidebar = (props: {
+const FloatingSidebar = ({
+  visible,
+  children,
+}: {
   visible: boolean;
   children?: React.ReactNode;
 }) => {
@@ -41,15 +44,18 @@ const FloatingSidebar = (props: {
     <div
       id="floating-sidebar"
       className={classNames(styles.floatingSidebar, {
-        visible: props.visible,
+        visible,
       })}
     >
-      {props.children}
+      {children}
     </div>
   );
 };
 
-const FixedSidebar = (props: {
+const FixedSidebar = ({
+  visible,
+  children,
+}: {
   visible: boolean;
   children?: React.ReactNode;
 }) => {
@@ -57,25 +63,27 @@ const FixedSidebar = (props: {
     <div
       id="fixed-sidebar"
       style={{
-        width: props.visible ? 0 : "var(--sidebar-width)",
+        width: visible ? 0 : "var(--sidebar-width)",
       }}
     >
-      {props.children}
+      {children}
     </div>
   );
 };
 
-const SidebarAction = (props: {
+const SidebarAction = ({
+  onClick,
+}: {
   onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
   return (
     <div className={styles.sidebarAction}>
-      <SidebarButton onClick={props.onClick} />
+      <SidebarButton onClick={onClick} />
     </div>
   );
 };
 
-export const Sidebar = (props: { children?: React.ReactNode }) => {
+export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
   const sidebarData = useSidebarData();
 
   if (sidebarData.status !== "LOADED") {
@@ -86,17 +94,21 @@ export const Sidebar = (props: { children?: React.ReactNode }) => {
     <div>
       <FloatingSidebar visible={sidebarData.value.visible}>
         <SidebarAction onClick={sidebarData.value.hide} />
-        {props.children}
+        {children}
       </FloatingSidebar>
       <FixedSidebar visible={sidebarData.value.visible}>
         <SidebarAction onClick={sidebarData.value.hide} />
-        {props.children}
+        {children}
       </FixedSidebar>
     </div>
   );
 };
 
-export const SidebarDataProvider = (props: { children?: React.ReactNode }) => {
+export const SidebarDataProvider = ({
+  children,
+}: {
+  children?: React.ReactNode;
+}) => {
   const device = useDeviceData();
 
   const [state, setState] = React.useState<ContextState>({
@@ -131,9 +143,5 @@ export const SidebarDataProvider = (props: { children?: React.ReactNode }) => {
     });
   }, [isMobile, orientation, visible, show, hide]);
 
-  return (
-    <>
-      <Context.Provider value={state}>{props.children}</Context.Provider>
-    </>
-  );
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 };

@@ -9,7 +9,16 @@ import { ChangeIndicator } from "@/Molecules/ChangeIndicator";
 import { formatCurrency, formatNumber } from "@/Utils/formatters";
 import styles from "./TransactionGroupCard.module.css";
 
-export const TransactionGroupCard = (props: {
+export const TransactionGroupCard = ({
+  id,
+  title,
+  transactionCount,
+  total,
+  relativePosition,
+  href,
+  changePercent,
+  categoryType,
+}: {
   id: string;
   title: string | undefined;
   transactionCount: number;
@@ -20,44 +29,40 @@ export const TransactionGroupCard = (props: {
   categoryType?: CategoryType;
 }) => {
   return (
-    <Card size="full" href={props.href}>
+    <Card href={href}>
       <CardTitle />
-      <CardContents position={props.relativePosition}>
+      <CardContents position={relativePosition}>
         <div className={styles.transactionGroupCard}>
           <div className={styles.titleContainer}>
             <div>
-              <Subheadline weight="Bold" title={props.title || ""} />
+              <Subheadline weight="Bold" title={title || ""} />
             </div>
             <div>
               <Caption1
-                title={`${props.transactionCount} transactions`}
+                title={`${transactionCount} transactions`}
                 ordinal="Secondary"
               />
             </div>
           </div>
           <div className={styles.amountContainer}>
             <div className={styles.amount}>
-              {props.categoryType && (
-                <div>
-                  {formatCurrency.format(props.total, { withSign: false })}
-                </div>
+              {categoryType && (
+                <div>{formatCurrency.format(total, { withSign: false })}</div>
               )}
-              {!props.categoryType && (
-                <div>{formatCurrency.format(props.total)}</div>
-              )}
+              {!categoryType && <div>{formatCurrency.format(total)}</div>}
             </div>
             <div className={styles.change}>
-              {props.categoryType && (
+              {categoryType && (
                 <>
                   <ChangeIndicator
-                    change={props.changePercent}
-                    categoryType={props.categoryType}
+                    change={changePercent}
+                    categoryType={categoryType}
                     desaturated
                     size="small"
                   />
                   <div className={styles.changeValue}>
                     <Caption1
-                      title={`${formatNumber.formatPercentInt(props.changePercent ?? 0, { withSign: false })}`}
+                      title={`${formatNumber.formatPercentInt(changePercent ?? 0, { withSign: false })}`}
                       ordinal="Secondary"
                     />
                   </div>

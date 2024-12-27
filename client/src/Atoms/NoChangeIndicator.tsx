@@ -1,7 +1,10 @@
 import classNames from "classnames";
 import styles from "./NoChangeIndicator.module.css";
 
-export const NoChangeIndicator = (props: {
+export const NoChangeIndicator = ({
+  size,
+  desaturated,
+}: {
   size?: "small" | "medium";
   desaturated?: boolean;
 }) => {
@@ -9,8 +12,8 @@ export const NoChangeIndicator = (props: {
     <>
       <svg
         className={classNames(styles.indicator, {
-          [styles.small]: props.size === "small",
-          [styles.medium]: props.size === "medium" || !props.size,
+          [styles.small]: size === "small",
+          [styles.medium]: size === "medium" || !size,
         })}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 19.92 19.92"
@@ -20,8 +23,8 @@ export const NoChangeIndicator = (props: {
           cy="9.96"
           r="9.96"
           className={classNames({
-            [styles.saturated]: props.desaturated !== true,
-            [styles.desaturated]: props.desaturated === true,
+            [styles.saturated]: desaturated !== true,
+            [styles.desaturated]: desaturated === true,
           })}
         />
       </svg>

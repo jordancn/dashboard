@@ -1,3 +1,3 @@
-export const Toolbar = (props: { children?: React.ReactNode }) => {
-  return <div id="toolbar">{props.children}</div>;
+export const Toolbar = ({ children }: { children?: React.ReactNode }) => {
+  return <div id="toolbar">{children}</div>;
 };

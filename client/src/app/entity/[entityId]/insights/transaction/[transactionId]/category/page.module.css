@@ -1,0 +1,54 @@
+.navigationBar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 44px;
+}
+
+.backButton {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.transactionLabel {
+  font-family: var(--app-proportional-font-family);
+  font-size: 17px;
+  color: #007aff;
+  margin-top: -4px;
+  margin-left: 10px;
+}
+
+.titleContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.incomeCard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.expenseCard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}

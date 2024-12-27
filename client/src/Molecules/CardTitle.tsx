@@ -1,10 +1,9 @@
-import React from "react";
 import styles from "./CardTitle.module.css";
 
-export const CardTitle = (props: { title?: string }) => {
-  if (!props.title) {
+export const CardTitle = ({ title }: { title?: string }) => {
+  if (!title) {
     return null;
   }
 
-  return <div className={styles.cardTitle}>{props.title}</div>;
+  return <div className={styles.cardTitle}>{title}</div>;
 };

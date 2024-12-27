@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { NavigationChevron } from "./NavigationChevron";
+import { NavigationChevronLeft } from "./NavigationChevronLeft";
 
 const meta = {
-  title: "Atoms/NavigationChevron",
-  component: NavigationChevron,
+  title: "Atoms/NavigationChevronLeft",
+  component: NavigationChevronLeft,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof NavigationChevron>;
+} satisfies Meta<typeof NavigationChevronLeft>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

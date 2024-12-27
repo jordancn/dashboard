@@ -5,7 +5,13 @@ import { TransactionAmount } from "@/Molecules/TransactionAmount";
 import { DateIso } from "@/Utils/date-iso";
 import { formatCurrency, formatDate } from "@/Utils/formatters";
 
-export const BalanceCard = (props: {
+export const BalanceCard = ({
+  size,
+  label,
+  balance,
+  date,
+  href,
+}: {
   size?: "half" | "full" | "quarter";
   label?: string;
   balance: number;
@@ -13,17 +19,15 @@ export const BalanceCard = (props: {
   href?: string;
 }) => {
   return (
-    <Card size={props.size || "half"} href={props.href}>
+    <Card size={size || "half"} href={href}>
       <CardContents>
-        <Caption1 title={props.label || "Balance"} />
+        <Caption1 title={label || "Balance"} />
         <TransactionAmount
           size="small"
-          value={props.balance}
+          value={balance}
           formatter={formatCurrency.formatK}
         />
-        {props.date && (
-          <Caption1 title={formatDate(props.date)} ordinal="Secondary" />
-        )}
+        {date && <Caption1 title={formatDate(date)} ordinal="Secondary" />}
       </CardContents>
     </Card>
   );

@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 44px;
+}
+
+.backButtonContainer {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.titleContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.transactionLabel {
+  font-size: 17px;
+  color: #007aff;
+  font: var(--app-proportional-font-family);
+  margin-top: -4px;
+  margin-left: 10px;
+}
+
+.currentVendor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.vendorList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

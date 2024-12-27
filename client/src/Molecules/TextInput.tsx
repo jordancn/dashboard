@@ -1,35 +1,46 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useCallback, useState } from "react";
 import styles from "./TextInput.module.css";
 
-export const TextInput = (props: {
+export const TextInput = ({
+  placeholder,
+  value: initialValue,
+  onChange: propOnChange,
+  multiline,
+}: {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
   multiline?: boolean;
 }) => {
-  const [value, setValue] = useState(props.value);
+  const [value, setValue] = useState(initialValue);
 
-  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  }, []);
+  const onChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value);
+    },
+    [propOnChange],
+  );
 
-  // const onKeyDown = useCallback(
-  //   (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //     if (event.key === "Enter") {
-  //       props.onChange(value);
-  //     }
-  //   },
-  //   [props.onChange, value],
-  // );
+  const onBlur = useCallback(() => {
+    propOnChange(value);
+  }, [value, propOnChange]);
 
-  if (props.multiline) {
+  const onKeyUp = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        propOnChange(value);
+      }
+
+      if (event.key === "Escape") {
+        setValue(initialValue);
+      }
+    },
+    [value, propOnChange, initialValue],
+  );
+
+  if (multiline) {
     return (
-      <textarea
-        className={styles.textarea}
-        placeholder={props.placeholder}
-        // onChange={onChange}
-        // onKeyDown={onKeyDown}
-      >
+      <textarea className={styles.textarea} placeholder={placeholder}>
         {value}
       </textarea>
     );
@@ -38,10 +49,11 @@ export const TextInput = (props: {
   return (
     <input
       className={styles.input}
-      placeholder={props.placeholder}
+      placeholder={placeholder}
       value={value}
       onChange={onChange}
-      // onKeyDown={onKeyDown}
+      onBlur={onBlur}
+      onKeyUp={onKeyUp}
     />
   );
 };

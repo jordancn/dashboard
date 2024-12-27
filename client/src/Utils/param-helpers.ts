@@ -42,6 +42,28 @@ export function assertIsTransactionGroupParams(
   assert(typeof params.end === "string", "end is not a string");
 }
 
+export function assertIsTransactionCategoryGroupParams(
+  params: unknown,
+): asserts params is {
+  entityId: string;
+  categoryId: string;
+  start: DateIso;
+  end: DateIso;
+} {
+  assert(params, "params is required");
+  assert(typeof params === "object", "params is not an object");
+  assert("entityId" in params, "entityId is required");
+  assert(typeof params.entityId === "string", "entityId is not a string");
+  assert("categoryId" in params, "categoryId is required");
+  assert(typeof params.categoryId === "string", "categoryId is not a string");
+  assert("start" in params, "start is required");
+  assert(typeof params.start === "string", "start is not a string");
+  assertIsDateIso(params.start);
+  assert("end" in params, "end is required");
+  assert(typeof params.end === "string", "end is not a string");
+  assertIsDateIso(params.end);
+}
+
 export function assertIsActivityParams(params: unknown): asserts params is {
   entityId: string;
   groupType: string;

@@ -241,6 +241,7 @@ export type Mutation = {
 
 
 export type MutationAddCategoryArgs = {
+  categoryType: CategoryType;
   name: Scalars['String'];
 };
 
@@ -681,7 +682,7 @@ export type MonthlyBalanceResolvers<ContextType = any, ParentType = ResolversPar
 }>;
 
 export type MutationResolvers<ContextType = any, ParentType = ResolversParentTypes['Mutation']> = ResolversObject<{
-  addCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationAddCategoryArgs, 'name'>>;
+  addCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationAddCategoryArgs, 'categoryType' | 'name'>>;
   addVendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<MutationAddVendorArgs, 'name'>>;
   setCategory?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationSetCategoryArgs, 'transactionId'>>;
   setVendor?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<MutationSetVendorArgs, 'transactionId'>>;

@@ -1,6 +1,13 @@
 import { Alignment, Ordinal, Style, Text, Variant, Weight } from "./Text";
 
-export const Title2 = (props: {
+export const Title2 = ({
+  title,
+  ordinal,
+  variant,
+  weight,
+  style,
+  alignment,
+}: {
   title: string;
   ordinal?: Ordinal;
   variant?: Variant;
@@ -10,13 +17,13 @@ export const Title2 = (props: {
 }) => {
   return (
     <Text
-      ordinal={props.ordinal}
-      variant={props.variant}
-      weight={props.weight}
-      style={props.style}
-      alignment={props.alignment}
+      ordinal={ordinal}
+      variant={variant}
+      weight={weight}
+      style={style}
+      alignment={alignment}
       size="Title2"
-      value={props.title}
+      value={title}
     />
   );
 };

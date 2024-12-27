@@ -3,22 +3,20 @@ import {
   getActivityGraphX,
   getActivityGraphY,
 } from "@/Molecules/ActivityGraph.helpers";
-import { ActivityGroup } from "@/Providers/AppStateProvider";
-import { DateIso } from "@/Utils/date-iso";
 import { useMemo } from "react";
 import styles from "./ActivityGraph.module.css";
 
-export const ActivityGraph = (props: {
-  activityGroup: ActivityGroup;
-  groupIndex: number;
+export const ActivityGraph = ({
+  incomePercentage,
+  expensePercentage,
+  size,
+}: {
   incomePercentage: number;
   expensePercentage: number;
-  start: DateIso;
-  end: DateIso;
   size: "half" | "full";
 }) => {
   const barDimensions = useMemo(() => {
-    if (props.size === "half") {
+    if (size === "half") {
       return {
         width: 5,
         height: 35,
@@ -29,7 +27,7 @@ export const ActivityGraph = (props: {
       width: 10,
       height: 100,
     };
-  }, [props.size]);
+  }, [size]);
 
   return (
     <svg
@@ -48,16 +46,16 @@ export const ActivityGraph = (props: {
         />
         <rect
           width={barDimensions.width}
-          height={`${getActivityGraphHeight(barDimensions.height, props.incomePercentage)}`}
+          height={`${getActivityGraphHeight(barDimensions.height, incomePercentage)}`}
           rx="2"
-          transform={`translate(${getActivityGraphX(barDimensions.width, "income")} ${getActivityGraphY(barDimensions.height, props.incomePercentage)} )`}
+          transform={`translate(${getActivityGraphX(barDimensions.width, "income")} ${getActivityGraphY(barDimensions.height, incomePercentage)} )`}
           className={styles.income}
         />
         <rect
           width={barDimensions.width}
-          height={`${getActivityGraphHeight(barDimensions.height, props.expensePercentage)}`}
+          height={`${getActivityGraphHeight(barDimensions.height, expensePercentage)}`}
           rx="2"
-          transform={`translate(${getActivityGraphX(barDimensions.width, "expense")} ${getActivityGraphY(barDimensions.height, props.expensePercentage)} )`}
+          transform={`translate(${getActivityGraphX(barDimensions.width, "expense")} ${getActivityGraphY(barDimensions.height, expensePercentage)} )`}
           className={styles.expense}
         />
       </g>

@@ -2,7 +2,12 @@ import classNames from "classnames";
 import { useCallback } from "react";
 import styles from "./SidebarListItem.module.css";
 
-export const SidebarListItem = (props: {
+export const SidebarListItem = ({
+  title,
+  icon,
+  path,
+  entityId,
+}: {
   title: string;
   icon?: string | ((props: { className: string }) => React.ReactNode);
   path: string;
@@ -10,11 +15,9 @@ export const SidebarListItem = (props: {
 }) => {
   // const navigate = useNavigate();
 
-  const Icon = props.icon;
+  const Icon = icon;
 
-  const match = props.entityId
-    ? window.location.href.includes(props.entityId)
-    : false;
+  const match = entityId ? window.location.href.includes(entityId) : false;
 
   const onClick = useCallback(() => {
     // navigate(props.path);
@@ -33,13 +36,13 @@ export const SidebarListItem = (props: {
         })}
       >
         {Icon && typeof Icon === "string" && (
-          <i className={`las la-${props.icon}`}></i>
+          <i className={`las la-${icon}`}></i>
         )}
         {Icon && typeof Icon !== "string" && (
           <Icon className={match ? "sidebar-icon-selected" : "sidebar-icon"} />
         )}
       </div>
-      <div className={styles.title}>{props.title}</div>
+      <div className={styles.title}>{title}</div>
     </div>
   );
 };

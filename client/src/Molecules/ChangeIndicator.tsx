@@ -5,49 +5,37 @@ import { IncomeUpIndicator } from "@/Atoms/IncomeUpIndicator";
 import { NoChangeIndicator } from "@/Atoms/NoChangeIndicator";
 import { CategoryType } from "@/GraphQL/client.gen";
 
-export const ChangeIndicator = (props: {
+export const ChangeIndicator = ({
+  change,
+  categoryType,
+  size,
+  desaturated,
+}: {
   change: number | null | undefined;
   categoryType: CategoryType;
   size?: "small" | "medium";
   desaturated?: boolean;
 }) => {
-  if (
-    props.change === null ||
-    props.change === undefined ||
-    props.change === 0
-  ) {
-    return (
-      <NoChangeIndicator size={props.size} desaturated={props.desaturated} />
-    );
+  if (change === null || change === undefined || change === 0) {
+    return <NoChangeIndicator size={size} desaturated={desaturated} />;
   }
 
-  if (props.categoryType === CategoryType.Expense) {
-    if (props.change > 0) {
-      return (
-        <ExpenseUpIndicator size={props.size} desaturated={props.desaturated} />
-      );
+  if (categoryType === CategoryType.Expense) {
+    if (change > 0) {
+      return <ExpenseUpIndicator size={size} desaturated={desaturated} />;
     }
 
-    if (props.change < 0) {
-      return (
-        <ExpenseDownIndicator
-          size={props.size}
-          desaturated={props.desaturated}
-        />
-      );
+    if (change < 0) {
+      return <ExpenseDownIndicator size={size} desaturated={desaturated} />;
     }
   }
 
-  if (props.change > 0) {
-    return (
-      <IncomeUpIndicator size={props.size} desaturated={props.desaturated} />
-    );
+  if (change > 0) {
+    return <IncomeUpIndicator size={size} desaturated={desaturated} />;
   }
 
-  if (props.change < 0) {
-    return (
-      <IncomeDownIndicator size={props.size} desaturated={props.desaturated} />
-    );
+  if (change < 0) {
+    return <IncomeDownIndicator size={size} desaturated={desaturated} />;
   }
 
   return null;

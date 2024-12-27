@@ -1,6 +1,13 @@
 import { Alignment, Ordinal, Style, Text, Variant, Weight } from "./Text";
 
-export const Callout = (props: {
+export const Callout = ({
+  title,
+  color,
+  variant,
+  weight,
+  style,
+  alignment,
+}: {
   title: string;
   color?: Ordinal;
   variant?: Variant;
@@ -10,13 +17,13 @@ export const Callout = (props: {
 }) => {
   return (
     <Text
-      ordinal={props.color}
-      variant={props.variant}
-      weight={props.weight}
-      style={props.style}
-      alignment={props.alignment}
+      ordinal={color}
+      variant={variant}
+      weight={weight}
+      style={style}
+      alignment={alignment}
       size="Callout"
-      value={props.title}
+      value={title}
     />
   );
 };
