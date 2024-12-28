@@ -9,6 +9,7 @@ import { useTransactionQuery } from "@/GraphQL/client.gen";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { NavigationBar } from "@/Molecules/NavigationBar";
+import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { TransactionAmount } from "@/Molecules/TransactionAmount";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { formatCurrency, formatDate } from "@/Utils/formatters";
@@ -22,6 +23,7 @@ import styles from "./page.module.css";
 
 const Transaction = () => {
   const router = useRouter();
+
   const { transactionId, entityId } = useRouteParams(
     assertIsIsEntityAndTransactionParams,
   );
@@ -35,6 +37,8 @@ const Transaction = () => {
   const onBackClicked = React.useCallback(() => {
     router.back();
   }, [router]);
+
+  const previousScreenTitle = usePreviousScreenTitle();
 
   if (results.loading) {
     return (
@@ -64,7 +68,9 @@ const Transaction = () => {
             <div>
               <NavigationChevronLeft />
             </div>
-            <div className={styles.navigationBarTitle}>Back</div>
+            <div className={styles.navigationBarTitle}>
+              {previousScreenTitle}
+            </div>
           </div>
         </div>
       </NavigationBar>

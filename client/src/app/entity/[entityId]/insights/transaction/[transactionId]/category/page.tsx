@@ -9,6 +9,7 @@ import {
 } from "@/GraphQL/client.gen";
 import { CardTitle } from "@/Molecules/CardTitle";
 import { NavigationBar } from "@/Molecules/NavigationBar";
+import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { TransactionCategoryCard } from "@/Organisms/TransactionCategoryCard";
 import { TransactionNewCategoryCard } from "@/Organisms/TransactionNewCategoryCard";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
@@ -112,6 +113,8 @@ const TransactionCategory = () => {
     [categories],
   );
 
+  const previousScreenTitle = usePreviousScreenTitle();
+
   if (results.loading) {
     return (
       <>
@@ -137,13 +140,13 @@ const TransactionCategory = () => {
             <div>
               <NavigationChevronLeft />
             </div>
-            <div className={styles.transactionLabel}>Transaction</div>
+            <div className={styles.transactionLabel}>{previousScreenTitle}</div>
           </div>
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards">
         <div className={styles.titleContainer}>
-          <Title1 weight="Bold" title="Transaction Category" />
+          <Title1 weight="Bold" title="Category" />
         </div>
 
         <div className={styles.cards}>

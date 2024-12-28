@@ -5,6 +5,7 @@ import {
   useTransactionGroupQuery,
 } from "@/GraphQL/client.gen";
 import { NavigationBar } from "@/Molecules/NavigationBar";
+import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
@@ -89,6 +90,8 @@ export const TransactionGroup = () => {
     }));
   }, [results]);
 
+  const previousScreenTitle = usePreviousScreenTitle();
+
   if (results.loading) {
     return (
       <>
@@ -108,7 +111,7 @@ export const TransactionGroup = () => {
             <div>
               <NavigationChevronLeft />
             </div>
-            <div className={styles.title}>Insights</div>
+            <div className={styles.title}>{previousScreenTitle}</div>
           </div>
         </div>
       </NavigationBar>

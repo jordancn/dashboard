@@ -5,6 +5,7 @@ import { Spinner } from "@/Atoms/Spinner";
 import { Title1 } from "@/Atoms/Title1";
 import { useTransactionVendorQuery } from "@/GraphQL/client.gen";
 import { NavigationBar } from "@/Molecules/NavigationBar";
+import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { TransactionNewVendorCard } from "@/Organisms/TransactionNewVendorCard";
 import { TransactionVendorCard } from "@/Organisms/TransactionVendorCard";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
@@ -92,6 +93,8 @@ const TransactionVendor = () => {
     [results.data?.vendors],
   );
 
+  const previousScreenTitle = usePreviousScreenTitle();
+
   if (results.loading) {
     return (
       <>
@@ -115,13 +118,13 @@ const TransactionVendor = () => {
             <div>
               <NavigationChevronLeft />
             </div>
-            <div className={styles.transactionLabel}>Transaction</div>
+            <div className={styles.transactionLabel}>{previousScreenTitle}</div>
           </div>
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards">
         <div className={styles.titleContainer}>
-          <Title1 weight="Bold" title="Transaction Vendor" />
+          <Title1 weight="Bold" title="Merchant" />
         </div>
 
         <div className={styles.currentVendor}>

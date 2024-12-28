@@ -13,6 +13,7 @@ import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
 import { NavigationBar } from "@/Molecules/NavigationBar";
+import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { useActivityGroup } from "@/Providers/AppStateProvider";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
@@ -74,6 +75,8 @@ const TransactionsCategory = () => {
     }
   }, [results]);
 
+  const previousScreenTitle = usePreviousScreenTitle();
+
   if (results.loading) {
     return (
       <>
@@ -99,7 +102,7 @@ const TransactionsCategory = () => {
             <div>
               <NavigationChevronLeft />
             </div>
-            <div className={styles.insights}>Insights</div>
+            <div className={styles.insights}>{previousScreenTitle}</div>
           </div>
         </div>
       </NavigationBar>

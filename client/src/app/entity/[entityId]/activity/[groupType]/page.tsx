@@ -2,6 +2,7 @@
 
 import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { NavigationBar } from "@/Molecules/NavigationBar";
+import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { Selector } from "@/Molecules/Selector";
 import { ActivitySlideRenderer } from "@/Organisms/SlideableActivity";
 import {
@@ -65,6 +66,8 @@ const ActivityPage = () => {
     router.push(`/entity/${entityId || "overview"}`);
   }, [router, entityId]);
 
+  const previousScreenTitle = usePreviousScreenTitle();
+
   return (
     <>
       <NavigationBar>
@@ -75,7 +78,7 @@ const ActivityPage = () => {
           <div>
             <NavigationChevronLeft />
           </div>
-          <div className={styles.navigationBarTitle}>Back</div>
+          <div className={styles.navigationBarTitle}>{previousScreenTitle}</div>
         </div>
 
         <div className={styles.selectorContainer}>
