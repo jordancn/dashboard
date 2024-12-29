@@ -28,8 +28,8 @@ import {
   lastDayOfMonth,
   today,
 } from "@/Utils/date-iso";
-import { getActivityGroupBy, useRouteParams } from "@/Utils/helpers";
-import { assertIsEntityParams } from "@/Utils/param-helpers";
+import { getActivityGroupBy } from "@/Utils/helpers";
+import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
 import * as React from "react";
 import styles from "./page.module.css";
@@ -83,7 +83,7 @@ const useQuery = (args: {
 };
 
 const EntityPage = () => {
-  const params = useRouteParams(assertIsEntityParams, { entityId: "overview" });
+  const { entityId } = useRouteParams({ entityId: "overview" }, hasEntityId);
 
   const insightsDateRange = {
     start: getFirstDayOfMonth(today()),
@@ -122,7 +122,7 @@ const EntityPage = () => {
   }, [activityGroup]);
 
   const results = useQuery({
-    entityId: params.entityId,
+    entityId,
     insightsDateRange,
     activityDateRange,
     activityGroup,
@@ -404,21 +404,17 @@ const EntityPage = () => {
         <ActivityCard
           activityGroup={activityGroup}
           activity={activity}
-          entityId={params.entityId}
+          entityId={entityId}
           size="half"
         />
         {mode === "insights" && (
           <>
-            {!params.entityId && <SectionHeading title="Insights" />}
-
-            {params.entityId && (
-              <div onClick={onShowBudgetClicked}>
-                <SectionHeading title="Insights" subtitle="Show Budget" />
-              </div>
-            )}
+            <div onClick={onShowBudgetClicked}>
+              <SectionHeading title="Insights" subtitle="Show Budget" />
+            </div>
 
             <InsightCards
-              entityId={params.entityId}
+              entityId={entityId}
               insights={insights}
               dateRange={insightsDateRange}
             />
@@ -435,7 +431,7 @@ const EntityPage = () => {
 
             <BudgetCards
               budget={budget}
-              entityId={params.entityId}
+              entityId={entityId}
               dateRange={insightsDateRange}
             />
           </>
@@ -447,7 +443,7 @@ const EntityPage = () => {
 
             <TransactionCards
               transactions={pendingTransactions}
-              entityId={params.entityId}
+              entityId={entityId}
             />
           </>
         )}
@@ -457,13 +453,13 @@ const EntityPage = () => {
         )}
         <TransactionCards
           transactions={latestTransactions}
-          entityId={params.entityId}
+          entityId={entityId}
         />
 
         <SectionHeading title={getYearFromIsoDate(today())} />
         <TransactionGroupCards
           transactionGroups={groupedTransactions}
-          entityId={params.entityId}
+          entityId={entityId}
         />
       </ContentScrollable>
     </>

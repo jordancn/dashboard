@@ -12,8 +12,7 @@ import {
   useSetGroupIndex,
 } from "@/Providers/AppStateProvider";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
-import { useRouteParams } from "@/Utils/helpers";
-import { assertIsActivityParams } from "@/Utils/param-helpers";
+import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import { useRouter } from "next/navigation";
 import React from "react";
 import SwipeableViews from "react-swipeable-views";
@@ -23,7 +22,8 @@ import styles from "./page.module.css";
 const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
 
 const ActivityPage = () => {
-  const { entityId } = useRouteParams(assertIsActivityParams);
+  const { entityId } = useRouteParams({ entityId: "overview" }, hasEntityId);
+
   const activityGroup = useActivityGroup();
   const setActivityGroup = useSetActivityGroup();
   const groupIndex = useGroupIndex();

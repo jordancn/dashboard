@@ -205,10 +205,6 @@ export const getNamedDateRange = (dateRange: DateRange) => {
 
   const isYear = differenceInDays(dateRange.end, dateRange.start) >= 364;
 
-  // console.log('dateRange', dateRange);
-  // console.log('isYear', isYear);
-  // console.log('differenceInDays(dateRange.end, dateRange.start)', differenceInDays(dateRange.end, dateRange.start));
-
   const isMonth = firstDoM === dateRange.start && lastDoM === dateRange.end;
 
   const isWeek = differenceInDays(dateRange.end, dateRange.start) === 6;

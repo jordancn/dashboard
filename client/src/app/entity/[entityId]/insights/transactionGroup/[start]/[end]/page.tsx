@@ -1,3 +1,5 @@
+"use client";
+
 import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { Spinner } from "@/Atoms/Spinner";
 import {
@@ -9,69 +11,49 @@ import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
-import { DateIso, formatLongMonthYear } from "@/Utils/date-iso";
-import { getWidthClassName } from "@/Utils/helpers";
+import { formatLongMonthYear, toDateIso } from "@/Utils/date-iso";
 import {
   hasEnd,
   hasEntityId,
   hasStart,
   useRouteParams,
 } from "@/Utils/param-helpers";
-import classNames from "classnames";
 import { useRouter } from "next/navigation";
 import React from "react";
-import styles from "./TransactionGroup.module.css";
+import styles from "./page.module.css";
 
-const useQuery = (args: {
-  entityId?: string;
-  start: DateIso;
-  end: DateIso;
-}) => {
-  const isEntity = !!args.entityId && args.entityId !== "overview";
-
-  const entityResults = useTransactionGroupQuery({
-    variables: {
-      entityId: args.entityId || "",
-      transactionsDateRange: {
-        start: args.start,
-        end: args.end,
-      },
-    },
-    skip: !isEntity,
-  });
-
-  const overallResults = useTransactionGroupOverviewQuery({
-    variables: {
-      transactionsDateRange: {
-        start: args.start,
-        end: args.end,
-      },
-    },
-    skip: isEntity,
-  });
-
-  return isEntity ? entityResults : overallResults;
-};
-
-export const TransactionGroup = () => {
-  const router = useRouter();
-
+const TransactionGroup = () => {
   const { entityId, start, end } = useRouteParams(
     {},
     hasEntityId,
     hasStart,
     hasEnd,
   );
+  const router = useRouter();
 
-  const results = useQuery({
-    entityId,
-    start,
-    end,
-  });
+  const results =
+    entityId && entityId !== "overview"
+      ? useTransactionGroupQuery({
+          variables: {
+            entityId,
+            transactionsDateRange: {
+              start,
+              end,
+            },
+          },
+        })
+      : useTransactionGroupOverviewQuery({
+          variables: {
+            transactionsDateRange: {
+              start,
+              end,
+            },
+          },
+        });
 
   const onBackClicked = React.useCallback(() => {
     router.back();
-  }, [router]);
+  }, []);
 
   const transactions = React.useMemo(() => {
     if (results.loading) {
@@ -116,26 +98,24 @@ export const TransactionGroup = () => {
   return (
     <>
       <NavigationBar>
-        <div className={styles.navigationBar}>
-          <div className={styles.backButtonContainer} onClick={onBackClicked}>
+        <div className={styles.navigation}>
+          <div className={styles.backButton} onClick={onBackClicked}>
             <div>
               <NavigationChevronLeft />
             </div>
-            <div className={styles.title}>{previousScreenTitle}</div>
+            <div className={styles.insights}>{previousScreenTitle}</div>
           </div>
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards">
-        <SectionHeading title={formatLongMonthYear(start)} />
+        <SectionHeading title={formatLongMonthYear(toDateIso(start))} />
 
-        <div
-          className={classNames(styles.transactionCardsContainer, {
-            ...getWidthClassName("full"),
-          })}
-        >
+        <div className={styles.transactionCards}>
           <TransactionCards transactions={transactions} entityId={entityId} />
         </div>
       </ContentScrollable>
     </>
   );
 };
+
+export default TransactionGroup;

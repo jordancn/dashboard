@@ -10,7 +10,6 @@ import {
   toMonthAndYear,
   toYear,
 } from "@/Utils/date-iso";
-import { useParams } from "next/navigation";
 
 import { toShortMonthAndDate } from "@/Utils/date-iso";
 
@@ -132,19 +131,3 @@ export const getActivityGroupName = (args: {
 
   return title;
 };
-
-export function useRouteParams<T>(
-  assertIsFn: (params: unknown) => asserts params is T,
-  defaultParams?: T,
-): T {
-  const actualParams = useParams();
-
-  const params =
-    actualParams && Object.keys(actualParams).length > 0
-      ? actualParams
-      : defaultParams;
-
-  assertIsFn(params);
-
-  return params;
-}

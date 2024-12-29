@@ -13,8 +13,12 @@ import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { TransactionAmount } from "@/Molecules/TransactionAmount";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { formatCurrency, formatDate } from "@/Utils/formatters";
-import { getWidthClassName, useRouteParams } from "@/Utils/helpers";
-import { assertIsIsEntityAndTransactionParams } from "@/Utils/param-helpers";
+import { getWidthClassName } from "@/Utils/helpers";
+import {
+  hasEntityId,
+  hasTransactionId,
+  useRouteParams,
+} from "@/Utils/param-helpers";
 import classNames from "classnames";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -25,7 +29,9 @@ const Transaction = () => {
   const router = useRouter();
 
   const { transactionId, entityId } = useRouteParams(
-    assertIsIsEntityAndTransactionParams,
+    {},
+    hasTransactionId,
+    hasEntityId,
   );
 
   const results = useTransactionQuery({

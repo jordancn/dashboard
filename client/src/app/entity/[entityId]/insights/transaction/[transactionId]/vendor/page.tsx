@@ -10,8 +10,8 @@ import { TransactionNewVendorCard } from "@/Organisms/TransactionNewVendorCard";
 import { TransactionVendorCard } from "@/Organisms/TransactionVendorCard";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { Defined } from "@/Types/core";
-import { getRelativePosition, useRouteParams } from "@/Utils/helpers";
-import { assertIsIsEntityAndTransactionParams } from "@/Utils/param-helpers";
+import { getRelativePosition } from "@/Utils/helpers";
+import { hasTransactionId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import React, { useMemo } from "react";
@@ -72,9 +72,7 @@ const Vendors = ({
 const TransactionVendor = () => {
   const router = useRouter();
 
-  const { transactionId } = useRouteParams(
-    assertIsIsEntityAndTransactionParams,
-  );
+  const { transactionId } = useRouteParams({}, hasTransactionId);
 
   const results = useTransactionVendorQuery({
     variables: {

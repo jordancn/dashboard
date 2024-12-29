@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouteParams } from "@/Utils/helpers";
-import { assertIsTransactionParams } from "@/Utils/param-helpers";
+import { hasTransactionId, useRouteParams } from "@/Utils/param-helpers";
 
 const TransactionPage = () => {
-  const params = useRouteParams(assertIsTransactionParams);
+  const params = useRouteParams({}, hasTransactionId);
 
   console.log("params", params);
 

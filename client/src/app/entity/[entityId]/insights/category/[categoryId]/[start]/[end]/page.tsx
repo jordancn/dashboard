@@ -4,7 +4,6 @@ import { Caption1 } from "@/Atoms/Caption1";
 import { Headline } from "@/Atoms/Headline";
 import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { Spinner } from "@/Atoms/Spinner";
-import { Title1 } from "@/Atoms/Title1";
 import {
   useTransactionCategoryGroupOverallQuery,
   useTransactionCategoryGroupQuery,
@@ -14,6 +13,7 @@ import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
+import { SectionHeading } from "@/Molecules/SectionHeading";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { useActivityGroup } from "@/Providers/AppStateProvider";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
@@ -33,12 +33,12 @@ import styles from "./page.module.css";
 const TransactionsCategory = () => {
   const router = useRouter();
 
-  const { categoryId, end, entityId, start } = useRouteParams(
-    { categoryId: "overview" },
-    hasCategoryId,
-    hasEnd,
+  const { entityId, categoryId, start, end } = useRouteParams(
+    { entityId: "overview" },
     hasEntityId,
+    hasCategoryId,
     hasStart,
+    hasEnd,
   );
 
   const activityGroup = useActivityGroup();
@@ -69,7 +69,7 @@ const TransactionsCategory = () => {
 
   const onBackClicked = React.useCallback(() => {
     router.back();
-  }, [router]);
+  }, []);
 
   const category = React.useMemo(() => {
     if (!results.data) {
@@ -98,11 +98,7 @@ const TransactionsCategory = () => {
     );
   }
 
-  if (!category) {
-    return null;
-  }
-
-  const transactions = category.transactions || [];
+  const transactions = category?.transactions || [];
 
   return (
     <>
@@ -117,9 +113,7 @@ const TransactionsCategory = () => {
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards">
-        <div className={styles.titleContainer}>
-          <Title1 weight="Bold" title={category.name || ""} />
-        </div>
+        <SectionHeading title={category?.name || ""} />
         <div className={styles.cards}>
           <Card>
             <CardTitle />
@@ -128,7 +122,6 @@ const TransactionsCategory = () => {
                 <div className={styles.dateRangeTotalContainer}>
                   <div className={styles.dateRange}>
                     <Headline
-                      weight="Bold"
                       title={getNamedDateRange({
                         start,
                         end,
@@ -137,10 +130,10 @@ const TransactionsCategory = () => {
                   </div>
                 </div>
                 <div className={styles.total}>
-                  <div>{formatCurrency.format(category.total || 0)}</div>
+                  <div>{formatCurrency.format(category?.total || 0)}</div>
                   <div>
                     <Caption1
-                      title={`${category.count || 0} transactions`}
+                      title={`${category?.count || 0} transactions`}
                       ordinal="Secondary"
                     />
                   </div>

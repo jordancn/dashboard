@@ -16,9 +16,8 @@ import {
   getActivitySubGroup,
   getActivitySubGroupBy,
   getRelativePosition,
-  useRouteParams,
 } from "@/Utils/helpers";
-import { assertIsEntityParams } from "@/Utils/param-helpers";
+import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
 import React from "react";
 import styles from "./Activity.module.css";
@@ -60,7 +59,7 @@ const useQuery = (args: {
 export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
   const activityGroup = useActivityGroup();
 
-  const { entityId } = useRouteParams(assertIsEntityParams);
+  const { entityId } = useRouteParams({ entityId: "overview" }, hasEntityId);
 
   const results = useQuery({
     entityId,

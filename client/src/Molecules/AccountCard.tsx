@@ -6,8 +6,7 @@ import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
 import { formatCurrency } from "@/Utils/formatters";
-import { useRouteParams } from "@/Utils/helpers";
-import { assertIsEntityParams } from "@/Utils/param-helpers";
+import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import Image from "next/image";
 import styles from "./AccountCard.module.css";
 
@@ -38,7 +37,7 @@ export const AccountCard = ({
   relativePosition: "start" | "middle" | "end" | "single";
   href?: string;
 }) => {
-  const params = useRouteParams(assertIsEntityParams);
+  const { entityId } = useRouteParams({ entityId: "overview" }, hasEntityId);
 
   const icon: string | undefined = undefined;
 
@@ -57,13 +56,13 @@ export const AccountCard = ({
             </div>
             <div>
               <div className={styles.accountType}>
-                {params?.entityId === "overview" && (
+                {entityId === "overview" && (
                   <Caption1
                     title={`${entity.name} ${accountType}`}
                     ordinal="Secondary"
                   />
                 )}
-                {params?.entityId !== "overview" && (
+                {entityId !== "overview" && (
                   <Caption1 title={accountType} ordinal="Secondary" />
                 )}
               </div>

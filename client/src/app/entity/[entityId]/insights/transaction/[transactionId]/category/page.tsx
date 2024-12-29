@@ -15,8 +15,8 @@ import { TransactionNewCategoryCard } from "@/Organisms/TransactionNewCategoryCa
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { Defined } from "@/Types/core";
 import { today } from "@/Utils/date-iso";
-import { getRelativePosition, useRouteParams } from "@/Utils/helpers";
-import { assertIsIsEntityAndTransactionParams } from "@/Utils/param-helpers";
+import { getRelativePosition } from "@/Utils/helpers";
+import { hasTransactionId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import React, { useMemo } from "react";
@@ -77,9 +77,7 @@ const Categories = ({
 const TransactionCategory = () => {
   const router = useRouter();
 
-  const { transactionId } = useRouteParams(
-    assertIsIsEntityAndTransactionParams,
-  );
+  const { transactionId } = useRouteParams({}, hasTransactionId);
 
   const results = useTransactionCategoryQuery({
     variables: {

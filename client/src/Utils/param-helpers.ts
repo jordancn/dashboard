@@ -1,7 +1,8 @@
 import { assertIsDateIso, DateIso } from "@/Utils/date-iso";
 import assert from "assert";
+import { useParams } from "next/navigation";
 
-export function assertIsEntityParams(
+export function hasEntityId(
   params: unknown,
 ): asserts params is { entityId: string } {
   assert(params, "params is required");
@@ -10,7 +11,43 @@ export function assertIsEntityParams(
   assert(typeof params.entityId === "string", "entityId is not a string");
 }
 
-export function assertIsTransactionParams(
+export function hasCategoryId(
+  params: unknown,
+): asserts params is { categoryId: string } {
+  assert(params, "params is required");
+  assert(typeof params === "object", "params is not an object");
+  assert("categoryId" in params, "categoryId is required");
+  assert(typeof params.categoryId === "string", "categoryId is not a string");
+}
+
+export function hasGroupType(
+  params: unknown,
+): asserts params is { groupType: string } {
+  assert(params, "params is required");
+  assert(typeof params === "object", "params is not an object");
+  assert("groupType" in params, "groupType is required");
+  assert(typeof params.groupType === "string", "groupType is not a string");
+}
+
+export function hasStart(
+  params: unknown,
+): asserts params is { start: DateIso } {
+  assert(params, "params is required");
+  assert(typeof params === "object", "params is not an object");
+  assert("start" in params, "start is required");
+  assert(typeof params.start === "string", "start is not a string");
+  assertIsDateIso(params.start);
+}
+
+export function hasEnd(params: unknown): asserts params is { end: DateIso } {
+  assert(params, "params is required");
+  assert(typeof params === "object", "params is not an object");
+  assert("end" in params, "end is required");
+  assert(typeof params.end === "string", "end is not a string");
+  assertIsDateIso(params.end);
+}
+
+export function hasTransactionId(
   params: unknown,
 ): asserts params is { transactionId: string } {
   assert(params, "params is required");
@@ -22,68 +59,29 @@ export function assertIsTransactionParams(
   );
 }
 
-export function assertIsIsEntityAndTransactionParams(
-  params: unknown,
-): asserts params is { entityId: string; transactionId: string } {
-  assertIsEntityParams(params);
-  assertIsTransactionParams(params);
-}
+type AssertionFn<T> = (params: unknown) => asserts params is T;
+type AssertedTypes<A extends Array<AssertionFn<any>>> =
+  A[number] extends AssertionFn<infer U> ? U : never;
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+  k: infer I,
+) => void
+  ? I
+  : never;
+type AssertionsToIntersection<A extends Array<AssertionFn<any>>> =
+  UnionToIntersection<AssertedTypes<A>>;
 
-export function assertIsTransactionGroupParams(
-  params: unknown,
-): asserts params is { entityId: string; start: string; end: string } {
-  assert(params, "params is required");
-  assert(typeof params === "object", "params is not an object");
-  assert("entityId" in params, "entityId is required");
-  assert(typeof params.entityId === "string", "entityId is not a string");
-  assert("start" in params, "start is required");
-  assert(typeof params.start === "string", "start is not a string");
-  assert("end" in params, "end is required");
-  assert(typeof params.end === "string", "end is not a string");
-}
+export function useRouteParams<A extends Array<AssertionFn<any>>>(
+  defaultParams: Partial<AssertionsToIntersection<A>>,
+  ...assertionFns: A
+): AssertionsToIntersection<A> {
+  const params = useParams();
 
-export function assertIsTransactionCategoryGroupParams(
-  params: unknown,
-): asserts params is {
-  entityId: string;
-  categoryId: string;
-  start: DateIso;
-  end: DateIso;
-} {
-  assert(params, "params is required");
-  assert(typeof params === "object", "params is not an object");
-  assert("entityId" in params, "entityId is required");
-  assert(typeof params.entityId === "string", "entityId is not a string");
-  assert("categoryId" in params, "categoryId is required");
-  assert(typeof params.categoryId === "string", "categoryId is not a string");
-  assert("start" in params, "start is required");
-  assert(typeof params.start === "string", "start is not a string");
-  assertIsDateIso(params.start);
-  assert("end" in params, "end is required");
-  assert(typeof params.end === "string", "end is not a string");
-  assertIsDateIso(params.end);
-}
+  assert(defaultParams, "defaultParams is required");
+  assert(typeof defaultParams === "object", "defaultParams is not an object");
 
-export function assertIsActivityParams(params: unknown): asserts params is {
-  entityId: string;
-  groupType: string;
-  start: DateIso | undefined;
-  end: DateIso | undefined;
-} {
-  assert(params, "params is required");
-  assert(typeof params === "object", "params is not an object");
-  assert("entityId" in params, "entityId is required");
-  assert(typeof params.entityId === "string", "entityId is not a string");
-  assert("groupType" in params, "groupType is required");
-  assert(typeof params.groupType === "string", "groupType is not a string");
+  const actualParams: unknown = { ...defaultParams, ...params };
 
-  if ("start" in params) {
-    assert(typeof params.start === "string", "start is not a string");
-    assertIsDateIso(params.start);
-  }
+  assertionFns.forEach((fn) => fn(actualParams));
 
-  if ("end" in params) {
-    assert(typeof params.end === "string", "end is not a string");
-    assertIsDateIso(params.end);
-  }
+  return actualParams as AssertionsToIntersection<A>;
 }
