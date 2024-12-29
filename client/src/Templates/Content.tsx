@@ -1,8 +1,9 @@
 import { useSidebarData } from "@/Providers/SidebarDataProvider";
 import classNames from "classnames";
+import { ReactNode } from "react";
 import styles from "./Content.module.css";
 
-export const Content = ({ children }: { children?: React.ReactNode }) => {
+export const Content = ({ children }: { children?: ReactNode }) => {
   const sidebarData = useSidebarData();
 
   if (sidebarData.status !== "LOADED") {

@@ -19,7 +19,7 @@ import {
 } from "@/Utils/helpers";
 import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
-import React from "react";
+import { useMemo } from "react";
 import styles from "./Activity.module.css";
 
 const useQuery = (args: {
@@ -68,7 +68,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     activityGroup: activityGroup,
   });
 
-  const categories = React.useMemo(() => {
+  const categories = useMemo(() => {
     if (results.loading || !results.data) {
       return;
     }
@@ -82,7 +82,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     }
   }, [results]);
 
-  const activity = React.useMemo(() => {
+  const activity = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -115,7 +115,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     }));
   }, [results]);
 
-  const totalIncome = React.useMemo(
+  const totalIncome = useMemo(
     () =>
       _.sum(
         (categories || [])
@@ -129,7 +129,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     [categories],
   );
 
-  const totalIncomeCount = React.useMemo(
+  const totalIncomeCount = useMemo(
     () =>
       _.sum(
         (categories || [])
@@ -143,7 +143,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     [categories],
   );
 
-  const totalExpense = React.useMemo(
+  const totalExpense = useMemo(
     () =>
       _.sum(
         (categories || [])
@@ -157,7 +157,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     [categories],
   );
 
-  const totalExpenseCount = React.useMemo(
+  const totalExpenseCount = useMemo(
     () =>
       _.sum(
         (categories || [])
@@ -171,7 +171,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     [categories],
   );
 
-  const incomeCards = React.useMemo(
+  const incomeCards = useMemo(
     () =>
       _.orderBy(
         (categories || []).filter(
@@ -199,7 +199,7 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
     [categories, entityId, activityGroup, start, end],
   );
 
-  const expenseCards = React.useMemo(
+  const expenseCards = useMemo(
     () =>
       _.orderBy(
         (categories || []).filter(

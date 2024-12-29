@@ -1,10 +1,19 @@
 import classNames from "classnames";
 import Mousetrap from "mousetrap";
-import React, { useCallback } from "react";
+import {
+  createContext,
+  memo,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import styles from "./Table.module.css";
 
 export type TableContext = {
-  renderFns: Array<(value: string) => React.ReactNode>;
+  renderFns: Array<(value: string) => ReactNode>;
   data: string[][];
   state: {
     cursor: { row: number; column: number };
@@ -21,10 +30,10 @@ export type TableContext = {
   };
 };
 
-const Context = React.createContext<TableContext | null>(null);
+const Context = createContext<TableContext | null>(null);
 
 // export const useTableContext = (): TableContext => {
-//   const context = React.useContext(Context);
+//   const context = useContext(Context);
 
 //   if (context === null) {
 //     throw new Error("useTableData must be used within a TableProvider tag");
@@ -34,7 +43,7 @@ const Context = React.createContext<TableContext | null>(null);
 // };
 
 const useTableRows = () => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useTableRows must be used within a TableProvider tag");
@@ -44,7 +53,7 @@ const useTableRows = () => {
 };
 
 const useTableRow = (rowNumber: number) => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useTableRow must be used within a TableProvider tag");
@@ -54,7 +63,7 @@ const useTableRow = (rowNumber: number) => {
 };
 
 const useCursor = () => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useCursor must be used within a TableProvider tag");
@@ -64,7 +73,7 @@ const useCursor = () => {
 };
 
 const useTableCell = (rowNumber: number, columnNumber: number) => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useTableCell must be used within a TableProvider tag");
@@ -88,13 +97,13 @@ export const TableProvider = ({
 }: {
   data: TableContext["data"];
   renderFns: TableContext["renderFns"];
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
-  const [cursor, setCursor] = React.useState({ row: 0, column: 0 });
-  const [editing, setEditing] = React.useState(false);
+  const [cursor, setCursor] = useState({ row: 0, column: 0 });
+  const [editing, setEditing] = useState(false);
 
   // Stable mutations object
-  const mutations = React.useMemo(
+  const mutations = useMemo(
     () => ({
       setCursor: (newCursor: { row: number; column: number }) => {
         setCursor(newCursor);
@@ -126,7 +135,7 @@ export const TableProvider = ({
   );
 
   // Provide stable context value
-  const contextValue = React.useMemo(
+  const contextValue = useMemo(
     () => ({
       data,
       renderFns,
@@ -140,7 +149,7 @@ export const TableProvider = ({
 };
 
 const useAdjustCursor = () => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useAdjustCursor must be used within a TableProvider tag");
@@ -150,7 +159,7 @@ const useAdjustCursor = () => {
 };
 
 const useSetCursor = () => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useSetCursor must be used within a TableProvider tag");
@@ -160,7 +169,7 @@ const useSetCursor = () => {
 };
 
 const useStartEditing = () => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useStartEditing must be used within a TableProvider tag");
@@ -170,7 +179,7 @@ const useStartEditing = () => {
 };
 
 const useStopEditing = () => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
 
   if (context === null) {
     throw new Error("useStopEditing must be used within a TableProvider tag");
@@ -179,7 +188,7 @@ const useStopEditing = () => {
   return context.mutations.stopEditing;
 };
 
-export const TableCell = React.memo(
+export const TableCell = memo(
   ({
     rowNumber,
     columnNumber,
@@ -220,7 +229,7 @@ export const TableCell = React.memo(
 );
 TableCell.displayName = "TableCell";
 
-export const TableRow = React.memo(({ rowNumber }: { rowNumber: number }) => {
+export const TableRow = memo(({ rowNumber }: { rowNumber: number }) => {
   const row = useTableRow(rowNumber);
 
   if (!row) {
@@ -243,7 +252,7 @@ export const Table = () => {
   const rows = useTableRows();
   const cursor = useCursor();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKey = (event: KeyboardEvent, callback: () => void) => {
       event.preventDefault(); // Prevent default page scroll behavior
       callback();
@@ -271,7 +280,7 @@ export const Table = () => {
     };
   }, [adjustCursor, startEditing, stopEditing, cursor]);
 
-  const rowsContent = React.useMemo(() => {
+  const rowsContent = useMemo(() => {
     return Array.from({ length: rows }, (_, index) => (
       <TableRow key={index} rowNumber={index} />
     ));

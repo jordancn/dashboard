@@ -4,7 +4,7 @@ import { Spinner } from "@/Atoms/Spinner";
 import { useTransactionsReviewQuery } from "@/GraphQL/client.gen";
 import { toDateIso } from "@/Utils/date-iso";
 import { formatCurrency, formatDate } from "@/Utils/formatters";
-import React from "react";
+import { useMemo } from "react";
 import styles from "./page.module.css";
 
 // make a provider that holds the data for the table
@@ -23,7 +23,7 @@ const TransactionsTable = () => {
     },
   });
 
-  const data = React.useMemo(() => {
+  const data = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -42,7 +42,7 @@ const TransactionsTable = () => {
     });
   }, [results]);
 
-  const renderFns = React.useMemo(() => {
+  const renderFns = useMemo(() => {
     return [
       (date: string) => `${formatDate(toDateIso(date))}`,
       (description: string) => (

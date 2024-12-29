@@ -6,7 +6,7 @@ import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { TextInput } from "@/Molecules/TextInput";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { useCallback } from "react";
 import css from "./TransactionNewVendorCard.module.css";
 
 export const TransactionNewVendorCard = ({
@@ -20,7 +20,7 @@ export const TransactionNewVendorCard = ({
 
   const [addVendor] = useAddVendorMutation();
 
-  const onChange = React.useCallback(
+  const onChange = useCallback(
     async (name: string) => {
       const vendor = await addVendor({
         variables: {

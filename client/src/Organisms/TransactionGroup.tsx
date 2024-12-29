@@ -19,7 +19,7 @@ import {
 } from "@/Utils/param-helpers";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { useCallback, useMemo } from "react";
 import styles from "./TransactionGroup.module.css";
 
 const useQuery = (args: {
@@ -69,11 +69,11 @@ export const TransactionGroup = () => {
     end,
   });
 
-  const onBackClicked = React.useCallback(() => {
+  const onBackClicked = useCallback(() => {
     router.back();
   }, [router]);
 
-  const transactions = React.useMemo(() => {
+  const transactions = useMemo(() => {
     if (results.loading) {
       return [];
     }

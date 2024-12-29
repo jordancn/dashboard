@@ -1,0 +1,54 @@
+.request {
+  display: flex;
+}
+
+.requestMessage {
+  flex: 1;
+}
+
+.requestButton {
+  flex: 0;
+}
+
+.responses {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.response {
+  display: flex;
+  flex-direction: column;
+}
+
+.responseDate {
+  font-size: 12px;
+}
+
+.responseMessage {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  line-height: 1.5;
+  text-align: left;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  max-width: 500px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  position: relative;
+  text-wrap: balance;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+  text-align: left;
+  margin-bottom: 15px;
+}

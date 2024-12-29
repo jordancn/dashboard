@@ -4,7 +4,7 @@ import { useSetTransactionVendorMutation } from "@/GraphQL/client.gen";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { useCallback } from "react";
 import styles from "./TransactionVendorCard.module.css";
 
 export const TransactionVendorCard = ({
@@ -28,7 +28,7 @@ export const TransactionVendorCard = ({
       },
     });
 
-  const onClick = React.useCallback(async () => {
+  const onClick = useCallback(async () => {
     await setTransactionVendorMutation();
 
     router.back();

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ReactNode } from "react";
 import styles from "./MenuListItem.module.css";
 
 export const MenuListItem = ({
@@ -7,7 +8,7 @@ export const MenuListItem = ({
   path,
 }: {
   title: string;
-  icon?: string | ((props: { className: string }) => React.ReactNode);
+  icon?: string | ((props: { className: string }) => ReactNode);
   path: string;
 }) => {
   return (

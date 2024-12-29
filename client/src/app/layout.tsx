@@ -3,8 +3,10 @@ import { DeviceDataProvider } from "@/Providers/DeviceDataProvider";
 import { ErrorStateProvider } from "@/Providers/ErrorStateProvider";
 import { GraphQLProvider } from "@/Providers/GraphQLProvider";
 import { SidebarDataProvider } from "@/Providers/SidebarDataProvider";
+import { SocketProvider } from "@/Providers/SocketProvider";
 import { Error } from "@/Templates/Error";
 import type { Metadata } from "next";
+import { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,19 +17,21 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
       <body>
         <ErrorStateProvider>
           <AppStateProvider>
-            <DeviceDataProvider>
-              <Error />
-              <SidebarDataProvider>
-                <GraphQLProvider>{children}</GraphQLProvider>
-              </SidebarDataProvider>
-            </DeviceDataProvider>
+            <SocketProvider>
+              <DeviceDataProvider>
+                <Error />
+                <SidebarDataProvider>
+                  <GraphQLProvider>{children}</GraphQLProvider>
+                </SidebarDataProvider>
+              </DeviceDataProvider>
+            </SocketProvider>
           </AppStateProvider>
         </ErrorStateProvider>
       </body>

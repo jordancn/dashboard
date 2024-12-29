@@ -1,6 +1,6 @@
 import "@/app/globals.css";
 import type { Preview } from "@storybook/react";
-import React from "react";
+import { createElement } from "react";
 import { DeviceDataProvider } from "../src/Providers/DeviceDataProvider";
 
 const preview: Preview = {
@@ -13,8 +13,7 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) =>
-      React.createElement(DeviceDataProvider, null, React.createElement(Story)),
+    (Story) => createElement(DeviceDataProvider, null, createElement(Story)),
   ],
 };
 

@@ -40,7 +40,8 @@
     "react-dom": "^19.0.0",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
-    "serve": "^14.2.4"
+    "serve": "^14.2.4",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",

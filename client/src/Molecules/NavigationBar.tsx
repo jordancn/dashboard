@@ -1,6 +1,7 @@
 import { SidebarButton } from "@/Molecules/SidebarButton";
 import { useSidebarData } from "@/Providers/SidebarDataProvider";
 import classNames from "classnames";
+import { ReactNode } from "react";
 import styles from "./NavigationBar.module.css";
 
 export const NavigationBar = ({
@@ -8,7 +9,7 @@ export const NavigationBar = ({
   children,
 }: {
   mode?: "space-between" | "center-left";
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
   const sidebarData = useSidebarData();
 

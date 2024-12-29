@@ -9,7 +9,7 @@ import {
 import { DateIso } from "@/Utils/date-iso";
 import { getActivityGroupName, getWidthClassName } from "@/Utils/helpers";
 import classNames from "classnames";
-import React from "react";
+import { useCallback, useMemo } from "react";
 import styles from "./ActivityContainer.module.css";
 
 export const ActivityContainer = ({
@@ -30,11 +30,11 @@ export const ActivityContainer = ({
     end,
   });
 
-  const goBack = React.useCallback(() => {
+  const goBack = useCallback(() => {
     setGroupIndex(index - 1);
   }, [index, setGroupIndex]);
 
-  const goForward = React.useCallback(() => {
+  const goForward = useCallback(() => {
     if (index === 0) {
       return;
     }
@@ -42,7 +42,7 @@ export const ActivityContainer = ({
     setGroupIndex(index + 1);
   }, [index, setGroupIndex]);
 
-  const isForwardDisabled = React.useMemo(() => {
+  const isForwardDisabled = useMemo(() => {
     return index === 0;
   }, [index]);
 

@@ -9,20 +9,16 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import React from "react";
+import { ReactNode, useMemo } from "react";
 
 const uri = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
 
 console.info("GraphQL URL", uri);
 
-export const GraphQLProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const GraphQLProvider = ({ children }: { children: ReactNode }) => {
   const setError = useSetError();
 
-  const errorLink = React.useMemo(
+  const errorLink = useMemo(
     () =>
       onError(({ graphQLErrors, networkError }) => {
         const errors = [
@@ -30,20 +26,16 @@ export const GraphQLProvider = ({
           ...(networkError ? [networkError] : []),
         ];
 
-        console.log("onError", errors);
-
         if (errors.length > 0) {
-          console.log("setError called");
-
           setError(errors);
         }
       }),
     [setError],
   );
 
-  const httpLink = React.useMemo(() => new HttpLink({ uri }), [uri]);
+  const httpLink = useMemo(() => new HttpLink({ uri }), [uri]);
 
-  const client = React.useMemo(
+  const client = useMemo(
     () =>
       new ApolloClient({
         cache: new InMemoryCache(),

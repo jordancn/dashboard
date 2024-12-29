@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
-import React from "react";
+import { ReactNode } from "react";
 import styles from "./Card.module.css";
 
 export const Card = ({
@@ -14,7 +14,7 @@ export const Card = ({
   size?: "full" | "half" | "quarter";
   href?: string;
   onClick?: () => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
   withSeparators?: boolean;
 }) => {

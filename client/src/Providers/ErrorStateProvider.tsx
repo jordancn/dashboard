@@ -14,7 +14,7 @@ import {
 type ErrorState =
   | {
       state: "error";
-      error: Array<GraphQLFormattedError | NetworkError | string>;
+      error: unknown[];
     }
   | {
       state: "clear";

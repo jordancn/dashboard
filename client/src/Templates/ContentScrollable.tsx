@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { ReactNode } from "react";
 import styles from "./ContentScrollable.module.css";
 
 export const ContentScrollable = ({
@@ -13,7 +14,7 @@ export const ContentScrollable = ({
   direction?: "row" | "column";
   hasNavigationBar?: boolean;
   fullHeight?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
   fullWidth?: boolean;
 }) => {
   return (

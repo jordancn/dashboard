@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import styles from "./ToolbarItem.module.css";
 
 export const ToolbarItem = ({
@@ -10,7 +10,7 @@ export const ToolbarItem = ({
   entityId,
 }: {
   title: string;
-  icon?: string | ((props: { className: string }) => React.ReactNode);
+  icon?: string | ((props: { className: string }) => ReactNode);
   path: string;
   base: string;
   entityId: string | "overview";

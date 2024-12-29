@@ -14,7 +14,7 @@ import {
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { useCallback, useMemo } from "react";
 import SwipeableViews from "react-swipeable-views";
 import { bindKeyboard, virtualize } from "react-swipeable-views-utils";
 import styles from "./page.module.css";
@@ -30,7 +30,7 @@ const ActivityPage = () => {
   const setGroupIndex = useSetGroupIndex();
   const router = useRouter();
 
-  const options = React.useMemo(() => {
+  const options = useMemo(() => {
     return [
       {
         label: "Week",
@@ -62,7 +62,7 @@ const ActivityPage = () => {
     ];
   }, [setActivityGroup, setGroupIndex, router, entityId]);
 
-  const onBackClicked = React.useCallback(() => {
+  const onBackClicked = useCallback(() => {
     router.push(`/entity/${entityId || "overview"}`);
   }, [router, entityId]);
 

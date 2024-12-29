@@ -5,7 +5,7 @@ import { ServerParseError } from "@apollo/client/link/http";
 import { ServerError } from "@apollo/client/link/utils";
 import { GraphQLFormattedError } from "graphql";
 import _ from "lodash";
-import React, { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 import styles from "./Error.module.css";
 
 function isGraphQLFormattedError(
@@ -58,7 +58,7 @@ function isGraphQLFormattedError(
   return true;
 }
 
-function isError(error: unknown): error is Error {
+function isEsError(error: unknown): error is Error {
   if (error === undefined) {
     return false;
   }
@@ -78,8 +78,32 @@ function isError(error: unknown): error is Error {
   return true;
 }
 
+function isError(error: unknown): error is Error {
+  if (error === undefined) {
+    return false;
+  }
+
+  if (error === null) {
+    return false;
+  }
+
+  if (typeof error !== "object") {
+    return false;
+  }
+
+  if (!("message" in error)) {
+    return false;
+  }
+
+  if (typeof error.message !== "string") {
+    return false;
+  }
+
+  return true;
+}
+
 function isServerParseError(error: unknown): error is ServerParseError {
-  if (!isError(error)) {
+  if (!isEsError(error)) {
     return false;
   }
 
@@ -127,7 +151,7 @@ function isServerError(error: unknown): error is ServerError {
     return false;
   }
 
-  if (!isError(error)) {
+  if (!isEsError(error)) {
     return false;
   }
 
@@ -161,10 +185,14 @@ function isServerError(error: unknown): error is ServerError {
 export const Error = ({ children }: { children?: ReactNode }) => {
   const error = useError();
 
-  const formattedErrors = React.useMemo(
+  const formattedErrors = useMemo(
     () =>
       _.compact(
         error?.map((error) => {
+          if (!error) {
+            return;
+          }
+
           if (isGraphQLFormattedError(error)) {
             return error.message;
           }
@@ -177,15 +205,15 @@ export const Error = ({ children }: { children?: ReactNode }) => {
             return JSON.stringify(error.result);
           }
 
+          if (isEsError(error)) {
+            return error.message;
+          }
+
           if (isError(error)) {
             return error.message;
           }
 
-          if (error === null) {
-            return null;
-          }
-
-          return error;
+          return "Unknown";
         }) ?? [],
       ),
     [error],

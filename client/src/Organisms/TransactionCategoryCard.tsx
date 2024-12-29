@@ -6,7 +6,7 @@ import { useSetTransactionCategoryMutation } from "@/GraphQL/client.gen";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { useCallback } from "react";
 import styles from "./TransactionCategoryCard.module.css";
 
 export const TransactionCategoryCard = ({
@@ -30,7 +30,7 @@ export const TransactionCategoryCard = ({
       },
     });
 
-  const onClick = React.useCallback(async () => {
+  const onClick = useCallback(async () => {
     await setTransactionCategoryMutation();
 
     router.back();

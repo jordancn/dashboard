@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import styles from "./SidebarListItem.module.css";
 
 export const SidebarListItem = ({
@@ -9,7 +9,7 @@ export const SidebarListItem = ({
   entityId,
 }: {
   title: string;
-  icon?: string | ((props: { className: string }) => React.ReactNode);
+  icon?: string | ((props: { className: string }) => ReactNode);
   path: string;
   entityId: string | "overview";
 }) => {

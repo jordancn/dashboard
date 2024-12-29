@@ -3,7 +3,15 @@
 import { SidebarButton } from "@/Molecules/SidebarButton";
 import { useDeviceData } from "@/Providers/DeviceDataProvider";
 import classNames from "classnames";
-import React from "react";
+import {
+  createContext,
+  MouseEventHandler,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import styles from "./SidebarDataProvider.module.css";
 
 type ContextState =
@@ -19,10 +27,10 @@ type ContextState =
       };
     };
 
-const Context = React.createContext<ContextState | null>(null);
+const Context = createContext<ContextState | null>(null);
 
 export const useSidebarData = (): ContextState => {
-  const contextState = React.useContext(Context);
+  const contextState = useContext(Context);
 
   if (contextState === null) {
     throw new Error(
@@ -38,7 +46,7 @@ const FloatingSidebar = ({
   children,
 }: {
   visible: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
   return (
     <div
@@ -57,7 +65,7 @@ const FixedSidebar = ({
   children,
 }: {
   visible: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
   return (
     <div
@@ -74,7 +82,7 @@ const FixedSidebar = ({
 const SidebarAction = ({
   onClick,
 }: {
-  onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+  onClick: MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
   return (
     <div className={styles.sidebarAction}>
@@ -83,7 +91,7 @@ const SidebarAction = ({
   );
 };
 
-export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
+export const Sidebar = ({ children }: { children?: ReactNode }) => {
   const sidebarData = useSidebarData();
 
   if (sidebarData.status !== "LOADED") {
@@ -104,24 +112,20 @@ export const Sidebar = ({ children }: { children?: React.ReactNode }) => {
   );
 };
 
-export const SidebarDataProvider = ({
-  children,
-}: {
-  children?: React.ReactNode;
-}) => {
+export const SidebarDataProvider = ({ children }: { children?: ReactNode }) => {
   const device = useDeviceData();
 
-  const [state, setState] = React.useState<ContextState>({
+  const [state, setState] = useState<ContextState>({
     status: "LOADING",
   });
 
-  const [visible, setVisible] = React.useState(true);
+  const [visible, setVisible] = useState(true);
 
-  const show = React.useCallback(() => {
+  const show = useCallback(() => {
     setVisible(true);
   }, []);
 
-  const hide = React.useCallback(() => {
+  const hide = useCallback(() => {
     setVisible(false);
   }, []);
 
@@ -130,7 +134,7 @@ export const SidebarDataProvider = ({
       ? device.value
       : { isMobile: false, orientation: "landscape" };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setState({
       status: "LOADED",
       value: {

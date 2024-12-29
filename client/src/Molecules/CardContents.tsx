@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import { ReactNode } from "react";
 import styles from "./CardContents.module.css";
 
 export const CardContents = ({
@@ -11,7 +11,7 @@ export const CardContents = ({
   state?: "normal" | "error";
   position?: "start" | "middle" | "end" | "single";
   variant?: "transparent" | "translucent";
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
   return (
     <div className={styles.cardContentsContainer}>

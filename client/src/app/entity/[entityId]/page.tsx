@@ -1,6 +1,7 @@
 "use client";
 
 import { AccountsIcon } from "@/Atoms/AccountsIcon";
+import { AiIcon } from "@/Atoms/AiIcon";
 import { SearchIcon } from "@/Atoms/SearchIcon";
 import { Spinner } from "@/Atoms/Spinner";
 import {
@@ -31,7 +32,7 @@ import {
 import { getActivityGroupBy } from "@/Utils/helpers";
 import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
-import * as React from "react";
+import { useMemo, useState } from "react";
 import styles from "./page.module.css";
 
 const useQuery = (args: {
@@ -90,11 +91,11 @@ const EntityPage = () => {
     end: lastDayOfMonth(today()),
   };
 
-  const [mode, setMode] = React.useState<"insights" | "budget">("insights");
+  const [mode, setMode] = useState<"insights" | "budget">("insights");
 
   const activityGroup = useActivityGroup();
 
-  const activityDateRange = React.useMemo(() => {
+  const activityDateRange = useMemo(() => {
     switch (activityGroup) {
       case "Weekday":
         return {
@@ -128,7 +129,7 @@ const EntityPage = () => {
     activityGroup,
   });
 
-  const insights = React.useMemo(() => {
+  const insights = useMemo(() => {
     if (results.loading || !results.data) {
       return [];
     }
@@ -167,7 +168,7 @@ const EntityPage = () => {
       );
   }, [results]);
 
-  const budget = React.useMemo(() => {
+  const budget = useMemo(() => {
     return _.compact(
       insights.map((category) => {
         const budget = category.budget;
@@ -200,7 +201,7 @@ const EntityPage = () => {
     );
   }, [insights]);
 
-  const pendingTransactions = React.useMemo(() => {
+  const pendingTransactions = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -242,7 +243,7 @@ const EntityPage = () => {
     );
   }, [results]);
 
-  const latestTransactions = React.useMemo(() => {
+  const latestTransactions = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -284,7 +285,7 @@ const EntityPage = () => {
     );
   }, [results]);
 
-  const groupedTransactions = React.useMemo(() => {
+  const groupedTransactions = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -316,7 +317,7 @@ const EntityPage = () => {
     }));
   }, [results]);
 
-  const activity = React.useMemo(() => {
+  const activity = useMemo(() => {
     if (results.loading) {
       return [];
     }
@@ -351,7 +352,7 @@ const EntityPage = () => {
       }));
   }, [results]);
 
-  const currentBalance = React.useMemo(() => {
+  const currentBalance = useMemo(() => {
     if (!results.data) {
       return 0;
     }
@@ -390,9 +391,8 @@ const EntityPage = () => {
     <>
       <NavigationBar>
         <div className={styles.navigationBarContents}>
-          <div>
-            <SearchIcon disabled />
-          </div>
+          <AiIcon disabled />
+          <SearchIcon disabled />
           <AccountsIcon disabled />
         </div>
       </NavigationBar>

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import * as React from "react";
+import { ReactNode } from "react";
 import styles from "./ScrollMarker.module.css";
 
 export const ScrollMarker = ({
@@ -9,7 +9,7 @@ export const ScrollMarker = ({
 }: {
   id?: string;
   fullHeight?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
   return (
     <div

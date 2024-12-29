@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import styles from "./SidebarTitle.module.css";
 
 export const SidebarTitle = ({
@@ -5,7 +6,7 @@ export const SidebarTitle = ({
   children,
 }: {
   title: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
   return (
     <div className={styles.container}>

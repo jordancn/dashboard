@@ -12,14 +12,14 @@ import {
 import { ActivityContainer } from "@/Organisms/ActivityContainer";
 import { useActivityGroup } from "@/Providers/AppStateProvider";
 import { today } from "@/Utils/date-iso";
-import React from "react";
+import { useMemo } from "react";
 
 export const SlideableActivity = ({ index }: { index: number }) => {
   const activityGroup = useActivityGroup();
 
   const date = today();
 
-  const dateRange = React.useMemo(() => {
+  const dateRange = useMemo(() => {
     switch (activityGroup) {
       case "Week": {
         const dayOfWeek = getWeekdayFromIsoDate(date);

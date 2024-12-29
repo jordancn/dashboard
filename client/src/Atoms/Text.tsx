@@ -1,7 +1,7 @@
 import { useDeviceData } from "@/Providers/DeviceDataProvider";
 import { useSystemTheme } from "@/Utils/use-system-theme/use-system-theme";
 import classNames from "classnames";
-import React from "react";
+import { useMemo } from "react";
 import styles from "./Text.module.css";
 
 export type Platform = "Desktop" | "Mobile";
@@ -46,31 +46,25 @@ export const Text = ({
   const deviceData = useDeviceData();
   const systemTheme = useSystemTheme();
 
-  const isMobile = React.useMemo(
+  const isMobile = useMemo(
     () => deviceData.status === "LOADED" && deviceData.value.isMobile,
     [deviceData],
   );
 
-  const isDesktop = React.useMemo(
+  const isDesktop = useMemo(
     () => deviceData.status === "LOADED" && !isMobile,
     [deviceData, isMobile],
   );
 
-  const mode = React.useMemo(
-    () => modeProp || systemTheme,
-    [modeProp, systemTheme],
-  );
+  const mode = useMemo(() => modeProp || systemTheme, [modeProp, systemTheme]);
 
-  const ordinal = React.useMemo(() => ordinalProp || "Primary", [ordinalProp]);
-  const variant = React.useMemo(() => variantProp || "Opaque", [variantProp]);
-  const weight = React.useMemo(() => weightProp || "Regular", [weightProp]);
-  const style = React.useMemo(() => styleProp || "Normal", [styleProp]);
-  const alignment = React.useMemo(
-    () => alignmentProp || "Left",
-    [alignmentProp],
-  );
+  const ordinal = useMemo(() => ordinalProp || "Primary", [ordinalProp]);
+  const variant = useMemo(() => variantProp || "Opaque", [variantProp]);
+  const weight = useMemo(() => weightProp || "Regular", [weightProp]);
+  const style = useMemo(() => styleProp || "Normal", [styleProp]);
+  const alignment = useMemo(() => alignmentProp || "Left", [alignmentProp]);
 
-  const className = React.useMemo(() => {
+  const className = useMemo(() => {
     return classNames(styles.text, {
       // Style
       [styles.normalStyle]: style === "Normal",

@@ -14,7 +14,7 @@ import { getRelativePosition } from "@/Utils/helpers";
 import { hasTransactionId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
-import React, { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import styles from "./page.module.css";
 
 type Vendor = Defined<
@@ -80,7 +80,7 @@ const TransactionVendor = () => {
     },
   });
 
-  const onBackClicked = React.useCallback(() => {
+  const onBackClicked = useCallback(() => {
     router.back();
   }, [router]);
 

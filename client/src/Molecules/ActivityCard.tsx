@@ -16,7 +16,7 @@ import {
   getActivityParentGroup,
 } from "@/Utils/helpers";
 import _ from "lodash";
-import React from "react";
+import { useCallback, useMemo } from "react";
 import styles from "./ActivityCard.module.css";
 
 export const ActivityCard = ({
@@ -37,7 +37,7 @@ export const ActivityCard = ({
   }>;
   size?: "half" | "full";
 }) => {
-  const maxActivity = React.useMemo(() => {
+  const maxActivity = useMemo(() => {
     return (
       _.max([
         ...activityProp.map((activity) => activity.totalIncome),
@@ -46,7 +46,7 @@ export const ActivityCard = ({
     );
   }, [activityProp]);
 
-  const activity = React.useMemo(() => {
+  const activity = useMemo(() => {
     return activityProp.map((act) => ({
       ...act,
       incomePercentage: (act.totalIncome * 1.0) / maxActivity,
@@ -54,7 +54,7 @@ export const ActivityCard = ({
     }));
   }, [activityProp, maxActivity]);
 
-  const getLabel = React.useCallback(
+  const getLabel = useCallback(
     (start: DateIso, end: DateIso, groupIndex: number) => {
       switch (activityGroup) {
         case "Weekday":
