@@ -70,3 +70,8 @@ jobs:
 
             # Bring up the new images
             docker-compose up -d --no-build
+
+            # Remove temporary files
+            rm -f dashboard-nextjs-build-${{ github.sha }}.tar
+            rm -f dashboard-storybook-build-${{ github.sha }}.tar
+            rm -f dashboard-graphql-build-${{ github.sha }}.tar
