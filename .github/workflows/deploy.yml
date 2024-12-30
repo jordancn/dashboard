@@ -23,8 +23,8 @@ jobs:
       # Step 3: Build Docker images
       - name: Build Docker images
         run: |
-          cp docker-compose.yml docker-compose-${{ github.sha }}.yml
-          GIT_COMMIT_SHA=${{ github.sha }} /usr/local/bin/docker-compose build
+          sed "s/..GIT_COMMIT_SHA./{{ github.sha }}/g" docker-compose.yml > docker-compose-${{ github.sha }}.yml
+          /usr/local/bin/docker-compose -f docker-compose-${{ github.sha }}.yml build
 
       # Step 4: Save Docker images to tar files
       - name: Save Docker images to tar files
@@ -69,4 +69,4 @@ jobs:
             ln -s docker-compose-${{ github.sha }}.yml docker-compose.yml
 
             # Bring up the new images
-            GIT_COMMIT_SHA=${{ github.sha }} docker-compose up -d --no-build
+            docker-compose up -d --no-build
