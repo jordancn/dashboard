@@ -79,10 +79,11 @@ jobs:
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           debug: true
           script: |
+            # Copy docker-compose.yml to the server
+            cp docker-compose.yml docker-compose-old.yml
+
             # Remove old containers and images
             docker-compose down || true
-            docker system prune -f
-            docker image prune -a -f
 
             # Load new images
             docker load -i dashboard-nextjs-build-${{ github.sha }}.tar
@@ -102,3 +103,7 @@ jobs:
             rm -f dashboard-nextjs-build-${{ github.sha }}.tar
             rm -f dashboard-storybook-build-${{ github.sha }}.tar
             rm -f dashboard-graphql-build-${{ github.sha }}.tar
+
+            # Remove unused images and containers
+            docker system prune -f
+            docker image prune -a -f
