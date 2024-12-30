@@ -1,5 +1,6 @@
 services:
   nextjs:
+    image: dashboard-nextjs:build-${GIT_COMMIT_SHA}
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -15,6 +16,7 @@ services:
       - shared-network
 
   storybook:
+    image: dashboard-storybook:build-${GIT_COMMIT_SHA}
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -27,6 +29,7 @@ services:
       - shared-network
 
   graphql:
+    image: dashboard-graphql:build-${GIT_COMMIT_SHA}
     build:
       context: ./server
       dockerfile: Dockerfile

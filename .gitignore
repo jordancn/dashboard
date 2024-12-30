@@ -12,3 +12,5 @@ out
 server/api/*.node
 server/api/graphql.js
 /deployment/*
+
+/*-build-*.tar
