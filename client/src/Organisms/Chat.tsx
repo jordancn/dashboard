@@ -1,16 +1,14 @@
-"use client";
-
-import { useChatChannel } from "@/app/entity/[entityId]/insights/chat/ChatChannel";
-import { ConnectionStatusIcon } from "@/Atoms/ConnectionStatusIcon";
 import { TextInput } from "@/Molecules/TextInput";
+import { useChatChannel } from "@/Organisms/ChatChannel";
 import { useSetError } from "@/Providers/ErrorStateProvider";
 import { useIsSocketConnected } from "@/Providers/SocketProvider";
 import { DateTimeIso, now, toSlashyDateAndTime } from "@/Utils/date-time-iso";
 import classNames from "classnames";
+import Mousetrap from "mousetrap";
 import { useCallback, useEffect, useRef, useState } from "react";
-import styles from "./page.module.css";
+import styles from "./Chat.module.css";
 
-const Chat = () => {
+export const Chat = ({ onClose }: { onClose: () => void }) => {
   const isSocketConnected = useIsSocketConnected();
   const setError = useSetError();
   const chatChannel = useChatChannel();
@@ -101,44 +99,61 @@ const Chat = () => {
     [setMessage],
   );
 
-  return (
-    <div>
-      <div className={styles.logs} ref={logsRef}>
-        {entries.map((entry, index) => (
-          <div
-            className={classNames(styles.log, {
-              [styles.request]: entry.type === "request",
-              [styles.response]: entry.type === "response",
-            })}
-            key={index}
-          >
-            <div className={styles.logDate}>
-              {toSlashyDateAndTime(entry.date)}
-            </div>
-            <div className={styles.logMessage}>{entry.message}</div>
-          </div>
-        ))}
-      </div>
-      <div className={styles.message}>
-        <ConnectionStatusIcon
-          status={isSocketConnected ? "connected" : "disconnected"}
-        />
+  useEffect(() => {
+    Mousetrap.bind("escape", () => {
+      onClose();
+    });
+  }, [onClose]);
 
-        <div className={styles.messageMessage}>
-          <TextInput
-            value={message}
-            onChange={onInputChanged}
-            onEnter={onInputEnter}
-            placeholder="Message"
-            clearOnEnter
-          />
+  return (
+    <div className={styles.chatContainer} onClick={onClose}>
+      {/* <div className={styles.chatClose} onClick={onClose}>
+        <CloseIcon />
+      </div> */}
+      <div className={styles.chat} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.logs} ref={logsRef}>
+          {entries.map((entry, index) => (
+            <div
+              className={classNames(styles.log, {
+                [styles.request]: entry.type === "request",
+                [styles.response]: entry.type === "response",
+              })}
+              key={index}
+            >
+              <div className={styles.logDate}>
+                {toSlashyDateAndTime(entry.date)}
+              </div>
+              <div className={styles.logMessage}>{entry.message}</div>
+            </div>
+          ))}
         </div>
-        <div className={styles.messageButton}>
-          <button onClick={onSendButtonClicked}>Send</button>
+        <div className={styles.message}>
+          {/* <ConnectionStatusIcon
+            status={isSocketConnected ? "connected" : "disconnected"}
+          />
+         */}
+          <div className={styles.messageMessage}>
+            <TextInput
+              value={message}
+              onChange={onInputChanged}
+              onEnter={onInputEnter}
+              placeholder="Message"
+              clearOnEnter
+            />
+          </div>
+          <div className={styles.messageButton}>
+            <button
+              className={classNames({
+                [styles.buttonEnabled]: chatChannel.state === "connected",
+                [styles.buttonDisabled]: chatChannel.state === "disconnected",
+              })}
+              onClick={onSendButtonClicked}
+            >
+              Send
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
-export default Chat;

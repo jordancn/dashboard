@@ -4,4 +4,5 @@
 
 .enabled {
   fill: var(--button-color);
+  cursor: pointer;
 }

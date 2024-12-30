@@ -42,7 +42,10 @@ const main = async () => {
     cors: corsOptions,
   });
 
-  await attachChatChannel(ioServer);
+  await attachChatChannel({
+    apolloServer,
+    ioServer,
+  });
 
   httpServer.listen(4000, () => {
     console.info(`🚀  GraphQL Server ready on port 4000`);

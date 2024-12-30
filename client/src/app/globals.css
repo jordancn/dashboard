@@ -50,7 +50,14 @@ a {
 
   /* Screen */
   --screen-width: 100vw;
-  --screen-horizontal-margin: 16px;
+
+  @media (max-width: 1000px) {
+    --screen-horizontal-margin: 16px;
+  }
+
+  @media (min-width: 1000px) {
+    --screen-horizontal-margin: 200px;
+  }
 
   /* Sidebar */
   --sidebar-width: 320px;

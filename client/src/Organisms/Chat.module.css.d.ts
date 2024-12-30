@@ -1,4 +1,9 @@
 declare const styles: {
+  readonly "buttonDisabled": string;
+  readonly "buttonEnabled": string;
+  readonly "chat": string;
+  readonly "chatClose": string;
+  readonly "chatContainer": string;
   readonly "log": string;
   readonly "logDate": string;
   readonly "logMessage": string;

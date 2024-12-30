@@ -19,6 +19,7 @@ type ContextState =
       value: {
         isMobile: boolean;
         orientation: "landscape" | "portrait";
+        canScroll: boolean;
       };
     };
 
@@ -76,6 +77,8 @@ export const DeviceDataProvider = ({ children }: { children?: ReactNode }) => {
             value: {
               isMobile: isMobilePhone || isMobileTablet,
               orientation: newOrientation,
+              canScroll:
+                prevState.status === "LOADED" && prevState.value.canScroll,
             },
           };
         });
@@ -96,6 +99,7 @@ export const DeviceDataProvider = ({ children }: { children?: ReactNode }) => {
       value: {
         isMobile: isMobilePhone || isMobileTablet,
         orientation: getOrientation(orientation),
+        canScroll: true,
       },
     });
   }, [isMobileTablet, isMobilePhone]);

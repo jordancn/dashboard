@@ -1,6 +1,7 @@
+import classNames from "classnames";
 import { useRouter } from "next/navigation";
-
 import { useCallback } from "react";
+import styles from "./Redirect.module.css";
 
 export const Redirect = ({
   href,
@@ -14,15 +15,11 @@ export const Redirect = ({
   const router = useRouter();
 
   const onClicked = useCallback(() => {
-    // TODO: This doesn't always work for some reason. Also Link doesn't always work.
-
     router.push(href);
-
-    // window.location.replace(href);
   }, [href]);
 
   return (
-    <div onClick={onClicked} className={className}>
+    <div onClick={onClicked} className={classNames(styles.redirect, className)}>
       {children}
     </div>
   );

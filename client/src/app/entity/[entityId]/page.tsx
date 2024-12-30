@@ -1,8 +1,6 @@
 "use client";
 
-import { AccountsIcon } from "@/Atoms/AccountsIcon";
 import { AiIcon } from "@/Atoms/AiIcon";
-import { SearchIcon } from "@/Atoms/SearchIcon";
 import { Spinner } from "@/Atoms/Spinner";
 import {
   DateRange,
@@ -14,6 +12,7 @@ import { BalanceCard } from "@/Molecules/BalanceCard";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import { BudgetCards } from "@/Organisms/BudgetCards";
+import { Chat } from "@/Organisms/Chat";
 import { InsightCards } from "@/Organisms/InsightCards";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { TransactionGroupCards } from "@/Organisms/TransactionGroupCards";
@@ -32,7 +31,7 @@ import {
 import { getActivityGroupBy } from "@/Utils/helpers";
 import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styles from "./page.module.css";
 
 const useQuery = (args: {
@@ -91,9 +90,15 @@ const EntityPage = () => {
     end: lastDayOfMonth(today()),
   };
 
+  const [chatOpen, setChatOpen] = useState(false);
+
   const [mode, setMode] = useState<"insights" | "budget">("insights");
 
   const activityGroup = useActivityGroup();
+
+  const onChatClicked = useCallback(() => {
+    setChatOpen(true);
+  }, []);
 
   const activityDateRange = useMemo(() => {
     switch (activityGroup) {
@@ -390,10 +395,14 @@ const EntityPage = () => {
   return (
     <>
       <NavigationBar>
+        {chatOpen && <Chat onClose={() => setChatOpen(false)} />}
+
         <div className={styles.navigationBarContents}>
-          <AiIcon disabled />
-          <SearchIcon disabled />
-          <AccountsIcon disabled />
+          <div onClick={onChatClicked}>
+            <AiIcon />
+          </div>
+          {/* <SearchIcon disabled />
+          <AccountsIcon disabled /> */}
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards" hasNavigationBar>

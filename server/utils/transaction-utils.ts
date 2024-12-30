@@ -194,6 +194,9 @@ export const getTransactions: GetTransactions = async (
   scope,
   args
 ) => {
+  console.debug("ARGS", JSON.stringify(args));
+  console.debug("SCOPE", JSON.stringify(scope));
+
   const accountIds = scope.accountId
     ? [scope.accountId]
     : scope.entityId
