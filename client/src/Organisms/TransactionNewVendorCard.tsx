@@ -42,7 +42,7 @@ export const TransactionNewVendorCard = ({
 
       router.back();
     },
-    [setTransactionVendorMutation, transactionId],
+    [setTransactionVendorMutation, transactionId, addVendor, router],
   );
 
   return (

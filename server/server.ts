@@ -1,3 +1,4 @@
+import { attachChatChannel } from "@/chat/chat";
 import { context } from "@/context";
 import { resolvers } from "@/resolvers";
 import { getTypeDefs } from "@/schema/schema";
@@ -19,7 +20,6 @@ const main = async () => {
   const app = express();
 
   app.use(express.json());
-
   app.use(cors(corsOptions));
 
   const httpServer = http.createServer(app);
@@ -38,32 +38,11 @@ const main = async () => {
     })
   );
 
-  const io = new Server(httpServer, {
+  const ioServer = new Server(httpServer, {
     cors: corsOptions,
   });
 
-  io.on("connection", async (socket) => {
-    console.log("[A USER CONNECTED]");
-
-    socket.on("hello", (data) => {
-      const { message } = data;
-
-      console.log("[RECEIVED DATA]", message);
-
-      socket.emit("hello", {
-        message: `ECHO ${message}`,
-        date: new Date(),
-      });
-    });
-
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // console.log("[EMITTING DATA]");
-
-    // socket.emit("hello", {
-    //   message: "Hello from the server",
-    // });
-  });
+  await attachChatChannel(ioServer);
 
   httpServer.listen(4000, () => {
     console.info(`🚀  GraphQL Server ready on port 4000`);

@@ -11,23 +11,16 @@ import Image from "next/image";
 import styles from "./AccountCard.module.css";
 
 export const AccountCard = ({
-  id,
   name,
   currentBalance,
-  institution,
   entity,
   number,
   accountType,
   relativePosition,
   href,
 }: {
-  id: string;
   name: string;
   currentBalance: number;
-  institution: {
-    id: string;
-    name: string;
-  };
   entity: {
     id: string;
     name: string;

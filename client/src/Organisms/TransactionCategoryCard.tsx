@@ -22,19 +22,18 @@ export const TransactionCategoryCard = ({
 }) => {
   const router = useRouter();
 
-  const [setTransactionCategoryMutation, { data, loading, error }] =
-    useSetTransactionCategoryMutation({
-      variables: {
-        transactionId: transaction.id,
-        categoryId: category?.categoryId,
-      },
-    });
+  const [setTransactionCategoryMutation] = useSetTransactionCategoryMutation({
+    variables: {
+      transactionId: transaction.id,
+      categoryId: category?.categoryId,
+    },
+  });
 
   const onClick = useCallback(async () => {
     await setTransactionCategoryMutation();
 
     router.back();
-  }, [setTransactionCategoryMutation]);
+  }, [setTransactionCategoryMutation, router]);
 
   return (
     <Card onClick={onClick} withSeparators>

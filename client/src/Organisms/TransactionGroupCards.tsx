@@ -25,7 +25,6 @@ export const TransactionGroupCards = ({
         return (
           <TransactionGroupCard
             key={transactionGroup.id}
-            id={transactionGroup.id}
             title={`${formatLongMonth(transactionGroup.start)}`}
             total={transactionGroup.total}
             transactionCount={transactionGroup.count}

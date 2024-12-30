@@ -15,7 +15,6 @@ type Story = StoryObj<typeof Selector>;
 
 export const Default: Story = {
   args: {
-    size: "full",
     options: [
       { label: "Option 1", onClick: () => console.log("Option 1 clicked") },
       { label: "Option 2", onClick: () => console.log("Option 2 clicked") },
@@ -27,7 +26,6 @@ export const Default: Story = {
 
 export const WithDisabledOption: Story = {
   args: {
-    size: "full",
     options: [
       { label: "Option 1", onClick: () => console.log("Option 1 clicked") },
       {
@@ -43,7 +41,6 @@ export const WithDisabledOption: Story = {
 
 export const DifferentSizes: Story = {
   args: {
-    size: "half",
     options: [
       { label: "Option 1", onClick: () => console.log("Option 1 clicked") },
       { label: "Option 2", onClick: () => console.log("Option 2 clicked") },
@@ -54,7 +51,6 @@ export const DifferentSizes: Story = {
 
 export const Triple: Story = {
   args: {
-    size: "quarter",
     options: [
       { label: "Option 1", onClick: () => console.log("Option 1 clicked") },
       { label: "Option 2", onClick: () => console.log("Option 2 clicked") },

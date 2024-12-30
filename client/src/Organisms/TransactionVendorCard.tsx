@@ -20,19 +20,18 @@ export const TransactionVendorCard = ({
 }) => {
   const router = useRouter();
 
-  const [setTransactionVendorMutation, { data, loading, error }] =
-    useSetTransactionVendorMutation({
-      variables: {
-        transactionId: transaction.id,
-        vendorId: vendor?.id,
-      },
-    });
+  const [setTransactionVendorMutation] = useSetTransactionVendorMutation({
+    variables: {
+      transactionId: transaction.id,
+      vendorId: vendor?.id,
+    },
+  });
 
   const onClick = useCallback(async () => {
     await setTransactionVendorMutation();
 
     router.back();
-  }, [setTransactionVendorMutation]);
+  }, [setTransactionVendorMutation, router]);
 
   return (
     <Card onClick={onClick} withSeparators>

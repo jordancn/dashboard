@@ -15,8 +15,9 @@ import { CardTitle } from "@/Molecules/CardTitle";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { TransactionCards } from "@/Organisms/TransactionCards";
-import { useActivityGroup } from "@/Providers/AppStateProvider";
+import { ActivityGroup, useActivityGroup } from "@/Providers/AppStateProvider";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
+import { DateIso } from "@/Utils/date-iso";
 import { formatCurrency, getNamedDateRange } from "@/Utils/formatters";
 import { getActivityGroupBy } from "@/Utils/helpers";
 import {
@@ -29,6 +30,47 @@ import {
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import styles from "./page.module.css";
+
+const useQuery = (args: {
+  entityId?: string;
+  categoryId: string;
+  start: DateIso;
+  end: DateIso;
+  activityGroup: ActivityGroup;
+}) => {
+  const useOverview = !!args.entityId && args.entityId !== "overview";
+
+  const overviewRresults = useTransactionCategoryGroupOverallQuery({
+    variables: {
+      dateRange: {
+        start: args.start,
+        end: args.end,
+      },
+      categoryId: args.categoryId,
+      groupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: !useOverview,
+  });
+
+  const entityResults = useTransactionCategoryGroupQuery({
+    variables: {
+      entityId: args.entityId || "",
+      dateRange: {
+        start: args.start,
+        end: args.end,
+      },
+      categoryId: args.categoryId,
+      groupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: useOverview,
+  });
+
+  if (useOverview) {
+    return overviewRresults;
+  }
+
+  return entityResults;
+};
 
 const TransactionsCategory = () => {
   const router = useRouter();
@@ -43,29 +85,13 @@ const TransactionsCategory = () => {
 
   const activityGroup = useActivityGroup();
 
-  const results =
-    entityId === "overview"
-      ? useTransactionCategoryGroupOverallQuery({
-          variables: {
-            dateRange: {
-              start,
-              end,
-            },
-            categoryId,
-            groupBy: getActivityGroupBy(activityGroup),
-          },
-        })
-      : useTransactionCategoryGroupQuery({
-          variables: {
-            entityId,
-            dateRange: {
-              start,
-              end,
-            },
-            categoryId,
-            groupBy: getActivityGroupBy(activityGroup),
-          },
-        });
+  const results = useQuery({
+    entityId,
+    categoryId,
+    start,
+    end,
+    activityGroup,
+  });
 
   const onBackClicked = useCallback(() => {
     router.back();

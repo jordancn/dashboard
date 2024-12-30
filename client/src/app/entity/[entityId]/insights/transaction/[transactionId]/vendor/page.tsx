@@ -59,7 +59,7 @@ const Vendors = ({
           );
         }),
       ),
-    [vendorsWithNewVendorEntry, transactionVendorId],
+    [transaction, vendorsWithNewVendorEntry, transactionVendorId],
   );
 
   return (

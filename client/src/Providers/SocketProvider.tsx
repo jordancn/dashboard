@@ -92,28 +92,44 @@ export const useIsSocketConnected = () => {
   return state.state === "connected";
 };
 
-export type UseSocketChannel<TSend, TReceive> = {
-  state: "connected" | "disconnected";
-  on?: (callback: (data: TReceive) => void) => void;
-  emit?: (data: TSend) => void;
-};
+type AssertionFn<T> = (params: unknown) => asserts params is T;
 
-export const useSocketChannel = <TSend, TReceive>(
+type AssertedType<A extends AssertionFn<unknown>> =
+  A extends AssertionFn<infer U> ? U : never;
+
+export type UseSocketChannel<TSend, TReceive> =
+  | {
+      state: "connected";
+      on: (callback: (data: TReceive) => void) => void;
+      emit: (data: TSend) => void;
+      off: () => void;
+    }
+  | {
+      state: "disconnected";
+    };
+
+export const useSocketChannel = <
+  TSend = unknown,
+  TAssertionFn extends AssertionFn<unknown> = AssertionFn<unknown>,
+>(
   channel: string,
-): UseSocketChannel<TSend, TReceive> => {
+  assertionFn: TAssertionFn,
+): UseSocketChannel<TSend, AssertedType<TAssertionFn>> => {
   const state = useSocketState();
-
   const isConnected = state.state === "connected";
 
   const on = useCallback(
-    (fn: (data: TReceive) => void) => {
-      if (!isConnected) {
-        return;
-      }
+    (fn: (data: AssertedType<TAssertionFn>) => void) => {
+      if (!isConnected) return;
 
-      return state.socket.on(channel, fn);
+      const assertedFn = (data: unknown) => {
+        assertionFn(data);
+        return fn(data as AssertedType<TAssertionFn>);
+      };
+
+      return state.socket.on(channel, assertedFn);
     },
-    [isConnected, state],
+    [isConnected, state, assertionFn, channel],
   );
 
   const emit = useCallback(
@@ -124,26 +140,34 @@ export const useSocketChannel = <TSend, TReceive>(
 
       state.socket.emit(channel, data);
     },
-    [isConnected, state],
+    [isConnected, state, channel],
   );
 
+  const off = useCallback(() => {
+    if (!isConnected) {
+      return;
+    }
+
+    state.socket.off(channel);
+  }, [isConnected, state, channel]);
+
+  // Return an object that knows if the socket is connected
   if (!isConnected) {
-    return {
-      state: "disconnected",
-    };
+    return { state: "disconnected" };
   }
 
   return {
     state: "connected",
     on,
     emit,
+    off,
   };
 };
 
 const initialSocket = socketIo("http://localhost:4000");
 
 export const SocketProvider = ({ children }: { children?: ReactNode }) => {
-  const [socket, setSocket] = useState<Socket | null>(initialSocket);
+  const [socket] = useState<Socket | null>(initialSocket);
   const setError = useSetError();
 
   const [state, dispatch] = useReducer(reducer, {

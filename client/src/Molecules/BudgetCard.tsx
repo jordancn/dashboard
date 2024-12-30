@@ -9,7 +9,6 @@ import { formatCurrency, formatNumber } from "@/Utils/formatters";
 import styles from "./BudgetCard.module.css";
 
 export const BudgetCard = ({
-  size,
   entityId,
   categoryId,
   categoryName,
@@ -18,7 +17,6 @@ export const BudgetCard = ({
   percent,
   dateRange,
 }: {
-  size?: "half" | "full";
   entityId?: string;
   categoryId: string;
   categoryName: string;

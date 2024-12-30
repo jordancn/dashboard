@@ -10,7 +10,6 @@ import { formatCurrency, formatNumber } from "@/Utils/formatters";
 import styles from "./TransactionGroupCard.module.css";
 
 export const TransactionGroupCard = ({
-  id,
   title,
   transactionCount,
   total,
@@ -19,7 +18,6 @@ export const TransactionGroupCard = ({
   changePercent,
   categoryType,
 }: {
-  id: string;
   title: string | undefined;
   transactionCount: number;
   total: number;

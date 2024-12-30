@@ -17,7 +17,6 @@ export const Default: Story = {
   args: {
     title: "Item Title",
     path: "/some/path",
-    base: "/base",
     entityId: "overview",
   },
 };
@@ -27,7 +26,6 @@ export const WithStringIcon: Story = {
     title: "Item with Icon",
     icon: "home",
     path: "/home",
-    base: "/base",
     entityId: "home",
   },
 };
@@ -37,7 +35,6 @@ export const WithCustomIcon: Story = {
     title: "Custom Icon",
     icon: ({ className }) => <div className={className}>🔧</div>,
     path: "/tools",
-    base: "/base",
     entityId: "tools",
   },
 };
@@ -47,7 +44,6 @@ export const Selected: Story = {
     title: "Selected Item",
     icon: "star",
     path: "/selected",
-    base: "/base",
     entityId: "selected",
   },
   parameters: {

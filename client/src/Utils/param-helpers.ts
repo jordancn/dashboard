@@ -60,17 +60,17 @@ export function hasTransactionId(
 }
 
 type AssertionFn<T> = (params: unknown) => asserts params is T;
-type AssertedTypes<A extends Array<AssertionFn<any>>> =
+type AssertedTypes<A extends Array<AssertionFn<unknown>>> =
   A[number] extends AssertionFn<infer U> ? U : never;
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I,
-) => void
+type UnionToIntersection<U> = (
+  U extends unknown ? (k: U) => void : never
+) extends (k: infer I) => void
   ? I
   : never;
-type AssertionsToIntersection<A extends Array<AssertionFn<any>>> =
+type AssertionsToIntersection<A extends Array<AssertionFn<unknown>>> =
   UnionToIntersection<AssertedTypes<A>>;
 
-export function useRouteParams<A extends Array<AssertionFn<any>>>(
+export function useRouteParams<A extends Array<AssertionFn<unknown>>>(
   defaultParams: Partial<AssertionsToIntersection<A>>,
   ...assertionFns: A
 ): AssertionsToIntersection<A> {

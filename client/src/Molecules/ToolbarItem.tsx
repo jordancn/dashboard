@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
 import { ReactNode, useCallback } from "react";
 import styles from "./ToolbarItem.module.css";
 
@@ -6,25 +7,22 @@ export const ToolbarItem = ({
   title,
   icon,
   path,
-  base,
   entityId,
 }: {
   title: string;
   icon?: string | ((props: { className: string }) => ReactNode);
   path: string;
-  base: string;
   entityId: string | "overview";
 }) => {
-  // const navigate = useNavigate();
+  const router = useRouter();
 
   const Icon = icon;
 
   const match = entityId ? window.location.href.includes(entityId) : false;
 
   const onClick = useCallback(() => {
-    // TODO
-    // navigate(props.path);
-  }, []);
+    router.push(path);
+  }, [path, router]);
 
   return (
     <div

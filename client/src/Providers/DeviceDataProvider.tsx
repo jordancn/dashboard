@@ -101,7 +101,7 @@ export const DeviceDataProvider = ({ children }: { children?: ReactNode }) => {
         orientation: getOrientation(orientation),
       },
     });
-  }, [isMobileTablet, isMobilePhone]);
+  }, [isMobileTablet, isMobilePhone, orientationChangeEventHandler]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 };

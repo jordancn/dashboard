@@ -11,7 +11,7 @@ import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
-import { formatLongMonthYear, toDateIso } from "@/Utils/date-iso";
+import { DateIso, formatLongMonthYear, toDateIso } from "@/Utils/date-iso";
 import {
   hasEnd,
   hasEntityId,
@@ -22,6 +22,41 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import styles from "./page.module.css";
 
+const useQuery = (args: {
+  entityId?: string;
+  start: DateIso;
+  end: DateIso;
+}) => {
+  const useOverview = !!args.entityId && args.entityId !== "overview";
+
+  const overviewResults = useTransactionGroupOverviewQuery({
+    variables: {
+      transactionsDateRange: {
+        start: args.start,
+        end: args.end,
+      },
+    },
+    skip: !useOverview,
+  });
+
+  const entityResults = useTransactionGroupQuery({
+    variables: {
+      entityId: args.entityId || "",
+      transactionsDateRange: {
+        start: args.start,
+        end: args.end,
+      },
+    },
+    skip: useOverview,
+  });
+
+  if (useOverview) {
+    return overviewResults;
+  }
+
+  return entityResults;
+};
+
 const TransactionGroup = () => {
   const { entityId, start, end } = useRouteParams(
     {},
@@ -31,29 +66,11 @@ const TransactionGroup = () => {
   );
   const router = useRouter();
 
-  const results =
-    entityId && entityId !== "overview"
-      ? useTransactionGroupQuery({
-          variables: {
-            entityId,
-            transactionsDateRange: {
-              start,
-              end,
-            },
-          },
-        })
-      : useTransactionGroupOverviewQuery({
-          variables: {
-            transactionsDateRange: {
-              start,
-              end,
-            },
-          },
-        });
+  const results = useQuery({ entityId, start, end });
 
   const onBackClicked = useCallback(() => {
     router.back();
-  }, []);
+  }, [router]);
 
   const transactions = useMemo(() => {
     if (results.loading) {

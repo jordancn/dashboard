@@ -1,79 +1,141 @@
 "use client";
 
+import { useChatChannel } from "@/app/entity/[entityId]/insights/chat/ChatChannel";
+import { ConnectionStatusIcon } from "@/Atoms/ConnectionStatusIcon";
 import { TextInput } from "@/Molecules/TextInput";
-import {
-  useIsSocketConnected,
-  useSocketChannel,
-} from "@/Providers/SocketProvider";
-import { DateIso } from "@/Utils/date-iso";
-import { DateTimeIso, toSlashyDateAndTime } from "@/Utils/date-time-iso";
-import { useCallback, useEffect, useState } from "react";
+import { useSetError } from "@/Providers/ErrorStateProvider";
+import { useIsSocketConnected } from "@/Providers/SocketProvider";
+import { DateTimeIso, now, toSlashyDateAndTime } from "@/Utils/date-time-iso";
+import classNames from "classnames";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
-
-type HelloRequest = {
-  message: string;
-};
-
-type HelloResponse = {
-  message: string;
-  date: DateIso;
-};
-
-const useHelloSocketChannel = () => {
-  const channel = useSocketChannel<HelloRequest, HelloResponse>("hello");
-
-  return channel;
-};
 
 const Chat = () => {
   const isSocketConnected = useIsSocketConnected();
-  const channel = useHelloSocketChannel();
-  const [responsesReceived, setResponsesReceived] = useState<HelloResponse[]>(
-    [],
-  );
+  const setError = useSetError();
+  const chatChannel = useChatChannel();
+
+  const [entries, setEntries] = useState<
+    { type: "request" | "response"; message: string; date: DateTimeIso }[]
+  >([]);
   const [message, setMessage] = useState<string>("");
 
+  const logsRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (channel.state === "disconnected") {
+    if (chatChannel.state === "disconnected") {
       return;
     }
 
-    channel.on?.((data) => {
+    chatChannel.on((data) => {
       console.log("received", JSON.stringify(data));
 
-      setResponsesReceived((prev) => [...prev, data]);
-    });
-  }, [channel, responsesReceived]);
+      setEntries((prev) => [
+        ...prev,
+        {
+          type: "response",
+          message: data.message,
+          date: data.date,
+        },
+      ]);
 
-  const sendData = useCallback(() => {
-    channel.emit?.({ message });
-  }, [channel, message]);
+      setTimeout(() => {
+        logsRef.current?.scrollTo({
+          top: logsRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 100);
+    });
+
+    return () => {
+      chatChannel.off();
+    };
+  }, [chatChannel]);
+
+  const sendData = useCallback(
+    (message: string) => {
+      console.log("sendData", message);
+
+      if (chatChannel.state === "disconnected") {
+        setError(["Socket is disconnected"]);
+        return;
+      }
+
+      setEntries((prev) => [
+        ...prev,
+        { type: "request", message, date: now() },
+      ]);
+
+      chatChannel.emit({ message });
+
+      setMessage("");
+    },
+    [chatChannel, setError],
+  );
+
+  const onSendButtonClicked = useCallback(() => {
+    if (chatChannel.state === "disconnected") {
+      return;
+    }
+
+    console.log("onSendButtonClicked", message);
+
+    sendData(message);
+  }, [chatChannel, message, sendData]);
+
+  const onInputEnter = useCallback(
+    (value: string) => {
+      console.log("onInputEnter", value);
+
+      sendData(value);
+    },
+    [sendData],
+  );
+
+  const onInputChanged = useCallback(
+    (value: string) => {
+      console.log("onInputChanged", value);
+
+      setMessage(value);
+    },
+    [setMessage],
+  );
 
   return (
     <div>
-      {isSocketConnected ? <div>Connected</div> : <div>Disconnected</div>}
-
-      <div className={styles.request}>
-        <div className={styles.requestMessage}></div>
-        <TextInput
-          value={message}
-          onChange={setMessage}
-          placeholder="Message"
-        />
-        <div className={styles.requestButton}>
-          <button onClick={sendData}>Send</button>
-        </div>
-      </div>
-
-      <div className={styles.responses}>
-        {responsesReceived.map((response, index) => (
-          <div className={styles.response} key={index}>
-            <div className={styles.responseDate}>
-              {toSlashyDateAndTime(response.date as unknown as DateTimeIso)}
+      <div className={styles.logs} ref={logsRef}>
+        {entries.map((entry, index) => (
+          <div
+            className={classNames(styles.log, {
+              [styles.request]: entry.type === "request",
+              [styles.response]: entry.type === "response",
+            })}
+            key={index}
+          >
+            <div className={styles.logDate}>
+              {toSlashyDateAndTime(entry.date)}
             </div>
-            <div className={styles.responseMessage}>{response.message}</div>
+            <div className={styles.logMessage}>{entry.message}</div>
           </div>
         ))}
+      </div>
+      <div className={styles.message}>
+        <ConnectionStatusIcon
+          status={isSocketConnected ? "connected" : "disconnected"}
+        />
+
+        <div className={styles.messageMessage}>
+          <TextInput
+            value={message}
+            onChange={onInputChanged}
+            onEnter={onInputEnter}
+            placeholder="Message"
+            clearOnEnter
+          />
+        </div>
+        <div className={styles.messageButton}>
+          <button onClick={onSendButtonClicked}>Send</button>
+        </div>
       </div>
     </div>
   );

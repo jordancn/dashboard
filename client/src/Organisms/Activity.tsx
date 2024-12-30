@@ -187,7 +187,6 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
             relativePosition={getRelativePosition(index, list)}
             key={category.categoryId}
             title={category.name}
-            id={category.categoryId}
             total={category.total}
             transactionCount={category.count}
             changePercent={category.change.changePercent}
@@ -215,7 +214,6 @@ export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {
             relativePosition={getRelativePosition(index, list)}
             key={category.categoryId}
             title={category.name}
-            id={category.categoryId}
             total={category.total}
             transactionCount={category.count}
             changePercent={category.change.changePercent}

@@ -1,0 +1,11 @@
+.active {
+  fill: green;
+}
+
+.neutral {
+  fill: gray;
+}
+
+.negative {
+  fill: red;
+}

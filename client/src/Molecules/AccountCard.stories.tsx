@@ -15,13 +15,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    id: "1",
     name: "Checking Account",
     currentBalance: 5000.75,
-    institution: {
-      id: "inst1",
-      name: "Bank of Example",
-    },
     entity: {
       id: "ent1",
       name: "Personal",
@@ -35,7 +30,6 @@ export const Default: Story = {
 export const WithOverviewEntity: Story = {
   args: {
     ...Default.args,
-    id: "2",
     name: "Savings Account",
     currentBalance: 10000.5,
     accountType: "Savings",

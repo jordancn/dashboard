@@ -46,7 +46,13 @@ export const TransactionNewCategoryCard = ({
 
       router.back();
     },
-    [setTransactionCategoryMutation, transaction.id],
+    [
+      setTransactionCategoryMutation,
+      transaction.id,
+      addCategory,
+      categoryType,
+      router,
+    ],
   );
 
   return (

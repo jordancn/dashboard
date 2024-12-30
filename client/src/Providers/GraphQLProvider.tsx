@@ -33,7 +33,7 @@ export const GraphQLProvider = ({ children }: { children: ReactNode }) => {
     [setError],
   );
 
-  const httpLink = useMemo(() => new HttpLink({ uri }), [uri]);
+  const httpLink = useMemo(() => new HttpLink({ uri }), []);
 
   const client = useMemo(
     () =>

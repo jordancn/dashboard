@@ -5,11 +5,15 @@ export const TextInput = ({
   placeholder,
   value: initialValue,
   onChange: propOnChange,
+  onEnter,
+  clearOnEnter,
   multiline,
 }: {
   placeholder: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
+  onEnter?: (value: string) => void;
+  clearOnEnter?: boolean;
   multiline?: boolean;
 }) => {
   const [value, setValue] = useState(initialValue);
@@ -18,24 +22,28 @@ export const TextInput = ({
     (event: ChangeEvent<HTMLInputElement>) => {
       setValue(event.target.value);
     },
-    [propOnChange],
+    [setValue],
   );
 
   const onBlur = useCallback(() => {
-    propOnChange(value);
+    propOnChange?.(value);
   }, [value, propOnChange]);
 
   const onKeyUp = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
-        propOnChange(value);
+        onEnter?.(value);
+
+        if (clearOnEnter) {
+          setValue("");
+        }
       }
 
       if (event.key === "Escape") {
         setValue(initialValue);
       }
     },
-    [value, propOnChange, initialValue],
+    [value, onEnter, initialValue, clearOnEnter],
   );
 
   if (multiline) {

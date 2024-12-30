@@ -68,7 +68,7 @@ const Categories = ({
           );
         }),
       ),
-    [categories, transactionCategoryId],
+    [transactionCategoryId, categoriesWithNewCategoryEntry, transaction],
   );
 
   return <>{categoryCards}</>;
