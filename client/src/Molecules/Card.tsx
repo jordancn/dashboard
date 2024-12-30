@@ -29,7 +29,13 @@ export const Card = ({
       })}
       onClick={onClick}
     >
-      {href ? <Link href={href}>{children}</Link> : children}
+      {href ? (
+        <Link href={href} prefetch={false}>
+          {children}
+        </Link>
+      ) : (
+        children
+      )}
     </div>
   );
 };
