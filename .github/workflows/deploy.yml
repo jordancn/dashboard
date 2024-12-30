@@ -34,13 +34,40 @@ jobs:
           docker save -o dashboard-graphql-build-${{ github.sha }}.tar dashboard-graphql:build-${{ github.sha }}
 
       # Step 5: Copy Docker images to Linode server
-      - name: Copy Docker images to Linode
+      - name: Copy Docker compose file to Linode
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_HOSTNAME }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          source: docker-compose-${{ github.sha }}.yml,dashboard-nextjs-build-${{ github.sha }}.tar,dashboard-storybook-build-${{ github.sha }}.tar,dashboard-graphql-build-${{ github.sha }}.tar
+          source: docker-compose-${{ github.sha }}.yml
+          target: /home/${{ secrets.DEPLOY_USERNAME }}
+
+      - name: Copy Docker image to Linode (nextjs)
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          source: dashboard-nextjs-build-${{ github.sha }}.tar
+          target: /home/${{ secrets.DEPLOY_USERNAME }}
+
+      - name: Copy Docker image to Linode (storybook)
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          source: dashboard-storybook-build-${{ github.sha }}.tar
+          target: /home/${{ secrets.DEPLOY_USERNAME }}
+
+      - name: Copy Docker image to Linode (graphql)
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOSTNAME }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          source: dashboard-graphql-build-${{ github.sha }}.tar
           target: /home/${{ secrets.DEPLOY_USERNAME }}
 
       # Step 6: SSH into Linode and deploy with Docker Compose
