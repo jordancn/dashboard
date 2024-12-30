@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Redirect } from "@/Atoms/Redirect";
 import styles from "./MenuListItem.module.css";
 
 export const MenuListItem = ({
@@ -9,8 +9,8 @@ export const MenuListItem = ({
   path: string;
 }) => {
   return (
-    <Link href={path} className={styles.menuListItem}>
+    <Redirect href={path} className={styles.menuListItem}>
       <div className={styles.title}>{title}</div>
-    </Link>
+    </Redirect>
   );
 };

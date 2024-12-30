@@ -57,31 +57,28 @@ export const DeviceDataProvider = ({ children }: { children?: ReactNode }) => {
   const orientationChangeEventHandler = useCallback(
     () =>
       _.throttle((event: Event) => {
-        if (event.target instanceof ScreenOrientation) {
-          if (state.status !== "LOADED") {
-            return;
+        setState((prevState) => {
+          if (!(event.target instanceof ScreenOrientation)) {
+            return prevState;
           }
 
           const newOrientation = getOrientation(event.target);
 
-          if (state.value.orientation === newOrientation) {
-            return;
+          if (
+            prevState.status === "LOADED" &&
+            prevState.value.orientation === newOrientation
+          ) {
+            return prevState;
           }
 
-          setState((prevState) => {
-            if (prevState.status !== "LOADED") {
-              return prevState;
-            }
-
-            return {
-              ...prevState,
-              value: {
-                ...prevState.value,
-                orientation: newOrientation,
-              },
-            };
-          });
-        }
+          return {
+            status: "LOADED",
+            value: {
+              isMobile: isMobilePhone || isMobileTablet,
+              orientation: newOrientation,
+            },
+          };
+        });
       }, 500),
     [setState, state],
   );
@@ -101,7 +98,7 @@ export const DeviceDataProvider = ({ children }: { children?: ReactNode }) => {
         orientation: getOrientation(orientation),
       },
     });
-  }, [isMobileTablet, isMobilePhone, orientationChangeEventHandler]);
+  }, [isMobileTablet, isMobilePhone]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 };

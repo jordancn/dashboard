@@ -1,5 +1,5 @@
+import { Redirect } from "@/Atoms/Redirect";
 import classNames from "classnames";
-import Link from "next/link";
 import { ReactNode } from "react";
 import styles from "./Card.module.css";
 
@@ -29,13 +29,7 @@ export const Card = ({
       })}
       onClick={onClick}
     >
-      {href ? (
-        <Link href={href} prefetch={false}>
-          {children}
-        </Link>
-      ) : (
-        children
-      )}
+      {href ? <Redirect href={href}>{children}</Redirect> : children}
     </div>
   );
 };

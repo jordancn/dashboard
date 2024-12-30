@@ -1,8 +1,8 @@
 import { Headline } from "@/Atoms/Headline";
 import { Label } from "@/Atoms/Label";
+import { Redirect } from "@/Atoms/Redirect";
 import { getWidthClassName } from "@/Utils/helpers";
 import classNames from "classnames";
-import Link from "next/link";
 import styles from "./SectionHeading.module.css";
 
 export const SectionHeading = ({
@@ -21,7 +21,7 @@ export const SectionHeading = ({
   return (
     <>
       {href && (
-        <Link
+        <Redirect
           href={href}
           className={classNames(styles.sectionHeading, {
             ...getWidthClassName(size),
@@ -29,7 +29,7 @@ export const SectionHeading = ({
         >
           <Headline weight="Bold" title={title} />
           {subtitle && <Label title={subtitle} />}
-        </Link>
+        </Redirect>
       )}
 
       {!href && (
