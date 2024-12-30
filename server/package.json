@@ -46,6 +46,7 @@
     "json-stable-stringify": "^1.0.1",
     "lodash": "^4.17.21",
     "ofx": "^0.5.0",
+    "ollama": "^0.5.11",
     "pkg": "^5.8.1",
     "prettier": "^2.4.1",
     "socket.io": "^4.8.1",
