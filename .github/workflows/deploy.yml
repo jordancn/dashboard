@@ -24,7 +24,7 @@ jobs:
       - name: Build Docker images
         run: |
           cp docker-compose.yml docker-compose-${{ github.sha }}.yml
-          GIT_COMMIT_SHA=${{ github.sha }} docker-compose build
+          GIT_COMMIT_SHA=${{ github.sha }} /usr/local/bin/docker-compose build
 
       # Step 4: Save Docker images to tar files
       - name: Save Docker images to tar files
