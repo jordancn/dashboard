@@ -55,6 +55,7 @@ jobs:
             # Remove old containers and images
             docker-compose down || true
             docker system prune -f
+            docker image prune -a -f
 
             # Load new images
             docker load -i dashboard-nextjs-build-${{ github.sha }}.tar
@@ -68,4 +69,4 @@ jobs:
             ln -s docker-compose-${{ github.sha }}.yml docker-compose.yml
 
             # Bring up the new images
-            GIT_COMMIT_SHA=${{ github.sha }} docker-compose up -d
+            GIT_COMMIT_SHA=${{ github.sha }} docker-compose up -d --no-build
