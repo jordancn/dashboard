@@ -40,7 +40,7 @@ jobs:
           host: ${{ secrets.DEPLOY_HOSTNAME }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          source: docker-compose-${{ github.sha }}.yml dashboard-nextjs-build-${{ github.sha }}.tar dashboard-storybook-build-${{ github.sha }}.tar dashboard-graphql-build-${{ github.sha }}.tar
+          source: docker-compose-${{ github.sha }}.yml,dashboard-nextjs-build-${{ github.sha }}.tar,dashboard-storybook-build-${{ github.sha }}.tar,dashboard-graphql-build-${{ github.sha }}.tar
           target: /home/${{ secrets.DEPLOY_USERNAME }}
 
       # Step 6: SSH into Linode and deploy with Docker Compose
