@@ -1,7 +1,6 @@
 import { TextInput } from "@/Molecules/TextInput";
 import { useChatChannel } from "@/Organisms/ChatChannel";
 import { useSetError } from "@/Providers/ErrorStateProvider";
-import { useIsSocketConnected } from "@/Providers/SocketProvider";
 import { DateTimeIso, now, toSlashyDateAndTime } from "@/Utils/date-time-iso";
 import classNames from "classnames";
 import Mousetrap from "mousetrap";
@@ -9,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Chat.module.css";
 
 export const Chat = ({ onClose }: { onClose: () => void }) => {
-  const isSocketConnected = useIsSocketConnected();
+  // const isSocketConnected = useIsSocketConnected();
   const setError = useSetError();
   const chatChannel = useChatChannel();
 
