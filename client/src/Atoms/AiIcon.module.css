@@ -1,7 +1,19 @@
 .disabled {
-  fill: var(--disabled-color);
+  @media (prefers-color-scheme: dark) {
+    fill: silver;
+  }
+
+  @media (prefers-color-scheme: light) {
+    fill: silver;
+  }
 }
 
 .enabled {
-  fill: var(--button-color);
+  @media (prefers-color-scheme: dark) {
+    fill: white;
+  }
+
+  @media (prefers-color-scheme: light) {
+    fill: black;
+  }
 }

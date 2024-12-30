@@ -56,7 +56,7 @@ export const attachChatChannel = async (args: {
   messages.push({
     role: "system",
     content:
-      "You are a helpful assistant that can answer questions about the financial information provided in the system role.\n",
+      "You are a helpful assistant that can answer questions about the financial information provided in the system role. When formatting dates, use MM/DD/YYYY. When formatting times, use HH:MM:SS. When formatting numbers, use the thousands separator for the currency. When formatting percentages, use the percentage symbol. Always round to the nearest cent (two decimal places).\n",
     // content:
     //   "You are a helpful assistant that can answer questions about the financial information described in this GraphQL schema: \n\n" +
     //   JSON.stringify(schema, null, 2),

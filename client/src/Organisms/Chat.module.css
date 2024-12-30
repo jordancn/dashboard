@@ -20,7 +20,14 @@
   width: var(--card-full-width);
 
   border-radius: 20px;
-  background-color: white;
+
+  @media (prefers-color-scheme: light) {
+    background-color: white;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: black;
+  }
 }
 
 .chatClose {
@@ -35,7 +42,6 @@
   display: flex;
   height: 60px;
 
-  /* background-color: white; */
   padding: 10px;
   border-radius: 20px;
 
@@ -54,13 +60,29 @@
 
   & > input {
     padding: 4px;
-    border: 1px solid silver;
-    background-color: #eeeeee;
+
+    @media (prefers-color-scheme: light) {
+      border: 1px solid silver;
+      background-color: #eeeeee;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      border: 1px solid silver;
+      background-color: #333333;
+    }
+
     border-radius: 25px;
     padding: 10px;
 
     &:focus {
-      border: 1px solid silver;
+      @media (prefers-color-scheme: light) {
+        border: 1px solid silver;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        border: 1px solid silver;
+      }
+
       border-radius: 25px;
     }
   }
@@ -70,7 +92,14 @@
   flex: 0;
 
   & > button {
-    border: 1px solid silver;
+    @media (prefers-color-scheme: light) {
+      border: 1px solid silver;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      border: 1px solid silver;
+    }
+
     border-radius: 25px;
     padding: 12px;
     font-weight: bold;
@@ -122,8 +151,17 @@
   margin-left: auto;
 
   .logMessage {
-    background-color: rgb(64, 136, 246);
-    color: white;
+    @media (prefers-color-scheme: light) {
+      background-color: rgb(64, 136, 246);
+
+      color: white;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgb(64, 136, 246);
+
+      color: black;
+    }
   }
 }
 
@@ -131,7 +169,16 @@
   margin-right: auto;
 
   .logMessage {
-    background-color: rgb(249, 249, 249);
-    color: black;
+    @media (prefers-color-scheme: light) {
+      background-color: rgb(249, 249, 249);
+
+      color: black;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgb(50, 50, 50);
+
+      color: white;
+    }
   }
 }
