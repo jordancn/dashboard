@@ -10,24 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
+      # Step 1: Install Docker and Docker Compose
+      - name: Install Docker and Docker Compose
+        run: |
+          curl -L "https://github.com/docker/compose/releases/download/2.32.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
+      # Step 2: Check out the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Build Docker images
+      # Step 3: Build Docker images
       - name: Build Docker images
         run: |
           cp docker-compose.yml docker-compose-${{ github.sha }}.yml
           GIT_COMMIT_SHA=${{ github.sha }} docker-compose build
 
-      # Step 3: Save Docker images to tar files
+      # Step 4: Save Docker images to tar files
       - name: Save Docker images to tar files
         run: |
           docker save -o dashboard-nextjs-build-${{ github.sha }}.tar dashboard-nextjs:build-${{ github.sha }}
           docker save -o dashboard-storybook-build-${{ github.sha }}.tar dashboard-storybook:build-${{ github.sha }}
           docker save -o dashboard-graphql-build-${{ github.sha }}.tar dashboard-graphql:build-${{ github.sha }}
 
-      # Step 4: Copy Docker images to Linode server
+      # Step 5: Copy Docker images to Linode server
       - name: Copy Docker images to Linode
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -37,7 +43,7 @@ jobs:
           source: docker-compose-${{ github.sha }}.yml dashboard-nextjs-build-${{ github.sha }}.tar dashboard-storybook-build-${{ github.sha }}.tar dashboard-graphql-build-${{ github.sha }}.tar
           target: /home/${{ secrets.DEPLOY_USERNAME }}
 
-      # Step 5: SSH into Linode and deploy with Docker Compose
+      # Step 6: SSH into Linode and deploy with Docker Compose
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@v0.1.4
         with:
