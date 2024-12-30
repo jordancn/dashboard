@@ -9,7 +9,7 @@ export type Mode = "light" | "dark";
 export type Variant = "Opaque" | "Vibrant";
 export type Ordinal = "Primary" | "Secondary" | "Tertiary" | "Quarternary";
 export type Weight = "Regular" | "Bold";
-export type Style = "Normal" | "Italic";
+export type FontStyle = "Normal" | "Italic";
 export type Alignment = "Left" | "Center" | "Right";
 export type Size =
   | "LargeTitle"
@@ -29,7 +29,7 @@ export const Text = ({
   ordinal: ordinalProp,
   variant: variantProp,
   weight: weightProp,
-  style: styleProp,
+  fontStyle: fontStyleProp,
   alignment: alignmentProp,
   size,
   value,
@@ -38,7 +38,7 @@ export const Text = ({
   ordinal?: Ordinal;
   variant?: Variant;
   weight?: Weight;
-  style?: Style;
+  fontStyle?: FontStyle;
   alignment?: Alignment;
   size?: Size;
   value: string;
@@ -61,14 +61,14 @@ export const Text = ({
   const ordinal = useMemo(() => ordinalProp || "Primary", [ordinalProp]);
   const variant = useMemo(() => variantProp || "Opaque", [variantProp]);
   const weight = useMemo(() => weightProp || "Regular", [weightProp]);
-  const style = useMemo(() => styleProp || "Normal", [styleProp]);
+  const fontStyle = useMemo(() => fontStyleProp || "Normal", [fontStyleProp]);
   const alignment = useMemo(() => alignmentProp || "Left", [alignmentProp]);
 
   const className = useMemo(() => {
     return classNames(styles.text, {
       // Style
-      [styles.normalStyle]: style === "Normal",
-      [styles.italicStyle]: style !== "Normal",
+      [styles.normalStyle]: fontStyle === "Normal",
+      [styles.italicStyle]: fontStyle !== "Normal",
 
       // Weight
       [styles.regularWeight]: weight === "Regular",
@@ -231,7 +231,7 @@ export const Text = ({
     size,
     variant,
     weight,
-    style,
+    fontStyle,
     alignment,
   ]);
 

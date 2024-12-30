@@ -79,6 +79,10 @@ jobs:
           key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           debug: true
           script: |
+            # Make docker-compose down happy :-/
+            mkdir -p server
+            mkdir -p client
+
             # Stop old containers
             docker-compose down || true
 

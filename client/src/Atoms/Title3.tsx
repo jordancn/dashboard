@@ -1,4 +1,4 @@
-import { Alignment, Ordinal, Style, Text, Variant, Weight } from "./Text";
+import { Alignment, FontStyle, Ordinal, Text, Variant, Weight } from "./Text";
 
 export const Title3 = ({
   title,
@@ -12,7 +12,7 @@ export const Title3 = ({
   color?: Ordinal;
   variant?: Variant;
   weight?: Weight;
-  style?: Style;
+  style?: FontStyle;
   alignment?: Alignment;
 }) => {
   return (
@@ -20,7 +20,7 @@ export const Title3 = ({
       ordinal={color}
       variant={variant}
       weight={weight}
-      style={style}
+      fontStyle={style}
       alignment={alignment}
       size="Title3"
       value={title}

@@ -1,4 +1,4 @@
-import { Alignment, Ordinal, Style, Text, Variant, Weight } from "./Text";
+import { Alignment, FontStyle, Ordinal, Text, Variant, Weight } from "./Text";
 
 export const Caption2 = ({
   title,
@@ -12,7 +12,7 @@ export const Caption2 = ({
   color?: Ordinal;
   variant?: Variant;
   weight?: Weight;
-  style?: Style;
+  style?: FontStyle;
   alignment?: Alignment;
 }) => {
   return (
@@ -20,7 +20,7 @@ export const Caption2 = ({
       ordinal={color}
       variant={variant}
       weight={weight}
-      style={style}
+      fontStyle={style}
       alignment={alignment}
       size="Caption2"
       value={title}

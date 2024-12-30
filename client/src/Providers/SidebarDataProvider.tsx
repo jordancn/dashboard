@@ -67,16 +67,13 @@ const FixedSidebar = ({
   visible: boolean;
   children?: ReactNode;
 }) => {
-  return (
-    <div
-      id="fixed-sidebar"
-      style={{
-        width: visible ? 0 : "var(--sidebar-width)",
-      }}
-    >
-      {children}
-    </div>
-  );
+  // style={{
+  //   width: visible ? 0 : "var(--sidebar-width)",
+  // }
+
+  console.debug("visible", visible);
+
+  return <div id="fixed-sidebar">{children}</div>;
 };
 
 const SidebarAction = ({

@@ -21,7 +21,7 @@ const meta: Meta<typeof Text> = {
       control: "select",
       options: ["Regular", "Bold"],
     },
-    style: {
+    fontStyle: {
       control: "select",
       options: ["Normal", "Italic"],
     },
@@ -86,7 +86,7 @@ export const LargeTitleBold: Story = {
 export const CenteredItalic: Story = {
   args: {
     alignment: "Center",
-    style: "Italic",
+    fontStyle: "Italic",
     value: "Centered Italic Text",
   },
 };

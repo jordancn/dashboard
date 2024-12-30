@@ -92,8 +92,6 @@ const ActivityPage = () => {
         hasNavigationBar
       >
         <VirtualizeSwipeableViews
-          style={styles.root}
-          slideStyle={styles.slide}
           overscanSlideBefore={1}
           overscanSlideAfter={1}
           index={groupIndex}
