@@ -82,16 +82,20 @@ jobs:
             # Stop old containers
             docker-compose down || true
 
+            # Remove old docker-compose.yml file
+            rm -f docker-compose.yml || true
+
+            # Remove unused images and containers
+            docker system prune -f || true
+            docker image prune -a -f || true
+
+            # Create a symlink to the new docker-compose.yml file
+            mv docker-compose-${{ github.sha }}.yml docker-compose.yml
+
             # Load new images
             docker load -i dashboard-nextjs-build-${{ github.sha }}.tar
             docker load -i dashboard-storybook-build-${{ github.sha }}.tar
             docker load -i dashboard-graphql-build-${{ github.sha }}.tar
-
-            # Remove old docker-compose.yml file
-            rm -f docker-compose.yml
-
-            # Create a symlink to the new docker-compose.yml file
-            ln -s docker-compose-${{ github.sha }}.yml docker-compose.yml
 
             # Bring up the new images
             docker-compose up -d --no-build
@@ -100,7 +104,3 @@ jobs:
             rm -f dashboard-nextjs-build-${{ github.sha }}.tar
             rm -f dashboard-storybook-build-${{ github.sha }}.tar
             rm -f dashboard-graphql-build-${{ github.sha }}.tar
-
-            # Remove unused images and containers
-            docker system prune -f
-            docker image prune -a -f
