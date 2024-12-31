@@ -12,6 +12,11 @@ import {
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
+import {
+  shouldSkipEntityQuery,
+  shouldSkipOverviewQuery,
+  shouldUseOverviewQuery,
+} from "@/Molecules/Entity.helpers";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
 import { TransactionCards } from "@/Organisms/TransactionCards";
@@ -38,9 +43,7 @@ const useQuery = (args: {
   end: DateIso;
   activityGroup: ActivityGroup;
 }) => {
-  const useOverview = !!args.entityId && args.entityId !== "overview";
-
-  const overviewRresults = useTransactionCategoryGroupOverallQuery({
+  const overviewResults = useTransactionCategoryGroupOverallQuery({
     variables: {
       dateRange: {
         start: args.start,
@@ -49,7 +52,7 @@ const useQuery = (args: {
       categoryId: args.categoryId,
       groupBy: getActivityGroupBy(args.activityGroup),
     },
-    skip: !useOverview,
+    skip: shouldSkipOverviewQuery(args.entityId),
   });
 
   const entityResults = useTransactionCategoryGroupQuery({
@@ -62,11 +65,11 @@ const useQuery = (args: {
       categoryId: args.categoryId,
       groupBy: getActivityGroupBy(args.activityGroup),
     },
-    skip: useOverview,
+    skip: shouldSkipEntityQuery(args.entityId),
   });
 
-  if (useOverview) {
-    return overviewRresults;
+  if (shouldUseOverviewQuery(args.entityId)) {
+    return overviewResults;
   }
 
   return entityResults;

@@ -2,13 +2,18 @@
 
 import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { Spinner } from "@/Atoms/Spinner";
+import { Title1 } from "@/Atoms/Title1";
 import {
   useTransactionGroupOverviewQuery,
   useTransactionGroupQuery,
 } from "@/GraphQL/client.gen";
+import {
+  shouldSkipEntityQuery,
+  shouldSkipOverviewQuery,
+  shouldUseOverviewQuery,
+} from "@/Molecules/Entity.helpers";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
-import { SectionHeading } from "@/Molecules/SectionHeading";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
 import { DateIso, formatLongMonthYear, toDateIso } from "@/Utils/date-iso";
@@ -27,8 +32,6 @@ const useQuery = (args: {
   start: DateIso;
   end: DateIso;
 }) => {
-  const useOverview = !!args.entityId && args.entityId !== "overview";
-
   const overviewResults = useTransactionGroupOverviewQuery({
     variables: {
       transactionsDateRange: {
@@ -36,7 +39,7 @@ const useQuery = (args: {
         end: args.end,
       },
     },
-    skip: !useOverview,
+    skip: shouldSkipOverviewQuery(args.entityId),
   });
 
   const entityResults = useTransactionGroupQuery({
@@ -47,10 +50,10 @@ const useQuery = (args: {
         end: args.end,
       },
     },
-    skip: useOverview,
+    skip: shouldSkipEntityQuery(args.entityId),
   });
 
-  if (useOverview) {
+  if (shouldUseOverviewQuery(args.entityId)) {
     return overviewResults;
   }
 
@@ -125,7 +128,7 @@ const TransactionGroup = () => {
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards">
-        <SectionHeading title={formatLongMonthYear(toDateIso(start))} />
+        <Title1 weight="Bold" title={formatLongMonthYear(toDateIso(start))} />
 
         <div className={styles.transactionCards}>
           <TransactionCards transactions={transactions} entityId={entityId} />

@@ -17,6 +17,8 @@
   gap: var(--card-gap);
   justify-content: flex-start;
   align-items: flex-start;
+
+  width: 100%;
 }
 
 .short {

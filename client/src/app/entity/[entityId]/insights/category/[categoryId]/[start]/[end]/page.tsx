@@ -4,6 +4,7 @@ import { Caption1 } from "@/Atoms/Caption1";
 import { Headline } from "@/Atoms/Headline";
 import { NavigationChevronLeft } from "@/Atoms/NavigationChevronLeft";
 import { Spinner } from "@/Atoms/Spinner";
+import { Title1 } from "@/Atoms/Title1";
 import {
   useTransactionCategoryGroupOverallQuery,
   useTransactionCategoryGroupQuery,
@@ -11,9 +12,13 @@ import {
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
+import {
+  shouldSkipEntityQuery,
+  shouldSkipOverviewQuery,
+  shouldUseOverviewQuery,
+} from "@/Molecules/Entity.helpers";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { usePreviousScreenTitle } from "@/Molecules/NavigationBar.helpers";
-import { SectionHeading } from "@/Molecules/SectionHeading";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { ActivityGroup, useActivityGroup } from "@/Providers/AppStateProvider";
 import { ContentScrollable } from "@/Templates/ContentScrollable";
@@ -38,8 +43,6 @@ const useQuery = (args: {
   end: DateIso;
   activityGroup: ActivityGroup;
 }) => {
-  const useOverview = !!args.entityId && args.entityId !== "overview";
-
   const overviewResults = useTransactionCategoryGroupOverallQuery({
     variables: {
       dateRange: {
@@ -49,7 +52,7 @@ const useQuery = (args: {
       categoryId: args.categoryId,
       groupBy: getActivityGroupBy(args.activityGroup),
     },
-    skip: !useOverview,
+    skip: shouldSkipOverviewQuery(args.entityId),
   });
 
   const entityResults = useTransactionCategoryGroupQuery({
@@ -62,10 +65,10 @@ const useQuery = (args: {
       categoryId: args.categoryId,
       groupBy: getActivityGroupBy(args.activityGroup),
     },
-    skip: !useOverview,
+    skip: shouldSkipEntityQuery(args.entityId),
   });
 
-  if (useOverview) {
+  if (shouldUseOverviewQuery(args.entityId)) {
     return overviewResults;
   }
 
@@ -133,7 +136,7 @@ const TransactionsCategory = () => {
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards">
-        <SectionHeading title={category?.name || ""} />
+        <Title1 weight="Bold" title={category?.name || ""} />
         <div className={styles.cards}>
           <Card>
             <CardTitle />

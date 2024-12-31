@@ -9,6 +9,11 @@ import { ActivityHeading } from "@/Molecules/ActivityHeading";
 import { Card } from "@/Molecules/Card";
 import { CardContents } from "@/Molecules/CardContents";
 import { CardTitle } from "@/Molecules/CardTitle";
+import {
+  shouldSkipEntityQuery,
+  shouldSkipOverviewQuery,
+  shouldUseOverviewQuery,
+} from "@/Molecules/Entity.helpers";
 import { TransactionGroupCard } from "@/Molecules/TransactionGroupCard";
 import { ActivityGroup, useActivityGroup } from "@/Providers/AppStateProvider";
 import { DateIso } from "@/Utils/date-iso";
@@ -28,7 +33,16 @@ const useQuery = (args: {
   end: DateIso;
   activityGroup: ActivityGroup;
 }) => {
-  const isEntity = !!args.entityId && args.entityId !== "overview";
+  const overallResults = useEntityActivityOverviewQuery({
+    variables: {
+      dateRange: {
+        start: args.start,
+        end: args.end,
+      },
+      activityGroupBy: getActivitySubGroupBy(args.activityGroup),
+    },
+    skip: shouldSkipOverviewQuery(args.entityId),
+  });
 
   const entityResults = useEntityActivityQuery({
     variables: {
@@ -39,21 +53,14 @@ const useQuery = (args: {
       },
       activityGroupBy: getActivitySubGroupBy(args.activityGroup),
     },
-    skip: !isEntity,
+    skip: shouldSkipEntityQuery(args.entityId),
   });
 
-  const overallResults = useEntityActivityOverviewQuery({
-    variables: {
-      dateRange: {
-        start: args.start,
-        end: args.end,
-      },
-      activityGroupBy: getActivitySubGroupBy(args.activityGroup),
-    },
-    skip: isEntity,
-  });
+  if (shouldUseOverviewQuery(args.entityId)) {
+    return overallResults;
+  }
 
-  return isEntity ? entityResults : overallResults;
+  return entityResults;
 };
 
 export const Activity = ({ start, end }: { start: DateIso; end: DateIso }) => {

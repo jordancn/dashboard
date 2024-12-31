@@ -9,6 +9,11 @@ import {
 } from "@/GraphQL/client.gen";
 import { ActivityCard } from "@/Molecules/ActivityCard";
 import { BalanceCard } from "@/Molecules/BalanceCard";
+import {
+  shouldSkipEntityQuery,
+  shouldSkipOverviewQuery,
+  shouldUseOverviewQuery,
+} from "@/Molecules/Entity.helpers";
 import { NavigationBar } from "@/Molecules/NavigationBar";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import { BudgetCards } from "@/Organisms/BudgetCards";
@@ -40,7 +45,23 @@ const useQuery = (args: {
   activityDateRange: DateRange;
   activityGroup: ActivityGroup;
 }) => {
-  const isEntity = !!args.entityId && args.entityId !== "overview";
+  const overallResults = useEntityPageOvervallQuery({
+    variables: {
+      insightsDateRange: args.insightsDateRange,
+      transactionsDateRange: {
+        start: addDays(today(), -3),
+        end: today(),
+      },
+      transactionGroupsDateRange: {
+        start: getFirstDayOfYear(today()),
+        end: today(),
+      },
+      changeThreshold: 0.1,
+      activityDateRange: args.activityDateRange,
+      activityGroupBy: getActivityGroupBy(args.activityGroup),
+    },
+    skip: shouldSkipOverviewQuery(args.entityId),
+  });
 
   const entityResults = useEntityPageByEntityIdQuery({
     variables: {
@@ -58,28 +79,14 @@ const useQuery = (args: {
       activityDateRange: args.activityDateRange,
       activityGroupBy: getActivityGroupBy(args.activityGroup),
     },
-    skip: !isEntity,
+    skip: shouldSkipEntityQuery(args.entityId),
   });
 
-  const overallResults = useEntityPageOvervallQuery({
-    variables: {
-      insightsDateRange: args.insightsDateRange,
-      transactionsDateRange: {
-        start: addDays(today(), -3),
-        end: today(),
-      },
-      transactionGroupsDateRange: {
-        start: getFirstDayOfYear(today()),
-        end: today(),
-      },
-      changeThreshold: 0.1,
-      activityDateRange: args.activityDateRange,
-      activityGroupBy: getActivityGroupBy(args.activityGroup),
-    },
-    skip: isEntity,
-  });
+  if (shouldUseOverviewQuery(args.entityId)) {
+    return overallResults;
+  }
 
-  return isEntity ? entityResults : overallResults;
+  return entityResults;
 };
 
 const EntityPage = () => {
@@ -418,9 +425,11 @@ const EntityPage = () => {
         />
         {mode === "insights" && (
           <>
-            <div onClick={onShowBudgetClicked}>
-              <SectionHeading title="Insights" subtitle="Show Budget" />
-            </div>
+            <SectionHeading
+              title="Insights"
+              subtitle="Show Budget"
+              onClick={onShowBudgetClicked}
+            />
 
             <InsightCards
               entityId={entityId}
@@ -429,7 +438,6 @@ const EntityPage = () => {
             />
           </>
         )}
-
         {mode === "budget" && (
           <>
             <SectionHeading
@@ -456,7 +464,6 @@ const EntityPage = () => {
             />
           </>
         )}
-
         {latestTransactions.length > 0 && (
           <SectionHeading title="Latest Transactions" />
         )}
@@ -464,7 +471,6 @@ const EntityPage = () => {
           transactions={latestTransactions}
           entityId={entityId}
         />
-
         <SectionHeading title={getYearFromIsoDate(today())} />
         <TransactionGroupCards
           transactionGroups={groupedTransactions}
