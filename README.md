@@ -134,7 +134,7 @@ The application uses PostgreSQL with Prisma ORM. The schema is defined in [serve
 
 ## GraphQL Schema
 
-The GraphQL schema is defined in [server/schema.gql](server/schema.gql).
+The GraphQL schema is defined in [server/schema/schema.gql](server/schema/schema.gql).
 
 ## 🧪 Testing and Quality
 
