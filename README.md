@@ -61,7 +61,7 @@ The project follows atomic design methodology as referenced in Brad Frost's [Ato
 
 ### Server
 
-The server is a GraphQL API built with Apollo Server. It uses Prisma ORM to interact with the PostgreSQL database.
+The server is a GraphQL API built with Apollo Server. It uses Prisma ORM to interact with the PostgreSQL database. Resolvers are scoped, queries are batched and cached via DataLoader to ensure efficient data retrieval.
 
 ## 🏃‍♂️ Getting Started
 
@@ -134,7 +134,7 @@ The application uses PostgreSQL with Prisma ORM. The schema is defined in [serve
 
 ## GraphQL Schema
 
-The GraphQL schema is defined in [server/schema.graphql](server/schema.graphql).
+The GraphQL schema is defined in [server/schema.gql](server/schema.gql).
 
 ## 🧪 Testing and Quality
 
