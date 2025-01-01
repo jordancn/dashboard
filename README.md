@@ -13,6 +13,10 @@ A [Live Demo](https://dashboard.jordancn.dev) is available.
 - Responsive design for mobile and desktop
 - Interactive component documentation via Storybook
 
+## Work in Progress
+
+- [ ] Chat with financial data (AI/LLM)
+
 ## Planned Features
 
 - [ ] API for external integrations (Plaid)
