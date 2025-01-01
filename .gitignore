@@ -16,3 +16,4 @@ server/api/graphql.js
 /*-build-*.tar
 
 dump.sql
+coverage
