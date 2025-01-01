@@ -18,6 +18,7 @@ import { NavigationBar } from "@/Molecules/NavigationBar";
 import { SectionHeading } from "@/Molecules/SectionHeading";
 import { BudgetCards } from "@/Organisms/BudgetCards";
 import { Chat } from "@/Organisms/Chat";
+import { useChatChannel } from "@/Organisms/ChatChannel";
 import { InsightCards } from "@/Organisms/InsightCards";
 import { TransactionCards } from "@/Organisms/TransactionCards";
 import { TransactionGroupCards } from "@/Organisms/TransactionGroupCards";
@@ -380,13 +381,15 @@ const EntityPage = () => {
     return 0;
   }, [results]);
 
-  const onShowBudgetClicked = () => {
-    setMode("budget");
-  };
+  const chatChannel = useChatChannel();
 
-  const onShowInsightsClicked = () => {
+  const onShowBudgetClicked = useCallback(() => {
+    setMode("budget");
+  }, []);
+
+  const onShowInsightsClicked = useCallback(() => {
     setMode("insights");
-  };
+  }, []);
 
   if (results.loading) {
     return (
@@ -405,9 +408,11 @@ const EntityPage = () => {
         {chatOpen && <Chat onClose={() => setChatOpen(false)} />}
 
         <div className={styles.navigationBarContents}>
-          <div onClick={onChatClicked}>
-            <AiIcon />
-          </div>
+          {chatChannel.state === "connected" && (
+            <div onClick={onChatClicked}>
+              <AiIcon />
+            </div>
+          )}
           {/* <SearchIcon disabled />
           <AccountsIcon disabled /> */}
         </div>

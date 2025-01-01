@@ -5,7 +5,12 @@ import { DateTimeIso, now, toSlashyDateAndTime } from "@/Utils/date-time-iso";
 import classNames from "classnames";
 import Mousetrap from "mousetrap";
 import { useCallback, useEffect, useRef, useState } from "react";
+import showdown from "showdown";
 import styles from "./Chat.module.css";
+
+const converter = new showdown.Converter({
+  tables: true,
+});
 
 export const Chat = ({ onClose }: { onClose: () => void }) => {
   // const isSocketConnected = useIsSocketConnected();
@@ -122,7 +127,13 @@ export const Chat = ({ onClose }: { onClose: () => void }) => {
               <div className={styles.logDate}>
                 {toSlashyDateAndTime(entry.date)}
               </div>
-              <div className={styles.logMessage}>{entry.message}</div>
+              <div className={styles.logMessage}>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: converter.makeHtml(entry.message),
+                  }}
+                />
+              </div>
             </div>
           ))}
         </div>
