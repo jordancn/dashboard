@@ -1,5 +1,5 @@
 const highlightSql = require("igniculus")();
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { format as sqlFormat } from "sql-formatter";
 
 const parseSqlParams = (str: string): string[] => {
@@ -14,10 +14,12 @@ const parseSqlParams = (str: string): string[] => {
 };
 
 // export const createPrismaClient = (databaseUrl: string, queryLoggingEnabled: boolean) => {
-export const createPrismaClient = (queryLoggingEnabled: boolean) => {
+export const createPrismaClient = (opts?: {
+  queryLoggingEnabled?: boolean;
+}) => {
   const prisma = new PrismaClient({
     log: [
-      ...(queryLoggingEnabled
+      ...(opts?.queryLoggingEnabled
         ? [{ emit: "event", level: "query" } as const]
         : []),
       "info",
@@ -26,7 +28,7 @@ export const createPrismaClient = (queryLoggingEnabled: boolean) => {
     ],
   });
 
-  if (queryLoggingEnabled) {
+  if (opts?.queryLoggingEnabled) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     prisma.$on("query", (e: any) => {
       // eslint-disable-next-line no-console

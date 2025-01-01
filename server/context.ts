@@ -6,7 +6,7 @@ import { buildModel, Data } from "@/utils/data-loaders";
 import { Utilities, utilities } from "@/utils/transaction-utils";
 import * as uuid from "uuid";
 
-export const prisma = createPrismaClient(true);
+export const prisma = createPrismaClient({ queryLoggingEnabled: false });
 
 export type Context = {
   requestId: Id;

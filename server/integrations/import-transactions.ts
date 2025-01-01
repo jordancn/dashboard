@@ -160,7 +160,7 @@ const main = async () => {
       })
   );
 
-  const prisma = createPrismaClient(false);
+  const prisma = createPrismaClient();
 
   for (const balance of balances) {
     const account = await prisma.account.findFirst({

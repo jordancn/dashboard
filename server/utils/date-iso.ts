@@ -310,3 +310,7 @@ export function getPreviousDateRange(dateRange: DateRange) {
   const end = addDays(toIsoDate(dateRange.start), -1);
   return { start, end };
 }
+
+export function isDateIso(date: string): date is DateIso {
+  return VALID_REGEX.test(date);
+}

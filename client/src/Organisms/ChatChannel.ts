@@ -15,6 +15,9 @@ function assertIsChatResponse(data: unknown): asserts data is ChatResponse {
   assert(data, "data is required");
   assert(typeof data === "object", "data is not an object");
   assert("message" in data, "message is required");
+
+  console.log("==> data", data);
+
   assert(typeof data.message === "string", "message is not a string");
   assert("date" in data, "date is required");
   assert(typeof data.date === "string", "date is not a string");

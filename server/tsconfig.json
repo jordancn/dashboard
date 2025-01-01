@@ -1,17 +1,33 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
     "sourceMap": true,
-    "outDir": "dist",
-    "strict": true,
-    "lib": ["esnext"],
-    "noImplicitAny": true,
-    "alwaysStrict": true,
-    "esModuleInterop": true,
+    "outDir": "./dist",
     "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "useUnknownInCatchVariables": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["jest"]
   },
+  "ts-node": {
+    "esm": true
+  }
 }
