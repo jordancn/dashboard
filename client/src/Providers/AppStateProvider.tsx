@@ -108,7 +108,7 @@ export const useSetGroupIndex = () => {
 
 export const AppStateProvider = ({ children }: { children?: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, {
-    activityGroup: "Month",
+    activityGroup: "Week",
     groupIndex: 0,
   });
 
