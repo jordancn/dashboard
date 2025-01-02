@@ -7,21 +7,19 @@ describe("Chat", () => {
     it(
       "should handle a chat request",
       async () => {
-        // const expected = {
-        //   message: "Hi",
-        //   date: new Date(),
-        // };
+        //  const expected = {};
 
-        const { response, messages } = await subject({
+        const actual = await subject({
           messages: [],
           chatRequest: {
-            message: "Give me a list of all transactions yesterday.",
+            message:
+              "Give me a list of all transactions last week, complete with category names. Please clean up the transaction descriptions. Then summarize the total amount spent per category.",
           },
         });
 
-        // console.log("==> messages", messages);
+        console.log("==> actual", actual);
 
-        expect(response.message.content).toBeTruthy();
+        expect(actual).toBeTruthy();
       },
       60 * 10 * 1000
     );

@@ -1,7 +1,4 @@
-import {
-  getInitialSystemMessageContent,
-  handleChatRequest,
-} from "@/chat/chat-processor";
+import { handleChatRequest } from "@/chat/chat-processor";
 import { Context } from "@/context";
 import { ApolloServer } from "@apollo/server";
 import fs from "fs";
