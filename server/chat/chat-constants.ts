@@ -6,6 +6,7 @@ export const QueryMessageIdentifier = "[##Q##]";
 export const QueryResponseMessageIdentifier = "[##R##]";
 
 export const InitialSystemMessageContent = `
+${SystemMessageIdentifier}
 You are a helpful assistant named Luna that can answer questions about the financial information in this system. You have a computer named Solana that queries data from the system and returns the results to Luna.
 
 Luna shall:

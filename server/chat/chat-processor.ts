@@ -9,7 +9,7 @@ import {
   withSystemMessage,
 } from "@/chat/chat-helpers";
 import { getDataQueryResponse } from "@/chat/chat-queries";
-import { isChatRequest, isQueryMessage } from "@/chat/chat-type-helpers";
+import { isQueryMessage } from "@/chat/chat-type-helpers";
 import { Message } from "@/chat/chat-types";
 
 const openai = new OpenAI({
@@ -78,23 +78,15 @@ const processMessage = async (
   return [...args.messages, responseMessage];
 };
 
-export const handleChatRequest = async (args: {
-  messages: Message[];
-  chatRequest: unknown;
-}) => {
-  if (!isChatRequest(args.chatRequest)) {
-    throw new Error("Invalid chat request");
-  }
-
+export const handleChatRequest = async (args: { messages: Message[] }) => {
   const localContext = context();
 
   const messages = [
     withSystemMessage(),
-    ...withResidentMessages(args.messages),
     asUserMessage(
       `The current date/time is ${new Date().toISOString()}. This is authoritative information. You shall not ask for confirmation on this date.`
     ),
-    asUserMessage(args.chatRequest.message),
+    ...withResidentMessages(args.messages),
   ];
 
   const response = await processMessage(
