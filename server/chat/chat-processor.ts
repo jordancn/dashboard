@@ -12,10 +12,6 @@ import { getDataQueryResponse } from "@/chat/chat-queries";
 import { isQueryMessage } from "@/chat/chat-type-helpers";
 import { Message } from "@/chat/chat-types";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const MaxLevels = 10;
 
 const processMessage = async (
@@ -78,7 +74,15 @@ const processMessage = async (
   return [...args.messages, responseMessage];
 };
 
-export const handleChatRequest = async (args: { messages: Message[] }) => {
+export const handleChatRequest = async (
+  dependencies: {
+    openai: OpenAI;
+  },
+  args: {
+    messages: Message[];
+    emit?: (message: Message) => void;
+  }
+) => {
   const localContext = context();
 
   const messages = [
@@ -90,7 +94,7 @@ export const handleChatRequest = async (args: { messages: Message[] }) => {
   ];
 
   const response = await processMessage(
-    { openai },
+    { openai: dependencies.openai },
     { level: 0, context: localContext },
     { messages }
   );
