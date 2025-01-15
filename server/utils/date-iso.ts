@@ -179,6 +179,8 @@ export const isoStringToIsoDate = (x: Date | string): DateIso => {
     if (isValid(d)) {
       return d as any as DateIso;
     }
+
+    return toIsoDate(new Date(x));
   } else {
     const d = x.toISOString().substr(0, 10);
 

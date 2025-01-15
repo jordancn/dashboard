@@ -1,10 +1,10 @@
-import { asUserMessage } from "@/chat/chat-helpers";
+import { asAssistantMessage, asUserMessage } from "@/chat/chat-helpers";
 import { handleChatRequest } from "@/chat/chat-processor";
 import { isChatRequest } from "@/chat/chat-type-helpers";
 import { Message } from "@/chat/chat-types";
 import { Context } from "@/context";
 import { ApolloServer } from "@apollo/server";
-import OpenAI from "openai";
+import _ from "lodash";
 import { Server } from "socket.io";
 
 const ChannelName = "chat";
@@ -15,34 +15,31 @@ export const attachChatChannel = async (args: {
 }) => {
   const statefulMessages: Message[] = [];
 
-  const openai = process.env.OPENAI_API_KEY
-    ? new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-      })
-    : undefined;
-
   args.ioServer.on("connection", async (socket) => {
     socket.on(ChannelName, async (chatRequest) => {
       if (!isChatRequest(chatRequest)) {
         throw new Error("Invalid chat request");
       }
 
-      if (!openai) {
-        throw new Error("OpenAI API key not found");
-      }
-
       statefulMessages.push(asUserMessage(chatRequest.message));
 
-      const response = await handleChatRequest(
-        { openai },
-        {
-          messages: statefulMessages,
-        }
-      );
+      const response = await handleChatRequest({
+        messages: statefulMessages,
+      });
 
       const newMessages = response.slice(statefulMessages.length - 1);
 
-      statefulMessages.push(...newMessages);
+      statefulMessages.push(
+        ..._.compact(
+          newMessages.map((message) => {
+            if (!message.content) {
+              return;
+            }
+
+            return asAssistantMessage(message.content);
+          })
+        )
+      );
 
       socket.emit(ChannelName, {
         message: newMessages[newMessages.length - 1].content,

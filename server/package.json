@@ -25,8 +25,14 @@
     "node_modules/@prisma/client"
   ],
   "dependencies": {
+    "@agentic/core": "^7.2.0",
+    "@agentic/dexter": "^7.2.0",
+    "@agentic/llamaindex": "^7.2.0",
+    "@agentic/stdlib": "^7.2.0",
+    "@ai-sdk/openai": "^1.0.14",
     "@apollo/server": "^4.10.0",
     "@as-integrations/next": "^3.2.0",
+    "@dexaai/dexter": "^2.1.0",
     "@graphql-codegen/add": "^3.1.1",
     "@graphql-tools/schema": "^8.3.1",
     "@prisma/client": "^6.0.1",
@@ -46,6 +52,7 @@
     "graphql-tag": "^2.12.6",
     "igniculus": "^1.5.0",
     "json-stable-stringify": "^1.0.1",
+    "llamaindex": "^0.7.10",
     "lodash": "^4.17.21",
     "ofx": "^0.5.0",
     "ollama": "^0.5.11",
@@ -56,7 +63,8 @@
     "sql-formatter": "^4.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^4.5.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",

@@ -1,30 +1,29 @@
-import {
-  isAccountsQuery,
-  isCategoriesQuery,
-  isDataQuery,
-  isNoAdditionalInformationNeededQuery,
-  isTransactionQuery,
-  isTransactionsQuery,
-  isVendorsQuery,
-} from "@/chat/chat-type-helpers";
+import { isDataQuery } from "@/chat/chat-type-helpers";
 import { QueryMessage } from "@/chat/chat-types";
 import { Context } from "@/context";
+import { isoStringToIsoDate } from "@/utils/date-iso";
 import * as TransactionUtils from "@/utils/transaction-utils";
-import { response } from "express";
 import _ from "lodash";
 
 export const getAccounts = async (context: Context) => {
   return await context.model.Account.findMany.load({});
 };
 
-export const getTransactions = async (context: Context, query: any) => {
+export const getTransactions = async (
+  context: Context,
+  query: { start: string; end: string }
+) => {
   const transactionIds = await TransactionUtils.getTransactions(
     context,
     {},
     {
       dateRange: {
-        start: query.start,
-        end: query.end,
+        start: isoStringToIsoDate(query.start),
+        end: isoStringToIsoDate(query.end),
+      },
+      pagination: {
+        limit: 10,
+        offset: 0,
       },
     }
   );
@@ -38,8 +37,11 @@ export const getTransactions = async (context: Context, query: any) => {
   );
 };
 
-export const getTransaction = async (context: Context, id: string) => {
-  return await context.model.Transaction.findById.load(id);
+export const getTransaction = async (
+  context: Context,
+  args: { id: string }
+) => {
+  return await context.model.Transaction.findById.load(args.id);
 };
 
 export const getCategories = async (context: Context) => {
@@ -84,45 +86,45 @@ const getQueryMessage = (content: QueryMessage["content"]) => {
 
 // --
 
-export const getDataQueryResponse = async (
-  context: Context,
-  message: QueryMessage
-): Promise<object[] | object | undefined> => {
-  const query = getQueryMessage(message.content);
+// export const getDataQueryResponse = async (
+//   context: Context,
+//   message: QueryMessage
+// ): Promise<object[] | object | undefined> => {
+//   const query = getQueryMessage(message.content);
 
-  if (isNoAdditionalInformationNeededQuery(query)) {
-    return response;
-  }
+//   if (isNoAdditionalInformationNeededQuery(query)) {
+//     return response;
+//   }
 
-  if (isAccountsQuery(query)) {
-    const accounts = await getAccounts(context);
+//   if (isAccountsQuery(query)) {
+//     const accounts = await getAccounts(context);
 
-    return accounts;
-  }
+//     return accounts;
+//   }
 
-  if (isTransactionsQuery(query)) {
-    const transactions = await getTransactions(context, query);
+//   if (isTransactionsQuery(query)) {
+//     const transactions = await getTransactions(context, query);
 
-    return transactions;
-  }
+//     return transactions;
+//   }
 
-  if (isTransactionQuery(query)) {
-    const transaction = await getTransaction(context, query.id);
+//   if (isTransactionQuery(query)) {
+//     const transaction = await getTransaction(context, query.id);
 
-    return transaction ?? undefined;
-  }
+//     return transaction ?? undefined;
+//   }
 
-  if (isCategoriesQuery(query)) {
-    const categories = await getCategories(context);
+//   if (isCategoriesQuery(query)) {
+//     const categories = await getCategories(context);
 
-    return categories;
-  }
+//     return categories;
+//   }
 
-  if (isVendorsQuery(query)) {
-    const vendors = await getVendors(context);
+//   if (isVendorsQuery(query)) {
+//     const vendors = await getVendors(context);
 
-    return vendors;
-  }
+//     return vendors;
+//   }
 
-  return;
-};
+//   return;
+// };
