@@ -32,3 +32,5 @@ export const BalanceCard = ({
     </Card>
   );
 };
+
+export default BalanceCard;

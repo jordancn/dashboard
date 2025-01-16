@@ -7,8 +7,11 @@ import {
   useEntityPageByEntityIdQuery,
   useEntityPageOvervallQuery,
 } from "@/GraphQL/client.gen";
-import { ActivityCard } from "@/Molecules/ActivityCard";
-import { BalanceCard } from "@/Molecules/BalanceCard";
+
+const ActivityCard = lazy(() => import("../../../Molecules/ActivityCard"));
+const BalanceCard = lazy(() => import("../../../Molecules/BalanceCard"));
+
+import { CardSkeleton } from "@/Molecules/CardSkeleton";
 import {
   shouldSkipEntityQuery,
   shouldSkipOverviewQuery,
@@ -37,7 +40,7 @@ import {
 import { getActivityGroupBy } from "@/Utils/helpers";
 import { hasEntityId, useRouteParams } from "@/Utils/param-helpers";
 import _ from "lodash";
-import { useCallback, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useMemo, useState } from "react";
 import styles from "./page.module.css";
 
 const useQuery = (args: {
@@ -418,16 +421,20 @@ const EntityPage = () => {
         </div>
       </NavigationBar>
       <ContentScrollable type="wrap-cards" hasNavigationBar>
-        <BalanceCard
-          balance={currentBalance}
-          date={results.data?.lastRefreshed}
-        />
-        <ActivityCard
-          activityGroup={activityGroup}
-          activity={activity}
-          entityId={entityId}
-          size="half"
-        />
+        <Suspense fallback={<CardSkeleton size="half" />}>
+          <BalanceCard
+            balance={currentBalance}
+            date={results.data?.lastRefreshed}
+          />
+        </Suspense>
+        <Suspense fallback={<CardSkeleton size="half" />}>
+          <ActivityCard
+            activityGroup={activityGroup}
+            activity={activity}
+            entityId={entityId}
+            size="half"
+          />
+        </Suspense>
         {mode === "insights" && (
           <>
             <SectionHeading

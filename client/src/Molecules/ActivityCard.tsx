@@ -128,3 +128,5 @@ export const ActivityCard = ({
     </Card>
   );
 };
+
+export default ActivityCard;

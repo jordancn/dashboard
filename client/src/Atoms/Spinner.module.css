@@ -22,12 +22,31 @@
     }
     border-radius: 50%;
     content: "";
-    height: 60px;
     position: absolute;
     top: 50%;
     left: 50%;
     /* transform: translate3d(-50%, -50%, 0); */
-    width: 60px;
     will-change: transform;
+  }
+
+  &.small {
+    &::before {
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  &.medium {
+    &::before {
+      height: 40px;
+      width: 40px;
+    }
+  }
+
+  &.large {
+    &::before {
+      height: 60px;
+      width: 60px;
+    }
   }
 }
