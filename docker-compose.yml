@@ -1,6 +1,7 @@
 services:
   nextjs:
     image: dashboard-nextjs:build-${GIT_COMMIT_SHA}
+    restart: unless-stopped
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -17,6 +18,7 @@ services:
 
   storybook:
     image: dashboard-storybook:build-${GIT_COMMIT_SHA}
+    restart: unless-stopped
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -30,6 +32,7 @@ services:
 
   graphql:
     image: dashboard-graphql:build-${GIT_COMMIT_SHA}
+    restart: unless-stopped
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -48,6 +51,7 @@ services:
     image: postgres:14
     ports:
       - "5432:5432"
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
