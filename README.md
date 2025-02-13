@@ -2,7 +2,7 @@
 
 A modern financial dashboard application built with React, TypeScript, Next.js, GraphQL, Apollo, and Storybook. The application follows atomic design principles for component organization and provides insights into financial transactions and budgeting.
 
-A [Live Demo](https://dashboard.jordancn.dev) is available.
+<!-- A [Live Demo](https://dashboard.jordancn.dev) is available. -->
 
 ## 🚀 Features
 
